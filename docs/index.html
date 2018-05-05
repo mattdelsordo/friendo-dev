@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Friendo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="src/util.js"></script>
+    <script src="src/config.js"></script>
+    <script src="src/friendo.js"></script>
+    <script src="src/art.js"></script>
+    <script src="src/art-util.js"></script>
+    <script src="src/index.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <div>
+                    <input type="text" placeholder="Friendo Name" id="friendo-name" class="form-control d-inline-block w-50">
+                    <input type="text" placeholder="Owner Name" id="owner-name" class="form-control d-inline-block w-50">
+                </div>
+                <canvas id="canvas" height="400" width="400" class="card m-2"></canvas>
+                <div>
+                    <div class="d-inline btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary">
+                            <input type="checkbox" autocomplete="off" id="hook-marker-toggle"> Toggle Hook Markers
+                        </label>
+                    </div>
+                    <!-- <button id="feed-button" class="btn btn-success">Feed</button> -->
+                </div>
+                <!-- <div>
+                    <div class="btn-group btn-group-toggle mt-1" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                        </label>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="col-md-auto">
+                <!-- Toggle for type -->
+                <div id="type-picker" class="border p-1 mt-1">
+                    <h5>Type:</h5>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-warning active" for="pick-type-earth">
+                            <input type="radio" name="type-radios" id="pick-type-earth" autocomplete="off" value="earth" checked> Earth
+                        </label>
+                        <label class="btn btn-primary" for="pick-type-water">
+                            <input type="radio" name="type-radios" id="pick-type-water" autocomplete="off" value="water"> Water
+                        </label>
+
+                        <label class="btn btn-danger" for="pick-type-fire">
+                            <input type="radio" name="type-radios" id="pick-type-fire" autocomplete="off" value="fire"> Fire
+                        </label>
+
+                        <label class="btn btn-info" for="pick-type-air">
+                            <input type="radio" name="type-radios" id="pick-type-air" autocomplete="off" value="air"> Air
+                        </label>
+                    </div>
+                </div>
+                <!-- Sliders for stats -->
+                <div class="border p-1 mt-1">
+                    <h5>Stats:</h5>
+                    <!-- Core -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Core</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="1" max="10" value="1" id="core-range" list="core-list" />
+                        <datalist id="core-list">
+                            <option>3</option>
+                            <option>5</option>
+                            <option>7</option>
+                            <option>9</option>
+                        </datalist>
+                        <span id="core-num">1</span>
+                    </div>
+                    <!-- Legs -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Legs</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="0" max="10" value="0" id="legs-range" />
+                        <span id="legs-num">0</span>
+                    </div>
+                    <!-- Arms -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Arms</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="0" max="10" value="0" id="arms-range" />
+                        <span id="arms-num">0</span>
+                    </div>
+                    <!-- Sight -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Sight</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="1" max="10" value="1" id="sight-range" list="sight-list" />
+                        <datalist id="sight-list">
+                            <option>4</option>
+                            <option>7</option>
+                        </datalist>
+                        <span id="sight-num">1</span>
+                    </div>
+                    <!-- Hair -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Hair</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="0" max="10" value="0" id="hair-range" list="hair-list" />
+                        <datalist id="hair-list">
+                            <option>1</option>
+                            <option>4</option>
+                            <option>8</option>
+                        </datalist>
+                        <span id="hair-num">0</span>
+                    </div>
+                    <!-- Taste -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Taste</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="1" max="10" value="1" id="taste-range" />
+                        <span id="taste-num">1</span>
+                    </div>
+                    <!-- Dog Affinity -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Dog Affinity</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="0" max="10" value="0" id="dog-range" list="dog-list" />
+                        <datalist id="dog-list">
+                            <option>2</option>
+                            <option>4</option>
+                            <option>6</option>
+                            <option>8</option>
+                            <option>10</option>
+                        </datalist>
+                        <span id="dog-num">0</span>
+                    </div>
+                    <!-- Meme Tolerance -->
+                    <div class="p-1 mt-1 w-100">
+                        <span>Meme Tolerance</span>
+                        <input class="mr-1 ml-1 align-bottom" type="range" min="1" max="10" value="1" id="meme-range" />
+                        <span id="meme-num">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
