@@ -5,20 +5,9 @@
     <title>Friendo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="src/util.js"></script>
-    <script src="src/config.js"></script>
-    <script src="src/friendo.js"></script>
-    <script src="src/art.js"></script>
-    <script src="src/art-util.js"></script>
-    <script src="src/index.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="bundle.js"></script>
 </head>
 
 <body>
@@ -41,22 +30,22 @@
                 <!-- <div>
                     <div class="btn-group btn-group-toggle mt-1" data-toggle="buttons">
                         <label class="btn btn-primary active">
-                            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                            <input element="radio" name="options" id="option1" autocomplete="off" checked> Active
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                            <input element="radio" name="options" id="option2" autocomplete="off"> Radio
                         </label>
                         <label class="btn btn-primary">
-                            <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                            <input element="radio" name="options" id="option3" autocomplete="off"> Radio
                         </label>
                     </div>
                 </div> -->
 
             </div>
             <div class="col-md-auto">
-                <!-- Toggle for type -->
+                <!-- Toggle for element -->
                 <div id="type-picker" class="border p-1 mt-1">
-                    <h5>Type:</h5>
+                    <h5>Element:</h5>
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-warning active" for="pick-type-earth">
                             <input type="radio" name="type-radios" id="pick-type-earth" autocomplete="off" value="earth" checked> Earth

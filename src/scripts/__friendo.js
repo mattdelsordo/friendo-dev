@@ -58,7 +58,7 @@ const friendoFromJSONString = function(friendoJson) {
     friendoType = fromJson.friendoType;
 };
 
-// sets colors based on friendo type
+// sets colors based on friendo element
 const setColors = function(g) {
     switch (friendoType) {
         case (ELEMENTS.EARTH):
@@ -99,7 +99,7 @@ const drawFriendo = function(g, x = mainHook.x, y = mainHook.y) {
 const drawEyes = function(g, x, y, doBlink) {
     if (statLevel[STATS.SIGHT] > 6) {
         // lvl 7 and up, 3 eyes
-        // fire types are a special case 
+        // fire types are a special case
         if (friendoType === ELEMENTS.FIRE) {
             drawEye(g, x, y-6, doBlink);
             drawEye(g, x-6, y+4, doBlink);
@@ -111,7 +111,7 @@ const drawEyes = function(g, x, y, doBlink) {
         }
     } else if (statLevel[STATS.SIGHT] > 3) {
         // lvl 4 and up, 2 eyes
-        // eyes must be moved down if a fire type
+        // eyes must be moved down if a fire element
         if (friendoType === ELEMENTS.FIRE) {
             drawEye(g, x-6, y+4, doBlink);
             drawEye(g, x+6, y+4, doBlink);
@@ -129,7 +129,7 @@ const drawEyes = function(g, x, y, doBlink) {
 
 // face is drawn relative to itself
 const drawFace = function(g, x, y) {
-    // if the friendo is a fire type, the face needs to be drawn
+    // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
     if (friendoType === ELEMENTS.FIRE) y += 6;
 
@@ -304,7 +304,7 @@ const drawLegs = function(g, x, y) {
         // gap between legs
         let thighGap = 13;
 
-        // draw type of leg based on type of friendo
+        // draw element of leg based on element of friendo
         // return the height at which to draw the body
         switch (friendoType) {
             case ELEMENTS.EARTH:
@@ -324,7 +324,7 @@ const drawLegs = function(g, x, y) {
                 drawFireRightLeg(g, x + thighGap - 1, y, legGirth, legHeight, footLength, footHeight);
                 return legHeight;
         }
-        
+
         drawHookMarker(g, x, y);
 
         // return leg height to calculate core height
@@ -448,7 +448,7 @@ const computeArmTethers = function () {
                     xOffset: 22,
                     yOffset: -20,
                 };
-        }        
+        }
     } else {
         switch (friendoType) {
             case ELEMENTS.EARTH:
@@ -498,7 +498,7 @@ const drawArms = function (g, x, y) {
             brush = function(_g) {
                 drawAirArm(_g, 0, 0, armGirth, armLength);
             }
-            break;  
+            break;
         case ELEMENTS.FIRE:
             brush = function(_g) {
                 drawFireArm(_g, 0, 0, armGirth, armLength);
