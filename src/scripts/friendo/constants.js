@@ -1,11 +1,11 @@
 // maximum level in a given element
-export const STAT_MAX = 10;
+export const STAT_MAX = 10
 
 // how much energy petting restores
-export const PET_INCREMENT = 4;
+export const PET_INCREMENT = 4
 
 // maximum amount of dogs on the screen
-export const MAX_DOGS = 5;
+export const MAX_DOGS = 5
 
 // 'enum' of stat indices
 export const STATS = Object.freeze({

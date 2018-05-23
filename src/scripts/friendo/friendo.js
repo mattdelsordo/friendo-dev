@@ -9,11 +9,13 @@ import {
   DEFAULT_OWNER,
   DEFAULT_STATS,
   DEFAULT_ELEMENT,
+  DEFAULT_HOOK,
 } from '../default'
 
 export default class Friendo {
   // constructor takes context on which to draw
-  constructor(json) {
+  constructor(context, json) {
+    this.g = context
     this.name = DEFAULT_NAME
     this.owner = DEFAULT_OWNER
     this.element = DEFAULT_ELEMENT
@@ -43,8 +45,18 @@ export default class Friendo {
     })
   }
 
+  setElement(element) {
+    this.element = Element.new(element)
+    // set colors here so that it doesn't have to be done every dang time
+    this.element.setColors(this.g)
+  }
+
   // sets the value of a stat
   setStat(stat, value) {
     this.stats[stat] = value
+  }
+
+  draw(x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
+
   }
 }

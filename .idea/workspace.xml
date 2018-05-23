@@ -2,35 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372263f2-1afd-4cec-92e7-dd7c970b079b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/default.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/element/air.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/element/earth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/element/element.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/element/fire.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/element/water.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/friendo/friendo.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scripts/game/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/art-util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/art.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/friendo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/art-util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/art.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/friendo.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/src/util.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/__friendo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/__friendo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/colors.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/colors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/default.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/element/air.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/element/air.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/element/earth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/element/earth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/element/element.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/element/element.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/element/fire.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/element/fire.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/element/water.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/element/water.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/friendo/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/friendo/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/friendo/friendo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/friendo/friendo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scripts/game/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/scripts/game/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,25 +28,13 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="friendo.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="friendo.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/scripts/friendo/friendo.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+                <state relative-caret-position="952">
+                  <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
                   <folding>
                     <element signature="e#95#130#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="element.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/scripts/element/element.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#0#25#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -73,58 +43,8 @@
           <file leaf-file-name="default.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/scripts/default.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/scripts/game/index.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="361">
-                  <caret line="216" selection-start-line="216" selection-end-line="222" selection-end-column="16" />
-                  <folding>
-                    <element signature="e#0#22#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="webpack.config.babel.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/webpack.config.babel.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1">
-                  <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-                  <folding>
-                    <element signature="e#0#23#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/.gitignore">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/scripts/game/config.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/package.json">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="293">
-                  <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+                <state relative-caret-position="425">
+                  <caret line="26" selection-start-line="26" selection-end-line="26" />
                 </state>
               </provider>
             </entry>
@@ -133,11 +53,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="__friendo.js" pinned="false" current-in-tab="false">
+          <file leaf-file-name="__friendo.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/scripts/__friendo.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
-                  <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+                <state relative-caret-position="-187">
+                  <caret line="61" selection-start-line="61" selection-start-column="3" selection-end-line="80" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -151,9 +71,22 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="constants.js" pinned="false" current-in-tab="true">
+          <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/scripts/friendo/constants.js">
-              <provider selected="true" editor-type-id="text-editor" />
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="119">
+                  <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="colors.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/scripts/colors.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="204">
+                  <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+                </state>
+              </provider>
             </entry>
           </file>
           <file leaf-file-name="art-util.js" pinned="false" current-in-tab="false">
@@ -176,6 +109,7 @@
       <find>saveGame()</find>
       <find>setStat</find>
       <find>statLevel</find>
+      <find>element</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -185,23 +119,25 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/scripts/type/type.js" />
-        <option value="$PROJECT_DIR$/src/scripts/element/fire.js" />
-        <option value="$PROJECT_DIR$/src/scripts/element/water.js" />
-        <option value="$PROJECT_DIR$/src/scripts/element/air.js" />
-        <option value="$PROJECT_DIR$/src/scripts/element/earth.js" />
-        <option value="$PROJECT_DIR$/src/scripts/element/element.js" />
         <option value="$PROJECT_DIR$/src/scripts/constants.js" />
         <option value="$PROJECT_DIR$/src/scripts/friendo.js" />
-        <option value="$PROJECT_DIR$/src/scripts/default.js" />
         <option value="$PROJECT_DIR$/src/scripts/util.js" />
-        <option value="$PROJECT_DIR$/src/scripts/friendo/friendo.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/scripts/friendo/constants.js" />
         <option value="$PROJECT_DIR$/webpack.config.babel.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/scripts/game/config.js" />
-        <option value="$PROJECT_DIR$/src/scripts/game/index.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/scripts/game/index.js" />
+        <option value="$PROJECT_DIR$/src/scripts/colors.js" />
+        <option value="$PROJECT_DIR$/src/scripts/element/element.js" />
+        <option value="$PROJECT_DIR$/src/scripts/element/air.js" />
+        <option value="$PROJECT_DIR$/src/scripts/element/earth.js" />
+        <option value="$PROJECT_DIR$/src/scripts/element/fire.js" />
+        <option value="$PROJECT_DIR$/src/scripts/element/water.js" />
+        <option value="$PROJECT_DIR$/src/scripts/__friendo.js" />
+        <option value="$PROJECT_DIR$/src/scripts/friendo/constants.js" />
+        <option value="$PROJECT_DIR$/src/scripts/default.js" />
+        <option value="$PROJECT_DIR$/src/scripts/friendo/friendo.js" />
       </list>
     </option>
   </component>
@@ -271,6 +207,13 @@
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
               <item name="friendo" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="friendo-dev" type="b2602c69:ProjectViewProjectNode" />
+              <item name="friendo-dev" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -315,12 +258,12 @@
       <option name="presentableId" value="Default" />
       <updated>1527104391639</updated>
       <workItem from="1527104394927" duration="583000" />
-      <workItem from="1527105011670" duration="7164000" />
+      <workItem from="1527105011670" duration="8580000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7747000" />
+    <option name="totallyTimeSpent" value="9163000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="23" width="1922" height="1058" extended-state="6" />
@@ -335,7 +278,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.30220357" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.22875132" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -381,72 +324,10 @@
     <entry file="file://$PROJECT_DIR$/src/scripts/__friendo.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/element/air.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/element/earth.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/element/fire.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/element/water.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/default.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/element/element.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/__friendo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/friendo/friendo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-          <folding>
-            <element signature="e#95#130#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -458,9 +339,6 @@
     <entry file="file://$PROJECT_DIR$/src/config.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/friendo/constants.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/yarn.lock">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -468,26 +346,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
           <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/game/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/scripts/game/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="216" selection-start-line="216" selection-end-line="222" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -503,6 +361,108 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/game/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/game/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="163" column="26" selection-start-line="163" selection-start-column="26" selection-end-line="163" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/colors.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/element/element.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="32" selection-start-line="32" selection-end-line="35" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/element/air.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/element/earth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/element/fire.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/element/water.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="9" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/friendo/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/__friendo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-187">
+          <caret line="61" selection-start-line="61" selection-start-column="3" selection-end-line="80" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/default.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/scripts/friendo/friendo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
+          <folding>
+            <element signature="e#95#130#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

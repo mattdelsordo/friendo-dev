@@ -2,20 +2,20 @@
  * Friendo statistics.
  * Initialized to default values.
  */
-let friendoName = "Friendtholemew";
-let ownerName = "Mrot";
-let friendoType = ELEMENTS.EARTH;
+// let friendoName = "Friendtholemew";
+// let ownerName = "Mrot";
+// let friendoType = ELEMENTS.EARTH;
 
-let statLevel = {
-    [STATS.CORE]: 1,
-    [STATS.LEG]: 0,
-    [STATS.ARM]: 0,
-    [STATS.SIGHT]: 1,
-    [STATS.HAIR]: 0,
-    [STATS.TASTE]: 1,
-    [STATS.DOG]: 0,
-    [STATS.MEME]: 1,
-};
+// let statLevel = {
+//     [STATS.CORE]: 1,
+//     [STATS.LEG]: 0,
+//     [STATS.ARM]: 0,
+//     [STATS.SIGHT]: 1,
+//     [STATS.HAIR]: 0,
+//     [STATS.TASTE]: 1,
+//     [STATS.DOG]: 0,
+//     [STATS.MEME]: 1,
+// };
 let statExp = [];
 let energy = 100;
 let energy_max;
@@ -31,54 +31,54 @@ let leftLegHook;
 let rightArmHook;
 let leftArmHook;
 
-const setStat = function(stat, val) {
-    statLevel[stat] = val;
-}
+// const setStat = function(stat, val) {
+//     statLevel[stat] = val;
+// }
 
-// converts this ""object"" to JSON, for saving
-const friendoToJSONString = function() {
-    const toJson = {
-        friendoName,
-        ownerName,
-        stats: statLevel,
-        showHooks,
-        friendoType,
-    };
-
-    return JSON.stringify(toJson);
-};
-
-// loads friendo from JSON
-const friendoFromJSONString = function(friendoJson) {
-    const fromJson = JSON.parse(friendoJson);
-    statLevel = fromJson.stats;
-    showHooks = fromJson.showHooks;
-    ownerName = fromJson.ownerName;
-    friendoName = fromJson.friendoName;
-    friendoType = fromJson.friendoType;
-};
+// // converts this ""object"" to JSON, for saving
+// const friendoToJSONString = function() {
+//     const toJson = {
+//         friendoName,
+//         ownerName,
+//         stats: statLevel,
+//         showHooks,
+//         friendoType,
+//     };
+//
+//     return JSON.stringify(toJson);
+// };
+//
+// // loads friendo from JSON
+// const friendoFromJSONString = function(friendoJson) {
+//     const fromJson = JSON.parse(friendoJson);
+//     statLevel = fromJson.stats;
+//     showHooks = fromJson.showHooks;
+//     ownerName = fromJson.ownerName;
+//     friendoName = fromJson.friendoName;
+//     friendoType = fromJson.friendoType;
+// };
 
 // sets colors based on friendo element
-const setColors = function(g) {
-    switch (friendoType) {
-        case (ELEMENTS.EARTH):
-            g.fillStyle = EARTH_SKIN;
-            g.strokeStyle = EARTH_OUTLINE;
-            break;
-        case (ELEMENTS.FIRE):
-            g.fillStyle = FIRE_SKIN;
-            g.strokeStyle = FIRE_OUTLINE;
-            break;
-        case (ELEMENTS.WATER):
-            g.fillStyle = WATER_SKIN;
-            g.strokeStyle = WATER_OUTLINE;
-            break;
-        case (ELEMENTS.AIR):
-            g.fillStyle = AIR_SKIN;
-            g.strokeStyle = AIR_OUTLINE;
-            break;
-    }
-};
+// const setColors = function(g) {
+//     switch (friendoType) {
+//         case (ELEMENTS.EARTH):
+//             g.fillStyle = EARTH_SKIN;
+//             g.strokeStyle = EARTH_OUTLINE;
+//             break;
+//         case (ELEMENTS.FIRE):
+//             g.fillStyle = FIRE_SKIN;
+//             g.strokeStyle = FIRE_OUTLINE;
+//             break;
+//         case (ELEMENTS.WATER):
+//             g.fillStyle = WATER_SKIN;
+//             g.strokeStyle = WATER_OUTLINE;
+//             break;
+//         case (ELEMENTS.AIR):
+//             g.fillStyle = AIR_SKIN;
+//             g.strokeStyle = AIR_OUTLINE;
+//             break;
+//     }
+// };
 
 // draws the friendo on the screen
 const drawFriendo = function(g, x = mainHook.x, y = mainHook.y) {
