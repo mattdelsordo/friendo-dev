@@ -2,6 +2,7 @@ import Fire from './fire'
 import Water from './water'
 import Air from './air'
 import Earth from './earth'
+import { DEFAULT_SKIN, DEFAULT_OUTLINE } from '../colors'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -27,6 +28,11 @@ export default class Element {
 
   toString() {
     return this.id
+  }
+
+  setColors(g) {
+    g.fillStyle = DEFAULT_SKIN
+    g.strokeStyle = DEFAULT_OUTLINE
   }
 
   // factory method to return a new element of a specified type

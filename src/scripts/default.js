@@ -21,3 +21,6 @@ export const DEFAULT_STATS = {
 }
 
 export const DEFAULT_ELEMENT = new Element(ELEMENTS.EARTH)
+
+// default x/y at which a friendo is drawn
+export const DEFAULT_HOOK = { x: 200, y: 350 }

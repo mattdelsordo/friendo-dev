@@ -23,7 +23,7 @@ $(document)
 
     // attempt to load friendo
     const savegame = load()
-    const friendo = new Friendo(savegame)
+    const friendo = new Friendo(context, savegame)
 
     /**
      * TEST-SLIDER LISTENERS
@@ -161,7 +161,7 @@ $(document)
     // handle element togglers
     $('#element-picker input[element=radio]')
       .change(function () {
-        friendo.type = Element.new(this.value)
+        friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
 
@@ -218,7 +218,7 @@ $(document)
     setInterval(() => {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
-      friendo.draw(context)
+      friendo.draw()
       context.restore()
     }, TICKRATE)
   })
