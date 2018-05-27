@@ -6,7 +6,7 @@ import { WDS_PORT, isProd } from './src/config'
 
 export default {
   entry: [
-    './src/scripts/game/index.js',
+    './src/js/game/index.js',
   ],
   output: {
     filename: 'bundle.js',

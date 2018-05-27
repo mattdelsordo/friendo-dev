@@ -7,6 +7,15 @@ export const PET_INCREMENT = 4
 // maximum amount of dogs on the screen
 export const MAX_DOGS = 5
 
+// time spent doing actions, in cycles of the game
+// (currently 4/sec)
+export const BLINK_TIME = 2
+export const SPEAK_TIME = 20
+
+// chance to blink or speak
+export const BLINK_CHANCE = 1
+export const SPEAK_CHANCE = 1
+
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',

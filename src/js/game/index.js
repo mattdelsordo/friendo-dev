@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import Tether from 'tether'
 
-import { save, load } from '../util'
+import { save, load } from './util'
 import { STATS } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
-import { toggleHookMarkers } from '../art-util'
+import { toggleHookMarkers } from '../art/art-util'
 import { TICKRATE } from './config'
 
 /**

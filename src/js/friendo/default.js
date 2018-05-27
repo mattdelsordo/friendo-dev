@@ -1,6 +1,7 @@
 
-import { STATS } from './friendo/constants'
+import { STATS } from './constants'
 import Element, { ELEMENTS } from './element/element'
+import Idle from './state/idle'
 
 /**
  * Specifies default values for new Friendos
@@ -21,6 +22,7 @@ export const DEFAULT_STATS = {
 }
 
 export const DEFAULT_ELEMENT = new Element(ELEMENTS.EARTH)
+export const DEFAULT_STATE = new Idle()
 
 // default x/y at which a friendo is drawn
 export const DEFAULT_HOOK = { x: 200, y: 350 }
