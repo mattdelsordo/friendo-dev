@@ -42,7 +42,7 @@ const newWagAngle = function() {
 const wag = function() {
     for (let i = 0; i < MAX_DOGS; i += 1) dogPoints[i].angle = newWagAngle();
 };
-// paints a variable amount of dogs on the screen, based on 
+// paints a variable amount of dogs on the screen, based on
 const paintDogs = function(g, dogLevel) {
     // identify where the dogs aught to be drawn
     if (!dogPoints) {
@@ -233,21 +233,21 @@ const drawDiglettHair = function (g, x, y, level) {
  * Arm drawing methods
  * Anchored at shoulder
  */
-const drawEarthArm = function(g, x, y, w, h) {
-    drawOutlinedRect(g, x, y, w, h);
-}
-const drawWaterArm = function(g, x, y, w, h) {
-    drawOutlinedOval(g, x, y, w, h);
-}
-const drawAirArm = function(g, x, y, w, h) {
-    drawOutlinedPolygon(g,
-        [x, x-(w/2), x, x+(w/2)],
-        [y, y+(h/2), y+h, y+(h/2)],
-        true);
-}
-const drawFireArm = function(g, x, y, w, h) {
-    drawOutlinedPolygon(g,
-        [x, x-(w/2), x,],
-        [y, y+(h/2), y+h,],
-        true);
-}
+// const drawEarthArm = function(g, x, y, w, h) {
+//     drawOutlinedRect(g, x, y, w, h);
+// }
+// const drawWaterArm = function(g, x, y, w, h) {
+//     drawOutlinedOval(g, x, y, w, h);
+// }
+// const drawAirArm = function(g, x, y, w, h) {
+//     drawOutlinedPolygon(g,
+//         [x, x-(w/2), x, x+(w/2)],
+//         [y, y+(h/2), y+h, y+(h/2)],
+//         true);
+// }
+// const drawFireArm = function(g, x, y, w, h) {
+//     drawOutlinedPolygon(g,
+//         [x, x-(w/2), x,],
+//         [y, y+(h/2), y+h,],
+//         true);
+// }

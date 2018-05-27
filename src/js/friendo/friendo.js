@@ -10,18 +10,21 @@ import {
   DEFAULT_STATS,
   DEFAULT_ELEMENT,
   DEFAULT_HOOK,
-} from '../default'
+  DEFAULT_STATE,
+} from './default'
 
 export default class Friendo {
   // constructor takes context on which to draw
-  constructor(context, json) {
-    this.g = context
+  constructor(json) {
     this.name = DEFAULT_NAME
     this.owner = DEFAULT_OWNER
     this.element = DEFAULT_ELEMENT
 
     // set stat defaults
     this.stats = Object.assign({}, DEFAULT_STATS)
+
+    // set state
+    this.state = DEFAULT_STATE
 
     // if JSON is passed in, load
     if (json) {
@@ -45,10 +48,8 @@ export default class Friendo {
     })
   }
 
-  setElement(element) {
-    this.element = Element.new(element)
-    // set colors here so that it doesn't have to be done every dang time
-    this.element.setColors(this.g)
+  setElement(element, graphics) {
+    this.element = Element.new(element, graphics)
   }
 
   // sets the value of a stat
@@ -56,7 +57,12 @@ export default class Friendo {
     this.stats[stat] = value
   }
 
-  draw(x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
+  // draws the friendo to the context specified by g at specified coordinate
+  draw(g, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
+    this.state.draw(g, x, y, this)
+  }
 
+  handleAction(action) {
+    this.state.handleAction(action)
   }
 }
