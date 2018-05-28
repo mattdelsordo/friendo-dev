@@ -1,15 +1,18 @@
 import { STATS } from '../constants'
 import { FIRE_SKIN, FIRE_OUTLINE } from '../../art/colors'
-import Element, { ELEMENTS } from './element'
+import Element from './element'
+import ELEMENTS from './elements'
+import { drawHookMarker } from '../../art/hook-marker'
+import { drawLine, drawOutlinedPolygon } from '../../art/art-util'
 
 /**
  * Specifies how a fire friendo is drawn
  */
 
-export default class Fire extends Element{
-  constructor(g) {
-    super(g)
-    this.id = STATS.FIRE
+export default class Fire extends Element {
+  constructor() {
+    super()
+    this.id = ELEMENTS.FIRE
   }
 
   setColors(g) {
@@ -21,17 +24,17 @@ export default class Fire extends Element{
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      drawEye(g, x, y - 6, doBlink)
-      drawEye(g, x - 6, y + 4, doBlink)
-      drawEye(g, x + 6, y + 4, doBlink)
+      this.drawEye(g, x, y - 6, doBlink)
+      this.drawEye(g, x - 6, y + 4, doBlink)
+      this.drawEye(g, x + 6, y + 4, doBlink)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      drawEye(g, x - 8, y, doBlink)
-      drawEye(g, x + 8, y, doBlink)
+      this.drawEye(g, x - 8, y, doBlink)
+      this.drawEye(g, x + 8, y, doBlink)
     } else {
       // default = 1 eye
-      drawEye(g, x, y, doBlink)
+      this.drawEye(g, x, y, doBlink)
     }
 
     drawHookMarker(g, x, y)
@@ -43,7 +46,7 @@ export default class Fire extends Element{
     drawLine(g, x - 5, y + 6, x + 5, y + 6) // mouth
     drawLine(g, x - 1, y - 5, x - 1, y + 2) // vertical nose
     drawLine(g, x - 2, y + 2, x + 3, y + 2) // horizontal nose
-    drawEyes(g, x, y - 8, doBlink)
+    this.drawEyes(g, x, y - 8, doBlink)
 
     drawHookMarker(g, x, y)
   }
@@ -54,12 +57,12 @@ export default class Fire extends Element{
     g.save()
     g.translate(x, y - 86)
     g.rotate(Math.PI)
-    drawCoreSegment(g, 25, 0, friendo)
-    drawCoreSegment(g, -24, 0, friendo)
+    this.drawCoreSegment(g, 25, 0, friendo)
+    this.drawCoreSegment(g, -24, 0, friendo)
     g.restore()
 
-    drawCoreSegment(g, x - 25, y, friendo)
-    drawCoreSegment(g, x + 25, y, friendo)
+    this.drawCoreSegment(g, x - 25, y, friendo)
+    this.drawCoreSegment(g, x + 25, y, friendo)
   }
 
   drawLvl4Core(g, x, y, friendo, doBlink) {
@@ -68,26 +71,26 @@ export default class Fire extends Element{
     g.save()
     g.translate(x - 25, y - 66)
     g.rotate(Math.PI)
-    drawCoreSegment(g, 0, 0, friendo)
+    this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
 
     g.save()
     g.translate(x + 25, y - 66)
     g.rotate(Math.PI)
-    drawCoreSegment(g, 0, 0, friendo)
+    this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
 
     g.save()
     g.translate(x, y - 23)
     g.rotate(Math.PI)
-    drawCoreSegment(g, 0, 0, friendo)
+    this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
   }
 
   drawLvl3Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 43, friendo, doBlink)
-    drawCoreSegment(g, x - 25, y)
-    drawCoreSegment(g, x + 25, y)
+    this.drawCoreSegment(g, x - 25, y)
+    this.drawCoreSegment(g, x + 25, y)
   }
 
   drawLvl2Core(g, x, y, friendo, doBlink) {
@@ -96,7 +99,7 @@ export default class Fire extends Element{
     g.save()
     g.translate(x, y - 23)
     g.rotate(Math.PI)
-    drawCoreSegment(g, 0, 0, friendo)
+    this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
   }
 
@@ -105,10 +108,10 @@ export default class Fire extends Element{
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
-    drawBackHair(g, x, y - 42) // back hair on top of head core
-    drawCoreSegment(g, x, y) // head core
-    drawFace(g, x, y - 12, doBlink) // face relative to head core
-    drawFrontHair(g, x, y - 42) // front hair on top of head core
+    this.drawBackHair(g, x, y - 42) // back hair on top of head core
+    this.drawCoreSegment(g, x, y) // head core
+    this.drawFace(g, x, y - 12, doBlink) // face relative to head core
+    this.drawFrontHair(g, x, y - 42) // front hair on top of head core
 
     drawHookMarker(g, x, y)
   }
@@ -142,10 +145,25 @@ export default class Fire extends Element{
     }
   }
 
-  drawArm(g, x, y, w, h) {
+  armBrush(g, x, y, w, h) {
     drawOutlinedPolygon(g,
-      [x, x-(w/2), x,],
-      [y, y+(h/2), y+h,],
-      true)
+      [x, x - (w / 2), x],
+      [y, y + (h / 2), y + h],
+      true,
+    )
+  }
+
+  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
+    drawOutlinedPolygon(g,
+      [x, x,              x-legGirth,         x,  x-(footLength/2),    x-footLength],
+      [y, y-legHeight,    y-(legHeight/2),    y,  y-footHeight,       y],
+      true,
+    )
+  }
+
+  drawCoreSegment(g, x, y) {
+    drawOutlinedPolygon(g, [x, x - 25, x + 25], [y - 43, y, y])
+
+    drawHookMarker(g, x, y)
   }
 }

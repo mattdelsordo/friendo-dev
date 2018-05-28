@@ -4,6 +4,8 @@
  */
 
 import { STATS } from './constants'
+import { paintDogs } from '../art/dog'
+import selectElement from './element/select-element'
 import {
   DEFAULT_NAME,
   DEFAULT_OWNER,
@@ -34,35 +36,38 @@ export default class Friendo {
       this.stats = fromJSON.stats
       this.name = fromJSON.name
       this.owner = fromJSON.owner
-      this.element = Element.new(fromJSON.element)
+      this.element = selectElement(fromJSON.element)
     }
   }
 
   // converts ya boi to a JSON string
-  toJSON() {
-    return JSON.stringify({
+  toJSON = () =>
+    JSON.stringify({
       name: this.name,
       owner: this.owner,
       element: this.element,
       stats: this.stats,
     })
-  }
 
-  setElement(element, graphics) {
-    this.element = Element.new(element, graphics)
+  setElement = (element) => {
+    this.element = selectElement(element)
+    console.log(`Element set to ${this.element}`)
   }
 
   // sets the value of a stat
-  setStat(stat, value) {
+  setStat = (stat, value) => {
     this.stats[stat] = value
+    console.log(`${stat} set to ${this.stats[stat]}`)
   }
 
   // draws the friendo to the context specified by g at specified coordinate
-  draw(g, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
+  draw = (canvas, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) => {
+    const g = canvas.getContext('2d')
+    paintDogs(g, this.stats[STATS.DOG], canvas.width, canvas.height)
     this.state.draw(g, x, y, this)
   }
 
-  handleAction(action) {
+  handleAction = (action) => {
     this.state.handleAction(action)
   }
 }

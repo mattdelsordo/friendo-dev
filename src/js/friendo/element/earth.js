@@ -1,15 +1,16 @@
 import { STATS } from '../constants'
 import { EARTH_OUTLINE, EARTH_SKIN } from '../../art/colors'
-import Element, { ELEMENTS } from './element'
+import Element from './element'
+import ELEMENTS from './elements'
 
 /**
  * Specifies how a earth friendo is drawn
  */
 
-export default class Earth extends Element{
-  constructor(g) {
-    super(g)
-    this.id = STATS.EARTH
+export default class Earth extends Element {
+  constructor() {
+    super()
+    this.id = ELEMENTS.EARTH
   }
 
   setColors(g) {
@@ -19,29 +20,29 @@ export default class Earth extends Element{
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
-    drawCoreSegment(g, x - 50, y - 100, friendo)
-    drawCoreSegment(g, x + 50, y - 100, friendo)
-    drawCoreSegment(g, x, y - 100, friendo)
-    drawCoreSegment(g, x, y - 50, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x - 50, y - 100, friendo)
+    this.drawCoreSegment(g, x + 50, y - 100, friendo)
+    this.drawCoreSegment(g, x, y - 100, friendo)
+    this.drawCoreSegment(g, x, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl4Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    drawCoreSegment(g, x - 25, y - 50, friendo)
-    drawCoreSegment(g, x + 25, y - 50, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x - 25, y - 50, friendo)
+    this.drawCoreSegment(g, x + 25, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl3Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    drawCoreSegment(g, x, y - 50, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl2Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl1Core(g, x, y, friendo, doBlink) {
@@ -75,10 +76,6 @@ export default class Earth extends Element{
         yOffset: -30,
       }
     }
-  }
-
-  drawArm(g, x, y, w, h) {
-    drawOutlinedRect(g, x, y, w, h)
   }
 }
 

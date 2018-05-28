@@ -1,6 +1,7 @@
 
 import { STATS } from './constants'
-import Element, { ELEMENTS } from './element/element'
+import ELEMENTS from './element/elements'
+import selectElement from './element/select-element'
 import Idle from './state/idle'
 
 /**
@@ -21,7 +22,7 @@ export const DEFAULT_STATS = {
   [STATS.MEME]: 1,
 }
 
-export const DEFAULT_ELEMENT = new Element(ELEMENTS.EARTH)
+export const DEFAULT_ELEMENT = selectElement(ELEMENTS.EARTH)
 export const DEFAULT_STATE = new Idle()
 
 // default x/y at which a friendo is drawn

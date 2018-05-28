@@ -10,7 +10,7 @@ export default class State {
     this.speak = 0
   }
 
-  draw(g, x, y, friendo) {
+  draw = (g, x, y, friendo) => {
     /**
      *  I know this is terrible practice but sorry yes my draw method has side effects
      */
@@ -28,6 +28,8 @@ export default class State {
     } else if (Math.random() * 10 < SPEAK_CHANCE) {
       this.speak = SPEAK_TIME
     }
+
+    friendo.element.setColors(g)
   }
 
   handleAction(action) {}

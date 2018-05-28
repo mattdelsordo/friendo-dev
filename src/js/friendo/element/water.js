@@ -1,15 +1,18 @@
 import { STATS } from '../constants'
 import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
 import Element from './element'
+import ELEMENTS from './elements'
+import { drawHookMarker } from '../../art/hook-marker'
+import { drawOval, drawOutlinedOval } from '../../art/art-util'
 
 /**
  * Specifies how a water friendo is drawn
  */
 
 export default class WATER extends Element {
-  constructor(g) {
-    super(g)
-    this.id = STATS.WATER
+  constructor() {
+    super()
+    this.id = ELEMENTS.WATER
   }
 
   setColors(g) {
@@ -19,28 +22,28 @@ export default class WATER extends Element {
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    drawCoreSegment(g, x - 44, y - 75, friendo)
-    drawCoreSegment(g, x + 44, y - 75, friendo)
-    drawCoreSegment(g, x, y - 50, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x - 44, y - 75, friendo)
+    this.drawCoreSegment(g, x + 44, y - 75, friendo)
+    this.drawCoreSegment(g, x, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl4Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 88, friendo, doBlink)
-    drawCoreSegment(g, x - 25, y - 44, friendo)
-    drawCoreSegment(g, x + 25, y - 44, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x - 25, y - 44, friendo)
+    this.drawCoreSegment(g, x + 25, y - 44, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl3Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x - 25, y - 44, friendo, doBlink)
-    drawCoreSegment(g, x + 25, y - 44, friendo)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x + 25, y - 44, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl2Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
-    drawCoreSegment(g, x, y, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
   }
 
   drawLvl1Core(g, x, y, friendo, doBlink) {
@@ -76,7 +79,19 @@ export default class WATER extends Element {
     }
   }
 
-  drawArm(g, x, y, w, h) {
+  armBrush(g, x, y, w, h) {
     drawOutlinedOval(g, x, y, w, h)
+  }
+
+  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
+    drawOutlinedOval(g, x - footLength, y - footHeight, footLength, footHeight)
+    drawOutlinedOval(g, x - (legGirth / 2), y - legHeight, legGirth, legHeight)
+    drawOval(g, x - footLength + 1, y - footHeight + 1, footLength - 4, footHeight - 3, true)
+  }
+
+  drawCoreSegment(g, x, y) {
+    drawOutlinedOval(g, x - 25, y - 50, 50, 50)
+
+    drawHookMarker(g, x, y)
   }
 }
