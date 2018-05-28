@@ -17,13 +17,13 @@ window.Tether = Tether
 require('bootstrap')
 
 $(document)
-  .ready(() => {
+  .ready(function() {
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('2d')
 
     // attempt to load friendo
     const savegame = load()
-    const friendo = new Friendo(context, savegame)
+    const friendo = new Friendo(savegame)
 
     /**
      * TEST-SLIDER LISTENERS
@@ -33,11 +33,11 @@ $(document)
      */
     $('#core-range')
       .on({
-        input: () => {
+        input: function() {
           $('#core-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#core-num')
             .html(this.value)
           friendo.setStat(STATS.CORE, this.value)
@@ -46,11 +46,11 @@ $(document)
       })
     $('#arms-range')
       .on({
-        input: () => {
+        input: function() {
           $('#arms-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#arms-num')
             .html(this.value)
           friendo.setStat(STATS.ARM, this.value)
@@ -59,11 +59,11 @@ $(document)
       })
     $('#legs-range')
       .on({
-        input: () => {
+        input: function() {
           $('#legs-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#legs-num')
             .html(this.value)
           friendo.setStat(STATS.LEG, this.value)
@@ -72,11 +72,11 @@ $(document)
       })
     $('#sight-range')
       .on({
-        input: () => {
+        input: function() {
           $('#sight-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#sight-num')
             .html(this.value)
           friendo.setStat(STATS.SIGHT, this.value)
@@ -85,11 +85,11 @@ $(document)
       })
     $('#hair-range')
       .on({
-        input: () => {
+        input: function() {
           $('#hair-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#hair-num')
             .html(this.value)
           friendo.setStat(STATS.HAIR, this.value)
@@ -98,11 +98,11 @@ $(document)
       })
     $('#taste-range')
       .on({
-        input: () => {
+        input: function() {
           $('#taste-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#taste-num')
             .html(this.value)
           friendo.setStat(STATS.TASTE, this.value)
@@ -111,11 +111,11 @@ $(document)
       })
     $('#dog-range')
       .on({
-        input: () => {
+        input: function() {
           $('#dog-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#dog-num')
             .html(this.value)
           friendo.setStat(STATS.DOG, this.value)
@@ -124,11 +124,11 @@ $(document)
       })
     $('#meme-range')
       .on({
-        input: () => {
+        input: function() {
           $('#meme-num')
             .html(this.value)
         },
-        change: () => {
+        change: function() {
           $('#meme-num')
             .html(this.value)
           friendo.setStat(STATS.MEME, this.value)
@@ -160,7 +160,7 @@ $(document)
 
     // handle element togglers
     $('#element-picker input[element=radio]')
-      .change(function () {
+      .change(function() {
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
@@ -211,14 +211,14 @@ $(document)
       .val(friendo.owner)
     $('#friendo-name')
       .val(friendo.name)
-    $(`#type-picker input[type=radio][value='${friendo.element}']`)
+    $(`#type-picker input[type=radio][value='${friendo.element.toString()}']`)
       .prop('checked', true)
 
     // draw game to the screen at some interval
-    setInterval(() => {
+    setInterval(function() {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
-      friendo.draw()
+      friendo.draw(canvas)
       context.restore()
     }, TICKRATE)
   })
