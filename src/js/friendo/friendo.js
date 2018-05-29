@@ -4,7 +4,7 @@
  */
 
 import { STATS } from './constants'
-import { paintDogs } from '../art/dog'
+import paintDogs from '../art/dog'
 import selectElement from './element/select-element'
 import {
   DEFAULT_NAME,

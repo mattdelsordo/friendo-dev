@@ -1,6 +1,7 @@
 import { DOG_SKIN, DOG_OUTLINE } from './colors'
 import { drawOval, drawPolygon, drawLine } from './art-util'
 import { MAX_DOGS } from '../friendo/constants'
+import {drawHookMarker } from './hook-marker'
 
 /**
  * Paints a dog on the canvas
@@ -47,7 +48,7 @@ const wag = function () {
   for (let i = 0; i < MAX_DOGS; i += 1) dogPoints[i].angle = newWagAngle()
 }
 // paints a variable amount of dogs on the screen, based on
-export const paintDogs = function (g, dogLevel, canvasW, canvasH) {
+export default (g, dogLevel, canvasW, canvasH) => {
   // identify where the dogs aught to be drawn
   if (!dogPoints) {
     dogPoints = []
