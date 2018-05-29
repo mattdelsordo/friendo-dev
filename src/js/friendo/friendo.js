@@ -30,9 +30,15 @@ export default class Friendo {
 
     // if JSON is passed in, load
     if (json) {
-      console.log(`Loading Friendo from ${json}`)
+      console.log(`Loading Friendo from ${JSON.parse(json)}`)
 
-      const fromJSON = JSON.parse(json)
+      let fromJSON = JSON.parse(json)
+      fromJSON = JSON.parse(fromJSON) // good god I hate this
+      // console.log(typeof fromJSON)
+      // console.log(`Stats: ${fromJSON.stats}`)
+      // console.log(`Name: ${fromJSON.name}`)
+      // console.log(`Owner: ${fromJSON.owner}`)
+      // console.log(`Element: ${fromJSON.element}`)
       this.stats = fromJSON.stats
       this.name = fromJSON.name
       this.owner = fromJSON.owner
@@ -56,6 +62,7 @@ export default class Friendo {
 
   // sets the value of a stat
   setStat = (stat, value) => {
+    console.log(`${this.toJSON()}`)
     this.stats[stat] = value
     console.log(`${stat} set to ${this.stats[stat]}`)
   }
