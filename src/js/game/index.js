@@ -17,7 +17,7 @@ window.Tether = Tether
 require('bootstrap')
 
 $(document)
-  .ready(function() {
+  .ready(() => {
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('2d')
 
@@ -215,7 +215,7 @@ $(document)
       .prop('checked', true)
 
     // draw game to the screen at some interval
-    setInterval(function() {
+    setInterval(() => {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
       friendo.draw(canvas)
