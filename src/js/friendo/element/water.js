@@ -3,7 +3,7 @@ import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawOval, drawOutlinedOval } from '../../art/art-util'
+import { drawOval, drawOutlinedOval, drawOutlinedRect } from '../../art/art-util'
 
 /**
  * Specifies how a water friendo is drawn
@@ -50,7 +50,7 @@ export default class WATER extends Element {
     this.drawHeadSegment(g, x, y, friendo, doBlink)
   }
 
-  computeArmTethers(friendo) {
+  computeTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 60,
@@ -79,11 +79,16 @@ export default class WATER extends Element {
     }
   }
 
-  armBrush(g, x, y, w, h) {
-    drawOutlinedOval(g, x, y, w, h)
+  armBrush(friendo) {
+    const armGirth = friendo.stats[STATS.ARM] * 2
+    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
+
+    return (_g) => {
+      drawOutlinedOval(_g, 0, 0, armGirth, armLength)
+    }
   }
 
-  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
+  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
     drawOutlinedOval(g, x - footLength, y - footHeight, footLength, footHeight)
     drawOutlinedOval(g, x - (legGirth / 2), y - legHeight, legGirth, legHeight)
     drawOval(g, x - footLength + 1, y - footHeight + 1, footLength - 4, footHeight - 3, true)

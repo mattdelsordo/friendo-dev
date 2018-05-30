@@ -3,7 +3,7 @@ import { AIR_OUTLINE, AIR_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawOutlinedPolygon } from '../../art/art-util'
+import { drawOutlinedPolygon, drawOutlinedRect } from '../../art/art-util'
 
 /**
  * Specifies how a air friendo is drawn
@@ -52,7 +52,7 @@ export default class Air extends Element{
     this.drawHeadSegment(g, x, y, doBlink, friendo)
   }
 
-  computeArmTethers(friendo) {
+  computeTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 56,
@@ -81,15 +81,20 @@ export default class Air extends Element{
     }
   }
 
-  armBrush(g, x, y, w, h) {
-    drawOutlinedPolygon(g,
-      [x, x - (w / 2), x, x + (w / 2)],
-      [y, y + (h / 2), y + h, y + (h / 2)],
-      true,
-    )
+  armBrush(friendo) {
+    const armGirth = friendo.stats[STATS.ARM] * 2
+    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
+
+    return (_g) => {
+      drawOutlinedPolygon(_g,
+        [0, -(armGirth / 2), 0, (armGirth / 2)],
+        [0, (armLength / 2), armLength, (armLength / 2)],
+        true,
+      )
+    }
   }
 
-  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
+  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
     drawOutlinedPolygon(g,
       [x, x+(legGirth/2),  x,           x-(legGirth/2),  x, x-(legGirth/4), x-(legGirth/4)-(footLength/4), x-(legGirth/4)-(footLength/2), x-(legGirth/4)-(footLength/4),x-(legGirth/4)],
       [y, y-(legHeight/2), y-legHeight, y-(legHeight/2), y, y-footHeight,     y-footHeight, y, y, y-footHeight],

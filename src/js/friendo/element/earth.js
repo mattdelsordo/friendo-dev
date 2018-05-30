@@ -49,7 +49,7 @@ export default class Earth extends Element {
     this.drawHeadSegment(g, x, y, doBlink, friendo)
   }
 
-  computeArmTethers(friendo) {
+  computeTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 75,

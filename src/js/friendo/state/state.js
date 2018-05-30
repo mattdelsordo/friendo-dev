@@ -10,7 +10,7 @@ export default class State {
     this.speak = 0
   }
 
-  draw = (g, x, y, friendo) => {
+  draw(g, x, y, friendo) {
     /**
      *  I know this is terrible practice but sorry yes my draw method has side effects
      */
@@ -32,5 +32,7 @@ export default class State {
     friendo.element.setColors(g)
   }
 
-  handleAction(action) {}
+  handleAction(action) {
+    console.log(`Handling ${action}`)
+  }
 }

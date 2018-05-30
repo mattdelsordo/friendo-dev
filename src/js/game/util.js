@@ -9,6 +9,6 @@ export const load = () => {
   return saveGame
 }
 export const save = (friendoJSON) => {
-  console.log(`Saving ${friendoJSON}`)
+  // console.log(`Saving ${friendoJSON}`)
   localStorage.setItem(STORAGE_TOKEN, friendoJSON)
 }
