@@ -20,6 +20,11 @@ export default class WATER extends Element {
     g.strokeStyle = WATER_OUTLINE
   }
 
+  computeAnchors(friendo) {
+    super.computeAnchors(friendo)
+    this.bodyOffset -= 5 // tweak body offset to make sure body and legs connect
+  }
+
   drawLvl5Core(g, x, y, friendo, doBlink) {
     this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
     this.drawCoreSegment(g, x - 44, y - 75, friendo)
@@ -50,7 +55,7 @@ export default class WATER extends Element {
     this.drawHeadSegment(g, x, y, friendo, doBlink)
   }
 
-  computeTethers(friendo) {
+  computeArmTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 60,
@@ -80,18 +85,21 @@ export default class WATER extends Element {
   }
 
   armBrush(friendo) {
-    const armGirth = friendo.stats[STATS.ARM] * 2
-    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
-
     return (_g) => {
-      drawOutlinedOval(_g, 0, 0, armGirth, armLength)
+      if (friendo.stats[STATS.ARM] > 0) {
+        drawOutlinedOval(_g, 0, 0, this.armGirth, this.armLength)
+      }
     }
   }
 
-  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
-    drawOutlinedOval(g, x - footLength, y - footHeight, footLength, footHeight)
-    drawOutlinedOval(g, x - (legGirth / 2), y - legHeight, legGirth, legHeight)
-    drawOval(g, x - footLength + 1, y - footHeight + 1, footLength - 4, footHeight - 3, true)
+  legBrush(friendo) {
+    return (_g) => {
+      if (friendo.stats[STATS.LEG] > 0) {
+        drawOutlinedOval(_g, -this.footLength, -this.footHeight, this.footLength, this.footHeight)
+        drawOutlinedOval(_g, -(this.legGirth / 2), -this.legHeight, this.legGirth, this.legHeight)
+        drawOval(_g, -this.footLength + 1, -this.footHeight + 1, this.footLength - 4, this.footHeight - 3, true)
+      }
+    }
   }
 
   drawCoreSegment(g, x, y) {

@@ -4,6 +4,7 @@ import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/hair'
 import { left, right, drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon } from '../../art/art-util'
+import * as Measurements from '../measurements'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -12,6 +13,18 @@ import { left, right, drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon 
 export default class Element {
   constructor() {
     this.id = ELEMENTS.NULL
+
+
+    // default anchors
+    this.thighGap = 0
+    this.armGirth = 0
+    this.armLength = 0
+    this.legGirth = 0
+    this.legHeight = 0
+    this.footLength = 0
+    this.footHeight = 0
+    this.bodyOffset = this.legHeight
+    this.armOffset = { xOffset: 0, yOffset: 0 }
   }
 
   toJSON() {
@@ -25,6 +38,20 @@ export default class Element {
   setColors(g) {
     g.fillStyle = DEFAULT_SKIN
     g.strokeStyle = DEFAULT_OUTLINE
+  }
+
+  // anchors are computed in the element because they are based off friendo
+  // stats but otherwise vary with element
+  computeAnchors(friendo) {
+    this.thighGap = Measurements.thighGap()
+    this.armGirth = Measurements.armGirth(friendo)
+    this.armLength = Measurements.armLength(friendo)
+    this.legGirth = Measurements.legGirth(friendo)
+    this.legHeight = Measurements.legHeight(friendo)
+    this.bodyOffset = this.legHeight
+    this.footLength = Measurements.footLength(friendo)
+    this.footHeight = Measurements.footHeight(friendo)
+    this.armOffset = this.computeArmTethers(friendo)
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
@@ -78,11 +105,36 @@ export default class Element {
       this.drawLvl1Core(g, x, y, friendo, doBlink)
     }
   }
-  drawLvl5Core() {}
-  drawLvl4Core() {}
-  drawLvl3Core() {}
-  drawLvl2Core() {}
-  drawLvl1Core() {}
+  drawLvl5Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
+    this.drawCoreSegment(g, x - 50, y - 100, friendo)
+    this.drawCoreSegment(g, x + 50, y - 100, friendo)
+    this.drawCoreSegment(g, x, y - 100, friendo)
+    this.drawCoreSegment(g, x, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
+  }
+
+  drawLvl4Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+    this.drawCoreSegment(g, x - 25, y - 50)
+    this.drawCoreSegment(g, x + 25, y - 50)
+    this.drawCoreSegment(g, x, y)
+  }
+
+  drawLvl3Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+    this.drawCoreSegment(g, x, y - 50, friendo)
+    this.drawCoreSegment(g, x, y, friendo)
+  }
+
+  drawLvl2Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
+    this.drawCoreSegment(g, x, y, friendo)
+  }
+
+  drawLvl1Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y, friendo, doBlink)
+  }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
     this.drawBackHair(g, x, y - 50, friendo) // back hair on top of head core
@@ -100,8 +152,8 @@ export default class Element {
 
       // draw element of leg based on element of friendo
       // return the height at which to draw the body
-      left(g, x - (thighGap / 2), y, this.legBrush(friendo), 0)
-      right(g, x + (thighGap / 2), y, this.legBrush(friendo), 0)
+      left(g, x - thighGap, y, this.legBrush(friendo), 0)
+      right(g, x + thighGap, y, this.legBrush(friendo), 0)
 
       drawHookMarker(g, x, y)
     }
@@ -129,50 +181,38 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
-  drawFrontHair(g, x, y, friendo) {
-    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairFront(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
-
-    drawHookMarker(g, x, y)
-  }
-
   // compute where arms should be tethered
   // delegated to child classes
-  computeTethers(friendo) {
-
+  computeArmTethers(friendo) {
+    return {
+      xOffset: 0,
+      yOffset: 0,
+    }
   }
 
   // default arm is left
   // accepts the friendo and returns a function that takes in the graphics
   // context and returns a function to draw the specific arm
   armBrush(friendo) {
-    const armGirth = friendo.stats[STATS.ARM] * 2
-    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
-
     return (_g) => {
-      drawOutlinedRect(_g, 0, 0, armGirth, armLength)
+      if (friendo.stats[STATS.ARM] > 0) {
+        drawOutlinedRect(_g, 0, 0, this.armGirth, this.armLength)
+      }
     }
   }
 
   // default leg is left
   // returns the function that properly draws the leg
   legBrush(friendo) {
-    /**
-     * Parameters for drawing the legs
-     * These values are complete nonsense I just fiddled till it looked like it scaled good
-     */
-    const legGirth = friendo.stats[STATS.LEG] * 2 // thiccness of leg
-    const legHeight = ((friendo.stats[STATS.LEG] - 1) * 6) + 10 // length of leg
-    const footLength = Math.floor(legGirth * 1.3) + 3
-    const footHeight = legHeight / 4
-
     return (_g) => {
-      drawOutlinedPolygon(
-        _g,
-        [(legGirth / 2), (legGirth / 2), -(legGirth / 2), -(legGirth / 2), -footLength, -footLength],
-        [0,-legHeight, -legHeight, -footHeight, -footHeight, 0],
-        true,
-      )
+      if (friendo.stats[STATS.LEG] > 0) {
+        drawOutlinedPolygon(
+          _g,
+          [(this.legGirth / 2), (this.legGirth / 2), -(this.legGirth / 2), -(this.legGirth / 2), -this.footLength, -this.footLength],
+          [0, -this.legHeight, -this.legHeight, -this.footHeight, -this.footHeight, 0],
+          true,
+        )
+      }
     }
   }
 
@@ -183,16 +223,18 @@ export default class Element {
   }
 
   drawEye(g, x, y, doBlink) {
-    if (doBlink) g.fillRect(x - 5, y - 1, 10, 2)
+    // save fill color so that we can paint a full eye
+    const fillPre = g.fillStyle
+    const strokePre = g.strokeStyle
+    g.fillStyle = strokePre
+    if (doBlink) {
+      g.fillRect(x - 5, y - 3, 10, 2)
+    }
     else {
-      // save fill color so that we can paint a full eye
-      const fillPre = g.fillStyle
-      const strokePre = g.strokeStyle
-      g.fillStyle = strokePre
       drawOval(g, x - 5, y - 10, 10, 10) // rim
       drawOval(g, x - 3, y - 8, 6, 6, true) // pupil
-      g.fillStyle = fillPre
     }
+    g.fillStyle = fillPre
 
     drawHookMarker(g, x, y)
   }

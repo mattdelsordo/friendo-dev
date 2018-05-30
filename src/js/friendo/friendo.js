@@ -45,6 +45,8 @@ export default class Friendo {
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
+      // remember to recompute anchors
+      this.element.computeAnchors(this)
     }
   }
 
@@ -59,6 +61,7 @@ export default class Friendo {
 
   setElement = (element) => {
     this.element = selectElement(element)
+    this.element.computeAnchors(this)
     console.log(`Element set to ${this.element}`)
   }
 
@@ -66,6 +69,8 @@ export default class Friendo {
   setStat = (stat, value) => {
     console.log(`${this.toJSON()}`)
     this.stats[stat] = value
+    // remember to recompute anchors for drawing
+    this.element.computeAnchors(this)
     console.log(`${stat} set to ${this.stats[stat]}`)
   }
 
