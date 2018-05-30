@@ -159,8 +159,8 @@ $(document)
       })
 
     // handle element togglers
-    $('#element-picker input[element=radio]')
-      .change(function() {
+    $('#type-picker input[type=radio]')
+      .change(function () {
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
@@ -215,10 +215,10 @@ $(document)
       .prop('checked', true)
 
     // draw game to the screen at some interval
-    setInterval(() => {
+    setInterval(function() {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
-      friendo.draw(canvas)
+      friendo.draw(canvas, context)
       context.restore()
     }, TICKRATE)
   })

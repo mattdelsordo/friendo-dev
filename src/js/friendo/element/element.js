@@ -54,7 +54,7 @@ export default class Element {
     drawLine(g, x - 5, y, x + 5, y) // mouth
     drawLine(g, x - 1, y - 11, x - 1, y - 4) // vertical nose
     drawLine(g, x - 2, y - 4, x + 3, y - 4) // horizontal nose
-    this.drawEyes(g, x, y - 14, doBlink)
+    this.drawEyes(g, x, y - 14, friendo, doBlink)
 
     drawHookMarker(g, x, y)
   }
@@ -95,31 +95,15 @@ export default class Element {
 
   drawLegs(g, x, y, friendo) {
     if (friendo.stats[STATS.LEG] > 0) {
-      /**
-       * Parameters for drawing the legs
-       * These values are complete nonsense I just fiddled till it looked like it scaled good
-       */
-      const legGirth = friendo.stats[STATS.LEG] * 2 // thiccness of leg
-      const legHeight = ((friendo.stats[STATS.LEG] - 1) * 6) + 10 // length of leg
-      const footLength = Math.floor(legGirth * 1.3) + 3
-      const footHeight = legHeight / 4
-
       // gap between legs
       const thighGap = 13
 
       // draw element of leg based on element of friendo
       // return the height at which to draw the body
-      left(g, x, y, (_g) => {
-        this.drawLeg(_g, x - thighGap, y, legGirth, legHeight, footLength, footHeight)
-      }, 0)
-      right(g, x, y, (_g) => {
-        this.drawLeg(_g, x + thighGap - 1, y, legGirth, legHeight, footLength, footHeight)
-      }, 0)
+      left(g, x - (thighGap / 2), y, this.legBrush(friendo), 0)
+      right(g, x + (thighGap / 2), y, this.legBrush(friendo), 0)
 
       drawHookMarker(g, x, y)
-
-      // return leg height to calculate core height
-      return legHeight
     }
     // no legs, draw body just on the floor or whatever
     return 0
@@ -154,26 +138,42 @@ export default class Element {
 
   // compute where arms should be tethered
   // delegated to child classes
-  computeArmTethers() {}
+  computeTethers(friendo) {
+
+  }
 
   // default arm is left
+  // accepts the friendo and returns a function that takes in the graphics
+  // context and returns a function to draw the specific arm
   armBrush(friendo) {
     const armGirth = friendo.stats[STATS.ARM] * 2
     const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
 
     return (_g) => {
-      drawOutlinedRect(_g, armGirth, armLength)
+      drawOutlinedRect(_g, 0, 0, armGirth, armLength)
     }
   }
 
   // default leg is left
-  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
-    drawOutlinedPolygon(
-      g,
-      [x + (legGirth / 2), x + (legGirth / 2), x - (legGirth / 2), x - (legGirth / 2), x - footLength, x - footLength],
-      [y, y - legHeight, y - legHeight, y - footHeight, y - footHeight, y],
-      true,
-    )
+  // returns the function that properly draws the leg
+  legBrush(friendo) {
+    /**
+     * Parameters for drawing the legs
+     * These values are complete nonsense I just fiddled till it looked like it scaled good
+     */
+    const legGirth = friendo.stats[STATS.LEG] * 2 // thiccness of leg
+    const legHeight = ((friendo.stats[STATS.LEG] - 1) * 6) + 10 // length of leg
+    const footLength = Math.floor(legGirth * 1.3) + 3
+    const footHeight = legHeight / 4
+
+    return (_g) => {
+      drawOutlinedPolygon(
+        _g,
+        [(legGirth / 2), (legGirth / 2), -(legGirth / 2), -(legGirth / 2), -footLength, -footLength],
+        [0,-legHeight, -legHeight, -footHeight, -footHeight, 0],
+        true,
+      )
+    }
   }
 
   drawCoreSegment(g, x, y) {

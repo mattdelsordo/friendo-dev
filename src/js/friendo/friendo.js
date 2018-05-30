@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * Friendo class
  * Stores friendo stats, renders friendo at some desired coordinates
@@ -68,10 +70,9 @@ export default class Friendo {
   }
 
   // draws the friendo to the context specified by g at specified coordinate
-  draw = (canvas, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) => {
-    const g = canvas.getContext('2d')
-    paintDogs(g, this.stats[STATS.DOG], canvas.width, canvas.height)
-    this.state.draw(g, x, y, this)
+  draw = (canvas, context, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) => {
+    paintDogs(context, this.stats[STATS.DOG], canvas.width, canvas.height)
+    this.state.draw(context, x, y, this)
   }
 
   handleAction = (action) => {

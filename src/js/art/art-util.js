@@ -24,7 +24,10 @@ export const drawOutlinedPolygon = (g, xs, ys) => {
 
 // draws an oval based on the upper left corner of the enclosing rectangle
 export const drawOval = (g, x, y, width, height, fill) => {
-  if (width < 0 || height < 0) return // catch error from trying to draw too small of an ellipse
+  if (width < 0 || height < 0) {
+    // catch error from trying to draw too small of an ellipse
+    return
+  }
   g.beginPath()
   g.ellipse(x + (width / 2), y + (height / 2), width / 2, height / 2, 0, 0, Math.PI * 2)
   g.closePath()

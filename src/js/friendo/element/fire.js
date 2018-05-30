@@ -46,7 +46,7 @@ export default class Fire extends Element {
     drawLine(g, x - 5, y + 6, x + 5, y + 6) // mouth
     drawLine(g, x - 1, y - 5, x - 1, y + 2) // vertical nose
     drawLine(g, x - 2, y + 2, x + 3, y + 2) // horizontal nose
-    this.drawEyes(g, x, y - 8, doBlink)
+    this.drawEyes(g, x, y - 8, friendo, doBlink)
 
     drawHookMarker(g, x, y)
   }
@@ -108,15 +108,15 @@ export default class Fire extends Element {
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
-    this.drawBackHair(g, x, y - 42) // back hair on top of head core
-    this.drawCoreSegment(g, x, y) // head core
-    this.drawFace(g, x, y - 12, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y - 42) // front hair on top of head core
+    this.drawBackHair(g, x, y - 42, friendo) // back hair on top of head core
+    this.drawCoreSegment(g, x, y, friendo) // head core
+    this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
+    this.drawFrontHair(g, x, y - 42, friendo) // front hair on top of head core
 
     drawHookMarker(g, x, y)
   }
 
-  computeArmTethers(friendo) {
+  computeTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 42,
@@ -145,15 +145,20 @@ export default class Fire extends Element {
     }
   }
 
-  armBrush(g, x, y, w, h) {
-    drawOutlinedPolygon(g,
-      [x, x - (w / 2), x],
-      [y, y + (h / 2), y + h],
-      true,
-    )
+  armBrush(friendo) {
+    const armGirth = friendo.stats[STATS.ARM] * 2
+    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
+
+    return (_g) => {
+      drawOutlinedPolygon(_g,
+        [0, -(armGirth / 2), 0],
+        [0, (armLength / 2), armLength],
+        true,
+      )
+    }
   }
 
-  drawLeg(g, x, y, legGirth, legHeight, footLength, footHeight) {
+  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
     drawOutlinedPolygon(g,
       [x, x,              x-legGirth,         x,  x-(footLength/2),    x-footLength],
       [y, y-legHeight,    y-(legHeight/2),    y,  y-footHeight,       y],

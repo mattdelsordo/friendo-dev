@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --progress",
-    "build": "rm -rf docs && webpack -p --progress && cp -a src/.nojekyll src/index.html src/res/. docs"
+    "build": "diff src/index.html docs/index.html && rm -rf docs && webpack -p --progress && cp -a src/.nojekyll src/index.html src/res/. docs"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
