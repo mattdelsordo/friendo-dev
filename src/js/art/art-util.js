@@ -52,17 +52,23 @@ export const drawLine = (g, x1, y1, x2, y2) => {
 export const drawSpeech = (g, x, y, text) => {
   g.font = SPEECH_STYLE
 
-  // draw text backdrop
-  // g.save()
-  // // g.globalAlpha = 0.5
-  // g.fillStyle = g.strokeStyle
-  // const boxW = g.measureText(text).width
-  // const boxH = SPEECH_SIZE
-  // // console.log(`${boxW}, ${boxH}`)
-  // g.fillRect(x, y-boxH+3, boxW, boxH+3)
-  // g.restore()
+  // multi line support
+  const lineLength = 22
+  const words = text.split(' ')
+  for (let i = 0, wordCount = 0; i < text.length; i += 1) {
+    let line = ''
+    while (line.length < lineLength && wordCount < words.length) {
+      line += `${words[wordCount]} `
+      wordCount += 1
+    }
 
-  g.fillText(text, x, y)
+    g.fillText(
+      line,
+      x,
+      y + (SPEECH_SIZE * i),
+    )
+  }
+
   // g.strokeText(text, x, y)
 }
 

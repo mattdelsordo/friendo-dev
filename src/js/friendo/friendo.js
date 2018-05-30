@@ -33,17 +33,16 @@ export default class Friendo {
 
     // if JSON is passed in, load
     if (json) {
-      console.log(`Loading Friendo from ${JSON.parse(json)}`)
+      console.log(`Loading Friendo from ${json}`)
 
       let fromJSON = JSON.parse(json)
-      fromJSON = JSON.parse(fromJSON) // good god I hate this
       // console.log(typeof fromJSON)
       // console.log(`Stats: ${fromJSON.stats}`)
       // console.log(`Name: ${fromJSON.name}`)
       // console.log(`Owner: ${fromJSON.owner}`)
       // console.log(`Element: ${fromJSON.element}`)
       this.stats = fromJSON.stats
-      this.state = loadState(JSON.parse(fromJSON.state))
+      this.state = loadState(fromJSON.state)
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
@@ -53,14 +52,15 @@ export default class Friendo {
   }
 
   // converts ya boi to a JSON string
-  toJSON = () =>
-    JSON.stringify({
+  toJSON() {
+    return {
       name: this.name,
       owner: this.owner,
       element: this.element,
       stats: this.stats,
       state: this.state,
-    })
+    }
+  }
 
   setElement = (element) => {
     this.element = selectElement(element)

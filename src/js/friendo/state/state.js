@@ -29,14 +29,14 @@ export default class State {
   }
 
   toJSON() {
-    return JSON.stringify({
+    return {
       id: this.id,
       blinkRate: this.blinkRate,
       speakRate: this.speakRate,
       blink: this.blink,
       speak: this.speak,
       words: this.words,
-    })
+    }
   }
 
   draw(g, x, y, friendo) {
