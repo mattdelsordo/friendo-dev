@@ -8,6 +8,7 @@
 import { STATS } from './constants'
 import paintDogs from '../art/dog'
 import selectElement from './element/select-element'
+import loadState from './state/load-state'
 import {
   DEFAULT_NAME,
   DEFAULT_OWNER,
@@ -42,6 +43,7 @@ export default class Friendo {
       // console.log(`Owner: ${fromJSON.owner}`)
       // console.log(`Element: ${fromJSON.element}`)
       this.stats = fromJSON.stats
+      this.state = loadState(JSON.parse(fromJSON.state))
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
@@ -57,6 +59,7 @@ export default class Friendo {
       owner: this.owner,
       element: this.element,
       stats: this.stats,
+      state: this.state,
     })
 
   setElement = (element) => {

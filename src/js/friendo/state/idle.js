@@ -1,7 +1,14 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
 
+export const ID = 'state_idle'
+
 export default class Idle extends State {
+  constructor(savedState) {
+    super(savedState)
+    this.id = ID
+  }
+
   draw(g, x, y, friendo) {
     super.draw(g, x, y, friendo)
 

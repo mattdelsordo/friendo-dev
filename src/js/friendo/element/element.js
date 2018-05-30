@@ -3,7 +3,7 @@ import { STATS } from '../constants'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/hair'
-import { left, right, drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon } from '../../art/art-util'
+import { left, right, drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
 
 /**
@@ -40,6 +40,15 @@ export default class Element {
     g.strokeStyle = DEFAULT_OUTLINE
   }
 
+  // compute where arms should be tethered
+  // delegated to child classes
+  computeArmTethers(friendo) {
+    return {
+      xOffset: 0,
+      yOffset: 0,
+    }
+  }
+
   // anchors are computed in the element because they are based off friendo
   // stats but otherwise vary with element
   computeAnchors(friendo) {
@@ -52,6 +61,30 @@ export default class Element {
     this.footLength = Measurements.footLength(friendo)
     this.footHeight = Measurements.footHeight(friendo)
     this.armOffset = this.computeArmTethers(friendo)
+  }
+
+  drawCoreSegment(g, x, y) {
+    drawOutlinedRect(g, x - 25, y - 50, 50, 50)
+
+    drawHookMarker(g, x, y)
+  }
+
+
+  drawEye(g, x, y, doBlink) {
+    // save fill color so that we can paint a full eye
+    const fillPre = g.fillStyle
+    const strokePre = g.strokeStyle
+    g.fillStyle = strokePre
+    if (doBlink) {
+      g.fillRect(x - 5, y - 3, 10, 2)
+    }
+    else {
+      drawOval(g, x - 5, y - 10, 10, 10) // rim
+      drawOval(g, x - 3, y - 8, 6, 6, true) // pupil
+    }
+    g.fillStyle = fillPre
+
+    drawHookMarker(g, x, y)
   }
 
   drawEyes(g, x, y, friendo) {
@@ -86,25 +119,22 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
-  // core drawing delegated to child elements
-  drawCore(g, x, y, friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
-      // 5-6 segments
-      this.drawLvl5Core(g, x, y, friendo)
-    } else if (friendo.stats[STATS.CORE] > 6) {
-      // 4 segments
-      this.drawLvl4Core(g, x, y, friendo)
-    } else if (friendo.stats[STATS.CORE] > 4) {
-      // 3 segments
-      this.drawLvl3Core(g, x, y, friendo)
-    } else if (friendo.stats[STATS.CORE] > 2) {
-      // 2 segments
-      this.drawLvl2Core(g, x, y, friendo)
-    } else {
-      // 1 segment
-      this.drawLvl1Core(g, x, y, friendo)
-    }
+  drawHeadSegment(g, x, y, friendo) {
+    this.drawBackHair(g, x, y - 50, friendo) // back hair on top of head core
+    this.drawCoreSegment(g, x, y, friendo) // head core
+    this.drawFace(g, x, y - 12, friendo) // face relative to head core
+    this.drawFrontHair(g, x, y - 50, friendo) // front hair on top of head core
+
+    let speechX = x + 30
+    // move speech more to right if hair too big
+    if (friendo.stats[STATS.HAIR] == 10) speechX += 14
+    else if (friendo.stats[STATS.HAIR] == 9) speechX += 10
+    else if (friendo.stats[STATS.HAIR] == 8) speechX += 6
+    this.speak(g, speechX, y - 36, friendo) // handle speech
+
+    drawHookMarker(g, x, y)
   }
+
   drawLvl5Core(g, x, y, friendo) {
     this.drawHeadSegment(g, x, y - 150, friendo)
     this.drawCoreSegment(g, x - 50, y - 100, friendo)
@@ -136,57 +166,23 @@ export default class Element {
     this.drawHeadSegment(g, x, y, friendo)
   }
 
-  drawHeadSegment(g, x, y, friendo) {
-    this.drawBackHair(g, x, y - 50, friendo) // back hair on top of head core
-    this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo) // face relative to head core
-    this.drawFrontHair(g, x, y - 50, friendo) // front hair on top of head core
-
-    drawHookMarker(g, x, y)
-  }
-
-  drawLegs(g, x, y, friendo) {
-    if (friendo.stats[STATS.LEG] > 0) {
-      // gap between legs
-      const thighGap = 13
-
-      // draw element of leg based on element of friendo
-      // return the height at which to draw the body
-      left(g, x - thighGap, y, this.legBrush(friendo), 0)
-      right(g, x + thighGap, y, this.legBrush(friendo), 0)
-
-      drawHookMarker(g, x, y)
-    }
-    // no legs, draw body just on the floor or whatever
-    return 0
-  }
-
-  // hair that gets painted behind the head segment
-  drawBackHair(g, x, y, friendo) {
-    g.save()
-    // hair needs to be at the back of EVERYTHING
-    // this draws it to the 'underside' of the canvas
-    g.globalCompositeOperation = 'destination-over'
-    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairBack(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 3) drawStevenHair(g, x, y, friendo.stats[STATS.HAIR])
-    g.restore()
-    drawHookMarker(g, x, y)
-  }
-
-  // hair that gets painted in front of the head segment
-  drawFrontHair(g, x, y, friendo) {
-    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairFront(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
-
-    drawHookMarker(g, x, y)
-  }
-
-  // compute where arms should be tethered
-  // delegated to child classes
-  computeArmTethers(friendo) {
-    return {
-      xOffset: 0,
-      yOffset: 0,
+  // core drawing delegated to child elements
+  drawCore(g, x, y, friendo) {
+    if (friendo.stats[STATS.CORE] > 8) {
+      // 5-6 segments
+      this.drawLvl5Core(g, x, y, friendo)
+    } else if (friendo.stats[STATS.CORE] > 6) {
+      // 4 segments
+      this.drawLvl4Core(g, x, y, friendo)
+    } else if (friendo.stats[STATS.CORE] > 4) {
+      // 3 segments
+      this.drawLvl3Core(g, x, y, friendo)
+    } else if (friendo.stats[STATS.CORE] > 2) {
+      // 2 segments
+      this.drawLvl2Core(g, x, y, friendo)
+    } else {
+      // 1 segment
+      this.drawLvl1Core(g, x, y, friendo)
     }
   }
 
@@ -216,26 +212,30 @@ export default class Element {
     }
   }
 
-  drawCoreSegment(g, x, y) {
-    drawOutlinedRect(g, x - 25, y - 50, 50, 50)
+  // hair that gets painted behind the head segment
+  drawBackHair(g, x, y, friendo) {
+    g.save()
+    // hair needs to be at the back of EVERYTHING
+    // this draws it to the 'underside' of the canvas
+    g.globalCompositeOperation = 'destination-over'
+    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairBack(g, x, y, friendo.stats[STATS.HAIR])
+    else if (friendo.stats[STATS.HAIR] > 3) drawStevenHair(g, x, y, friendo.stats[STATS.HAIR])
+    g.restore()
+    drawHookMarker(g, x, y)
+  }
+
+  // hair that gets painted in front of the head segment
+  drawFrontHair(g, x, y, friendo) {
+    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairFront(g, x, y, friendo.stats[STATS.HAIR])
+    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
 
     drawHookMarker(g, x, y)
   }
 
-  drawEye(g, x, y, doBlink) {
-    // save fill color so that we can paint a full eye
-    const fillPre = g.fillStyle
-    const strokePre = g.strokeStyle
-    g.fillStyle = strokePre
-    if (doBlink) {
-      g.fillRect(x - 5, y - 3, 10, 2)
+  // positions speech and handles speaking when in a speaking state
+  speak(g, x, y, friendo) {
+    if (friendo.state.speak) {
+      drawSpeech(g, x, y, friendo.state.words)
     }
-    else {
-      drawOval(g, x - 5, y - 10, 10, 10) // rim
-      drawOval(g, x - 3, y - 8, 6, 6, true) // pupil
-    }
-    g.fillStyle = fillPre
-
-    drawHookMarker(g, x, y)
   }
 }
