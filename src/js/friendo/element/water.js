@@ -25,34 +25,34 @@ export default class WATER extends Element {
     this.bodyOffset -= 5 // tweak body offset to make sure body and legs connect
   }
 
-  drawLvl5Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+  drawLvl5Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 100, friendo)
     this.drawCoreSegment(g, x - 44, y - 75, friendo)
     this.drawCoreSegment(g, x + 44, y - 75, friendo)
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl4Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 88, friendo, doBlink)
+  drawLvl4Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 88, friendo)
     this.drawCoreSegment(g, x - 25, y - 44, friendo)
     this.drawCoreSegment(g, x + 25, y - 44, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl3Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x - 25, y - 44, friendo, doBlink)
+  drawLvl3Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x - 25, y - 44, friendo)
     this.drawCoreSegment(g, x + 25, y - 44, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl2Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
+  drawLvl2Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl1Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y, friendo, doBlink)
+  drawLvl1Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y, friendo)
   }
 
   computeArmTethers(friendo) {

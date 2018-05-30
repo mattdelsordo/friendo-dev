@@ -20,8 +20,8 @@ export default class Air extends Element{
     g.strokeStyle = AIR_OUTLINE
   }
 
-  drawLvl5Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 120, friendo, doBlink)
+  drawLvl5Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 120, friendo)
     this.drawCoreSegment(g, x - 30, y - 90, friendo)
     this.drawCoreSegment(g, x + 30, y - 90, friendo)
     this.drawCoreSegment(g, x, y - 60, friendo)
@@ -30,26 +30,26 @@ export default class Air extends Element{
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl4Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 60, friendo, doBlink)
+  drawLvl4Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 60, friendo)
     this.drawCoreSegment(g, x - 30, y - 30, friendo)
     this.drawCoreSegment(g, x + 30, y - 30, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl3Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 26, friendo, doBlink)
+  drawLvl3Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 26, friendo)
     this.drawCoreSegment(g, x + 30, y + 4, friendo)
     this.drawCoreSegment(g, x - 30, y + 4, friendo)
   }
 
-  drawLvl2Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x - 30, y - 30, friendo, doBlink)
+  drawLvl2Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x - 30, y - 30, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl1Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y, doBlink, friendo)
+  drawLvl1Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y, friendo)
   }
 
   computeArmTethers(friendo) {
