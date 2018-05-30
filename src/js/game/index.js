@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Tether from 'tether'
 
 import { save, load } from './util'
-import { STATS } from '../friendo/constants'
+import { STATS, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
 import { TICKRATE } from './config'
@@ -213,6 +213,33 @@ $(document)
       .val(friendo.name)
     $(`#type-picker input[type=radio][value='${friendo.element.toString()}']`)
       .prop('checked', true)
+
+    // configure speaking and blinking rates
+    $('#blink-rate')
+      .val(BLINK_CHANCE)
+      .on({
+        input: function () {
+          $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+        },
+        change: function () {
+          $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+          friendo.state.blinkRate = this.value
+        },
+      })
+    $('#blink-rate-indicator').html(`${friendo.state.blinkRate}/${TOTAL_EVENT_CHANCE}`)
+    $('#speak-rate')
+      .val(friendo.state.speakRate)
+      .on({
+        input: function () {
+          $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+        },
+        change: function () {
+          $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+          friendo.state.speakRate = this.value
+        },
+      })
+    $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
+
 
     // draw game to the screen at some interval
     setInterval(function() {

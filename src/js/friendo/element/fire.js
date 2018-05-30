@@ -20,39 +20,39 @@ export default class Fire extends Element {
     g.strokeStyle = FIRE_OUTLINE
   }
 
-  drawEyes(g, x, y, friendo, doBlink) {
+  drawEyes(g, x, y, friendo) {
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      this.drawEye(g, x, y - 6, doBlink)
-      this.drawEye(g, x - 6, y + 4, doBlink)
-      this.drawEye(g, x + 6, y + 4, doBlink)
+      this.drawEye(g, x, y - 6, friendo.state.blink)
+      this.drawEye(g, x - 6, y + 4, friendo.state.blink)
+      this.drawEye(g, x + 6, y + 4, friendo.state.blink)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 8, y, doBlink)
-      this.drawEye(g, x + 8, y, doBlink)
+      this.drawEye(g, x - 8, y, friendo.state.blink)
+      this.drawEye(g, x + 8, y, friendo.state.blink)
     } else {
       // default = 1 eye
-      this.drawEye(g, x, y, doBlink)
+      this.drawEye(g, x, y, friendo.state.blink)
     }
 
     drawHookMarker(g, x, y)
   }
 
-  drawFace(g, x, y, friendo, doBlink) {
+  drawFace(g, x, y, friendo) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
     drawLine(g, x - 5, y + 6, x + 5, y + 6) // mouth
     drawLine(g, x - 1, y - 5, x - 1, y + 2) // vertical nose
     drawLine(g, x - 2, y + 2, x + 3, y + 2) // horizontal nose
-    this.drawEyes(g, x, y - 8, friendo, doBlink)
+    this.drawEyes(g, x, y - 8, friendo)
 
     drawHookMarker(g, x, y)
   }
 
-  drawLvl5Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 86, friendo, doBlink)
+  drawLvl5Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 86, friendo)
 
     g.save()
     g.translate(x, y - 86)
@@ -65,8 +65,8 @@ export default class Fire extends Element {
     this.drawCoreSegment(g, x + 25, y, friendo)
   }
 
-  drawLvl4Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 66, friendo, doBlink)
+  drawLvl4Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 66, friendo)
 
     g.save()
     g.translate(x - 25, y - 66)
@@ -87,14 +87,14 @@ export default class Fire extends Element {
     g.restore()
   }
 
-  drawLvl3Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 43, friendo, doBlink)
+  drawLvl3Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 43, friendo)
     this.drawCoreSegment(g, x - 25, y)
     this.drawCoreSegment(g, x + 25, y)
   }
 
-  drawLvl2Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 23, friendo, doBlink)
+  drawLvl2Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y - 23, friendo)
 
     g.save()
     g.translate(x, y - 23)
@@ -103,14 +103,14 @@ export default class Fire extends Element {
     g.restore()
   }
 
-  drawLvl1Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y, friendo, doBlink)
+  drawLvl1Core(g, x, y, friendo) {
+    this.drawHeadSegment(g, x, y, friendo)
   }
 
-  drawHeadSegment(g, x, y, friendo, doBlink) {
+  drawHeadSegment(g, x, y, friendo) {
     this.drawBackHair(g, x, y - 42, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
+    this.drawFace(g, x, y - 12, friendo) // face relative to head core
     this.drawFrontHair(g, x, y - 42, friendo) // front hair on top of head core
 
     drawHookMarker(g, x, y)

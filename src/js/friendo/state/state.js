@@ -1,4 +1,5 @@
-import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_CHANCE } from '../constants'
+import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../constants'
+import phrasebook from '../phrases/idle-phrases'
 
 /**
  *  defines the animation to be done in a given state
@@ -6,8 +7,13 @@ import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_CHANCE } from
 
 export default class State {
   constructor() {
+    this.blinkRate = BLINK_CHANCE
+    this.speakRate = SPEAK_CHANCE
     this.blink = 0
     this.speak = 0
+
+    this.phrasebook = phrasebook
+    this.words = 'Hi'
   }
 
   draw(g, x, y, friendo) {
@@ -17,7 +23,7 @@ export default class State {
     // handle blink
     if (this.blink > 0) {
       this.blink -= 1
-    } else if (Math.random() * TOTAL_CHANCE < BLINK_CHANCE) {
+    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.blinkRate) {
       // not blinking, chance to blink
       this.blink = BLINK_TIME
     }
@@ -25,7 +31,7 @@ export default class State {
     // handle speech
     if (this.speak > 0) {
       this.speak -= 1
-    } else if (Math.random() * TOTAL_CHANCE < SPEAK_CHANCE) {
+    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.speakRate) {
       this.speak = SPEAK_TIME
     }
 
@@ -34,5 +40,10 @@ export default class State {
 
   handleAction(action) {
     console.log(`Handling ${action}`)
+  }
+
+  pickPhrase(friendo) {
+    const list = this.phrasebook(friendo)
+    return list[Math.random() * list.length]
   }
 }
