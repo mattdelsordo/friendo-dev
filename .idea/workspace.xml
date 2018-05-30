@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372263f2-1afd-4cec-92e7-dd7c970b079b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.directory" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.directory" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/art/art-util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/art/art-util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/friendo/element/fire.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/element/fire.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,13 +17,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="art-util.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="art-util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/art/art-util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
+            <state relative-caret-position="264">
+              <caret line="61" column="57" selection-start-line="61" selection-start-column="57" selection-end-line="61" selection-end-column="57" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fire.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/js/friendo/element/fire.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -119,7 +129,6 @@
         <option value="$PROJECT_DIR$/src/js/art/config.js" />
         <option value="$PROJECT_DIR$/src/js/art/art-config.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/element/element.js" />
-        <option value="$PROJECT_DIR$/src/js/friendo/element/fire.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/element/select-element.js" />
         <option value="$PROJECT_DIR$/src/js/game/index.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/state/load-state.js" />
@@ -132,6 +141,7 @@
         <option value="$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js" />
         <option value="$PROJECT_DIR$/docs/index.html" />
         <option value="$PROJECT_DIR$/src/js/art/art-util.js" />
+        <option value="$PROJECT_DIR$/src/js/friendo/element/fire.js" />
       </list>
     </option>
   </component>
@@ -192,6 +202,21 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="friendo-dev" type="b2602c69:ProjectViewProjectNode" />
+              <item name="friendo-dev" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="friendo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="friendo-dev" type="b2602c69:ProjectViewProjectNode" />
+              <item name="friendo-dev" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+              <item name="friendo" type="462c0819:PsiDirectoryNode" />
+              <item name="element" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -250,12 +275,12 @@
       <workItem from="1527538723232" duration="1580000" />
       <workItem from="1527620321301" duration="11897000" />
       <workItem from="1527684992648" duration="16687000" />
-      <workItem from="1527719339219" duration="342000" />
+      <workItem from="1527719339219" duration="585000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50540000" />
+    <option name="totallyTimeSpent" value="50783000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="960" height="1056" extended-state="0" />
@@ -539,13 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/friendo/element/fire.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/friendo/state/idle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -583,10 +601,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/art/art-util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="66" column="6" selection-start-line="66" selection-start-column="6" selection-end-line="66" selection-end-column="6" />
+        <state relative-caret-position="264">
+          <caret line="61" column="57" selection-start-line="61" selection-start-column="57" selection-end-line="61" selection-end-column="57" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/friendo/element/fire.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
