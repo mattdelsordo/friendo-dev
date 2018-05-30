@@ -65,8 +65,8 @@ export default class Fire extends Element {
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 8, y, friendo.state.blink)
-      this.drawEye(g, x + 8, y, friendo.state.blink)
+      this.drawEye(g, x - 6, y + 4, friendo.state.blink)
+      this.drawEye(g, x + 6, y + 4, friendo.state.blink)
     } else {
       // default = 1 eye
       this.drawEye(g, x, y, friendo.state.blink)

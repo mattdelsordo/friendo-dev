@@ -58,7 +58,8 @@ export const drawSpeech = (g, x, y, text) => {
   // build each line
   for (let i = 0, wordCount = 0; i < text.length; i += 1) {
     let line = ''
-    while (words[wordCount] && line.length + words[wordCount].length < lineLength && wordCount < words.length) {
+    while (words[wordCount]
+    && line.length + words[wordCount].length < lineLength) {
       // console.log(`Word: ${words[wordCount]}`)
       line += `${words[wordCount]} `
       wordCount += 1
