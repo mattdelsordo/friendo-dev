@@ -14,8 +14,8 @@ export const SPEAK_TIME = 20
 
 // chance to blink or speak
 export const TOTAL_EVENT_CHANCE = 100
-export const BLINK_CHANCE = 10
-export const SPEAK_CHANCE = 8
+export const BLINK_CHANCE = 5
+export const SPEAK_CHANCE = 5
 
 // 'enum' of stat indices
 export const STATS = Object.freeze({
