@@ -21,6 +21,6 @@ export default (type) => {
     case ELEMENTS.FIRE:
       return new Fire()
     default:
-      return new Element()
+      throw 'Attempted to load invalid element.'
   }
 }

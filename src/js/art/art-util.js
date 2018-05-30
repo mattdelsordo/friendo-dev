@@ -1,6 +1,7 @@
-// draws a rectangle with an outline on top of it
 import { drawHookMarker } from './hook-marker'
+import { SPEECH_STYLE, SPEECH_SIZE } from './art-config'
 
+// draws a rectangle with an outline on top of it
 export const drawOutlinedRect = (g, x, y, w, h) => {
   g.fillRect(x, y, w, h)
   g.strokeRect(x, y, w, h)
@@ -45,6 +46,24 @@ export const drawLine = (g, x1, y1, x2, y2) => {
   g.moveTo(x1, y1)
   g.lineTo(x2, y2)
   g.stroke()
+}
+
+// draws text for a friendo's message
+export const drawSpeech = (g, x, y, text) => {
+  g.font = SPEECH_STYLE
+
+  // draw text backdrop
+  // g.save()
+  // // g.globalAlpha = 0.5
+  // g.fillStyle = g.strokeStyle
+  // const boxW = g.measureText(text).width
+  // const boxH = SPEECH_SIZE
+  // // console.log(`${boxW}, ${boxH}`)
+  // g.fillRect(x, y-boxH+3, boxW, boxH+3)
+  // g.restore()
+
+  g.fillText(text, x, y)
+  // g.strokeText(text, x, y)
 }
 
 // positions appendages and whatnot

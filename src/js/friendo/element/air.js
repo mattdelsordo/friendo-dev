@@ -20,6 +20,41 @@ export default class Air extends Element{
     g.strokeStyle = AIR_OUTLINE
   }
 
+  computeArmTethers(friendo) {
+    if (friendo.stats[STATS.CORE] > 8) {
+      return {
+        xOffset: 56,
+        yOffset: -100,
+      }
+    } else if (friendo.stats[STATS.CORE] > 6) {
+      return {
+        xOffset: 54,
+        yOffset: -44,
+      }
+    } else if (friendo.stats[STATS.CORE] > 4) {
+      return {
+        xOffset: 50,
+        yOffset: -10,
+      }
+    } else if (friendo.stats[STATS.CORE] > 2) {
+      return {
+        xOffset: 24,
+        yOffset: -18,
+      }
+    } else {
+      return {
+        xOffset: 24,
+        yOffset: -18,
+      }
+    }
+  }
+
+  drawCoreSegment(g, x, y) {
+    drawOutlinedPolygon(g, [x, x - 25, x, x + 25], [y - 50, y - 25, y, y - 25])
+
+    drawHookMarker(g, x, y)
+  }
+
   drawLvl5Core(g, x, y, friendo) {
     this.drawHeadSegment(g, x, y - 120, friendo)
     this.drawCoreSegment(g, x - 30, y - 90, friendo)
@@ -52,35 +87,6 @@ export default class Air extends Element{
     this.drawHeadSegment(g, x, y, friendo)
   }
 
-  computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
-      return {
-        xOffset: 56,
-        yOffset: -100,
-      }
-    } else if (friendo.stats[STATS.CORE] > 6) {
-      return {
-        xOffset: 54,
-        yOffset: -44,
-      }
-    } else if (friendo.stats[STATS.CORE] > 4) {
-      return {
-        xOffset: 50,
-        yOffset: -10,
-      }
-    } else if (friendo.stats[STATS.CORE] > 2) {
-      return {
-        xOffset: 24,
-        yOffset: -18,
-      }
-    } else {
-      return {
-        xOffset: 24,
-        yOffset: -18,
-      }
-    }
-  }
-
   armBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.ARM] > 0) {
@@ -103,11 +109,5 @@ export default class Air extends Element{
         )
       }
     }
-  }
-
-  drawCoreSegment(g, x, y) {
-    drawOutlinedPolygon(g, [x, x - 25, x, x + 25], [y - 50, y - 25, y, y - 25])
-
-    drawHookMarker(g, x, y)
   }
 }

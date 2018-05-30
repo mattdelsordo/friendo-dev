@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import Tether from 'tether'
 
-import { save, load } from './util'
+import { save, load } from './game-util'
 import { STATS, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
-import { TICKRATE } from './config'
+import { TICKRATE } from './game-config'
 
 /**
  * Contains code to interface the user display with the friendo code.
@@ -224,6 +224,7 @@ $(document)
         change: function () {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
           friendo.state.blinkRate = this.value
+          save(JSON.stringify(friendo))
         },
       })
     $('#blink-rate-indicator').html(`${friendo.state.blinkRate}/${TOTAL_EVENT_CHANCE}`)
@@ -236,6 +237,7 @@ $(document)
         change: function () {
           $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
           friendo.state.speakRate = this.value
+          save(JSON.stringify(friendo))
         },
       })
     $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)

@@ -20,6 +20,41 @@ export default class Fire extends Element {
     g.strokeStyle = FIRE_OUTLINE
   }
 
+  computeArmTethers(friendo) {
+    if (friendo.stats[STATS.CORE] > 8) {
+      return {
+        xOffset: 42,
+        yOffset: -70,
+      }
+    } else if (friendo.stats[STATS.CORE] > 6) {
+      return {
+        xOffset: 42,
+        yOffset: -50,
+      }
+    } else if (friendo.stats[STATS.CORE] > 4) {
+      return {
+        xOffset: 22,
+        yOffset: -50,
+      }
+    } else if (friendo.stats[STATS.CORE] > 2) {
+      return {
+        xOffset: 22,
+        yOffset: -20,
+      }
+    } else {
+      return {
+        xOffset: 14,
+        yOffset: -20,
+      }
+    }
+  }
+
+  drawCoreSegment(g, x, y) {
+    drawOutlinedPolygon(g, [x, x - 25, x + 25], [y - 43, y, y])
+
+    drawHookMarker(g, x, y)
+  }
+
   drawEyes(g, x, y, friendo) {
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
@@ -47,6 +82,22 @@ export default class Fire extends Element {
     drawLine(g, x - 1, y - 5, x - 1, y + 2) // vertical nose
     drawLine(g, x - 2, y + 2, x + 3, y + 2) // horizontal nose
     this.drawEyes(g, x, y - 8, friendo)
+
+    drawHookMarker(g, x, y)
+  }
+
+  drawHeadSegment(g, x, y, friendo) {
+    this.drawBackHair(g, x, y - 42, friendo) // back hair on top of head core
+    this.drawCoreSegment(g, x, y, friendo) // head core
+    this.drawFace(g, x, y - 12, friendo) // face relative to head core
+    this.drawFrontHair(g, x, y - 42, friendo) // front hair on top of head core
+
+    let speechX = x + 30
+    // move speech more to right if hair too big
+    if (friendo.stats[STATS.HAIR] == 10) speechX += 14
+    else if (friendo.stats[STATS.HAIR] == 9) speechX += 10
+    else if (friendo.stats[STATS.HAIR] == 8) speechX += 6
+    this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
   }
@@ -107,44 +158,6 @@ export default class Fire extends Element {
     this.drawHeadSegment(g, x, y, friendo)
   }
 
-  drawHeadSegment(g, x, y, friendo) {
-    this.drawBackHair(g, x, y - 42, friendo) // back hair on top of head core
-    this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo) // face relative to head core
-    this.drawFrontHair(g, x, y - 42, friendo) // front hair on top of head core
-
-    drawHookMarker(g, x, y)
-  }
-
-  computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
-      return {
-        xOffset: 42,
-        yOffset: -70,
-      }
-    } else if (friendo.stats[STATS.CORE] > 6) {
-      return {
-        xOffset: 42,
-        yOffset: -50,
-      }
-    } else if (friendo.stats[STATS.CORE] > 4) {
-      return {
-        xOffset: 22,
-        yOffset: -50,
-      }
-    } else if (friendo.stats[STATS.CORE] > 2) {
-      return {
-        xOffset: 22,
-        yOffset: -20,
-      }
-    } else {
-      return {
-        xOffset: 14,
-        yOffset: -20,
-      }
-    }
-  }
-
   armBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.ARM] > 0) {
@@ -161,17 +174,11 @@ export default class Fire extends Element {
     return (_g) => {
       if (friendo.stats[STATS.LEG] > 0) {
         drawOutlinedPolygon(_g,
-          [0, 0, 0-this.legGirth, 0, -(this.footLength/2), -this.footLength],
-          [0, 0-this.legHeight, -(this.legHeight/2), 0, -this.footHeight, 0],
+          [0, 0, 0 - this.legGirth, 0, -(this.footLength / 2), -this.footLength],
+          [0, 0 - this.legHeight, -(this.legHeight / 2), 0, -this.footHeight, 0],
           true,
         )
       }
     }
-  }
-
-  drawCoreSegment(g, x, y) {
-    drawOutlinedPolygon(g, [x, x - 25, x + 25], [y - 43, y, y])
-
-    drawHookMarker(g, x, y)
   }
 }

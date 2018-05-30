@@ -5,8 +5,12 @@ import phrasebook from '../phrases/idle-phrases'
  *  defines the animation to be done in a given state
  */
 
+export const ID = 'state_default'
+
 export default class State {
-  constructor() {
+  constructor(savedState) {
+    this.id = ID
+
     this.blinkRate = BLINK_CHANCE
     this.speakRate = SPEAK_CHANCE
     this.blink = 0
@@ -14,6 +18,25 @@ export default class State {
 
     this.phrasebook = phrasebook
     this.words = 'Hi'
+
+    if (savedState) {
+      this.blinkRate = savedState.blinkRate
+      this.speakRate = savedState.speakRate
+      this.blink = savedState.blink
+      this.speak = savedState.speak
+      this.words = savedState.words
+    }
+  }
+
+  toJSON() {
+    return JSON.stringify({
+      id: this.id,
+      blinkRate: this.blinkRate,
+      speakRate: this.speakRate,
+      blink: this.blink,
+      speak: this.speak,
+      words: this.words,
+    })
   }
 
   draw(g, x, y, friendo) {
@@ -33,6 +56,7 @@ export default class State {
       this.speak -= 1
     } else if (Math.random() * TOTAL_EVENT_CHANCE < this.speakRate) {
       this.speak = SPEAK_TIME
+      this.words = this.pickPhrase(friendo)
     }
 
     friendo.element.setColors(g)
@@ -44,6 +68,8 @@ export default class State {
 
   pickPhrase(friendo) {
     const list = this.phrasebook(friendo)
-    return list[Math.random() * list.length]
+    const selected = Math.floor(Math.random() * list.length)
+    // console.log(`Picked phrase ${selected}`)
+    return list[selected]
   }
 }
