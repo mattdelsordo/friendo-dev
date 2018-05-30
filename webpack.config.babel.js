@@ -24,7 +24,7 @@ export default {
   },
   devServer: {
     port: 8080,
-    contentBase: path.join(__dirname, 'docs'),
+    contentBase: path.join(__dirname, '/'),
     watchContentBase: true,
   },
   // plugins: [
