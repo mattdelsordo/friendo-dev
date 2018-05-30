@@ -49,7 +49,7 @@ export const drawLine = (g, x1, y1, x2, y2) => {
 
 // positions appendages and whatnot
 // angle in rads/pi
-export const left = (g, x, y, brush, angle) => {
+export const left = (g, x, y, brush, angle = 0) => {
   g.save()
   g.translate(x, y)
   g.rotate(Math.PI * angle)
@@ -57,7 +57,7 @@ export const left = (g, x, y, brush, angle) => {
   g.restore()
   drawHookMarker(g, x, y)
 }
-export const right = (g, x, y, brush, angle) => {
+export const right = (g, x, y, brush, angle = 0) => {
   g.save()
   g.translate(x, y)
   g.rotate(Math.PI * (2 - angle))

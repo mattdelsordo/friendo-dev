@@ -1,4 +1,4 @@
-import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE } from '../constants'
+import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_CHANCE } from '../constants'
 
 /**
  *  defines the animation to be done in a given state
@@ -17,7 +17,7 @@ export default class State {
     // handle blink
     if (this.blink > 0) {
       this.blink -= 1
-    } else if (Math.random() * 10 < BLINK_CHANCE) {
+    } else if (Math.random() * TOTAL_CHANCE < BLINK_CHANCE) {
       // not blinking, chance to blink
       this.blink = BLINK_TIME
     }
@@ -25,7 +25,7 @@ export default class State {
     // handle speech
     if (this.speak > 0) {
       this.speak -= 1
-    } else if (Math.random() * 10 < SPEAK_CHANCE) {
+    } else if (Math.random() * TOTAL_CHANCE < SPEAK_CHANCE) {
       this.speak = SPEAK_TIME
     }
 

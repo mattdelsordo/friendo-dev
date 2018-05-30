@@ -52,7 +52,7 @@ export default class Air extends Element{
     this.drawHeadSegment(g, x, y, doBlink, friendo)
   }
 
-  computeTethers(friendo) {
+  computeArmTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 56,
@@ -82,24 +82,27 @@ export default class Air extends Element{
   }
 
   armBrush(friendo) {
-    const armGirth = friendo.stats[STATS.ARM] * 2
-    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
-
     return (_g) => {
-      drawOutlinedPolygon(_g,
-        [0, -(armGirth / 2), 0, (armGirth / 2)],
-        [0, (armLength / 2), armLength, (armLength / 2)],
-        true,
-      )
+      if (friendo.stats[STATS.ARM] > 0) {
+        drawOutlinedPolygon(_g,
+          [0, -(this.armGirth / 2), 0, (this.armGirth / 2)],
+          [0, (this.armLength / 2), this.armLength, (this.armLength / 2)],
+          true,
+        )
+      }
     }
   }
 
-  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
-    drawOutlinedPolygon(g,
-      [x, x+(legGirth/2),  x,           x-(legGirth/2),  x, x-(legGirth/4), x-(legGirth/4)-(footLength/4), x-(legGirth/4)-(footLength/2), x-(legGirth/4)-(footLength/4),x-(legGirth/4)],
-      [y, y-(legHeight/2), y-legHeight, y-(legHeight/2), y, y-footHeight,     y-footHeight, y, y, y-footHeight],
-      true,
-    )
+  legBrush(friendo) {
+    return (_g) => {
+      if (friendo.stats[STATS.LEG] > 0) {
+        drawOutlinedPolygon(_g,
+          [0, (this.legGirth/2), 0, -(this.legGirth/2), 0, -(this.legGirth/4), -(this.legGirth/4)-(this.footLength/4), -(this.legGirth/4)-(this.footLength/2), -(this.legGirth/4)-(this.footLength/4),-(this.legGirth/4)],
+          [0, -(this.legHeight/2), -this.legHeight, -(this.legHeight/2), 0, -this.footHeight, -this.footHeight, 0, 0, 0-this.footHeight],
+          true,
+        )
+      }
+    }
   }
 
   drawCoreSegment(g, x, y) {

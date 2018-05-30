@@ -116,7 +116,7 @@ export default class Fire extends Element {
     drawHookMarker(g, x, y)
   }
 
-  computeTethers(friendo) {
+  computeArmTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 42,
@@ -146,24 +146,27 @@ export default class Fire extends Element {
   }
 
   armBrush(friendo) {
-    const armGirth = friendo.stats[STATS.ARM] * 2
-    const armLength = Math.floor(((friendo.stats[STATS.ARM] - 1) * 6) + 10)
-
     return (_g) => {
-      drawOutlinedPolygon(_g,
-        [0, -(armGirth / 2), 0],
-        [0, (armLength / 2), armLength],
-        true,
-      )
+      if (friendo.stats[STATS.ARM] > 0) {
+        drawOutlinedPolygon(_g,
+          [0, -(this.armGirth / 2), 0],
+          [0, (this.armLength / 2), this.armLength],
+          true,
+        )
+      }
     }
   }
 
-  legBrush(g, x, y, legGirth, legHeight, footLength, footHeight) {
-    drawOutlinedPolygon(g,
-      [x, x,              x-legGirth,         x,  x-(footLength/2),    x-footLength],
-      [y, y-legHeight,    y-(legHeight/2),    y,  y-footHeight,       y],
-      true,
-    )
+  legBrush(friendo) {
+    return (_g) => {
+      if (friendo.stats[STATS.LEG] > 0) {
+        drawOutlinedPolygon(_g,
+          [0, 0, 0-this.legGirth, 0, -(this.footLength/2), -this.footLength],
+          [0, 0-this.legHeight, -(this.legHeight/2), 0, -this.footHeight, 0],
+          true,
+        )
+      }
+    }
   }
 
   drawCoreSegment(g, x, y) {

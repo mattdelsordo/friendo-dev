@@ -18,38 +18,7 @@ export default class Earth extends Element {
     g.strokeStyle = EARTH_OUTLINE
   }
 
-  drawLvl5Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
-    this.drawCoreSegment(g, x - 50, y - 100, friendo)
-    this.drawCoreSegment(g, x + 50, y - 100, friendo)
-    this.drawCoreSegment(g, x, y - 100, friendo)
-    this.drawCoreSegment(g, x, y - 50, friendo)
-    this.drawCoreSegment(g, x, y, friendo)
-  }
-
-  drawLvl4Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    this.drawCoreSegment(g, x - 25, y - 50, friendo)
-    this.drawCoreSegment(g, x + 25, y - 50, friendo)
-    this.drawCoreSegment(g, x, y, friendo)
-  }
-
-  drawLvl3Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    this.drawCoreSegment(g, x, y - 50, friendo)
-    this.drawCoreSegment(g, x, y, friendo)
-  }
-
-  drawLvl2Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
-    this.drawCoreSegment(g, x, y, friendo)
-  }
-
-  drawLvl1Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y, doBlink, friendo)
-  }
-
-  computeTethers(friendo) {
+  computeArmTethers(friendo) {
     if (friendo.stats[STATS.CORE] > 8) {
       return {
         xOffset: 75,
