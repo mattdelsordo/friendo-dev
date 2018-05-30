@@ -55,13 +55,15 @@ export const drawSpeech = (g, x, y, text) => {
   // multi line support
   const lineLength = 22
   const words = text.split(' ')
+  // build each line
   for (let i = 0, wordCount = 0; i < text.length; i += 1) {
     let line = ''
-    while (line.length < lineLength && wordCount < words.length) {
+    while (words[wordCount] && line.length + words[wordCount].length < lineLength && wordCount < words.length) {
+      // console.log(`Word: ${words[wordCount]}`)
       line += `${words[wordCount]} `
       wordCount += 1
     }
-
+    // console.log(`Built line "${line}"`)
     g.fillText(
       line,
       x,
