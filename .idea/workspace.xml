@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372263f2-1afd-4cec-92e7-dd7c970b079b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/art/art-util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/art/art-util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/friendo/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/friendo/friendo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/friendo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/friendo/state/idle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/state/idle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/friendo/state/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/friendo/state/state.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/game/game-util.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/game/game-util.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,7 +17,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="art-util.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="art-util.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/art/art-util.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="162">
@@ -38,8 +32,17 @@
       <file leaf-file-name="idle-phrases.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="3" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+            <state relative-caret-position="102">
+              <caret line="6" column="55" selection-start-line="6" selection-start-column="55" selection-end-line="6" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -119,7 +122,6 @@
         <option value="$PROJECT_DIR$/src/js/friendo/element/earth.js" />
         <option value="$PROJECT_DIR$/src/js/art/dog.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/default.js" />
-        <option value="$PROJECT_DIR$/docs/index.html" />
         <option value="$PROJECT_DIR$/src/js/friendo/element/air.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/element/water.js" />
         <option value="$PROJECT_DIR$/src/js/art/config.js" />
@@ -135,8 +137,9 @@
         <option value="$PROJECT_DIR$/src/js/friendo/state/state.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/friendo.js" />
         <option value="$PROJECT_DIR$/src/js/friendo/state/idle.js" />
-        <option value="$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js" />
         <option value="$PROJECT_DIR$/src/js/art/art-util.js" />
+        <option value="$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js" />
+        <option value="$PROJECT_DIR$/docs/index.html" />
       </list>
     </option>
   </component>
@@ -299,12 +302,12 @@
       <workItem from="1527366001286" duration="10531000" />
       <workItem from="1527538723232" duration="1580000" />
       <workItem from="1527620321301" duration="11897000" />
-      <workItem from="1527684992648" duration="16106000" />
+      <workItem from="1527684992648" duration="16196000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49617000" />
+    <option name="totallyTimeSpent" value="49707000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="23" width="1922" height="1058" extended-state="6" />
@@ -518,13 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="149" column="55" selection-start-line="149" selection-start-column="55" selection-end-line="149" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/friendo/element/earth.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -654,13 +650,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="3" lean-forward="true" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/art/art-util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -668,6 +657,20 @@
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/friendo/phrases/idle-phrases.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="55" selection-start-line="6" selection-start-column="55" selection-end-line="6" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
         </state>
       </provider>
     </entry>
