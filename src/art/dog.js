@@ -1,7 +1,9 @@
+
+
 import { DOG_SKIN, DOG_OUTLINE } from './colors'
 import { drawOval, drawPolygon, drawLine } from './art-util'
 import { MAX_DOGS } from '../friendo/constants'
-import {drawHookMarker } from './hook-marker'
+import { drawHookMarker } from './hook-marker'
 
 /**
  * Paints a dog on the canvas
@@ -11,7 +13,7 @@ const DOG_WIDTH = 30
 let dogPoints
 
 // draws a dog's tail, where x and y are the bsae of the tail
-const dogTail = function (g, x, y, angle) {
+const dogTail = (g, x, y, angle) => {
   g.save()
   g.translate(x, y)
   g.rotate(angle)
@@ -19,7 +21,7 @@ const dogTail = function (g, x, y, angle) {
   g.restore()
 }
 // paints a single dog
-const paintDog = function (g, x, y, tail = -0.6) {
+const paintDog = (g, x, y, tail = -0.6) => {
   g.fillStyle = DOG_SKIN
   g.strokeStyle = DOG_OUTLINE
   drawOval(g, x - 12, y - 41, 24, 24, true) // head
@@ -41,10 +43,9 @@ const paintDog = function (g, x, y, tail = -0.6) {
   drawHookMarker(g, x, y)
 }
 // adjusts the angle of a dog's tail based on the last draw
-const newWagAngle = function () {
-  return Math.random() * Math.PI / -5
-}
-const wag = function () {
+const newWagAngle = () => (Math.random() * Math.PI) / -5
+
+const wag = () => {
   for (let i = 0; i < MAX_DOGS; i += 1) dogPoints[i].angle = newWagAngle()
 }
 // paints a variable amount of dogs on the screen, based on
@@ -54,8 +55,9 @@ export default (g, dogLevel, canvasW, canvasH) => {
     dogPoints = []
     for (let i = 0; i < MAX_DOGS; i += 1) {
       dogPoints.push({
-        x: Math.floor((Math.random() * (canvasW - DOG_WIDTH)) + DOG_WIDTH / 2),
-        y: Math.floor((Math.random() * (canvasH * (3 / 5) - DOG_HEIGHT)) + DOG_HEIGHT + canvasH * (2 / 5)),
+        x: Math.floor((Math.random() * (canvasW - DOG_WIDTH)) + (DOG_WIDTH / 2)),
+        y: Math.floor((Math.random() * ((canvasH * (3 / 5)) - DOG_HEIGHT))
+          + DOG_HEIGHT + (canvasH * (2 / 5))),
         angle: newWagAngle(),
       })
     }

@@ -15,18 +15,19 @@ export default class Idle extends State {
     super.draw(g, x, y, friendo)
 
     // decide which frame shall be displayed
-    this.frame  = (this.frame + 1) % 4
-    switch(this.frame){
-      case 0:
-      case 1:
-        return this.frame1(g, x, y, friendo)
+    this.frame = (this.frame + 1) % 4
+    switch (this.frame) {
       case 2:
       case 3:
         return this.frame2(g, x, y, friendo)
+      case 0:
+      case 1:
+      default:
+        return this.frame1(g, x, y, friendo)
     }
   }
 
-  frame1 = (g, x, y, friendo) => {
+  frame1(g, x, y, friendo) {
     // pre-compute constants for drawing for ease of readability
     const { thighGap, bodyOffset } = friendo.element
     const legBrush = friendo.element.legBrush(friendo)
@@ -44,7 +45,7 @@ export default class Idle extends State {
     friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
   }
 
-  frame2 = (g, x, y, friendo) => {
+  frame2(g, x, y, friendo) {
     // pre-compute constants for drawing for ease of readability
     const { thighGap } = friendo.element
     const bodyOffset = friendo.element.bodyOffset - (friendo.element.bodyOffset * 0.05)
@@ -63,7 +64,7 @@ export default class Idle extends State {
     friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
   }
 
-  handleAction(action) {
-    // based off of action and current state switch the state
-  }
+  // handleAction(action) {
+  //
+  // }
 }

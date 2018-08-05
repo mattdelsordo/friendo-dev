@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Tether from 'tether'
 
 import { save, load } from './game-util'
-import { STATS, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../friendo/constants'
+import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
 import { TICKRATE } from './game-config'
@@ -33,11 +33,11 @@ $(document)
      */
     $('#core-range')
       .on({
-        input: function() {
+        input() {
           $('#core-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#core-num')
             .html(this.value)
           friendo.setStat(STATS.CORE, this.value)
@@ -46,11 +46,11 @@ $(document)
       })
     $('#arms-range')
       .on({
-        input: function() {
+        input() {
           $('#arms-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#arms-num')
             .html(this.value)
           friendo.setStat(STATS.ARM, this.value)
@@ -59,11 +59,11 @@ $(document)
       })
     $('#legs-range')
       .on({
-        input: function() {
+        input() {
           $('#legs-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#legs-num')
             .html(this.value)
           friendo.setStat(STATS.LEG, this.value)
@@ -72,11 +72,11 @@ $(document)
       })
     $('#sight-range')
       .on({
-        input: function() {
+        input() {
           $('#sight-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#sight-num')
             .html(this.value)
           friendo.setStat(STATS.SIGHT, this.value)
@@ -85,11 +85,11 @@ $(document)
       })
     $('#hair-range')
       .on({
-        input: function() {
+        input() {
           $('#hair-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#hair-num')
             .html(this.value)
           friendo.setStat(STATS.HAIR, this.value)
@@ -98,11 +98,11 @@ $(document)
       })
     $('#taste-range')
       .on({
-        input: function() {
+        input() {
           $('#taste-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#taste-num')
             .html(this.value)
           friendo.setStat(STATS.TASTE, this.value)
@@ -111,11 +111,11 @@ $(document)
       })
     $('#dog-range')
       .on({
-        input: function() {
+        input() {
           $('#dog-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#dog-num')
             .html(this.value)
           friendo.setStat(STATS.DOG, this.value)
@@ -124,11 +124,11 @@ $(document)
       })
     $('#meme-range')
       .on({
-        input: function() {
+        input() {
           $('#meme-num')
             .html(this.value)
         },
-        change: function() {
+        change() {
           $('#meme-num')
             .html(this.value)
           friendo.setStat(STATS.MEME, this.value)
@@ -142,7 +142,7 @@ $(document)
 
     // name inputs
     $('#friendo-name')
-      .focusout(function () {
+      .focusout(() => {
         const content = this.value.trim()
         if (content) {
           friendo.name = content
@@ -150,7 +150,7 @@ $(document)
         }
       })
     $('#owner-name')
-      .focusout(function () {
+      .focusout(() => {
         const content = this.value.trim()
         if (content) {
           friendo.owner = content
@@ -160,7 +160,7 @@ $(document)
 
     // handle element togglers
     $('#type-picker input[type=radio]')
-      .change(function () {
+      .change(() => {
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
@@ -216,25 +216,26 @@ $(document)
 
     // configure speaking and blinking rates
     $('#blink-rate')
-      .val(BLINK_CHANCE)
+      .val(friendo.state.speakRate)
       .on({
-        input: function () {
+        input() {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
         },
-        change: function () {
+        change() {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
           friendo.state.blinkRate = this.value
           save(JSON.stringify(friendo))
         },
       })
     $('#blink-rate-indicator').html(`${friendo.state.blinkRate}/${TOTAL_EVENT_CHANCE}`)
+
     $('#speak-rate')
       .val(friendo.state.speakRate)
       .on({
-        input: function () {
+        input() {
           $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
         },
-        change: function () {
+        change() {
           $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
           friendo.state.speakRate = this.value
           save(JSON.stringify(friendo))
@@ -244,7 +245,7 @@ $(document)
 
 
     // draw game to the screen at some interval
-    setInterval(function() {
+    setInterval(() => {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
       friendo.draw(canvas, context)

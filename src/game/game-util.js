@@ -9,6 +9,7 @@ export const load = () => {
   return saveGame
 }
 export const save = (friendoJSON) => {
+  /* eslint-disable-next-line no-console */
   console.log(`Saving ${friendoJSON}`)
   localStorage.setItem(STORAGE_TOKEN, friendoJSON)
 }
