@@ -1,12 +1,13 @@
 import path from 'path'
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
+import WriteFilePlugin from 'write-file-webpack-plugin'
 
 import { WDS_PORT, isProd } from './src/config'
 
 
 export default {
   entry: [
-    './src/js/game/index.js',
+    './src/game/index.js',
   ],
   output: {
     filename: 'bundle.js',
@@ -27,6 +28,9 @@ export default {
     contentBase: path.join(__dirname, '/'),
     watchContentBase: true,
   },
+  plugins: [
+    new WriteFilePlugin(),
+  ],
   // plugins: [
   //   new BrowserSyncPlugin({
   //     host: 'localhost',
