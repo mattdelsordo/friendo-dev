@@ -3,7 +3,6 @@
  */
 
 // factory for element types
-import Element from './element'
 import ELEMENTS from './elements'
 import Earth from './earth'
 import Water from './water'
@@ -21,6 +20,6 @@ export default (type) => {
     case ELEMENTS.FIRE:
       return new Fire()
     default:
-      throw 'Attempted to load invalid element.'
+      throw new Error('Attempted to load invalid element.')
   }
 }

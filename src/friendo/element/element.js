@@ -3,7 +3,7 @@ import { STATS } from '../constants'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/hair'
-import { left, right, drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
+import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
 
 /**
@@ -13,7 +13,6 @@ import * as Measurements from '../measurements'
 export default class Element {
   constructor() {
     this.id = ELEMENTS.NULL
-
 
     // default anchors
     this.thighGap = 0
@@ -42,7 +41,7 @@ export default class Element {
 
   // compute where arms should be tethered
   // delegated to child classes
-  computeArmTethers(friendo) {
+  computeArmTethers() {
     return {
       xOffset: 0,
       yOffset: 0,
@@ -77,8 +76,7 @@ export default class Element {
     g.fillStyle = strokePre
     if (doBlink) {
       g.fillRect(x - 5, y - 3, 10, 2)
-    }
-    else {
+    } else {
       drawOval(g, x - 5, y - 10, 10, 10) // rim
       drawOval(g, x - 3, y - 8, 6, 6, true) // pupil
     }
@@ -127,9 +125,9 @@ export default class Element {
 
     let speechX = x + 30
     // move speech more to right if hair too big
-    if (friendo.stats[STATS.HAIR] == 10) speechX += 14
-    else if (friendo.stats[STATS.HAIR] == 9) speechX += 10
-    else if (friendo.stats[STATS.HAIR] == 8) speechX += 6
+    if (friendo.stats[STATS.HAIR] === 10) speechX += 14
+    else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
+    else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
     this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
@@ -204,8 +202,21 @@ export default class Element {
       if (friendo.stats[STATS.LEG] > 0) {
         drawOutlinedPolygon(
           _g,
-          [(this.legGirth / 2), (this.legGirth / 2), -(this.legGirth / 2), -(this.legGirth / 2), -this.footLength, -this.footLength],
-          [0, -this.legHeight, -this.legHeight, -this.footHeight, -this.footHeight, 0],
+          [
+            (this.legGirth / 2),
+            (this.legGirth / 2),
+            -(this.legGirth / 2),
+            -(this.legGirth / 2),
+            -this.footLength,
+            -this.footLength],
+          [
+            0,
+            -this.legHeight,
+            -this.legHeight,
+            -this.footHeight,
+            -this.footHeight,
+            0,
+          ],
           true,
         )
       }
@@ -227,7 +238,9 @@ export default class Element {
   // hair that gets painted in front of the head segment
   drawFrontHair(g, x, y, friendo) {
     if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairFront(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
+    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) {
+      drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
+    }
 
     drawHookMarker(g, x, y)
   }

@@ -1,9 +1,9 @@
-// @flow
-
 /**
  * Friendo class
  * Stores friendo stats, renders friendo at some desired coordinates
  */
+
+/* eslint-disable no-console */
 
 import { STATS } from './constants'
 import paintDogs from '../art/dog'
@@ -35,7 +35,7 @@ export default class Friendo {
     if (json) {
       console.log(`Loading Friendo from ${json}`)
 
-      let fromJSON = JSON.parse(json)
+      const fromJSON = JSON.parse(json)
       // console.log(typeof fromJSON)
       // console.log(`Stats: ${fromJSON.stats}`)
       // console.log(`Name: ${fromJSON.name}`)
@@ -62,14 +62,14 @@ export default class Friendo {
     }
   }
 
-  setElement = (element) => {
+  setElement(element) {
     this.element = selectElement(element)
     this.element.computeAnchors(this)
     console.log(`Element set to ${this.element}`)
   }
 
   // sets the value of a stat
-  setStat = (stat, value) => {
+  setStat(stat, value) {
     console.log(`${this.toJSON()}`)
     this.stats[stat] = value
     // remember to recompute anchors for drawing
@@ -78,12 +78,12 @@ export default class Friendo {
   }
 
   // draws the friendo to the context specified by g at specified coordinate
-  draw = (canvas, context, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) => {
+  draw(canvas, context, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
     paintDogs(context, this.stats[STATS.DOG], canvas.width, canvas.height)
     this.state.draw(context, x, y, this)
   }
 
-  handleAction = (action) => {
+  handleAction(action) {
     this.state.handleAction(action)
   }
 }

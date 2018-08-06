@@ -31,24 +31,24 @@ export const STATS = Object.freeze({
 
 // energy cost per exercise
 export const EXP_COST = Object.freeze({
-    [STATS.CORE]: 1,
-    [STATS.LEG]: 1,
-    [STATS.ARM]: 1,
-    [STATS.SIGHT]: 1,
-    [STATS.HAIR]: 2,
-    [STATS.TASTE]: 2,
-    [STATS.DOG]: 3,
-    [STATS.MEME]: 4
-});
+  [STATS.CORE]: 1,
+  [STATS.LEG]: 1,
+  [STATS.ARM]: 1,
+  [STATS.SIGHT]: 1,
+  [STATS.HAIR]: 2,
+  [STATS.TASTE]: 2,
+  [STATS.DOG]: 3,
+  [STATS.MEME]: 4,
+})
 
 // time required for one excersize of a particular stat
 export const WORKOUT_LENGTH = Object.freeze({
-    [STATS.CORE]: 5,
-    [STATS.LEG]: 5,
-    [STATS.ARM]: 5,
-    [STATS.SIGHT]: 5,
-    [STATS.HAIR]: 5,
-    [STATS.TASTE]: 5,
-    [STATS.DOG]: 5,
-    [STATS.MEME]: 5
-});
+  [STATS.CORE]: 5,
+  [STATS.LEG]: 5,
+  [STATS.ARM]: 5,
+  [STATS.SIGHT]: 5,
+  [STATS.HAIR]: 5,
+  [STATS.TASTE]: 5,
+  [STATS.DOG]: 5,
+  [STATS.MEME]: 5,
+})

@@ -3,13 +3,13 @@ import { AIR_OUTLINE, AIR_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawOutlinedPolygon, drawOutlinedRect } from '../../art/art-util'
+import { drawOutlinedPolygon } from '../../art/art-util'
 
 /**
  * Specifies how a air friendo is drawn
  */
 
-export default class Air extends Element{
+export default class Air extends Element {
   constructor() {
     super()
     this.id = ELEMENTS.AIR
@@ -41,11 +41,10 @@ export default class Air extends Element{
         xOffset: 24,
         yOffset: -18,
       }
-    } else {
-      return {
-        xOffset: 24,
-        yOffset: -18,
-      }
+    }
+    return {
+      xOffset: 24,
+      yOffset: -18,
     }
   }
 
@@ -90,7 +89,8 @@ export default class Air extends Element{
   armBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.ARM] > 0) {
-        drawOutlinedPolygon(_g,
+        drawOutlinedPolygon(
+          _g,
           [0, -(this.armGirth / 2), 0, (this.armGirth / 2)],
           [0, (this.armLength / 2), this.armLength, (this.armLength / 2)],
           true,
@@ -102,9 +102,31 @@ export default class Air extends Element{
   legBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.LEG] > 0) {
-        drawOutlinedPolygon(_g,
-          [0, (this.legGirth/2), 0, -(this.legGirth/2), 0, -(this.legGirth/4), -(this.legGirth/4)-(this.footLength/4), -(this.legGirth/4)-(this.footLength/2), -(this.legGirth/4)-(this.footLength/4),-(this.legGirth/4)],
-          [0, -(this.legHeight/2), -this.legHeight, -(this.legHeight/2), 0, -this.footHeight, -this.footHeight, 0, 0, 0-this.footHeight],
+        drawOutlinedPolygon(
+          _g,
+          [
+            0,
+            (this.legGirth / 2),
+            0,
+            -(this.legGirth / 2),
+            0,
+            -(this.legGirth / 4),
+            -(this.legGirth / 4) - (this.footLength / 4),
+            -(this.legGirth / 4) - (this.footLength / 2),
+            -(this.legGirth / 4) - (this.footLength / 4),
+            -(this.legGirth / 4),
+          ],
+          [
+            0,
+            -(this.legHeight / 2),
+            -this.legHeight,
+            -(this.legHeight / 2),
+            0,
+            -this.footHeight,
+            -this.footHeight,
+            0,
+            0,
+            -this.footHeight],
           true,
         )
       }

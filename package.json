@@ -1,6 +1,6 @@
 {
   "name": "friendo-dev",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dev-kit for Friendo.",
   "main": "index.js",
   "repository": "https://github.com/mattdelsordo/friendo-dev.git",
@@ -28,7 +28,8 @@
   "scripts": {
     "build": "webpack -p --progress",
     "dev": "webpack-dev-server --progress",
-    "precommit": "yarn build && git add docs/bundle.js docs/bundle.js.map"
+    "precommit": "yarn build && git add docs/bundle.js docs/bundle.js.map",
+    "test": "eslint src"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

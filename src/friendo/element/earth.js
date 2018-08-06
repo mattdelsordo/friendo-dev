@@ -39,11 +39,11 @@ export default class Earth extends Element {
         xOffset: 25,
         yOffset: -60,
       }
-    } else {
-      return {
-        xOffset: 25,
-        yOffset: -30,
-      }
+    }
+
+    return {
+      xOffset: 25,
+      yOffset: -30,
     }
   }
 }
