@@ -1,4 +1,4 @@
-//element colors
+// element colors
 export const EARTH_OUTLINE = 'rgb(79, 57, 36)'
 export const EARTH_SKIN = 'rgb(166, 145, 123)'
 export const WATER_OUTLINE = 'rgb(24, 73, 129)'
