@@ -5,7 +5,7 @@ import { drawOval, drawLine } from './art-util'
  */
 
 // handles bang swoop thing
-export const drawLusciousHairFront = function (g, x, y) {
+export const drawLusciousHairFront = (g, x, y) => {
   // set hair color to friendo outline color
   const oldFill = g.fillStyle
   g.fillStyle = g.strokeStyle
@@ -22,7 +22,7 @@ export const drawLusciousHairFront = function (g, x, y) {
   g.fillStyle = oldFill
 }
 // back of the hair
-export const drawLusciousHairBack = function (g, x, y, level) {
+export const drawLusciousHairBack = (g, x, y, level) => {
   // set hair color to friendo outline color
   const oldFill = g.fillStyle
   g.fillStyle = g.strokeStyle
@@ -43,7 +43,7 @@ export const drawLusciousHairBack = function (g, x, y, level) {
   // revert colors
   g.fillStyle = oldFill
 }
-export const drawStevenHair = function (g, x, y, level) {
+export const drawStevenHair = (g, x, y, level) => {
   // set hair color to friendo outline color
   const oldFill = g.fillStyle
   g.fillStyle = g.strokeStyle
@@ -51,12 +51,12 @@ export const drawStevenHair = function (g, x, y, level) {
   // calculate oval size
   const curlSize = level * 4
   const curls = [
-    [x - (curlSize / 2) - 8, y - curlSize + 4],
-    [x - (curlSize / 2) + 12, y - curlSize + 14],
-    [x - (curlSize / 2) + 8, y - curlSize + 2],
-    [x - (curlSize / 2) - 10, y - curlSize + 17],
-    [x - (curlSize / 2) + 9, y - curlSize + 18],
-    [x - (curlSize / 2) - 2, y - curlSize],
+    [x - ((curlSize / 2) - 8), y - (curlSize + 4)],
+    [x - ((curlSize / 2) + 12), y - (curlSize + 14)],
+    [x - ((curlSize / 2) + 8), y - (curlSize + 2)],
+    [x - ((curlSize / 2) - 10), y - (curlSize + 17)],
+    [x - ((curlSize / 2) + 9), y - (curlSize + 18)],
+    [x - ((curlSize / 2) - 2), y - curlSize],
   ]
   drawOval(g, curls[0][0], curls[0][1], curlSize, curlSize, true)
   drawOval(g, curls[1][0], curls[1][1], curlSize, curlSize, true)
@@ -70,7 +70,7 @@ export const drawStevenHair = function (g, x, y, level) {
   // revert colors
   g.fillStyle = oldFill
 }
-export const drawDiglettHair = function (g, x, y, level) {
+export const drawDiglettHair = (g, x, y, level) => {
   const xOffset = 4 + (level * 1.5)
   const yOffset = 5 + (level * 2)
   drawLine(g, x, y, x, y - yOffset)

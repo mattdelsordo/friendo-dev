@@ -63,6 +63,7 @@ export default class State {
   }
 
   handleAction(action) {
+    /* eslint-disable-next-line no-console */
     console.log(`Handling ${action}`)
   }
 

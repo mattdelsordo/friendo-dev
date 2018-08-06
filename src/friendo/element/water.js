@@ -3,7 +3,7 @@ import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawOval, drawOutlinedOval, drawOutlinedRect } from '../../art/art-util'
+import { drawOval, drawOutlinedOval } from '../../art/art-util'
 
 /**
  * Specifies how a water friendo is drawn
@@ -46,11 +46,11 @@ export default class WATER extends Element {
         xOffset: 22,
         yOffset: -40,
       }
-    } else {
-      return {
-        xOffset: 25,
-        yOffset: -30,
-      }
+    }
+
+    return {
+      xOffset: 25,
+      yOffset: -30,
     }
   }
 
@@ -101,9 +101,28 @@ export default class WATER extends Element {
   legBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.LEG] > 0) {
-        drawOutlinedOval(_g, -this.footLength, -this.footHeight, this.footLength, this.footHeight)
-        drawOutlinedOval(_g, -(this.legGirth / 2), -this.legHeight, this.legGirth, this.legHeight)
-        drawOval(_g, -this.footLength + 1, -this.footHeight + 1, this.footLength - 4, this.footHeight - 3, true)
+        drawOutlinedOval(
+          _g,
+          -this.footLength,
+          -this.footHeight,
+          this.footLength,
+          this.footHeight,
+        )
+        drawOutlinedOval(
+          _g,
+          -(this.legGirth / 2),
+          -this.legHeight,
+          this.legGirth,
+          this.legHeight,
+        )
+        drawOval(
+          _g,
+          -this.footLength + 1,
+          -this.footHeight + 1,
+          this.footLength - 4,
+          this.footHeight - 3,
+          true,
+        )
       }
     }
   }

@@ -41,11 +41,11 @@ export default class Fire extends Element {
         xOffset: 22,
         yOffset: -20,
       }
-    } else {
-      return {
-        xOffset: 14,
-        yOffset: -20,
-      }
+    }
+
+    return {
+      xOffset: 14,
+      yOffset: -20,
     }
   }
 
@@ -65,8 +65,8 @@ export default class Fire extends Element {
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 8, y, friendo.state.blink)
-      this.drawEye(g, x + 8, y, friendo.state.blink)
+      this.drawEye(g, x - 6, y + 4, friendo.state.blink)
+      this.drawEye(g, x + 6, y + 4, friendo.state.blink)
     } else {
       // default = 1 eye
       this.drawEye(g, x, y, friendo.state.blink)
@@ -94,9 +94,9 @@ export default class Fire extends Element {
 
     let speechX = x + 30
     // move speech more to right if hair too big
-    if (friendo.stats[STATS.HAIR] == 10) speechX += 14
-    else if (friendo.stats[STATS.HAIR] == 9) speechX += 10
-    else if (friendo.stats[STATS.HAIR] == 8) speechX += 6
+    if (friendo.stats[STATS.HAIR] === 10) speechX += 14
+    else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
+    else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
     this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
@@ -161,7 +161,8 @@ export default class Fire extends Element {
   armBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.ARM] > 0) {
-        drawOutlinedPolygon(_g,
+        drawOutlinedPolygon(
+          _g,
           [0, -(this.armGirth / 2), 0],
           [0, (this.armLength / 2), this.armLength],
           true,
@@ -173,7 +174,8 @@ export default class Fire extends Element {
   legBrush(friendo) {
     return (_g) => {
       if (friendo.stats[STATS.LEG] > 0) {
-        drawOutlinedPolygon(_g,
+        drawOutlinedPolygon(
+          _g,
           [0, 0, 0 - this.legGirth, 0, -(this.footLength / 2), -this.footLength],
           [0, 0 - this.legHeight, -(this.legHeight / 2), 0, -this.footHeight, 0],
           true,
