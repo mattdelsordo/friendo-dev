@@ -1,6 +1,6 @@
 {
   "name": "friendo-dev",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Dev-kit for Friendo.",
   "main": "index.js",
   "repository": "https://github.com/mattdelsordo/friendo-dev.git",
