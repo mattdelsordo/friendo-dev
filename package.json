@@ -27,8 +27,8 @@
     "write-file-webpack-plugin": "^4.3.2"
   },
   "scripts": {
-    "build": "yarn build-js && yarn build-html",
-    "build-html": "pug ui/index.pug -o docs/ && cp ui/resources/* docs/",
+    "build": "NODE_ENV=production yarn build-js && yarn build-html",
+    "build-html": "pug ui/index.pug -o docs/ && cp -r ui/resources/. docs/",
     "build-js": "webpack -p --progress",
     "dev": "yarn js-dev & yarn html-dev",
     "html-dev": "pug ui/index.pug -o docs/ -w",

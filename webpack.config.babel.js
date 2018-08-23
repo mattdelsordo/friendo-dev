@@ -5,12 +5,11 @@ import { isProd } from './src/config'
 
 export default {
   entry: [
-    'webpack/hot/dev-server',
     './src/game/index.js',
   ],
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '/docs'),
+    path: path.resolve(__dirname, 'docs'),
     publicPath: '/',
   },
   module: {
@@ -24,7 +23,7 @@ export default {
   },
   devServer: {
     port: 3000,
-    contentBase: path.join(__dirname, '/docs'),
+    contentBase: path.join(__dirname, 'docs'),
     watchContentBase: true,
   },
   mode: isProd ? 'production' : 'development',
