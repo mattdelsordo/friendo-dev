@@ -30,7 +30,9 @@
     "build": "yarn build-js && yarn build-html",
     "build-html": "pug ui/index.pug -o docs/ && cp ui/resources/* docs/",
     "build-js": "webpack -p --progress",
-    "dev": "webpack-dev-server --progress",
+    "dev": "yarn js-dev & yarn html-dev",
+    "html-dev": "pug ui/index.pug -o docs/ -w",
+    "js-dev": "webpack-dev-server",
     "test": "eslint src"
   },
   "dependencies": {
