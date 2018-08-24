@@ -20,6 +20,6 @@ export default (type) => {
     case ELEMENTS.FIRE:
       return new Fire()
     default:
-      throw new Error('Attempted to load invalid element.')
+      throw new Error(`Attempted to load invalid element "${type}"`)
   }
 }

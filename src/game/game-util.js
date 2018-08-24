@@ -5,7 +5,6 @@
 export const STORAGE_TOKEN = 'friendo'
 export const load = () => {
   const saveGame = localStorage.getItem(STORAGE_TOKEN)
-  console.log(`Loaded ${saveGame}`)
   return saveGame
 }
 export const save = (friendoJSON) => {
