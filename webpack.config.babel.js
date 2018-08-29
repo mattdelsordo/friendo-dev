@@ -22,8 +22,8 @@ export default {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port: 3000,
-    contentBase: path.join(__dirname, 'docs'),
+    port: 3001,
+    contentBase: path.join(__dirname, './docs'),
     watchContentBase: true,
   },
   mode: isProd ? 'production' : 'development',
