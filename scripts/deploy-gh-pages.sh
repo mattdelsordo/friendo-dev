@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # build webpage
+git checkout master
 yarn build-prod
 git add -A
 git commit -m ":rocket:"
