@@ -1,8 +1,6 @@
 import path from 'path'
-import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
-import WriteFilePlugin from 'write-file-webpack-plugin'
 
-import { WDS_PORT, isProd } from './src/config'
+import { isProd } from './src/config'
 
 
 export default {
@@ -12,7 +10,7 @@ export default {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'docs'),
-    publicPath: '/docs',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -24,19 +22,9 @@ export default {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port: 8080,
-    contentBase: path.join(__dirname, '/'),
+    port: 3001,
+    contentBase: path.join(__dirname, './docs'),
     watchContentBase: true,
   },
-  plugins: [
-    new WriteFilePlugin(),
-  ],
-  // plugins: [
-  //   new BrowserSyncPlugin({
-  //     host: 'localhost',
-  //     port: 3000,
-  //     proxy: 'http://localhost:8080',
-  //   }),
-  // ],
   mode: isProd ? 'production' : 'development',
 }

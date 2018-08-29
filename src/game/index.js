@@ -160,7 +160,9 @@ $(document)
 
     // handle element togglers
     $('#type-picker input[type=radio]')
-      .change(() => {
+      // Note: changing this to an arrow function leads to the 'this'
+      // in it being undefined
+      .change(function setElement() {
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })

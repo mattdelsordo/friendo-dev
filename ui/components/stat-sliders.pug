@@ -1,0 +1,62 @@
+-
+    var stats = [
+        {
+            name: 'Core',
+            initial: 1,
+            points: [3, 5, 7, 9]
+        },
+        {
+            name: 'Legs',
+            initial: 0
+        },
+        {
+            name: 'Arms',
+            initial: 0
+        },
+        {
+            name: 'Sight',
+            initial: 1,
+            points: [4, 7]
+        },
+        {
+            name: 'Hair',
+            initial: 0,
+            points: [1, 4, 8]
+        },
+        {
+            name: 'Taste',
+            initial: 1,
+        },
+        {
+            name: 'Dog Affinity',
+            initial: 0,
+            points: [2, 4, 6, 8, 10]
+        },
+        {
+            name: 'Meme Tolerance',
+            initial: 1,
+        },
+    ]
+
+mixin statSlider(stat)
+    - var statId = stat.name.split(' ')[0].toLowerCase()
+    .p-1.mt-1.w-100
+        span= stat.name
+        input.mr-1.ml-1.align-bottom(
+            type='range'
+            min=stat.initial
+            max=10,
+            value=stat.initial
+            id=`${statId}-range`
+            list=`${statId}-list`
+        )
+        if stat.points
+            datalist(id=`${statId}-list`)
+                each point in stat.points
+                    option= point
+        span(id=`${statId}-num`)= stat.initial
+
+.border.p-1.mt-1
+    h5 Stats:
+    each stat in stats
+        +statSlider(stat)

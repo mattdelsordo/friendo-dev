@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+    head
+        title Friendo
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width')
+        link(rel='stylesheet' href='bootstrap.min.css')
+        link(rel='stylesheet' href='styles.css')
+        script(src='bundle.js')
+    body
+        .container
+            .row.mt-5
+                .col
+                    include ./components/name-input
+                    +nameInput("Friendo Name", "Owner Name")
+                    include ./components/canvas
+                    include ./components/hook-markers
+                .col-sm
+                    include ./components/type-picker
+                    include ./components/stat-sliders
+                    include components/constant-sliders
