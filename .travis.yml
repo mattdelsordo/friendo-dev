@@ -3,3 +3,7 @@ node_js:
   - "node"
 install: yarn install
 script: yarn test
+deploy:
+  script: ./scripts/deploy-gh-pages.sh
+  on:
+    branch: master

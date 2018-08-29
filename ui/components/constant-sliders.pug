@@ -1,0 +1,26 @@
+-
+    var constants = [
+        {
+            name: 'Blink',
+            initial: 10
+        },
+        {
+            name: 'Speak',
+            initial: 10
+        }
+    ]
+
+mixin constantSlider(constant)
+    .p-1.mt-1.w-100
+        span #{constant.name} Chance
+        input.mr-1.ml-1.align-bottom(
+            type='range'
+            min='1'
+            max='100'
+            value=constant.initial
+            id=`${constant.name.toLowerCase()}-rate`
+        )
+        span(id=`${constant.name.toLowerCase()}-rate-indicator`) #{constant.initial}/100
+
+each constant in constants
+    +constantSlider(constant)
