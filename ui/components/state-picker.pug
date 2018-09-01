@@ -1,0 +1,16 @@
+mixin stateSetter(state)
+    label.btn.btn-secondary(for=`set-state-${state}`)
+        input(id=`set-state-${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
+        | #{state[0].toUpperCase() + state.slice(1)}
+
+-
+    var states = [
+      'idle',
+      'sleep'
+    ]
+
+#state-picker.border.p-1.mt-1
+    h5 State:
+    .btn-group.btn-group-toggle(data-toggle='buttons')
+        each state in states
+            +stateSetter(state)
