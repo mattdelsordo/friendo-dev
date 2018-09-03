@@ -246,6 +246,17 @@ $(document)
     $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
 
 
+    /**
+     * State toggler listeners
+     */
+    $('#state-picker input[type=radio]')
+    // Note: changing this to an arrow function leads to the 'this'
+    // in it being undefined
+      .change(function setState() {
+        friendo.handleAction(this.value)
+        save(JSON.stringify(friendo))
+      })
+
     // draw game to the screen at some interval
     setInterval(() => {
       context.save() // save and restore context to prevent colors from getting donged up

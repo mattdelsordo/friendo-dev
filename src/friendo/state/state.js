@@ -1,5 +1,6 @@
 import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../constants'
 import phrasebook from '../phrases/idle-phrases'
+import loadState from './load-state'
 
 /**
  *  defines the animation to be done in a given state
@@ -8,23 +9,28 @@ import phrasebook from '../phrases/idle-phrases'
 export const ID = 'state_default'
 
 export default class State {
-  constructor(savedState) {
-    this.id = ID
+  constructor(oldState) {
+    if (oldState) {
+      this.id = oldState.id
 
-    this.blinkRate = BLINK_CHANCE
-    this.speakRate = SPEAK_CHANCE
-    this.blink = 0
-    this.speak = 0
+      this.blinkRate = oldState.blinkRate
+      this.speakRate = oldState.speakRate
+      this.blink = oldState.blink
+      this.speak = oldState.speak
 
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
+      // handle case where oldState is JSON rather than an object
+      this.phrasebook = oldState.phrasebook || phrasebook
+      this.words = oldState.words
+    } else {
+      this.id = ID
 
-    if (savedState) {
-      this.blinkRate = savedState.blinkRate
-      this.speakRate = savedState.speakRate
-      this.blink = savedState.blink
-      this.speak = savedState.speak
-      this.words = savedState.words
+      this.blinkRate = BLINK_CHANCE
+      this.speakRate = SPEAK_CHANCE
+      this.blink = 0
+      this.speak = 0
+
+      this.phrasebook = phrasebook
+      this.words = 'Hi'
     }
   }
 
@@ -62,9 +68,10 @@ export default class State {
     friendo.element.setColors(g)
   }
 
-  handleAction(action) {
+  handleAction(action, friendo) {
     /* eslint-disable-next-line no-console */
     console.log(`Handling ${action}`)
+    friendo.state = loadState(this, action)
   }
 
   pickPhrase(friendo) {

@@ -1,5 +1,6 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
+import phrasebook from '../phrases/idle-phrases'
 
 export const ID = 'state_idle'
 
@@ -9,6 +10,9 @@ export default class Idle extends State {
     this.id = ID
 
     this.frame = 0
+
+    this.phrasebook = phrasebook
+    this.words = 'Hi'
   }
 
   draw(g, x, y, friendo) {
@@ -63,8 +67,4 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
   }
-
-  // handleAction(action) {
-  //
-  // }
 }
