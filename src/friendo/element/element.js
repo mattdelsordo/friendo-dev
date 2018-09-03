@@ -85,42 +85,42 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
-  drawEyes(g, x, y, friendo) {
+  drawEyes(g, x, y, friendo, doBlink) {
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      this.drawEye(g, x, y - 8, friendo.state.blink)
-      this.drawEye(g, x - 8, y, friendo.state.blink)
-      this.drawEye(g, x + 8, y, friendo.state.blink)
+      this.drawEye(g, x, y - 8, doBlink)
+      this.drawEye(g, x - 8, y, doBlink)
+      this.drawEye(g, x + 8, y, doBlink)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 8, y, friendo.state.blink)
-      this.drawEye(g, x + 8, y, friendo.state.blink)
+      this.drawEye(g, x - 8, y, doBlink)
+      this.drawEye(g, x + 8, y, doBlink)
     } else {
       // default = 1 eye
-      this.drawEye(g, x, y, friendo.state.blink)
+      this.drawEye(g, x, y, doBlink)
     }
 
     drawHookMarker(g, x, y)
   }
 
-  drawFace(g, x, y, friendo) {
+  drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
 
     drawLine(g, x - 5, y, x + 5, y) // mouth
     drawLine(g, x - 1, y - 11, x - 1, y - 4) // vertical nose
     drawLine(g, x - 2, y - 4, x + 3, y - 4) // horizontal nose
-    this.drawEyes(g, x, y - 14, friendo)
+    this.drawEyes(g, x, y - 14, friendo, doBlink)
 
     drawHookMarker(g, x, y)
   }
 
-  drawHeadSegment(g, x, y, friendo) {
+  drawHeadSegment(g, x, y, friendo, doBlink) {
     this.drawBackHair(g, x, y - 50, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo) // face relative to head core
+    this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
     this.drawFrontHair(g, x, y - 50, friendo) // front hair on top of head core
 
     let speechX = x + 30
@@ -133,8 +133,8 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
-  drawLvl5Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 150, friendo)
+  drawLvl5Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
     this.drawCoreSegment(g, x - 50, y - 100, friendo)
     this.drawCoreSegment(g, x + 50, y - 100, friendo)
     this.drawCoreSegment(g, x, y - 100, friendo)
@@ -142,45 +142,45 @@ export default class Element {
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl4Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 100, friendo)
+  drawLvl4Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
     this.drawCoreSegment(g, x - 25, y - 50)
     this.drawCoreSegment(g, x + 25, y - 50)
     this.drawCoreSegment(g, x, y)
   }
 
-  drawLvl3Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 100, friendo)
+  drawLvl3Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl2Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 50, friendo)
+  drawLvl2Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
     this.drawCoreSegment(g, x, y, friendo)
   }
 
-  drawLvl1Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y, friendo)
+  drawLvl1Core(g, x, y, friendo, doBlink) {
+    this.drawHeadSegment(g, x, y, friendo, doBlink)
   }
 
   // core drawing delegated to child elements
-  drawCore(g, x, y, friendo) {
+  drawCore(g, x, y, friendo, doBlink) {
     if (friendo.stats[STATS.CORE] > 8) {
       // 5-6 segments
-      this.drawLvl5Core(g, x, y, friendo)
+      this.drawLvl5Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 6) {
       // 4 segments
-      this.drawLvl4Core(g, x, y, friendo)
+      this.drawLvl4Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 4) {
       // 3 segments
-      this.drawLvl3Core(g, x, y, friendo)
+      this.drawLvl3Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 2) {
       // 2 segments
-      this.drawLvl2Core(g, x, y, friendo)
+      this.drawLvl2Core(g, x, y, friendo, doBlink)
     } else {
       // 1 segment
-      this.drawLvl1Core(g, x, y, friendo)
+      this.drawLvl1Core(g, x, y, friendo, doBlink)
     }
   }
 
