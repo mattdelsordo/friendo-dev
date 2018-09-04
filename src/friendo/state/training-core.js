@@ -1,6 +1,6 @@
 import State from './state'
 import { left, down } from '../../art/art-util'
-import phrasebook from '../phrases/idle-phrases'
+import phrasebook from '../phrases/fitness-phrases'
 
 export const ID = 'state_core'
 
@@ -23,15 +23,17 @@ export default class Idle extends State {
     switch (this.frame) {
       case 2:
       case 3:
-        return down(g, (_g, _x, _y) => {
+        down(g, (_g, _x, _y) => {
           this.frame2(_g, _x, _y, friendo)
         }, x, y)
+        break
       case 0:
       case 1:
       default:
-        return down(g, (_g, _x, _y) => {
+        down(g, (_g, _x, _y) => {
           this.frame1(_g, _x, _y, friendo)
         }, x, y)
+        break
     }
   }
 
@@ -50,8 +52,9 @@ export default class Idle extends State {
     left(g, x + thighGap, y + bodyOffset, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
 
-    friendo.element.drawCore(g, x, y, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(g, x, y, friendo, this.blink)
     left(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
+    friendo.element.speak(g, (computedTethers.speech.x + 50), computedTethers.speech.y, friendo)
   }
 
   frame2(g, x, y, friendo) {
@@ -69,7 +72,8 @@ export default class Idle extends State {
     left(g, x + thighGap, y + bodyOffset, legBrush) // right leg
     left(g, x - armOffset.x - 6, y - armOffset.y, armBrush, armAngle)// left arm
 
-    friendo.element.drawCore(g, x - 6, y, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(g, x - 6, y, friendo, this.blink)
     left(g, x + (armOffset.x - 6), y - armOffset.y, armBrush, armAngle)// right arm
+    friendo.element.speak(g, (computedTethers.speech.x + 50), computedTethers.speech.y, friendo)
   }
 }

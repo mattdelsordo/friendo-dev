@@ -65,6 +65,7 @@ export default class Petting extends State {
       this.blink,
       true,
     )
+    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
     return computedTethers
   }
 
@@ -92,6 +93,7 @@ export default class Petting extends State {
       this.blink,
       true,
     )
+    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
     return computedTethers
   }
 

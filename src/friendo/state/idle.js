@@ -46,7 +46,8 @@ export default class Idle extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
   }
 
   frame2(g, x, y, friendo) {
@@ -65,6 +66,7 @@ export default class Idle extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
   }
 }
