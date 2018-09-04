@@ -96,3 +96,15 @@ export const right = (g, x, y, brush, angle = 0) => {
   g.restore()
   drawHookMarker(g, x, y)
 }
+
+export const down = (g, brush, x, y) => {
+  g.save()
+  g.translate(x, y)
+  g.rotate(Math.PI / 2)
+  g.translate(-x, -y)
+
+  brush(g, x, y)
+
+  g.restore()
+  drawHookMarker(g, x, y)
+}
