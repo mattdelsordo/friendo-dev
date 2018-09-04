@@ -55,42 +55,42 @@ export default class Fire extends Element {
     drawHookMarker(g, x, y)
   }
 
-  drawEyes(g, x, y, friendo) {
+  drawEyes(g, x, y, friendo, doBlink) {
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      this.drawEye(g, x, y - 6, friendo.state.blink)
-      this.drawEye(g, x - 6, y + 4, friendo.state.blink)
-      this.drawEye(g, x + 6, y + 4, friendo.state.blink)
+      this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 6, y + 4, friendo.state.blink)
-      this.drawEye(g, x + 6, y + 4, friendo.state.blink)
+      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
     } else {
       // default = 1 eye
-      this.drawEye(g, x, y, friendo.state.blink)
+      this.drawEye(g, x, y, doBlink, friendo.state.isSmiling)
     }
 
     drawHookMarker(g, x, y)
   }
 
-  drawFace(g, x, y, friendo) {
+  drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
     drawLine(g, x - 5, y + 6, x + 5, y + 6) // mouth
     drawLine(g, x - 1, y - 5, x - 1, y + 2) // vertical nose
     drawLine(g, x - 2, y + 2, x + 3, y + 2) // horizontal nose
-    this.drawEyes(g, x, y - 8, friendo)
+    this.drawEyes(g, x, y - 8, friendo, doBlink)
 
     drawHookMarker(g, x, y)
   }
 
-  drawHeadSegment(g, x, y, friendo) {
+  drawHeadSegment(g, x, y, friendo, doBlink) {
     const hairY = -42
     this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo) // face relative to head core
+    this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
     this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
 
     let speechX = x + 30
@@ -105,8 +105,8 @@ export default class Fire extends Element {
     return { hair: y + hairY }
   }
 
-  drawLvl5Core(g, x, y, friendo) {
-    const computedTethers = this.drawHeadSegment(g, x, y - 86, friendo)
+  drawLvl5Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 86, friendo, doBlink)
 
     g.save()
     g.translate(x, y - 86)
@@ -121,8 +121,8 @@ export default class Fire extends Element {
     return computedTethers
   }
 
-  drawLvl4Core(g, x, y, friendo) {
-    const computedTethers = this.drawHeadSegment(g, x, y - 66, friendo)
+  drawLvl4Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 66, friendo, doBlink)
 
     g.save()
     g.translate(x - 25, y - 66)
@@ -145,15 +145,15 @@ export default class Fire extends Element {
     return computedTethers
   }
 
-  drawLvl3Core(g, x, y, friendo) {
-    const computedTethers = this.drawHeadSegment(g, x, y - 43, friendo)
+  drawLvl3Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 43, friendo, doBlink)
     this.drawCoreSegment(g, x - 25, y)
     this.drawCoreSegment(g, x + 25, y)
     return computedTethers
   }
 
-  drawLvl2Core(g, x, y, friendo) {
-    const computedTethers = this.drawHeadSegment(g, x, y - 23, friendo)
+  drawLvl2Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 23, friendo, doBlink)
 
     g.save()
     g.translate(x, y - 23)
@@ -164,8 +164,8 @@ export default class Fire extends Element {
     return computedTethers
   }
 
-  drawLvl1Core(g, x, y, friendo) {
-    const computedTethers = this.drawHeadSegment(g, x, y, friendo)
+  drawLvl1Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y, friendo, doBlink)
     return computedTethers
   }
 

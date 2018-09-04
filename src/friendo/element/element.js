@@ -81,7 +81,7 @@ export default class Element {
       drawLine(g, x + left.x, y + left.y, x + mid.x, y + mid.y)
       drawLine(g, x + mid.x, y + mid.y, x + right.x, y + right.y)
     } else if (doBlink) {
-      g.fillRect(x - 5, y - 3, 10, 2)
+      drawLine(g, x - 5, y - 4, x + 5, y - 4)
     } else {
       drawOval(g, x - 5, y - 10, 10, 10) // rim
       drawOval(g, x - 3, y - 8, 6, 6, true) // pupil
