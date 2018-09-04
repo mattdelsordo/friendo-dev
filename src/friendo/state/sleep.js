@@ -34,7 +34,7 @@ export default class Sleep extends State {
       x: friendo.element.armOffset.xOffset,
       y: friendo.element.legHeight - friendo.element.armOffset.yOffset,
     }
-    const armAngle = 0.30 // pi radians
+    const armAngle = 0.15 // pi radians
 
     left(g, x - thighGap, y, legBrush) // left leg
     right(g, x + thighGap, y, legBrush) // right leg

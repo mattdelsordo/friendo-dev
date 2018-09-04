@@ -142,19 +142,37 @@ $(document)
 
     // name inputs
     $('#friendo-name')
-      .focusout(() => {
+      .focusout(function setFriendoName() {
         const content = this.value.trim()
-        if (content) {
+        if (content && content !== friendo.name) {
           friendo.name = content
           save(JSON.stringify(friendo))
         }
       })
+      .on('keypress', function setFriendoNameE(e) {
+        if (e.which === 13) {
+          const content = this.value.trim()
+          if (content && content !== friendo.name) {
+            friendo.name = content
+            save(JSON.stringify(friendo))
+          }
+        }
+      })
     $('#owner-name')
-      .focusout(() => {
+      .focusout(function setOwnerName() {
         const content = this.value.trim()
-        if (content) {
+        if (content && content !== friendo.owner) {
           friendo.owner = content
           save(JSON.stringify(friendo))
+        }
+      })
+      .on('keypress', function setOwnerNameE(e) {
+        if (e.which === 13) {
+          const content = this.value.trim()
+          if (content && content !== friendo.owner) {
+            friendo.owner = content
+            save(JSON.stringify(friendo))
+          }
         }
       })
 
