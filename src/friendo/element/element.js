@@ -69,12 +69,18 @@ export default class Element {
   }
 
 
-  drawEye(g, x, y, doBlink) {
+  drawEye(g, x, y, doBlink, smile) {
     // save fill color so that we can paint a full eye
     const fillPre = g.fillStyle
     const strokePre = g.strokeStyle
     g.fillStyle = strokePre
-    if (doBlink) {
+    if (smile) {
+      const left = { x: -5, y: 0 }
+      const mid = { x: 0, y: -6 }
+      const right = { x: 5, y: 0 }
+      drawLine(g, x + left.x, y + left.y, x + mid.x, y + mid.y)
+      drawLine(g, x + mid.x, y + mid.y, x + right.x, y + right.y)
+    } else if (doBlink) {
       g.fillRect(x - 5, y - 3, 10, 2)
     } else {
       drawOval(g, x - 5, y - 10, 10, 10) // rim
@@ -89,17 +95,17 @@ export default class Element {
     if (friendo.stats[STATS.SIGHT] > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      this.drawEye(g, x, y - 8, doBlink)
-      this.drawEye(g, x - 8, y, doBlink)
-      this.drawEye(g, x + 8, y, doBlink)
+      this.drawEye(g, x, y - 8, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x + 8, y, doBlink, friendo.state.isSmiling)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 8, y, doBlink)
-      this.drawEye(g, x + 8, y, doBlink)
+      this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x + 8, y, doBlink, friendo.state.isSmiling)
     } else {
       // default = 1 eye
-      this.drawEye(g, x, y, doBlink)
+      this.drawEye(g, x, y, doBlink, friendo.state.isSmiling)
     }
 
     drawHookMarker(g, x, y)

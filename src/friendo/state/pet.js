@@ -9,6 +9,7 @@ export default class Petting extends State {
     super(savedState)
     this.id = ID
     this.frame = savedState.frame || 0
+    this.isSmiling = true
   }
 
   draw(g, x, y, friendo) {
@@ -55,7 +56,7 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink, true)
   }
 
   frame2(g, x, y, friendo) {
@@ -74,7 +75,7 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink, true)
   }
 
   handUp(g, x, y) {
