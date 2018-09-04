@@ -124,10 +124,12 @@ export default class Element {
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
-    this.drawBackHair(g, x, y - 50, friendo) // back hair on top of head core
+    const hairY = -50
+
+    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
     this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y - 50, friendo) // front hair on top of head core
+    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
 
     let speechX = x + 30
     // move speech more to right if hair too big
@@ -137,56 +139,66 @@ export default class Element {
     this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
+
+    return { hair: y + hairY }
   }
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
+    const computedTethers = this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
+
     this.drawCoreSegment(g, x - 50, y - 100, friendo)
     this.drawCoreSegment(g, x + 50, y - 100, friendo)
     this.drawCoreSegment(g, x, y - 100, friendo)
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+
+    return computedTethers
   }
 
   drawLvl4Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+    const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
     this.drawCoreSegment(g, x - 25, y - 50)
     this.drawCoreSegment(g, x + 25, y - 50)
     this.drawCoreSegment(g, x, y)
+    return computedTethers
   }
 
   drawLvl3Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+    const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   drawLvl2Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
+    const computedTethers = this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   drawLvl1Core(g, x, y, friendo, doBlink) {
-    this.drawHeadSegment(g, x, y, friendo, doBlink)
+    const computedTethers = this.drawHeadSegment(g, x, y, friendo, doBlink)
+    return computedTethers
   }
 
   // core drawing delegated to child elements
   drawCore(g, x, y, friendo, doBlink) {
     if (friendo.stats[STATS.CORE] > 8) {
       // 5-6 segments
-      this.drawLvl5Core(g, x, y, friendo, doBlink)
+      return this.drawLvl5Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 6) {
       // 4 segments
-      this.drawLvl4Core(g, x, y, friendo, doBlink)
+      return this.drawLvl4Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 4) {
       // 3 segments
-      this.drawLvl3Core(g, x, y, friendo, doBlink)
+      return this.drawLvl3Core(g, x, y, friendo, doBlink)
     } else if (friendo.stats[STATS.CORE] > 2) {
       // 2 segments
-      this.drawLvl2Core(g, x, y, friendo, doBlink)
+      return this.drawLvl2Core(g, x, y, friendo, doBlink)
+      /* eslint-disable-next-line */
     } else {
       // 1 segment
-      this.drawLvl1Core(g, x, y, friendo, doBlink)
+      return this.drawLvl1Core(g, x, y, friendo, doBlink)
     }
   }
 

@@ -17,26 +17,27 @@ export default class Petting extends State {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
+    let computedTethers
     switch (this.frame) {
       case 0:
-        this.frame1(g, x, y, friendo)
-        this.handUp(g, x, y)
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hair)
         break
       case 1:
-        this.frame1(g, x, y, friendo)
-        this.handDown(g, x, y)
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handDown(g, x, computedTethers.hair)
         break
       case 2:
-        this.frame2(g, x, y, friendo)
-        this.handUp(g, x, y)
+        computedTethers = this.frame2(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hair)
         break
       case 3:
-        this.frame2(g, x, y, friendo)
-        this.handDown(g, x, y)
+        computedTethers = this.frame2(g, x, y, friendo)
+        this.handDown(g, x, computedTethers.hair)
         break
       default:
-        this.frame1(g, x, y, friendo)
-        this.handUp(g, x, y)
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hair)
         break
     }
   }
@@ -56,7 +57,15 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink, true)
+    const computedTethers = friendo.element.drawCore(
+      g,
+      x,
+      y - bodyOffset,
+      friendo,
+      this.blink,
+      true,
+    )
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -75,14 +84,22 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink, true)
+    const computedTethers = friendo.element.drawCore(
+      g,
+      x,
+      y - bodyOffset,
+      friendo,
+      this.blink,
+      true,
+    )
+    return computedTethers
   }
 
   handUp(g, x, y) {
-    paintHand(g, x - 4, y - 86)
+    paintHand(g, x - 4, y - 3)
   }
 
   handDown(g, x, y) {
-    paintHand(g, x - 4, y - 82)
+    paintHand(g, x - 4, y + 1)
   }
 }

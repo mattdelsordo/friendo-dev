@@ -55,35 +55,40 @@ export default class Air extends Element {
   }
 
   drawLvl5Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 120, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 120, friendo)
     this.drawCoreSegment(g, x - 30, y - 90, friendo)
     this.drawCoreSegment(g, x + 30, y - 90, friendo)
     this.drawCoreSegment(g, x, y - 60, friendo)
     this.drawCoreSegment(g, x - 30, y - 30, friendo)
     this.drawCoreSegment(g, x + 30, y - 30, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   drawLvl4Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 60, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 60, friendo)
     this.drawCoreSegment(g, x - 30, y - 30, friendo)
     this.drawCoreSegment(g, x + 30, y - 30, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   drawLvl3Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 26, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 26, friendo)
     this.drawCoreSegment(g, x + 30, y + 4, friendo)
     this.drawCoreSegment(g, x - 30, y + 4, friendo)
+    return computedTethers
   }
 
   drawLvl2Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x - 30, y - 30, friendo)
+    const computedTethers = this.drawHeadSegment(g, x - 30, y - 30, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   drawLvl1Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   armBrush(friendo) {

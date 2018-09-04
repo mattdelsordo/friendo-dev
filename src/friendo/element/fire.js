@@ -87,10 +87,11 @@ export default class Fire extends Element {
   }
 
   drawHeadSegment(g, x, y, friendo) {
-    this.drawBackHair(g, x, y - 42, friendo) // back hair on top of head core
+    const hairY = -42
+    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
     this.drawFace(g, x, y - 12, friendo) // face relative to head core
-    this.drawFrontHair(g, x, y - 42, friendo) // front hair on top of head core
+    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
 
     let speechX = x + 30
     // move speech more to right if hair too big
@@ -100,10 +101,12 @@ export default class Fire extends Element {
     this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
+
+    return { hair: y + hairY }
   }
 
   drawLvl5Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 86, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 86, friendo)
 
     g.save()
     g.translate(x, y - 86)
@@ -114,10 +117,12 @@ export default class Fire extends Element {
 
     this.drawCoreSegment(g, x - 25, y, friendo)
     this.drawCoreSegment(g, x + 25, y, friendo)
+
+    return computedTethers
   }
 
   drawLvl4Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 66, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 66, friendo)
 
     g.save()
     g.translate(x - 25, y - 66)
@@ -136,26 +141,32 @@ export default class Fire extends Element {
     g.rotate(Math.PI)
     this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
+
+    return computedTethers
   }
 
   drawLvl3Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 43, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 43, friendo)
     this.drawCoreSegment(g, x - 25, y)
     this.drawCoreSegment(g, x + 25, y)
+    return computedTethers
   }
 
   drawLvl2Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 23, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y - 23, friendo)
 
     g.save()
     g.translate(x, y - 23)
     g.rotate(Math.PI)
     this.drawCoreSegment(g, 0, 0, friendo)
     g.restore()
+
+    return computedTethers
   }
 
   drawLvl1Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y, friendo)
+    const computedTethers = this.drawHeadSegment(g, x, y, friendo)
+    return computedTethers
   }
 
   armBrush(friendo) {
