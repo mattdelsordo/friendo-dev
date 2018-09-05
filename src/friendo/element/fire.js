@@ -49,6 +49,13 @@ export default class Fire extends Element {
     }
   }
 
+  computeHandCoord() {
+    return {
+      x: 0,
+      y: this.armLength,
+    }
+  }
+
   drawCoreSegment(g, x, y) {
     drawOutlinedPolygon(g, [x, x - 25, x + 25], [y - 43, y, y])
 

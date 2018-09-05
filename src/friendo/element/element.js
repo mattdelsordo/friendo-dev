@@ -60,6 +60,14 @@ export default class Element {
     this.footLength = Measurements.footLength(friendo)
     this.footHeight = Measurements.footHeight(friendo)
     this.armOffset = this.computeArmTethers(friendo)
+    this.handCoord = this.computeHandCoord()
+  }
+
+  computeHandCoord() {
+    return {
+      x: this.armGirth / 2,
+      y: this.armLength,
+    }
   }
 
   drawCoreSegment(g, x, y) {
