@@ -7,7 +7,7 @@ import { left, down } from '../../../art/art-util'
 
 export const ID = 'state_core'
 
-export default class Idle extends Exercise {
+export default class Situp extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
