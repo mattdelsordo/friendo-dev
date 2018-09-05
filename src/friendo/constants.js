@@ -20,7 +20,7 @@ export const SPEAK_CHANCE = 5
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',
-  LEG: 'legs',
+  LEG: 'leg',
   ARM: 'arm',
   SIGHT: 'sight',
   HAIR: 'hair',
