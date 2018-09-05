@@ -1,18 +1,17 @@
-import State from './state'
-import { left, down } from '../../art/art-util'
-import phrasebook from '../phrases/fitness-phrases'
+/**
+ * Defines friendo behavior when performing core exercises
+ */
 
-export const ID = 'state_core'
+import Exercise from './exercise'
+import { left, down } from '../../../art/art-util'
+import { STATS } from '../../constants'
 
-export default class Idle extends State {
+export const ID = `state_${STATS.CORE}`
+
+export default class Situp extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-
-    this.frame = 0
-
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
   }
 
   draw(g, x, y, friendo) {

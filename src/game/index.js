@@ -44,27 +44,27 @@ $(document)
           save(JSON.stringify(friendo))
         },
       })
-    $('#arms-range')
+    $('#arm-range')
       .on({
         input() {
-          $('#arms-num')
+          $('#arm-num')
             .html(this.value)
         },
         change() {
-          $('#arms-num')
+          $('#arm-num')
             .html(this.value)
           friendo.setStat(STATS.ARM, this.value)
           save(JSON.stringify(friendo))
         },
       })
-    $('#legs-range')
+    $('#leg-range')
       .on({
         input() {
-          $('#legs-num')
+          $('#leg-num')
             .html(this.value)
         },
         change() {
-          $('#legs-num')
+          $('#leg-num')
             .html(this.value)
           friendo.setStat(STATS.LEG, this.value)
           save(JSON.stringify(friendo))
@@ -191,14 +191,14 @@ $(document)
     $('#core-num')
       .html(friendo.stats[STATS.CORE])
 
-    $('#legs-range')
+    $('#leg-range')
       .val(friendo.stats[STATS.LEG])
-    $('#legs-num')
+    $('#leg-num')
       .html(friendo.stats[STATS.LEG])
 
-    $('#arms-range')
+    $('#arm-range')
       .val(friendo.stats[STATS.ARM])
-    $('#arms-num')
+    $('#arm-num')
       .html(friendo.stats[STATS.ARM])
 
     $('#sight-range')
