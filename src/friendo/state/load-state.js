@@ -31,6 +31,6 @@ export default (savedState, id) => {
       console.log('Loading leg training state')
       return new Leg(savedState)
     default:
-      throw new Error('Attempted to load invalid state.')
+      throw new Error(`Attempted to load invalid state '${id}'`)
   }
 }
