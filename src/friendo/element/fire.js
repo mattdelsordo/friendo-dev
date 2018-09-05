@@ -93,16 +93,19 @@ export default class Fire extends Element {
     this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
     this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
 
-    let speechX = x + 30
+    let speechX = 30
     // move speech more to right if hair too big
     if (friendo.stats[STATS.HAIR] === 10) speechX += 14
     else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
     else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
-    this.speak(g, speechX, y - 36, friendo) // handle speech
+    // this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
 
-    return { hair: y + hairY }
+    return {
+      hair: y + hairY,
+      speech: { y: y - 36, x: speechX },
+    }
   }
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
