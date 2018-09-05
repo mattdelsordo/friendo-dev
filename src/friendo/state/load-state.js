@@ -7,6 +7,7 @@ import Sleep, { ID as sleepID } from './sleep'
 import Pet, { ID as petID } from './pet'
 import Core, { ID as coreID } from './fitness/situp'
 import Leg, { ID as legID } from './fitness/squat'
+import Arm, { ID as armID } from './fitness/curl'
 
 export default (savedState, id) => {
   switch (id) {
@@ -30,6 +31,10 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading leg training state')
       return new Leg(savedState)
+    case armID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading arm training state')
+      return new Arm(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }
