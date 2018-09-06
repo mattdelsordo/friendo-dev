@@ -1,6 +1,6 @@
 mixin stateSetter(state)
-    label.btn.btn-secondary(for=`set-state-${state}`)
-        input(id=`set-state-${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
+    label.btn.btn-secondary(for=`set_state_${state}`)
+        input(id=`set_state_${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
         | #{state[0].toUpperCase() + state.slice(1)}
 
 -
@@ -9,7 +9,8 @@ mixin stateSetter(state)
       'sleep',
       'pet',
       'core',
-      'leg'
+      'leg',
+      'arm'
     ]
 
 #state-picker.border.p-1.mt-1

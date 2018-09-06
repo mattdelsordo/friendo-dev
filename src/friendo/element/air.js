@@ -48,6 +48,13 @@ export default class Air extends Element {
     }
   }
 
+  computeHandCoord() {
+    return {
+      x: 0,
+      y: this.armLength,
+    }
+  }
+
   drawCoreSegment(g, x, y) {
     drawOutlinedPolygon(g, [x, x - 25, x, x + 25], [y - 50, y - 25, y, y - 25])
 

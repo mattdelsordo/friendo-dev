@@ -184,6 +184,7 @@ $(document)
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
+    $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
 
     // display current stat values
     $('#core-range')
@@ -236,7 +237,7 @@ $(document)
 
     // configure speaking and blinking rates
     $('#blink-rate')
-      .val(friendo.state.speakRate)
+      .val(friendo.state.blinkRate)
       .on({
         input() {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
@@ -274,6 +275,8 @@ $(document)
         friendo.handleAction(this.value)
         save(JSON.stringify(friendo))
       })
+    // load state
+    $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
 
     // draw game to the screen at some interval
     setInterval(() => {
