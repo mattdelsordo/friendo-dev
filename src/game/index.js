@@ -237,7 +237,7 @@ $(document)
 
     // configure speaking and blinking rates
     $('#blink-rate')
-      .val(friendo.state.speakRate)
+      .val(friendo.state.blinkRate)
       .on({
         input() {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
