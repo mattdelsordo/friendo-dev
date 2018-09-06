@@ -184,6 +184,7 @@ $(document)
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
+    $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
 
     // display current stat values
     $('#core-range')
@@ -274,6 +275,8 @@ $(document)
         friendo.handleAction(this.value)
         save(JSON.stringify(friendo))
       })
+    // load state
+    $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
 
     // draw game to the screen at some interval
     setInterval(() => {
