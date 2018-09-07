@@ -21,23 +21,23 @@ export default class Petting extends State {
     switch (this.frame) {
       case 0:
         computedTethers = this.frame1(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hair)
+        this.handUp(g, x, computedTethers.hairY)
         break
       case 1:
         computedTethers = this.frame1(g, x, y, friendo)
-        this.handDown(g, x, computedTethers.hair)
+        this.handDown(g, x, computedTethers.hairY)
         break
       case 2:
         computedTethers = this.frame2(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hair)
+        this.handUp(g, x, computedTethers.hairY)
         break
       case 3:
         computedTethers = this.frame2(g, x, y, friendo)
-        this.handDown(g, x, computedTethers.hair)
+        this.handDown(g, x, computedTethers.hairY)
         break
       default:
         computedTethers = this.frame1(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hair)
+        this.handUp(g, x, computedTethers.hairY)
         break
     }
   }

@@ -29,26 +29,28 @@ export default class Groom extends Exercise {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
-    let hairY
+    let cT
+    /* eslint-disable prefer-destructuring */
     switch (this.frame) {
       case 2:
-        hairY = this.frame2(g, x, y, friendo).hair
-        rotateHairbrush(g, x + 26, hairY + 4, -0.25)
+        cT = this.frame2(g, x, y, friendo)
+        rotateHairbrush(g, x + 26 + (cT.hairXOffset || 0), cT.hairY + 4, -0.25)
         break
       case 3:
-        hairY = this.frame2(g, x, y, friendo).hair
-        rotateHairbrush(g, x + 28, hairY + 6, -0.25)
+        cT = this.frame2(g, x, y, friendo)
+        rotateHairbrush(g, x + 28 + (cT.hairXOffset || 0), cT.hairY + 6, -0.25)
         break
       case 1:
-        hairY = this.frame1(g, x, y, friendo).hair
-        rotateHairbrush(g, x + 22, hairY, -0.25)
+        cT = this.frame1(g, x, y, friendo)
+        rotateHairbrush(g, x + 22 + (cT.hairXOffset || 0), cT.hairY, -0.25)
         break
       case 0:
       default:
-        hairY = this.frame1(g, x, y, friendo).hair
-        rotateHairbrush(g, x + 24, hairY - 4, -0.25)
+        cT = this.frame1(g, x, y, friendo)
+        rotateHairbrush(g, x + 24 + (cT.hairXOffset || 0), cT.hairY - 4, -0.25)
         break
     }
+    /* eslint-enable prefer-destructuring */
   }
 
   frame1(g, x, y, friendo) {

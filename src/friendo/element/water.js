@@ -81,7 +81,7 @@ export default class WATER extends Element {
     const computedTethers = this.drawHeadSegment(g, x - 25, y - 44, friendo, doBlink)
     this.drawCoreSegment(g, x + 25, y - 44, friendo)
     this.drawCoreSegment(g, x, y, friendo)
-    return computedTethers
+    return Object.assign({}, computedTethers, { hairXOffset: -25 })
   }
 
   drawLvl2Core(g, x, y, friendo, doBlink) {

@@ -160,7 +160,7 @@ export default class Element {
     drawHookMarker(g, x, y)
 
     return {
-      hair: y + hairY,
+      hairY: y + hairY,
       speech: { y: y - 36, x: speechX },
     }
   }
