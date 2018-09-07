@@ -5,7 +5,7 @@
 import { drawOutlinedOval, drawLine } from '../art-util'
 
 export const WIRE_COLOR = 'maroon'
-export const LENS_COLOR = '#f8f8f840'
+export const LENS_COLOR = '#f8f8f850'
 
 const RIM_SIZE = 14
 
