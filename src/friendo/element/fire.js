@@ -4,6 +4,7 @@ import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawLine, drawOutlinedPolygon } from '../../art/art-util'
+import { oneLens, threeLens, twoLens } from '../../art/props/glasses'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -69,14 +70,24 @@ export default class Fire extends Element {
       this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      // doesn't need glasses to see anymore after 9
+      if (friendo.state.glasses && friendo.stats[STATS.SIGHT] < 10) threeLens(g, x, y + 3)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      if (friendo.state.glasses) twoLens(g, x, y + 3)
     } else {
       // default = 1 eye
       this.drawEye(g, x, y, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      if (friendo.state.glasses) oneLens(g, x, y)
     }
 
     drawHookMarker(g, x, y)
