@@ -4,7 +4,7 @@
  * Anchor in middle of dumbbell
  */
 
-import { drawOutlinedRect, drawOutlinedOval } from './art-util'
+import { drawOutlinedRect, drawOutlinedOval } from '../art-util'
 
 export const DUMBBELL_OUTLINE = 'purple'
 export const DUMBBELL_FILL = 'orchid'

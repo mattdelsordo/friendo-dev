@@ -2,14 +2,15 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
-import dumbbell from '../../../art/props/dumbbell'
+import { drawOpenBook } from '../../../art/props/book'
 
-export const ID = `state_${STATS.ARM}`
+export const ID = `state_${STATS.SIGHT}`
 
-export default class Curls extends Exercise {
+export default class ReadBook extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
+    this.glasses = true
   }
 
   draw(g, x, y, friendo) {
@@ -20,7 +21,7 @@ export default class Curls extends Exercise {
     switch (this.frame) {
       case 2:
       case 3:
-        this.frame1(g, x, y, friendo, 0.45, 0.05)
+        this.frame1(g, x, y, friendo, 0.40, 0.05)
         break
       case 0:
       case 1:
@@ -30,10 +31,11 @@ export default class Curls extends Exercise {
     }
   }
 
-  frame1(g, x, y, friendo, armAngle = 0.2, squat = 0) {
+  frame1(g, x, y, friendo, armAngle = 0.25, squatFactor = 0) {
     // pre-compute constants for drawing for ease of readability
     const { thighGap } = friendo.element
-    const bodyOffset = friendo.element.bodyOffset - (friendo.element.bodyOffset * squat)
+    const squatOffset = friendo.element.bodyOffset * squatFactor
+    const bodyOffset = friendo.element.bodyOffset - squatOffset
     const legBrush = friendo.element.legBrush(friendo)
     const armBrush = friendo.element.armBrush(friendo)
     const armOffset = {
@@ -44,18 +46,22 @@ export default class Curls extends Exercise {
     left(g, x - thighGap, y, legBrush) // left leg
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
-    right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
+    right(g, x + armOffset.x, y + (-armOffset.y + squatOffset), armBrush, 0.2)// right arm
 
-    const dumbbellBrush = (_g) => {
-      dumbbell(
-        _g,
-        friendo.element.handCoord.x,
-        friendo.element.handCoord.y,
-        friendo.element.armGirth,
-      )
-    }
-    left(g, x - armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // left dumbbell
-    right(g, x + armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // right dumbbell
+    // const dumbbellBrush = (_g) => {
+    //   dumbbell(
+    //     _g,
+    //     friendo.element.handCoord.x,
+    //     friendo.element.handCoord.y,
+    //     friendo.element.armGirth,
+    //   )
+    // }
+    // left(g, x - armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // left dumbbell
+    // right(g, x + armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // right dumbbell
+
+    left(g, x - armOffset.x, y - armOffset.y, (_g) => {
+      drawOpenBook(_g, friendo.element.handCoord.x, friendo.element.handCoord.y)
+    }, armAngle)
 
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)

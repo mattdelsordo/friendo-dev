@@ -1,9 +1,9 @@
 
 
-import { DOG_SKIN, DOG_OUTLINE } from './colors'
-import { drawOval, drawPolygon, drawLine } from './art-util'
-import { MAX_DOGS } from '../friendo/constants'
-import { drawHookMarker } from './hook-marker'
+import { DOG_SKIN, DOG_OUTLINE } from '../colors'
+import { drawOval, drawPolygon, drawLine } from '../art-util'
+import { MAX_DOGS } from '../../friendo/constants'
+import { drawHookMarker } from '../hook-marker'
 
 /**
  * Paints a dog on the canvas

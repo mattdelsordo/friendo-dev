@@ -8,6 +8,7 @@ import Pet, { ID as petID } from './pet'
 import Core, { ID as coreID } from './fitness/situp'
 import Leg, { ID as legID } from './fitness/squat'
 import Arm, { ID as armID } from './fitness/curl'
+import Sight, { ID as sightID } from './fitness/read'
 
 export default (savedState, id) => {
   switch (id) {
@@ -35,6 +36,10 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading arm training state')
       return new Arm(savedState)
+    case sightID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading sight raining state')
+      return new Sight(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }
