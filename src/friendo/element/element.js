@@ -5,6 +5,7 @@ import { drawHookMarker } from '../../art/hook-marker'
 import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/props/hair'
 import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
+import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -106,14 +107,24 @@ export default class Element {
       this.drawEye(g, x, y - 8, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x + 8, y, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      // doesn't need glasses to see anymore after 9
+      if (friendo.state.glasses && friendo.stats[STATS.SIGHT] < 10) threeLens(g, x, y)
     } else if (friendo.stats[STATS.SIGHT] > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
       this.drawEye(g, x + 8, y, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      if (friendo.state.glasses) twoLens(g, x, y)
     } else {
       // default = 1 eye
       this.drawEye(g, x, y, doBlink, friendo.state.isSmiling)
+
+      // handle glasses
+      if (friendo.state.glasses) oneLens(g, x, y)
     }
 
     drawHookMarker(g, x, y)

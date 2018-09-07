@@ -10,6 +10,7 @@ export default class ReadBook extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
+    this.glasses = true
   }
 
   draw(g, x, y, friendo) {
