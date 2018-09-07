@@ -2,7 +2,7 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
-import dumbbell from '../../../art/dumbbell'
+import dumbbell from '../../../art/props/dumbbell'
 
 export const ID = `state_${STATS.ARM}`
 

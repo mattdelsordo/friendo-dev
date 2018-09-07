@@ -1,6 +1,6 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
-import paintHand from '../../art/hand'
+import paintHand from '../../art/props/hand'
 
 export const ID = 'state_pet'
 

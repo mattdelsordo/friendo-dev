@@ -6,7 +6,7 @@
 /* eslint-disable no-console */
 
 import { STATS } from './constants'
-import paintDogs from '../art/dog'
+import paintDogs from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
 import {

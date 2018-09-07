@@ -1,4 +1,4 @@
-import { drawOval, drawLine } from './art-util'
+import { drawOval, drawLine } from '../art-util'
 
 /**
  Defines hair drawing routines

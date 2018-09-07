@@ -2,7 +2,7 @@
  * Draws a book for the friendo to hold during a
  */
 
-import { drawOutlinedRect, drawLine } from './art-util'
+import { drawOutlinedRect, drawLine } from '../art-util'
 
 export const BOOK_OUTLINE = 'saddlebrown'
 export const BOOK_FILL = 'sienna'

@@ -2,7 +2,7 @@ import { DEFAULT_SKIN, DEFAULT_OUTLINE } from '../../art/colors'
 import { STATS } from '../constants'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/hair'
+import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/props/hair'
 import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
 

@@ -2,7 +2,7 @@
  * Draws a hand to pet a friendo with
  */
 
-import { drawOutlinedRect } from './art-util'
+import { drawOutlinedRect } from '../art-util'
 
 const fingerHeight = 5
 const handWidth = 30
