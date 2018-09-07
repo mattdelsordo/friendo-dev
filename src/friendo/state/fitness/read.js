@@ -2,6 +2,7 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
+import { drawOpenBook } from '../../../art/book'
 
 export const ID = `state_${STATS.SIGHT}`
 
@@ -56,6 +57,10 @@ export default class ReadBook extends Exercise {
     // }
     // left(g, x - armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // left dumbbell
     // right(g, x + armOffset.x, y - armOffset.y, dumbbellBrush, armAngle) // right dumbbell
+
+    left(g, x - armOffset.x, y - armOffset.y, (_g) => {
+      drawOpenBook(_g, friendo.element.handCoord.x, friendo.element.handCoord.y)
+    }, armAngle)
 
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
