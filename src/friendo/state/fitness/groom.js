@@ -1,8 +1,21 @@
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
 import Exercise from './exercise'
+import drawHairbrush from '../../../art/props/hairbrush'
 
 export const ID = `state_${STATS.HAIR}`
+
+const rotateHairbrush = (g, x, y, angle = 0) => {
+  g.save()
+
+  g.translate(x, y)
+  g.rotate(Math.PI * angle)
+  g.translate(-x, -y)
+
+  drawHairbrush(g, x, y)
+
+  g.restore()
+}
 
 export default class Groom extends Exercise {
   constructor(savedState) {
@@ -16,14 +29,25 @@ export default class Groom extends Exercise {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
+    let hairY
     switch (this.frame) {
       case 2:
+        hairY = this.frame2(g, x, y, friendo).hair
+        rotateHairbrush(g, x + 26, hairY + 4, -0.25)
+        break
       case 3:
-        return this.frame2(g, x, y, friendo)
-      case 0:
+        hairY = this.frame2(g, x, y, friendo).hair
+        rotateHairbrush(g, x + 28, hairY + 6, -0.25)
+        break
       case 1:
+        hairY = this.frame1(g, x, y, friendo).hair
+        rotateHairbrush(g, x + 22, hairY, -0.25)
+        break
+      case 0:
       default:
-        return this.frame1(g, x, y, friendo)
+        hairY = this.frame1(g, x, y, friendo).hair
+        rotateHairbrush(g, x + 24, hairY - 4, -0.25)
+        break
     }
   }
 
@@ -44,6 +68,7 @@ export default class Groom extends Exercise {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -64,5 +89,6 @@ export default class Groom extends Exercise {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 }
