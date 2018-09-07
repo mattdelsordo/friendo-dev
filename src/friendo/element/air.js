@@ -90,7 +90,7 @@ export default class Air extends Element {
   drawLvl2Core(g, x, y, friendo, doBlink) {
     const computedTethers = this.drawHeadSegment(g, x - 30, y - 30, friendo, doBlink)
     this.drawCoreSegment(g, x, y, friendo)
-    return computedTethers
+    return Object.assign({}, computedTethers, { hairXOffset: -30 })
   }
 
   drawLvl1Core(g, x, y, friendo, doBlink) {

@@ -1,21 +1,30 @@
-mixin stateSetter(state)
-    label.btn.btn-secondary(for=`set_state_${state}`)
+mixin stateSetter(state, btnType)
+    label.btn(for=`set_state_${state}` class=`btn-${btnType}`)
         input(id=`set_state_${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
         | #{state[0].toUpperCase() + state.slice(1)}
 
+mixin stateSetterGroup(s, btnType)
+    .btn-group.btn-group-toggle.m-1(role='group')
+        each i in s
+            +stateSetter(i, btnType)
+
 -
     var states = [
-      'idle',
-      'sleep',
-      'pet',
-      'core',
-      'leg',
-      'arm',
-      'sight'
+        'idle',
+        'sleep',
+        'pet'
+    ]
+
+    var exercises = [
+        'core',
+        'leg',
+        'arm',
+        'sight',
+        'hair'
     ]
 
 #state-picker.border.p-1.mt-1
     h5 State:
-    .btn-group.btn-group-toggle(data-toggle='buttons')
-        each state in states
-            +stateSetter(state)
+    .btn-toolbar(data-toggle='buttons' role='toolbar')
+        +stateSetterGroup(states, 'info')
+        +stateSetterGroup(exercises, 'success')

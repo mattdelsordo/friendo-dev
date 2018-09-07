@@ -51,12 +51,12 @@ export const drawStevenHair = (g, x, y, level) => {
   // calculate oval size
   const curlSize = level * 4
   const curls = [
-    [x - ((curlSize / 2) - 8), y - (curlSize + 4)],
-    [x - ((curlSize / 2) + 12), y - (curlSize + 14)],
-    [x - ((curlSize / 2) + 8), y - (curlSize + 2)],
-    [x - ((curlSize / 2) - 10), y - (curlSize + 17)],
-    [x - ((curlSize / 2) + 9), y - (curlSize + 18)],
-    [x - ((curlSize / 2) - 2), y - curlSize],
+    [x - ((curlSize / 2) - 8), y - (curlSize - 8)],
+    [x - ((curlSize / 2) + 12), y - (curlSize - 8)],
+    [x - ((curlSize / 2) + 2), y - (curlSize - 16)],
+    [x - ((curlSize / 2) - 10), y - (curlSize - 5)],
+    [x - ((curlSize / 2) + 9), y - (curlSize - 4)],
+    [x - ((curlSize / 2)), y - (curlSize)],
   ]
   drawOval(g, curls[0][0], curls[0][1], curlSize, curlSize, true)
   drawOval(g, curls[1][0], curls[1][1], curlSize, curlSize, true)
@@ -64,8 +64,7 @@ export const drawStevenHair = (g, x, y, level) => {
   drawOval(g, curls[3][0], curls[3][1], curlSize, curlSize, true)
   drawOval(g, curls[4][0], curls[4][1], curlSize, curlSize, true)
   // this one just fills gaps in the middle of the design
-  // g.fillStyle = 'violet';
-  drawOval(g, curls[5][0], curls[5][1], curlSize + 5, curlSize + 5, true)
+  drawOval(g, curls[5][0], curls[5][1], curlSize + 4, curlSize + 4, true)
 
   // revert colors
   g.fillStyle = oldFill

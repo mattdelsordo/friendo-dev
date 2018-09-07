@@ -9,6 +9,7 @@ import Core, { ID as coreID } from './fitness/situp'
 import Leg, { ID as legID } from './fitness/squat'
 import Arm, { ID as armID } from './fitness/curl'
 import Sight, { ID as sightID } from './fitness/read'
+import Hair, { ID as hairID } from './fitness/groom'
 
 export default (savedState, id) => {
   switch (id) {
@@ -38,8 +39,12 @@ export default (savedState, id) => {
       return new Arm(savedState)
     case sightID:
       /* eslint-disable-next-line no-console */
-      console.log('Loading sight raining state')
+      console.log('Loading sight training state')
       return new Sight(savedState)
+    case hairID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading hair training state')
+      return new Hair(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }
