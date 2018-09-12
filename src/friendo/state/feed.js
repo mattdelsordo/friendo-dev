@@ -1,13 +1,9 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
 import phrasebook from '../phrases/feed-phrases'
-import { handWithFood } from '../../art/props/hand'
-import { PLATE_WIDTH, PLATE_HEIGHT, drawGenericFood } from '../../art/props/food'
+import { drawGenericFood } from '../../art/props/food'
 
 export const ID = 'state_feed'
-
-const HAND_X_OFFSET = PLATE_WIDTH / 2
-const HAND_Y_OFFSET = PLATE_HEIGHT * 2.5
 
 export default class Idle extends State {
   constructor(savedState) {
@@ -75,7 +71,7 @@ export default class Idle extends State {
   }
 
   drawFood(g, cT, frame) {
-    drawGenericFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, (10 - frame) / 10)
+    drawGenericFood(g, cT.mouth.x, cT.mouth.y + 20, (10 - frame) / 10)
   }
 
   frame1(g, x, y, friendo) {

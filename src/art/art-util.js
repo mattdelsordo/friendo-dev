@@ -50,6 +50,20 @@ export const drawLine = (g, x1, y1, x2, y2) => {
   g.stroke()
 }
 
+// draws a shape with rounded sides and straight top and bottom
+export const drawTube = (g, x, y, w, h) => {
+  const radius = w * 0.3
+  g.beginPath()
+  g.moveTo(x + radius, y)
+  g.lineTo((x + w) - radius, y)
+  g.quadraticCurveTo(x + w, y + (h / 2), (x + w) - radius, y + h)
+  g.lineTo(x + radius, y + h)
+  g.quadraticCurveTo(x, y + (h / 2), x + radius, y)
+  g.closePath()
+  g.fill()
+  g.stroke()
+}
+
 // draws text for a friendo's message
 export const drawSpeech = (g, x, y, text) => {
   g.font = SPEECH_STYLE
