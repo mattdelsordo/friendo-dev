@@ -130,16 +130,36 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
+  drawMouth(g, x, y, friendo) {
+    const MOUTH_START = x - 5
+    const MOUTH_LENGTH = 10
+    const MOUTH_OPEN_HEIGHT = 3
+
+    const tempFill = g.fillStyle
+    g.fillStyle = g.strokeStyle
+
+    if (friendo.state.mouthIsOpen) {
+      g.fillRect(MOUTH_START, y, MOUTH_LENGTH, MOUTH_OPEN_HEIGHT)
+    } else {
+      drawLine(g, MOUTH_START, y, MOUTH_START + MOUTH_LENGTH, y)
+    }
+
+    g.fillStyle = tempFill
+
+    return { mouth: { x: MOUTH_START + (MOUTH_LENGTH / 2), y } }
+  }
+
   drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
 
-    drawLine(g, x - 5, y, x + 5, y) // mouth
+    const mouthTether = this.drawMouth(g, x, y, friendo)// mouth
     drawLine(g, x - 1, y - 11, x - 1, y - 4) // vertical nose
     drawLine(g, x - 2, y - 4, x + 3, y - 4) // horizontal nose
     this.drawEyes(g, x, y - 14, friendo, doBlink)
 
     drawHookMarker(g, x, y)
+    return mouthTether
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
@@ -147,7 +167,7 @@ export default class Element {
 
     this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
-    this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
+    const mouthTethers = this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
     this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
 
     let speechX = 30
@@ -159,10 +179,10 @@ export default class Element {
 
     drawHookMarker(g, x, y)
 
-    return {
+    return Object.assign({}, {
       hairY: y + hairY,
       speech: { y: y - 36, x: speechX },
-    }
+    }, mouthTethers)
   }
 
   drawLvl5Core(g, x, y, friendo, doBlink) {

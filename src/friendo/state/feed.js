@@ -1,8 +1,12 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
 import phrasebook from '../phrases/feed-phrases'
+import { handWithFood } from '../../art/props/hand'
 
 export const ID = 'state_feed'
+
+const HAND_X_OFFSET = 35
+const HAND_Y_OFFSET = 18
 
 export default class Idle extends State {
   constructor(savedState) {
@@ -20,14 +24,30 @@ export default class Idle extends State {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
+    let cT
+    this.mouthIsOpen = true
+    this.isSmiling = false
     switch (this.frame) {
       case 2:
+        cT = this.frame2(g, x, y, friendo)
+        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, true)
+        break
       case 3:
-        return this.frame2(g, x, y, friendo)
-      case 0:
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, false)
+        break
       case 1:
+        cT = this.frame1(g, x, y, friendo)
+        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, true)
+        break
+      case 0:
       default:
-        return this.frame1(g, x, y, friendo)
+        this.mouthIsOpen = false
+        this.isSmiling = true
+        cT = this.frame1(g, x, y, friendo)
+        handWithFood(g, cT.mouth.x - HAND_X_OFFSET - 30, cT.mouth.y + HAND_Y_OFFSET, true)
+        break
     }
   }
 
@@ -48,6 +68,7 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -68,5 +89,6 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 }
