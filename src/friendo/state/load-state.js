@@ -11,6 +11,7 @@ import Arm, { ID as armID } from './fitness/curl'
 import Sight, { ID as sightID } from './fitness/read'
 import Hair, { ID as hairID } from './fitness/groom'
 import Feed, { ID as feedID } from './feed'
+import Taste, { ID as tasteID } from './fitness/munch'
 
 export default (savedState, id) => {
   switch (id) {
@@ -51,6 +52,10 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading hair training state')
       return new Hair(savedState)
+    case tasteID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading taste training state')
+      return new Taste(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }
