@@ -10,6 +10,7 @@ import Leg, { ID as legID } from './fitness/squat'
 import Arm, { ID as armID } from './fitness/curl'
 import Sight, { ID as sightID } from './fitness/read'
 import Hair, { ID as hairID } from './fitness/groom'
+import Feed, { ID as feedID } from './feed'
 
 export default (savedState, id) => {
   switch (id) {
@@ -25,6 +26,11 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading pet state')
       return new Pet(savedState)
+    case feedID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading feeding state')
+      return new Feed(savedState)
+
     case coreID:
       /* eslint-disable-next-line no-console */
       console.log('Loading core training state')

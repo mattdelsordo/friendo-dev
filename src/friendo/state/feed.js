@@ -1,45 +1,77 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
-import { drawHandDown as paintHand } from '../../art/props/hand'
+import phrasebook from '../phrases/feed-phrases'
+import { drawGenericFood } from '../../art/props/food'
 
-export const ID = 'state_pet'
+export const ID = 'state_feed'
 
-export default class Petting extends State {
+export default class Feed extends State {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-    this.frame = savedState.frame || 0
-    this.isSmiling = true
+
+    this.frame = 0
+
+    this.phrasebook = phrasebook
+    this.words = 'Yum'
+
+    this.frameTotal = 12
   }
 
   draw(g, x, y, friendo) {
     super.draw(g, x, y, friendo)
 
     // decide which frame shall be displayed
-    this.frame = (this.frame + 1) % 4
-    let computedTethers
+    this.frame = (this.frame + 1) % this.frameTotal
+
+    // state defaults
+    let cT
+    this.mouthIsOpen = true
+    this.isSmiling = false
+
     switch (this.frame) {
       case 0:
-        computedTethers = this.frame1(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hairY)
+      case 4:
+      case 8:
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
       case 1:
-        computedTethers = this.frame1(g, x, y, friendo)
-        this.handDown(g, x, computedTethers.hairY)
+      case 5:
+      case 9:
+        this.mouthIsOpen = false
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
       case 2:
-        computedTethers = this.frame2(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hairY)
+      case 6:
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
       case 3:
-        computedTethers = this.frame2(g, x, y, friendo)
-        this.handDown(g, x, computedTethers.hairY)
+      case 7:
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+
+
+      case 10:
+      case 11:
+        this.isSmiling = true
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
       default:
-        computedTethers = this.frame1(g, x, y, friendo)
-        this.handUp(g, x, computedTethers.hairY)
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
     }
+  }
+
+  drawFood(g, cT, frame) {
+    drawGenericFood(g, cT.mouth.x, cT.mouth.y + 20, (10 - frame) / 10)
   }
 
   frame1(g, x, y, friendo) {
@@ -57,14 +89,7 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(
-      g,
-      x,
-      y - bodyOffset,
-      friendo,
-      this.blink,
-      true,
-    )
+    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
     return computedTethers
   }
@@ -85,23 +110,8 @@ export default class Petting extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(
-      g,
-      x,
-      y - bodyOffset,
-      friendo,
-      this.blink,
-      true,
-    )
+    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
     return computedTethers
-  }
-
-  handUp(g, x, y) {
-    paintHand(g, x - 4, y - 3)
-  }
-
-  handDown(g, x, y) {
-    paintHand(g, x - 4, y + 1)
   }
 }
