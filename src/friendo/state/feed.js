@@ -5,7 +5,7 @@ import { drawGenericFood } from '../../art/props/food'
 
 export const ID = 'state_feed'
 
-export default class Idle extends State {
+export default class Feed extends State {
   constructor(savedState) {
     super(savedState)
     this.id = ID
