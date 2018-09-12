@@ -2,11 +2,12 @@ import State from './state'
 import { left, right } from '../../art/art-util'
 import phrasebook from '../phrases/feed-phrases'
 import { handWithFood } from '../../art/props/hand'
+import { PLATE_WIDTH, PLATE_HEIGHT, drawGenericFood } from '../../art/props/food'
 
 export const ID = 'state_feed'
 
-const HAND_X_OFFSET = 35
-const HAND_Y_OFFSET = 18
+const HAND_X_OFFSET = PLATE_WIDTH / 2
+const HAND_Y_OFFSET = PLATE_HEIGHT * 2.5
 
 export default class Idle extends State {
   constructor(savedState) {
@@ -17,38 +18,64 @@ export default class Idle extends State {
 
     this.phrasebook = phrasebook
     this.words = 'Yum'
+
+    this.frameTotal = 12
   }
 
   draw(g, x, y, friendo) {
     super.draw(g, x, y, friendo)
 
     // decide which frame shall be displayed
-    this.frame = (this.frame + 1) % 4
+    this.frame = (this.frame + 1) % this.frameTotal
+
+    // state defaults
     let cT
     this.mouthIsOpen = true
     this.isSmiling = false
+
     switch (this.frame) {
-      case 2:
-        cT = this.frame2(g, x, y, friendo)
-        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, true)
-        break
-      case 3:
-        this.mouthIsOpen = false
-        cT = this.frame2(g, x, y, friendo)
-        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, false)
+      case 0:
+      case 4:
+      case 8:
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
       case 1:
-        cT = this.frame1(g, x, y, friendo)
-        handWithFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, true)
-        break
-      case 0:
-      default:
+      case 5:
+      case 9:
         this.mouthIsOpen = false
-        this.isSmiling = true
         cT = this.frame1(g, x, y, friendo)
-        handWithFood(g, cT.mouth.x - HAND_X_OFFSET - 30, cT.mouth.y + HAND_Y_OFFSET, true)
+        this.drawFood(g, cT, this.frame)
+        break
+      case 2:
+      case 6:
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+      case 3:
+      case 7:
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+
+
+      case 10:
+      case 11:
+        this.isSmiling = true
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+      default:
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
         break
     }
+  }
+
+  drawFood(g, cT, frame) {
+    drawGenericFood(g, cT.mouth.x - HAND_X_OFFSET, cT.mouth.y + HAND_Y_OFFSET, (10 - frame) / 10)
   }
 
   frame1(g, x, y, friendo) {
