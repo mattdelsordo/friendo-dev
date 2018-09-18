@@ -1,6 +1,7 @@
-import { DOG_SKIN, DOG_OUTLINE } from '../colors'
-import { drawOval, drawPolygon, drawLine } from '../art-util'
+import { DOG_SKIN, DOG_OUTLINE, TONGUE_FILL, TONGUE_LINE } from '../colors'
+import { drawOval, drawPolygon, drawLine, drawOutlinedRect } from '../art-util'
 import { drawHookMarker } from '../hook-marker'
+import { LICK_CHANCE } from '../../friendo/constants'
 
 /**
  * Paints a dog on the canvas
@@ -11,6 +12,7 @@ const DOG_WIDTH = 30
 export class Dog {
   constructor() {
     this.tailAngle = -0.6
+    this.justLicked = false
   }
 
   paintTail(g, x, y) {
@@ -25,7 +27,7 @@ export class Dog {
     this.tailAngle = (Math.random() * Math.PI) / -5
   }
 
-  paint(g, x, y) {
+  paint(g, x, y, licking) {
     this.newWagAngle()
 
     g.fillStyle = DOG_SKIN
@@ -35,6 +37,19 @@ export class Dog {
     this.paintTail(g, x + 8, y - 8, this.tailAngle) // tail
     drawOval(g, x - 13, y - 5, 10, 5, true) // left foot
     drawOval(g, x + 3, y - 5, 10, 5, true) // right foot
+
+    // draw tongue if necessary
+    if (licking && !this.justLicked && Math.random() < LICK_CHANCE) {
+      this.justLicked = true
+      g.save()
+      g.fillStyle = TONGUE_FILL
+      g.strokeStyle = TONGUE_LINE
+
+      drawOutlinedRect(g, x - 1, y - 22, 3, 2)
+      g.restore()
+    } else {
+      this.justLicked = false
+    }
 
     g.fillStyle = DOG_OUTLINE
     // g.strokeStyle = DOG_OUTLINE;

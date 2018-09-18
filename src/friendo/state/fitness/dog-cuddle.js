@@ -6,11 +6,11 @@ import { Dog } from '../../../art/props/dog'
 export const ID = `state_${STATS.DOG}`
 
 const DOG_COORDS = [
-  { x: -33, y: 0 },
   { x: 32, y: 0 },
+  { x: -33, y: 0 },
   { x: 21, y: -60 },
   { x: -32, y: -100 },
-  { x: 34, y: -160 },
+  { x: 34, y: -146 },
 ]
 
 export default class DogCuddle extends Exercise {
@@ -27,23 +27,16 @@ export default class DogCuddle extends Exercise {
     this.frame = (this.frame + 1) % 4
     switch (this.frame) {
       case 2:
-        this.frame2(g, x, y, friendo)
-        this.drawDogs(g, x, y, friendo)
-        break
       case 3:
         this.frame2(g, x, y, friendo)
-        this.drawDogs(g, x, y, friendo, true)
         break
       case 1:
-        this.frame1(g, x, y, friendo)
-        this.drawDogs(g, x, y, friendo)
-        break
       case 0:
       default:
         this.frame1(g, x, y, friendo)
-        this.drawDogs(g, x, y, friendo, true)
         break
     }
+    this.drawDogs(g, x, y, friendo, true)
   }
 
   coreToDogs(coreLevel) {
@@ -57,7 +50,7 @@ export default class DogCuddle extends Exercise {
   // Draw dogs based on predefined coordinates
   drawDogs(g, x, y, friendo, lick) {
     for (let i = 0; i < this.coreToDogs(friendo.stats[STATS.CORE]); i += 1) {
-      this.dogs[i].paint(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, 0, lick)
+      this.dogs[i].paint(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, lick)
     }
   }
 
