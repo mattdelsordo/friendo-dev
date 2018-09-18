@@ -12,6 +12,7 @@ import Sight, { ID as sightID } from './fitness/read'
 import Hair, { ID as hairID } from './fitness/groom'
 import Feed, { ID as feedID } from './feed'
 import Taste, { ID as tasteID } from './fitness/munch'
+import Dog, { ID as dogID } from './fitness/dog-cuddle'
 
 export default (savedState, id) => {
   switch (id) {
@@ -56,6 +57,10 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading taste training state')
       return new Taste(savedState)
+    case dogID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading dog training state')
+      return new Dog(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }

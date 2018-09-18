@@ -6,6 +6,7 @@ export const PET_INCREMENT = 4
 
 // maximum amount of dogs on the screen
 export const MAX_DOGS = 5
+export const LICK_CHANCE = 0.5
 
 // time spent doing actions, in cycles of the game
 // (currently 4/sec)
