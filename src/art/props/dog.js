@@ -49,7 +49,7 @@ const wag = () => {
   for (let i = 0; i < MAX_DOGS; i += 1) dogPoints[i].angle = newWagAngle()
 }
 // paints a variable amount of dogs on the screen, based on
-export default (g, dogLevel, canvasW, canvasH) => {
+export const drawAllDogs = (g, dogLevel, canvasW, canvasH) => {
   // identify where the dogs aught to be drawn
   if (!dogPoints) {
     dogPoints = []
