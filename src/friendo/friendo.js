@@ -5,8 +5,8 @@
 
 /* eslint-disable no-console */
 
-import { STATS } from './constants'
-import { drawAllDogs as paintDogs } from '../art/props/dog'
+import { MAX_DOGS, STATS } from './constants'
+import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
 import {
@@ -77,9 +77,31 @@ export default class Friendo {
     console.log(`${stat} set to ${this.stats[stat]}`)
   }
 
+  // Initialize pet dogs for the eventuality of them existing
+  initializeDogs(canvasW, canvasH) {
+    this.petDogs = {
+      dog: [],
+      location: [],
+    }
+
+    for (let i = 0; i < MAX_DOGS; i += 1) {
+      this.petDogs.dog.push(new Dog())
+      this.petDogs.location.push({ x: calcDogX(0, canvasW), y: calcDogY(0, canvasH) })
+    }
+  }
+
   // draws the friendo to the context specified by g at specified coordinate
   draw(canvas, context, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
-    paintDogs(context, this.stats[STATS.DOG], canvas.width, canvas.height)
+    // draw dog(s)
+    if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
+    else {
+      const { dog, location } = this.petDogs
+      for (let i = 0, j = 0; j < this.stats[STATS.DOG]; j += 2, i += 1) {
+        dog[i].paint(context, location[i].x, location[i].y)
+      }
+    }
+
+    // draw the friendo
     this.state.draw(context, x, y, this)
   }
 

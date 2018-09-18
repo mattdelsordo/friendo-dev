@@ -1,7 +1,7 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
-import { paintDog } from '../../../art/props/dog'
+import { Dog } from '../../../art/props/dog'
 
 export const ID = `state_${STATS.DOG}`
 
@@ -17,6 +17,7 @@ export default class DogCuddle extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
+    this.dogs = [new Dog(), new Dog(), new Dog(), new Dog(), new Dog()]
   }
 
   draw(g, x, y, friendo) {
@@ -56,7 +57,7 @@ export default class DogCuddle extends Exercise {
   // Draw dogs based on predefined coordinates
   drawDogs(g, x, y, friendo, lick) {
     for (let i = 0; i < this.coreToDogs(friendo.stats[STATS.CORE]); i += 1) {
-      paintDog(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, 0, lick)
+      this.dogs[i].paint(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, 0, lick)
     }
   }
 
