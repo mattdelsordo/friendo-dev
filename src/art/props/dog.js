@@ -21,7 +21,7 @@ const dogTail = (g, x, y, angle) => {
   g.restore()
 }
 // paints a single dog
-const paintDog = (g, x, y, tail = -0.6) => {
+export const paintDog = (g, x, y, tail = -0.6, showTongue) => {
   g.fillStyle = DOG_SKIN
   g.strokeStyle = DOG_OUTLINE
   drawOval(g, x - 12, y - 41, 24, 24, true) // head
