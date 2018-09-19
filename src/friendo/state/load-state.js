@@ -13,6 +13,7 @@ import Hair, { ID as hairID } from './fitness/groom'
 import Feed, { ID as feedID } from './feed'
 import Taste, { ID as tasteID } from './fitness/munch'
 import Dog, { ID as dogID } from './fitness/dog-cuddle'
+import Meme, { ID as memeID } from './fitness/surf-web'
 
 export default (savedState, id) => {
   switch (id) {
@@ -61,6 +62,10 @@ export default (savedState, id) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading dog training state')
       return new Dog(savedState)
+    case memeID:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading meme training state')
+      return new Meme(savedState)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }
