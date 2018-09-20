@@ -1,7 +1,7 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { STATS } from '../../constants'
-import dumbbell from '../../../art/props/dumbbell'
+import { drawComputer } from '../../../art/props/computer'
 
 export const ID = `state_${STATS.MEME}`
 
@@ -27,6 +27,8 @@ export default class SurfWeb extends Exercise {
         this.frame1(g, x, y, friendo, 0.20)
         break
     }
+
+    drawComputer(g, x - 100, y)
   }
 
   frame1(g, x, y, friendo, armAngle = 0.2, squat = 0) {
