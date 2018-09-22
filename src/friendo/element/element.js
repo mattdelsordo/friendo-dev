@@ -25,6 +25,7 @@ export default class Element {
     this.footHeight = 0
     this.bodyOffset = this.legHeight
     this.armOffset = { xOffset: 0, yOffset: 0 }
+    this.handCoord = { x: 0, y: 0 }
   }
 
   toJSON() {

@@ -46,9 +46,10 @@ export default class Friendo {
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
-      // remember to recompute anchors
-      this.element.computeAnchors(this)
     }
+
+    // remember to recompute anchors
+    this.element.computeAnchors(this)
   }
 
   // converts ya boi to a JSON string

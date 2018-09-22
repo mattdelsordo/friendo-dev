@@ -64,6 +64,22 @@ export const drawTube = (g, x, y, w, h) => {
   g.stroke()
 }
 
+export const drawRoundedRect = (g, x, y, w, h, r) => {
+  g.beginPath()
+  g.moveTo(x + r, y)
+  g.lineTo((x + w) - r, y)
+  g.quadraticCurveTo(x + w, y, x + w, y + r)
+  g.lineTo(x + w, (y + h) - r)
+  g.quadraticCurveTo(x + w, y + h, (x + w) - r, y + h)
+  g.lineTo(x + r, y + h)
+  g.quadraticCurveTo(x, y + h, x, (y + h) - r)
+  g.lineTo(x, y + r)
+  g.quadraticCurveTo(x, y, x + r, y)
+  g.closePath()
+  g.fill()
+  g.stroke()
+}
+
 // draws text for a friendo's message
 export const drawSpeech = (g, x, y, text) => {
   g.font = SPEECH_STYLE
