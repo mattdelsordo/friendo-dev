@@ -62,8 +62,15 @@ export default class WATER extends Element {
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
     const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
-    this.drawCoreSegment(g, x - 44, y - 75, friendo)
-    this.drawCoreSegment(g, x + 44, y - 75, friendo)
+
+    // Only draw "shoulder pads" if the friendo HAS arms
+    if (friendo.stats[STATS.ARM] > 0) {
+      this.drawCoreSegment(g, x - 44, y - 75, friendo)
+      this.drawCoreSegment(g, x + 44, y - 75, friendo)
+    } else {
+      this.drawCoreSegment(g, x - 44, y - 75, friendo)
+      this.drawCoreSegment(g, x + 44, y - 25, friendo)
+    }
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
     return computedTethers
