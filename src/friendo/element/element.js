@@ -189,8 +189,11 @@ export default class Element {
   drawLvl5Core(g, x, y, friendo, doBlink) {
     const computedTethers = this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
 
-    this.drawCoreSegment(g, x - 50, y - 100, friendo)
-    this.drawCoreSegment(g, x + 50, y - 100, friendo)
+    // Only draw "shoulder pads" if the friendo HAS arms
+    if (friendo.stats[STATS.ARM] > 0) {
+      this.drawCoreSegment(g, x - 50, y - 100, friendo)
+      this.drawCoreSegment(g, x + 50, y - 100, friendo)
+    }
     this.drawCoreSegment(g, x, y - 100, friendo)
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
