@@ -1,34 +1,66 @@
-import State from './state'
-import { left, right } from '../../art/art-util'
-import phrasebook from '../phrases/idle-phrases'
+import Exercise from './exercise'
+import { left, right } from '../../../art/art-util'
+import { drawGenericFood } from '../../../art/props/food'
+import { STATS } from '../../constants'
 
-export const ID = 'state_idle'
+export const ID = `state_${STATS.TASTE}`
 
-export default class Idle extends State {
+export default class Munch extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
 
     this.frame = 0
-
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
+    this.frameTotal = 12
   }
 
   draw(g, x, y, friendo) {
     super.draw(g, x, y, friendo)
 
     // decide which frame shall be displayed
-    this.frame = (this.frame + 1) % 4
+    this.frame = (this.frame + 1) % this.frameTotal
+
+    // state defaults
+    let cT
+    this.mouthIsOpen = true
+    this.isSmiling = false
+
     switch (this.frame) {
-      case 2:
-      case 3:
-        return this.frame2(g, x, y, friendo)
       case 0:
+      case 4:
+      case 8:
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
       case 1:
+      case 5:
+      case 9:
+        this.mouthIsOpen = false
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+      case 2:
+      case 6:
+      case 10:
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
+      case 3:
+      case 7:
+      case 11:
+        this.mouthIsOpen = false
+        cT = this.frame2(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
       default:
-        return this.frame1(g, x, y, friendo)
+        cT = this.frame1(g, x, y, friendo)
+        this.drawFood(g, cT, this.frame)
+        break
     }
+  }
+
+  drawFood(g, cT, frame) {
+    drawGenericFood(g, cT.mouth.x, cT.mouth.y + 20, (10 - frame) / 10)
   }
 
   frame1(g, x, y, friendo) {
@@ -48,12 +80,13 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
     // pre-compute constants for drawing for ease of readability
     const { thighGap } = friendo.element
-    const bodyOffset = friendo.element.bodyOffset - (friendo.element.bodyOffset * 0.05)
+    const bodyOffset = friendo.element.bodyOffset - (friendo.element.bodyOffset * 0.1)
     const legBrush = friendo.element.legBrush(friendo)
     const armBrush = friendo.element.armBrush(friendo)
     const armOffset = {
@@ -68,5 +101,6 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 }

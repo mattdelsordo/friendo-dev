@@ -50,6 +50,36 @@ export const drawLine = (g, x1, y1, x2, y2) => {
   g.stroke()
 }
 
+// draws a shape with rounded sides and straight top and bottom
+export const drawTube = (g, x, y, w, h) => {
+  const radius = w * 0.3
+  g.beginPath()
+  g.moveTo(x + radius, y)
+  g.lineTo((x + w) - radius, y)
+  g.quadraticCurveTo(x + w, y + (h / 2), (x + w) - radius, y + h)
+  g.lineTo(x + radius, y + h)
+  g.quadraticCurveTo(x, y + (h / 2), x + radius, y)
+  g.closePath()
+  g.fill()
+  g.stroke()
+}
+
+export const drawRoundedRect = (g, x, y, w, h, r) => {
+  g.beginPath()
+  g.moveTo(x + r, y)
+  g.lineTo((x + w) - r, y)
+  g.quadraticCurveTo(x + w, y, x + w, y + r)
+  g.lineTo(x + w, (y + h) - r)
+  g.quadraticCurveTo(x + w, y + h, (x + w) - r, y + h)
+  g.lineTo(x + r, y + h)
+  g.quadraticCurveTo(x, y + h, x, (y + h) - r)
+  g.lineTo(x, y + r)
+  g.quadraticCurveTo(x, y, x + r, y)
+  g.closePath()
+  g.fill()
+  g.stroke()
+}
+
 // draws text for a friendo's message
 export const drawSpeech = (g, x, y, text) => {
   g.font = SPEECH_STYLE
@@ -93,6 +123,18 @@ export const right = (g, x, y, brush, angle = 0) => {
   g.rotate(Math.PI * (2 - angle))
   g.scale(-1, 1)
   brush(g)
+  g.restore()
+  drawHookMarker(g, x, y)
+}
+
+export const down = (g, brush, x, y) => {
+  g.save()
+  g.translate(x, y)
+  g.rotate(Math.PI / 2)
+  g.translate(-x, -y)
+
+  brush(g, x, y)
+
   g.restore()
   drawHookMarker(g, x, y)
 }

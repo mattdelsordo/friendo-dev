@@ -1,18 +1,27 @@
-import State from './state'
-import { left, right } from '../../art/art-util'
-import phrasebook from '../phrases/idle-phrases'
+import { left, right } from '../../../art/art-util'
+import { STATS } from '../../constants'
+import Exercise from './exercise'
+import drawHairbrush from '../../../art/props/hairbrush'
 
-export const ID = 'state_idle'
+export const ID = `state_${STATS.HAIR}`
 
-export default class Idle extends State {
+const rotateHairbrush = (g, x, y, angle = 0) => {
+  g.save()
+
+  g.translate(x, y)
+  g.rotate(Math.PI * angle)
+  g.translate(-x, -y)
+
+  drawHairbrush(g, x, y)
+
+  g.restore()
+}
+
+export default class Groom extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-
-    this.frame = 0
-
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
+    this.isSmiling = true
   }
 
   draw(g, x, y, friendo) {
@@ -20,15 +29,28 @@ export default class Idle extends State {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
+    let cT
+    /* eslint-disable prefer-destructuring */
     switch (this.frame) {
       case 2:
+        cT = this.frame2(g, x, y, friendo)
+        rotateHairbrush(g, x + 26 + (cT.hairXOffset || 0), cT.hairY + 4, -0.25)
+        break
       case 3:
-        return this.frame2(g, x, y, friendo)
-      case 0:
+        cT = this.frame2(g, x, y, friendo)
+        rotateHairbrush(g, x + 28 + (cT.hairXOffset || 0), cT.hairY + 6, -0.25)
+        break
       case 1:
+        cT = this.frame1(g, x, y, friendo)
+        rotateHairbrush(g, x + 22 + (cT.hairXOffset || 0), cT.hairY, -0.25)
+        break
+      case 0:
       default:
-        return this.frame1(g, x, y, friendo)
+        cT = this.frame1(g, x, y, friendo)
+        rotateHairbrush(g, x + 24 + (cT.hairXOffset || 0), cT.hairY - 4, -0.25)
+        break
     }
+    /* eslint-enable prefer-destructuring */
   }
 
   frame1(g, x, y, friendo) {
@@ -48,6 +70,7 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -68,5 +91,6 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 }

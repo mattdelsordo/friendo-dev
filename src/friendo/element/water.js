@@ -60,34 +60,46 @@ export default class WATER extends Element {
     drawHookMarker(g, x, y)
   }
 
-  drawLvl5Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 100, friendo)
-    this.drawCoreSegment(g, x - 44, y - 75, friendo)
-    this.drawCoreSegment(g, x + 44, y - 75, friendo)
+  drawLvl5Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
+
+    // Only draw "shoulder pads" if the friendo HAS arms
+    if (friendo.stats[STATS.ARM] > 0) {
+      this.drawCoreSegment(g, x - 44, y - 75, friendo)
+      this.drawCoreSegment(g, x + 44, y - 75, friendo)
+    } else {
+      this.drawCoreSegment(g, x - 44, y - 75, friendo)
+      this.drawCoreSegment(g, x + 44, y - 25, friendo)
+    }
     this.drawCoreSegment(g, x, y - 50, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
-  drawLvl4Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 88, friendo)
+  drawLvl4Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 88, friendo, doBlink)
     this.drawCoreSegment(g, x - 25, y - 44, friendo)
     this.drawCoreSegment(g, x + 25, y - 44, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
-  drawLvl3Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x - 25, y - 44, friendo)
+  drawLvl3Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x - 25, y - 44, friendo, doBlink)
     this.drawCoreSegment(g, x + 25, y - 44, friendo)
     this.drawCoreSegment(g, x, y, friendo)
+    return Object.assign({}, computedTethers, { hairXOffset: -25 })
   }
 
-  drawLvl2Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y - 50, friendo)
+  drawLvl2Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y - 50, friendo, doBlink)
     this.drawCoreSegment(g, x, y, friendo)
+    return computedTethers
   }
 
-  drawLvl1Core(g, x, y, friendo) {
-    this.drawHeadSegment(g, x, y, friendo)
+  drawLvl1Core(g, x, y, friendo, doBlink) {
+    const computedTethers = this.drawHeadSegment(g, x, y, friendo, doBlink)
+    return computedTethers
   }
 
   armBrush(friendo) {

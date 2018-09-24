@@ -44,27 +44,27 @@ $(document)
           save(JSON.stringify(friendo))
         },
       })
-    $('#arms-range')
+    $('#arm-range')
       .on({
         input() {
-          $('#arms-num')
+          $('#arm-num')
             .html(this.value)
         },
         change() {
-          $('#arms-num')
+          $('#arm-num')
             .html(this.value)
           friendo.setStat(STATS.ARM, this.value)
           save(JSON.stringify(friendo))
         },
       })
-    $('#legs-range')
+    $('#leg-range')
       .on({
         input() {
-          $('#legs-num')
+          $('#leg-num')
             .html(this.value)
         },
         change() {
-          $('#legs-num')
+          $('#leg-num')
             .html(this.value)
           friendo.setStat(STATS.LEG, this.value)
           save(JSON.stringify(friendo))
@@ -142,19 +142,37 @@ $(document)
 
     // name inputs
     $('#friendo-name')
-      .focusout(() => {
+      .focusout(function setFriendoName() {
         const content = this.value.trim()
-        if (content) {
+        if (content && content !== friendo.name) {
           friendo.name = content
           save(JSON.stringify(friendo))
         }
       })
+      .on('keypress', function setFriendoNameE(e) {
+        if (e.which === 13) {
+          const content = this.value.trim()
+          if (content && content !== friendo.name) {
+            friendo.name = content
+            save(JSON.stringify(friendo))
+          }
+        }
+      })
     $('#owner-name')
-      .focusout(() => {
+      .focusout(function setOwnerName() {
         const content = this.value.trim()
-        if (content) {
+        if (content && content !== friendo.owner) {
           friendo.owner = content
           save(JSON.stringify(friendo))
+        }
+      })
+      .on('keypress', function setOwnerNameE(e) {
+        if (e.which === 13) {
+          const content = this.value.trim()
+          if (content && content !== friendo.owner) {
+            friendo.owner = content
+            save(JSON.stringify(friendo))
+          }
         }
       })
 
@@ -166,6 +184,7 @@ $(document)
         friendo.setElement(this.value)
         save(JSON.stringify(friendo))
       })
+    $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
 
     // display current stat values
     $('#core-range')
@@ -173,14 +192,14 @@ $(document)
     $('#core-num')
       .html(friendo.stats[STATS.CORE])
 
-    $('#legs-range')
+    $('#leg-range')
       .val(friendo.stats[STATS.LEG])
-    $('#legs-num')
+    $('#leg-num')
       .html(friendo.stats[STATS.LEG])
 
-    $('#arms-range')
+    $('#arm-range')
       .val(friendo.stats[STATS.ARM])
-    $('#arms-num')
+    $('#arm-num')
       .html(friendo.stats[STATS.ARM])
 
     $('#sight-range')
@@ -218,7 +237,7 @@ $(document)
 
     // configure speaking and blinking rates
     $('#blink-rate')
-      .val(friendo.state.speakRate)
+      .val(friendo.state.blinkRate)
       .on({
         input() {
           $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
@@ -245,6 +264,19 @@ $(document)
       })
     $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
 
+
+    /**
+     * State toggler listeners
+     */
+    $('#state-picker input[type=radio]')
+    // Note: changing this to an arrow function leads to the 'this'
+    // in it being undefined
+      .change(function setState() {
+        friendo.handleAction(this.value)
+        save(JSON.stringify(friendo))
+      })
+    // load state
+    $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
 
     // draw game to the screen at some interval
     setInterval(() => {

@@ -1,0 +1,34 @@
+mixin stateSetter(state, btnType)
+    label.btn(for=`set_state_${state}` class=`btn-${btnType}`)
+        input(id=`set_state_${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
+        | #{state[0].toUpperCase() + state.slice(1)}
+
+mixin stateSetterGroup(s, btnType)
+    .btn-group.btn-group-toggle.m-1(role='group')
+        each i in s
+            +stateSetter(i, btnType)
+
+-
+    var states = [
+        'idle',
+        'sleep',
+        'pet',
+        'feed'
+    ]
+
+    var exercises = [
+        'core',
+        'leg',
+        'arm',
+        'sight',
+        'hair',
+        'taste',
+        'dog',
+        'meme'
+    ]
+
+#state-picker.border.p-1.mt-1
+    h5 State:
+    .btn-toolbar(data-toggle='buttons' role='toolbar')
+        +stateSetterGroup(states, 'info')
+        +stateSetterGroup(exercises, 'success')

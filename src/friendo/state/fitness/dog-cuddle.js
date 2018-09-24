@@ -1,18 +1,23 @@
-import State from './state'
-import { left, right } from '../../art/art-util'
-import phrasebook from '../phrases/idle-phrases'
+import Exercise from './exercise'
+import { left, right } from '../../../art/art-util'
+import { STATS } from '../../constants'
+import { Dog } from '../../../art/props/dog'
 
-export const ID = 'state_idle'
+export const ID = `state_${STATS.DOG}`
 
-export default class Idle extends State {
+const DOG_COORDS = [
+  { x: 32, y: 0 },
+  { x: -33, y: 0 },
+  { x: 21, y: -60 },
+  { x: -32, y: -100 },
+  { x: 34, y: -146 },
+]
+
+export default class DogCuddle extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-
-    this.frame = 0
-
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
+    this.dogs = [new Dog(), new Dog(), new Dog(), new Dog(), new Dog()]
   }
 
   draw(g, x, y, friendo) {
@@ -23,11 +28,29 @@ export default class Idle extends State {
     switch (this.frame) {
       case 2:
       case 3:
-        return this.frame2(g, x, y, friendo)
-      case 0:
+        this.frame2(g, x, y, friendo)
+        break
       case 1:
+      case 0:
       default:
-        return this.frame1(g, x, y, friendo)
+        this.frame1(g, x, y, friendo)
+        break
+    }
+    this.drawDogs(g, x, y, friendo, true)
+  }
+
+  coreToDogs(coreLevel) {
+    if (coreLevel > 8) return 5
+    else if (coreLevel > 6) return 4
+    else if (coreLevel > 4) return 3
+    else if (coreLevel > 2) return 2
+    return 1
+  }
+
+  // Draw dogs based on predefined coordinates
+  drawDogs(g, x, y, friendo, lick) {
+    for (let i = 0; i < this.coreToDogs(friendo.stats[STATS.CORE]); i += 1) {
+      this.dogs[i].paint(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, lick)
     }
   }
 
@@ -48,6 +71,7 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -68,5 +92,6 @@ export default class Idle extends State {
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
     const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 }

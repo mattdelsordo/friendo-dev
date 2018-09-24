@@ -1,18 +1,15 @@
 import State from './state'
 import { left, right } from '../../art/art-util'
-import phrasebook from '../phrases/idle-phrases'
+import { drawHandDown as paintHand } from '../../art/props/hand'
 
-export const ID = 'state_idle'
+export const ID = 'state_pet'
 
-export default class Idle extends State {
+export default class Petting extends State {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-
-    this.frame = 0
-
-    this.phrasebook = phrasebook
-    this.words = 'Hi'
+    this.frame = savedState.frame || 0
+    this.isSmiling = true
   }
 
   draw(g, x, y, friendo) {
@@ -20,14 +17,28 @@ export default class Idle extends State {
 
     // decide which frame shall be displayed
     this.frame = (this.frame + 1) % 4
+    let computedTethers
     switch (this.frame) {
-      case 2:
-      case 3:
-        return this.frame2(g, x, y, friendo)
       case 0:
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hairY)
+        break
       case 1:
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handDown(g, x, computedTethers.hairY)
+        break
+      case 2:
+        computedTethers = this.frame2(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hairY)
+        break
+      case 3:
+        computedTethers = this.frame2(g, x, y, friendo)
+        this.handDown(g, x, computedTethers.hairY)
+        break
       default:
-        return this.frame1(g, x, y, friendo)
+        computedTethers = this.frame1(g, x, y, friendo)
+        this.handUp(g, x, computedTethers.hairY)
+        break
     }
   }
 
@@ -46,8 +57,16 @@ export default class Idle extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(
+      g,
+      x,
+      y - bodyOffset,
+      friendo,
+      this.blink,
+      true,
+    )
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
   }
 
   frame2(g, x, y, friendo) {
@@ -66,7 +85,23 @@ export default class Idle extends State {
     right(g, x + thighGap, y, legBrush) // right leg
     left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
     right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
+    const computedTethers = friendo.element.drawCore(
+      g,
+      x,
+      y - bodyOffset,
+      friendo,
+      this.blink,
+      true,
+    )
     friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
+    return computedTethers
+  }
+
+  handUp(g, x, y) {
+    paintHand(g, x - 4, y - 3)
+  }
+
+  handDown(g, x, y) {
+    paintHand(g, x - 4, y + 1)
   }
 }
