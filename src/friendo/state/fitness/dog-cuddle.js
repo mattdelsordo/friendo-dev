@@ -49,7 +49,7 @@ export default class DogCuddle extends Exercise {
 
   // Draw dogs based on predefined coordinates
   drawDogs(g, x, y, friendo, lick) {
-    for (let i = 0; i < this.coreToDogs(friendo.stats[STATS.CORE]); i += 1) {
+    for (let i = 0; i < this.coreToDogs(friendo.getStatStage(STATS.CORE)); i += 1) {
       this.dogs[i].paint(g, x + DOG_COORDS[i].x, y + DOG_COORDS[i].y, lick)
     }
   }

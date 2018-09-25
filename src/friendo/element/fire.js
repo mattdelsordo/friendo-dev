@@ -22,22 +22,22 @@ export default class Fire extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 42,
         yOffset: -70,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 42,
         yOffset: -50,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 22,
         yOffset: -50,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 22,
         yOffset: -20,
@@ -64,7 +64,7 @@ export default class Fire extends Element {
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
-    if (friendo.stats[STATS.SIGHT] > 6) {
+    if (friendo.getStatStage(STATS.SIGHT) > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
       this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
@@ -73,8 +73,8 @@ export default class Fire extends Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.stats[STATS.SIGHT] < 10) threeLens(g, x, y + 3)
-    } else if (friendo.stats[STATS.SIGHT] > 3) {
+      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 10) threeLens(g, x, y + 3)
+    } else if (friendo.getStatStage(STATS.SIGHT) > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
@@ -134,9 +134,9 @@ export default class Fire extends Element {
 
     let speechX = 30
     // move speech more to right if hair too big
-    if (friendo.stats[STATS.HAIR] === 10) speechX += 14
-    else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
-    else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
+    if (friendo.getStatStage(STATS.HAIR) === 10) speechX += 14
+    else if (friendo.getStatStage(STATS.HAIR) === 9) speechX += 10
+    else if (friendo.getStatStage(STATS.HAIR) === 8) speechX += 6
     // this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
@@ -213,7 +213,7 @@ export default class Fire extends Element {
 
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedPolygon(
           _g,
           [0, -(this.armGirth / 2), 0],
@@ -226,7 +226,7 @@ export default class Fire extends Element {
 
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedPolygon(
           _g,
           [0, 0, 0 - this.legGirth, 0, -(this.footLength / 2), -this.footLength],

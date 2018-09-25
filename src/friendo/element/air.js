@@ -21,22 +21,22 @@ export default class Air extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 56,
         yOffset: -100,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 54,
         yOffset: -44,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 50,
         yOffset: -10,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 24,
         yOffset: -18,
@@ -100,7 +100,7 @@ export default class Air extends Element {
 
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedPolygon(
           _g,
           [0, -(this.armGirth / 2), 0, (this.armGirth / 2)],
@@ -113,7 +113,7 @@ export default class Air extends Element {
 
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedPolygon(
           _g,
           [

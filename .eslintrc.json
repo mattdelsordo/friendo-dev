@@ -10,7 +10,8 @@
     "no-unexpected-multiline": 2,
     "compat/compat": 2,
     "no-param-reassign": 0,
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "no-underscore-dangle": 0
   },
   "env": {
     "browser": true

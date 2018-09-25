@@ -1,5 +1,5 @@
 // maximum level in a given element
-export const STAT_MAX = 10
+export const STAT_MAX = 100
 
 // how much energy petting restores
 export const PET_INCREMENT = 4

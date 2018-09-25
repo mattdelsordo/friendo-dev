@@ -26,22 +26,22 @@ export default class WATER extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 60,
         yOffset: -90,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 50,
         yOffset: -75,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 50,
         yOffset: -64,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 22,
         yOffset: -40,
@@ -64,7 +64,7 @@ export default class WATER extends Element {
     const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
 
     // Only draw "shoulder pads" if the friendo HAS arms
-    if (friendo.stats[STATS.ARM] > 0) {
+    if (friendo.getStatStage(STATS.ARM) > 0) {
       this.drawCoreSegment(g, x - 44, y - 75, friendo)
       this.drawCoreSegment(g, x + 44, y - 75, friendo)
     } else {
@@ -104,7 +104,7 @@ export default class WATER extends Element {
 
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedOval(_g, 0, 0, this.armGirth, this.armLength)
       }
     }
@@ -112,7 +112,7 @@ export default class WATER extends Element {
 
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedOval(
           _g,
           -this.footLength,

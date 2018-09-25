@@ -16,6 +16,7 @@ import {
   DEFAULT_ELEMENT,
   DEFAULT_HOOK,
   DEFAULT_STATE,
+  DEFAULT_STAT_STAGES,
 } from './default'
 
 export default class Friendo {
@@ -26,7 +27,9 @@ export default class Friendo {
     this.element = DEFAULT_ELEMENT
 
     // set stat defaults
-    this.stats = Object.assign({}, DEFAULT_STATS)
+    this._stats = Object.assign({}, DEFAULT_STATS)
+    // stat stages are cached rather than recomputed on each draw
+    this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
 
     // set state
     this.state = DEFAULT_STATE
@@ -41,14 +44,15 @@ export default class Friendo {
       // console.log(`Name: ${fromJSON.name}`)
       // console.log(`Owner: ${fromJSON.owner}`)
       // console.log(`Element: ${fromJSON.element}`)
-      this.stats = fromJSON.stats
+      this._stats = fromJSON.stats
       this.state = loadState(fromJSON.state, fromJSON.state.id)
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
     }
 
-    // remember to recompute anchors
+    // initialize stat stages and anchors
+    this.initializeStatStages()
     this.element.computeAnchors(this)
   }
 
@@ -58,7 +62,7 @@ export default class Friendo {
       name: this.name,
       owner: this.owner,
       element: this.element,
-      stats: this.stats,
+      stats: this._stats,
       state: this.state,
     }
   }
@@ -69,13 +73,33 @@ export default class Friendo {
     console.log(`Element set to ${this.element}`)
   }
 
+  setStatStage(stat) {
+    // stage 1 starts at 1, and then in 10 level increments
+    this._statStage[stat] = (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
+  }
+
+  initializeStatStages() {
+    Object.keys(this._stats).forEach((key) => {
+      this.setStatStage(key)
+    })
+  }
+
   // sets the value of a stat
   setStat(stat, value) {
-    console.log(`${this.toJSON()}`)
-    this.stats[stat] = value
+    this._stats[stat] = value
+    // recompute stage of stat
+    this.setStatStage(stat)
     // remember to recompute anchors for drawing
     this.element.computeAnchors(this)
-    console.log(`${stat} set to ${this.stats[stat]}`)
+  }
+
+  getStat(stat) {
+    return this._stats[stat]
+  }
+
+  // For calculating rank-ups, since they happen in 10 stat intervals
+  getStatStage(stat) {
+    return this._statStage[stat]
   }
 
   // Initialize pet dogs for the eventuality of them existing
@@ -97,7 +121,7 @@ export default class Friendo {
     if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
     else {
       const { dog, location } = this.petDogs
-      for (let i = 0, j = 0; j < this.stats[STATS.DOG]; j += 2, i += 1) {
+      for (let i = 0, j = 0; j < this.getStatStage(STATS.DOG); j += 2, i += 1) {
         dog[i].paint(context, location[i].x, location[i].y)
       }
     }

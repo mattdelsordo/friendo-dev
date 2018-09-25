@@ -2,7 +2,7 @@
     var stats = [
         {
             name: 'Core',
-            initial: 1,
+            initial: 0,
             points: [3, 5, 7, 9]
         },
         {
@@ -15,7 +15,7 @@
         },
         {
             name: 'Sight',
-            initial: 1,
+            initial: 0,
             points: [4, 7]
         },
         {
@@ -25,7 +25,7 @@
         },
         {
             name: 'Taste',
-            initial: 1,
+            initial: 0,
         },
         {
             name: 'Dog Affinity',
@@ -34,7 +34,7 @@
         },
         {
             name: 'Meme Tolerance',
-            initial: 1,
+            initial: 0,
         },
     ]
 
@@ -45,10 +45,11 @@ mixin statSlider(stat)
         input.mr-1.ml-1.align-bottom(
             type='range'
             min=stat.initial
-            max=10,
+            max=100,
             value=stat.initial
             id=`${statId}-range`
             list=`${statId}-list`
+            step=10
         )
         if stat.points
             datalist(id=`${statId}-list`)
