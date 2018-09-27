@@ -30,6 +30,9 @@ export const STATS = Object.freeze({
   MEME: 'meme',
 })
 
+// maximum total level
+export const LEVEL_MAX = (Object.keys(STATS).length * 99) + 1
+
 // energy cost per exercise
 export const EXP_COST = Object.freeze({
   [STATS.CORE]: 1,

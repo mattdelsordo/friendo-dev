@@ -10,6 +10,8 @@ import Idle from './state/idle'
 export const DEFAULT_NAME = 'Friendtholemew'
 export const DEFAULT_OWNER = 'Mrot'
 
+export const DEFAULT_LEVEL = 0
+
 export const DEFAULT_STATS = {
   [STATS.CORE]: 0,
   [STATS.LEG]: 0,
