@@ -59,7 +59,7 @@ mixin statSlider(stat)
                     option= point
         span(id=`${statId}-num`)= stat.initial
 
-.border.p-1.mt-1
+.border.p-1.mt-1#stat-sliders
     h5 Stats:
     each stat in stats
         +statSlider(stat)

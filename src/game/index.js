@@ -135,6 +135,16 @@ $(document)
           save(JSON.stringify(friendo))
         },
       })
+    // update level on stat change
+    $('#stat-sliders input').change(() => {
+      $('#level-display').html(` ${friendo.level}`)
+      /* eslint-disable-next-line no-restricted-globals */
+      if (isNaN(friendo.level)) {
+        $('#level-display').css('color', 'gold')
+      } else {
+        $('#level-display').css('color', 'black')
+      }
+    })
 
     // handle hook marker toggle
     $('#hook-marker-toggle')
@@ -185,6 +195,15 @@ $(document)
         save(JSON.stringify(friendo))
       })
     $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
+
+    // initialize level display
+    $('#level-display').html(` ${friendo.level}`)
+    /* eslint-disable-next-line no-restricted-globals */
+    if (isNaN(friendo.level)) {
+      $('#level-display').css('color', 'gold')
+    } else {
+      $('#level-display').css('color', 'black')
+    }
 
     // display current stat values
     $('#core-range')
