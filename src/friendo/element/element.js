@@ -294,9 +294,9 @@ export default class Element {
     // this draws it to the 'underside' of the canvas
     g.globalCompositeOperation = 'destination-over'
     if (friendo.getStatStage(STATS.HAIR) > 7) {
-      drawLusciousHairBack(g, x, y, friendo.getStatStage(STATS.HAIR))
+      drawLusciousHairBack(g, x, y, friendo.getStat(STATS.HAIR))
     } else if (friendo.getStatStage(STATS.HAIR) > 3) {
-      drawStevenHair(g, x, y, friendo.getStatStage(STATS.HAIR))
+      drawStevenHair(g, x, y, friendo.getStat(STATS.HAIR))
     }
     g.restore()
     drawHookMarker(g, x, y)
@@ -305,9 +305,9 @@ export default class Element {
   // hair that gets painted in front of the head segment
   drawFrontHair(g, x, y, friendo) {
     if (friendo.getStatStage(STATS.HAIR) > 7) {
-      drawLusciousHairFront(g, x, y, friendo.getStatStage(STATS.HAIR))
+      drawLusciousHairFront(g, x, y, friendo.getStat(STATS.HAIR))
     } else if (friendo.getStatStage(STATS.HAIR) > 0 && friendo.getStatStage(STATS.HAIR) < 4) {
-      drawDiglettHair(g, x, y, friendo.getStatStage(STATS.HAIR))
+      drawDiglettHair(g, x, y, friendo.getStat(STATS.HAIR))
     }
 
     drawHookMarker(g, x, y)
