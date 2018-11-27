@@ -3883,6 +3883,11 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
 
+jsmidgen@~0.1.4:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/jsmidgen/-/jsmidgen-0.1.5.tgz#ad0afd6375eb12f51064025393ce3baec380585d"
+  integrity sha1-rQr9Y3XrEvUQZAJTk847rsOAWF0=
+
 json-buffer@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/json-buffer/-/json-buffer-3.0.0.tgz#5b1f397afc75d677bde8bcfc0e47e1f9a3d9a898"
@@ -5711,6 +5716,14 @@ scoped-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/scoped-regex/-/scoped-regex-1.0.0.tgz#a346bb1acd4207ae70bd7c0c7ca9e566b6baddb8"
 
+scribbletune@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/scribbletune/-/scribbletune-1.9.2.tgz#6cbbd9604579736dee8685f658c6bcc2faa29140"
+  integrity sha512-LrBJ83vItWuIlq/oqfOcYsR00U4hpe3RmEhV00oxIP+PxqKcXfj0FfYqhJ7RPu0sbN1amq0YAedx8zlOMRzPXA==
+  dependencies:
+    jsmidgen "~0.1.4"
+    tonal "^2.0.0"
+
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
@@ -6343,6 +6356,94 @@ to-regex@^3.0.1, to-regex@^3.0.2:
 token-stream@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/token-stream/-/token-stream-0.0.1.tgz#ceeefc717a76c4316f126d0b9dbaa55d7e7df01a"
+
+tonal-array@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-array/-/tonal-array-2.1.2.tgz#50db7e09b94de4c59f4be414ac6d83d3612c0873"
+  integrity sha512-itFzicmDy4/ZsrrC2OSqQHNFJAgDCUOqtlSa1H3s4EeUSZFShZfdDGGiHuWaOt2Ybhf30a4zNkeHplBbzU4pKQ==
+  dependencies:
+    tonal-note "^2.1.2"
+
+tonal-chord@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-chord/-/tonal-chord-2.1.2.tgz#331fcb9e6b995fcd7b76dd1f46a8b82a578d0f48"
+  integrity sha512-TglYj3JBZgJBz/mIA34PtQENrsw9nFU3PDM69h2y6KAv2vbQ44097kxzHqkMg9+IS/HGksgUC7xW6L52jECt2w==
+  dependencies:
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal-dictionary@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-dictionary/-/tonal-dictionary-2.1.2.tgz#4a72eb3d561a331580ad3019eb42dc0b6610b3db"
+  integrity sha512-aBxLx0ues6ekFFQsfD2s2VL+YCOD1Szls2Ne+j2mQyTWsPKE18PiDUZ4YA0Ytr7TeefgduINQRil26jFhsG7QQ==
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal-distance@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-distance/-/tonal-distance-2.1.2.tgz#a53b21d61a588ec31cf081e6acd06b0ac2d317e1"
+  integrity sha512-0AeogWBIoQMcoW+zEgPHSHfwsLJ/sksYoEaCDYQBNSvYXXtVyMxAM+FSmyP3CEZV/2oirAN7TFRTmc8ORA9f3Q==
+  dependencies:
+    tonal-interval "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-interval@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-interval/-/tonal-interval-2.1.2.tgz#620ef64e302ef193bd2a9368142c2132c0b8ed16"
+  integrity sha512-qSVezmPdwim+2QmEfjLGFWMB0pAk55ppWP9siTGd3Wby1TNxkKTuVXE8dzZBzEvbhZDs8bblz3kPmtPNNe9Xrg==
+
+tonal-key@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-key/-/tonal-key-2.1.2.tgz#51f7c0c931c0d6be26e7ade9f3954fa2161778ec"
+  integrity sha512-m7K/9RK5c9xhL4QLKVi8uKesrYOrhOKn0ifYHXEWWxZ+QA8p5HOUiIf+TMFEmiij9BYnuVz9hBhzl5ESOEsdMg==
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-note@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-note/-/tonal-note-2.1.2.tgz#8fdddb775168e918931a74a256e7810c730ebcac"
+  integrity sha512-PP/h5+j4O1b1X3Gk++yJLE6yABRrksxt2CpqYMitdNhn+Hgd5UfMwlZALNVaZZTGGwksKaHn1h61rY+Ab/HCaQ==
+
+tonal-pcset@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-pcset/-/tonal-pcset-2.1.2.tgz#c6b33b3016b08bcdc36dd7772208ecaecc47b449"
+  integrity sha512-UkDzCCtoNE1NSerbt3PUtroz2lf4lPbFgrkaveKBDqqxTu6F1oaukpoehHES4s5+rKY7UzanV8Kr4lfVlrZzCA==
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-interval "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-scale@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-scale/-/tonal-scale-2.1.2.tgz#b352e34c63187543753447cd32aaa57df2c711a6"
+  integrity sha512-8OOwz3legz8xGgBWelXxidE7ZOuZNrSf/xmxbwh41K/8gnL8BIueMPXXkdN0y9yplAhnajc8k+YzO1ynxG86sw==
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal/-/tonal-2.1.2.tgz#7168ec683d40dd36004527f9e9a632fabab1f23a"
+  integrity sha512-CPtqcnb0p0ZtCn9VaxnEno2FSkmP85CnYqzX8le3QXmj8tpbOeNVbvw6gegPpj8wIkz9LlFV6duKZx+BNEnC7w==
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-chord "^2.1.2"
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-interval "^2.1.2"
+    tonal-key "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+    tonal-scale "^2.1.2"
 
 trim-newlines@^1.0.0:
   version "1.0.0"
