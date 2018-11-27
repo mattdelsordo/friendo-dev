@@ -121,7 +121,7 @@ export default class Friendo {
     if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
     else {
       const { dog, location } = this.petDogs
-      for (let i = 0, j = 0; j < this.getStatStage(STATS.DOG); j += 2, i += 1) {
+      for (let i = 0, j = 0; j < this.getStatStage(STATS.DOG) && i < dog.length; j += 2, i += 1) {
         dog[i].paint(context, location[i].x, location[i].y)
       }
     }
