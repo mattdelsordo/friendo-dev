@@ -102,7 +102,7 @@ export default class Element {
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
-    if (friendo.stats[STATS.SIGHT] > 6) {
+    if (friendo.getStatStage(STATS.SIGHT) > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
       this.drawEye(g, x, y - 8, doBlink, friendo.state.isSmiling)
@@ -111,8 +111,8 @@ export default class Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.stats[STATS.SIGHT] < 10) threeLens(g, x, y)
-    } else if (friendo.stats[STATS.SIGHT] > 3) {
+      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 10) threeLens(g, x, y)
+    } else if (friendo.getStatStage(STATS.SIGHT) > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
@@ -173,9 +173,9 @@ export default class Element {
 
     let speechX = 30
     // move speech more to right if hair too big
-    if (friendo.stats[STATS.HAIR] === 10) speechX += 14
-    else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
-    else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
+    if (friendo.getStatStage(STATS.HAIR) === 10) speechX += 14
+    else if (friendo.getStatStage(STATS.HAIR) === 9) speechX += 10
+    else if (friendo.getStatStage(STATS.HAIR) === 8) speechX += 6
     // this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
@@ -190,7 +190,7 @@ export default class Element {
     const computedTethers = this.drawHeadSegment(g, x, y - 150, friendo, doBlink)
 
     // Only draw "shoulder pads" if the friendo HAS arms
-    if (friendo.stats[STATS.ARM] > 0) {
+    if (friendo.getStatStage(STATS.ARM) > 0) {
       this.drawCoreSegment(g, x - 50, y - 100, friendo)
       this.drawCoreSegment(g, x + 50, y - 100, friendo)
     }
@@ -229,16 +229,16 @@ export default class Element {
 
   // core drawing delegated to child elements
   drawCore(g, x, y, friendo, doBlink) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       // 5-6 segments
       return this.drawLvl5Core(g, x, y, friendo, doBlink)
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       // 4 segments
       return this.drawLvl4Core(g, x, y, friendo, doBlink)
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       // 3 segments
       return this.drawLvl3Core(g, x, y, friendo, doBlink)
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       // 2 segments
       return this.drawLvl2Core(g, x, y, friendo, doBlink)
       /* eslint-disable-next-line */
@@ -253,7 +253,7 @@ export default class Element {
   // context and returns a function to draw the specific arm
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedRect(_g, 0, 0, this.armGirth, this.armLength)
       }
     }
@@ -263,7 +263,7 @@ export default class Element {
   // returns the function that properly draws the leg
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedPolygon(
           _g,
           [
@@ -293,17 +293,21 @@ export default class Element {
     // hair needs to be at the back of EVERYTHING
     // this draws it to the 'underside' of the canvas
     g.globalCompositeOperation = 'destination-over'
-    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairBack(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 3) drawStevenHair(g, x, y, friendo.stats[STATS.HAIR])
+    if (friendo.getStatStage(STATS.HAIR) > 7) {
+      drawLusciousHairBack(g, x, y, friendo.getStat(STATS.HAIR))
+    } else if (friendo.getStatStage(STATS.HAIR) > 3) {
+      drawStevenHair(g, x, y, friendo.getStat(STATS.HAIR))
+    }
     g.restore()
     drawHookMarker(g, x, y)
   }
 
   // hair that gets painted in front of the head segment
   drawFrontHair(g, x, y, friendo) {
-    if (friendo.stats[STATS.HAIR] > 7) drawLusciousHairFront(g, x, y, friendo.stats[STATS.HAIR])
-    else if (friendo.stats[STATS.HAIR] > 0 && friendo.stats[STATS.HAIR] < 4) {
-      drawDiglettHair(g, x, y, friendo.stats[STATS.HAIR])
+    if (friendo.getStatStage(STATS.HAIR) > 7) {
+      drawLusciousHairFront(g, x, y, friendo.getStat(STATS.HAIR))
+    } else if (friendo.getStatStage(STATS.HAIR) > 0 && friendo.getStatStage(STATS.HAIR) < 4) {
+      drawDiglettHair(g, x, y, friendo.getStat(STATS.HAIR))
     }
 
     drawHookMarker(g, x, y)

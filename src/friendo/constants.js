@@ -1,5 +1,5 @@
 // maximum level in a given element
-export const STAT_MAX = 10
+export const STAT_MAX = 100
 
 // how much energy petting restores
 export const PET_INCREMENT = 4
@@ -29,6 +29,9 @@ export const STATS = Object.freeze({
   DOG: 'dog',
   MEME: 'meme',
 })
+
+// maximum total level
+export const LEVEL_MAX = (Object.keys(STATS).length * 99) + 1
 
 // energy cost per exercise
 export const EXP_COST = Object.freeze({

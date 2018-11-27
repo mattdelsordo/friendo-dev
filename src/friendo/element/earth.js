@@ -19,22 +19,22 @@ export default class Earth extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 75,
         yOffset: -135,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 50,
         yOffset: -90,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 25,
         yOffset: -100,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 25,
         yOffset: -60,

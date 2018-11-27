@@ -27,7 +27,7 @@ export const drawLusciousHairBack = (g, x, y, level) => {
   const oldFill = g.fillStyle
   g.fillStyle = g.strokeStyle
 
-  const hairFactor = Math.ceil(level * 8.5)
+  const hairFactor = Math.ceil(level * 0.85)
   const halfHairFactor = (hairFactor / 2)
   drawOval(g, x - halfHairFactor, y - halfHairFactor, hairFactor, hairFactor, true)
   // g.fillStyle = 'violet';
@@ -49,7 +49,7 @@ export const drawStevenHair = (g, x, y, level) => {
   g.fillStyle = g.strokeStyle
 
   // calculate oval size
-  const curlSize = level * 4
+  const curlSize = level * 0.4
   const curls = [
     [x - ((curlSize / 2) - 8), y - (curlSize - 8)],
     [x - ((curlSize / 2) + 12), y - (curlSize - 8)],
@@ -70,8 +70,8 @@ export const drawStevenHair = (g, x, y, level) => {
   g.fillStyle = oldFill
 }
 export const drawDiglettHair = (g, x, y, level) => {
-  const xOffset = 4 + (level * 1.5)
-  const yOffset = 5 + (level * 2)
+  const xOffset = 4 + (level * 0.15)
+  const yOffset = 5 + (level * 0.2)
   drawLine(g, x, y, x, y - yOffset)
   drawLine(g, x, y, x - xOffset, y - yOffset)
   drawLine(g, x, y, x + xOffset, y - yOffset)
