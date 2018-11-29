@@ -246,6 +246,11 @@ $(document)
     $('#meme-num')
       .html(friendo.getStat(STATS.MEME))
 
+    // update zodiac sign
+    $('#zodiac-display')
+      .html(friendo.zodiac.symbol)
+      .popover({ content: `Born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
+
     // set names and element to defaults regardless of saved data
     $('#owner-name')
       .val(friendo.owner)

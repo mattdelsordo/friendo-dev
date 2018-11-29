@@ -13,7 +13,9 @@ html(lang='en')
                 .col
                     include ./components/name-input
                     +nameInput("Friendo Name", "Owner Name")
-                    include ./components/level
+                    .row
+                        include ./components/level
+                        include ./components/zodiac
                     include ./components/canvas
                     include ./components/hook-markers
                     include ./components/state-picker
