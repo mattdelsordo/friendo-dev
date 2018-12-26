@@ -3,6 +3,8 @@
  * bonuses certain stats get based on horoscope
  */
 
+import STATS from '../constants'
+
 class Zodiac {
   constructor(birthtime) {
     this.birthday = birthtime // this should be a Date object
@@ -31,6 +33,11 @@ export class Aries extends Zodiac {
     this.sign = 'Aries'
     this.symbol = '\u2648'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.SIGHT) return 1.1
+    return 1
+  }
 }
 
 export class Taurus extends Zodiac {
@@ -38,6 +45,11 @@ export class Taurus extends Zodiac {
     super(birthtime)
     this.sign = 'Taurus'
     this.symbol = '\u2649'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.SLEEP) return 1.2
+    return 1
   }
 }
 
@@ -47,6 +59,11 @@ export class Gemini extends Zodiac {
     this.sign = 'Gemini'
     this.symbol = '\u264A'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.ARM) return 1.1
+    return 1
+  }
 }
 
 export class Cancer extends Zodiac {
@@ -54,6 +71,11 @@ export class Cancer extends Zodiac {
     super(birthtime)
     this.sign = 'Cancer'
     this.symbol = '\u264B'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.MEME) return 1.1
+    return 1
   }
 }
 
@@ -63,6 +85,11 @@ export class Leo extends Zodiac {
     this.sign = 'Leo'
     this.symbol = '\u264C'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.CORE) return 1.1
+    return 1
+  }
 }
 
 export class Virgo extends Zodiac {
@@ -70,6 +97,11 @@ export class Virgo extends Zodiac {
     super(birthtime)
     this.sign = 'Virgo'
     this.symbol = '\u264D'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.TASTE) return 1.1
+    return 1
   }
 }
 
@@ -79,6 +111,19 @@ export class Libra extends Zodiac {
     this.sign = 'Libra'
     this.symbol = '\u264E'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.SIGHT
+      || stat === STATS.ARM
+      || stat === STATS.LEG
+      || stat === STATS.CORE
+      || stat === STATS.HAIR
+      || stat === STATS.TASTE
+      || stat === STATS.DOG
+      || stat === STATS.MEME
+    ) return 1.05
+    return 1
+  }
 }
 
 export class Scorpio extends Zodiac {
@@ -86,6 +131,11 @@ export class Scorpio extends Zodiac {
     super(birthtime)
     this.sign = 'Scorpio'
     this.symbol = '\u264F'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.PET) return 1.2
+    return 1
   }
 }
 
@@ -95,6 +145,11 @@ export class Sagittarius extends Zodiac {
     this.sign = 'Sagittarius'
     this.symbol = '\u2650'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.LEG) return 1.1
+    return 1
+  }
 }
 
 export class Capricorn extends Zodiac {
@@ -102,6 +157,11 @@ export class Capricorn extends Zodiac {
     super(birthtime)
     this.sign = 'Capricorn'
     this.symbol = '\u2651'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.HAIR) return 1.1
+    return 1
   }
 }
 
@@ -111,6 +171,11 @@ export class Aquarius extends Zodiac {
     this.sign = 'Aquarius'
     this.symbol = '\u2652'
   }
+
+  getStatBonus(stat) {
+    if (stat === STATS.DOG) return 1.1
+    return 1
+  }
 }
 
 export class Pisces extends Zodiac {
@@ -118,5 +183,10 @@ export class Pisces extends Zodiac {
     super(birthtime)
     this.sign = 'Pisces'
     this.symbol = '\u2653'
+  }
+
+  getStatBonus(stat) {
+    if (stat === STATS.FOOD) return 1.2
+    return 1
   }
 }

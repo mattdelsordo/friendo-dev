@@ -28,6 +28,9 @@ export const STATS = Object.freeze({
   TASTE: 'taste',
   DOG: 'dog',
   MEME: 'meme',
+  SLEEP: 'sleep',
+  PET: 'pet',
+  FOOD: 'food',
 })
 
 // maximum total level
