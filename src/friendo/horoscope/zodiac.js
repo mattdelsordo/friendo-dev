@@ -14,7 +14,7 @@ class Zodiac {
   }
 
   toJSON() {
-    return this.birthday
+    return this.birthday.toString()
   }
 
   // Returns the modifier by which to MULTIPLY the relevant stat increase
