@@ -1,4 +1,4 @@
-import { DEFAULT_SKIN, DEFAULT_OUTLINE } from '../../art/colors'
+import { DEFAULT_SKIN, DEFAULT_OUTLINE, DEFAULT_EGG_SKIN, DEFAULT_EGG_OUTLINE } from '../../art/colors'
 import { STATS } from '../constants'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
@@ -39,6 +39,11 @@ export default class Element {
   setColors(g) {
     g.fillStyle = DEFAULT_SKIN
     g.strokeStyle = DEFAULT_OUTLINE
+  }
+
+  setEggColors(g) {
+    g.fillStyle = DEFAULT_EGG_SKIN
+    g.strokeStyle = DEFAULT_EGG_OUTLINE
   }
 
   // compute where arms should be tethered
@@ -225,6 +230,13 @@ export default class Element {
   drawLvl1Core(g, x, y, friendo, doBlink) {
     const computedTethers = this.drawHeadSegment(g, x, y, friendo, doBlink)
     return computedTethers
+  }
+
+  drawEgg(g, x, y) {
+    g.save()
+    this.setEggColors(g)
+    this.drawCoreSegment(g, x, y)
+    g.restore()
   }
 
   // core drawing delegated to child elements
