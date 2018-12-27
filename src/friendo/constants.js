@@ -18,6 +18,9 @@ export const TOTAL_EVENT_CHANCE = 100
 export const BLINK_CHANCE = 5
 export const SPEAK_CHANCE = 5
 
+// Only the first X stats are shown to the user, the rest are only used internally
+export const EXPOSED_STATS = 8
+
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',
@@ -35,7 +38,7 @@ export const STATS = Object.freeze({
 })
 
 // maximum total level
-export const LEVEL_MAX = (Object.keys(STATS).length * 99) + 1
+export const LEVEL_MAX = (EXPOSED_STATS * 99) + 1
 
 // energy cost per exercise
 export const EXP_COST = Object.freeze({

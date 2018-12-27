@@ -21,7 +21,6 @@ export const DEFAULT_STATS = {
   [STATS.TASTE]: 0,
   [STATS.DOG]: 0,
   [STATS.MEME]: 0,
-  [STATS.EGG]: 0,
 }
 
 export const DEFAULT_STAT_STAGES = {
@@ -33,7 +32,14 @@ export const DEFAULT_STAT_STAGES = {
   [STATS.TASTE]: 0,
   [STATS.DOG]: 0,
   [STATS.MEME]: 0,
-  [STATS.EGG]: 0,
+}
+
+export const DEFAULT_HIDDEN_STATS = {
+  [STATS.EGG]: 1,
+}
+
+export const DEFAULT_HIDDEN_STAT_STAGES = {
+  [STATS.EGG]: 1,
 }
 
 export const DEFAULT_ELEMENT = selectElement(ELEMENTS.EARTH)

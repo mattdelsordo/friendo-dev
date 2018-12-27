@@ -19,6 +19,8 @@ import {
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
   DEFAULT_LEVEL,
+  DEFAULT_HIDDEN_STATS,
+  DEFAULT_HIDDEN_STAT_STAGES,
 } from './default'
 
 export default class Friendo {
@@ -34,6 +36,9 @@ export default class Friendo {
     // stat stages are cached rather than recomputed on each draw
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
     this.level = DEFAULT_LEVEL
+    // hidden stats stored separately because they are only used internally
+    this._h_stats = Object.assign({}, DEFAULT_HIDDEN_STATS)
+    this._h_statStage = Object.assign({}, DEFAULT_HIDDEN_STAT_STAGES)
 
     // set state
     this.state = DEFAULT_STATE
@@ -49,6 +54,7 @@ export default class Friendo {
       // console.log(`Owner: ${fromJSON.owner}`)
       // console.log(`Element: ${fromJSON.element}`)
       this._stats = fromJSON.stats
+      this._h_stats = fromJSON.hstats
       this.state = loadState(fromJSON.state, fromJSON.state.id)
       this.name = fromJSON.name
       this.owner = fromJSON.owner
@@ -69,6 +75,7 @@ export default class Friendo {
       owner: this.owner,
       element: this.element,
       stats: this._stats,
+      hstats: this._h_stats,
       state: this.state,
       zodiac: this.zodiac,
     }
@@ -82,8 +89,15 @@ export default class Friendo {
 
   // stat stage is used to draw the friendo
   setStatStage(stat) {
-    // stage 1 starts at 1, and then in 10 level increments
-    this._statStage[stat] = (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
+    // differentiate between hidden and displayed stats
+    if (stat in this._stats) {
+      // stage 1 starts at 1, and then in 10 level increments
+      this._statStage[stat] =
+        (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
+    } else if (stat in this._h_stats) {
+      this._h_statStage[stat] =
+        (this._h_stats[stat] > 0 ? Math.floor(this._h_stats[stat] / 10) + 1 : 0)
+    } else throw new Error(`${stat} is not a valid stored stat!`)
   }
 
   // calls setStatStage on every stat
@@ -92,10 +106,14 @@ export default class Friendo {
     Object.keys(this._stats).forEach((key) => {
       this.setStatStage(key)
     })
+    Object.keys(this._h_stats).forEach((key) => {
+      this.setStatStage(key)
+    })
   }
 
   computeLevel() {
-    // sum stats but skip first level
+    // compute cumulative sum but skip the first level of each stat
+    // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
     const statSum = Object.values(this._stats).reduce((l, r) => Number(l) + (r < 2 ? 0 : r - 1))
 
     // if the sum of all stats is less than one, skip rest of calcs
@@ -115,7 +133,9 @@ export default class Friendo {
 
   // sets the value of a stat
   setStat(stat, value) {
-    this._stats[stat] = value
+    if (stat in this._stats) this._stats[stat] = value
+    else if (stat in this._h_stats) this._h_stats[stat] = value
+    else throw new Error(`${stat} is not a valid stored stat!`)
     // recompute stage of stat
     this.setStatStage(stat)
     // recompute level
@@ -125,12 +145,16 @@ export default class Friendo {
   }
 
   getStat(stat) {
-    return this._stats[stat]
+    if (stat in this._stats) return this._stats[stat]
+    else if (stat in this._h_stats) return this._h_stats[stat]
+    throw new Error(`${stat} is not a valid stored stat!`)
   }
 
   // For calculating rank-ups, since they happen in 10 stat intervals
   getStatStage(stat) {
-    return this._statStage[stat]
+    if (stat in this._statStage) return this._statStage[stat]
+    else if (stat in this._h_statStage) return this._h_statStage[stat]
+    throw new Error(`${stat} is not a valid stored stat!`)
   }
 
   // Initialize pet dogs for the eventuality of them existing
