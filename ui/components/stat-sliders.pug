@@ -38,6 +38,12 @@
             name: 'Meme Tolerance',
             initial: 0,
         },
+        {
+            name: 'Egg Stage',
+            initial: 1,
+            max: 30,
+            points: [1,10,20,30]
+        }
     ]
 
 mixin statSlider(stat)
@@ -47,7 +53,7 @@ mixin statSlider(stat)
         input.mr-1.ml-1.align-bottom(
             type='range'
             min=stat.initial
-            max=100,
+            max=`${stat.max||100}`,
             value=stat.initial
             id=`${statId}-range`
             list=`${statId}-list`
