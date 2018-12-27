@@ -1,5 +1,5 @@
 import { STATS } from '../constants'
-import { AIR_OUTLINE, AIR_SKIN } from '../../art/colors'
+import { AIR_OUTLINE, AIR_SKIN, AIR_EGG_OUTLINE, AIR_EGG_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
@@ -18,6 +18,11 @@ export default class Air extends Element {
   setColors(g) {
     g.fillStyle = AIR_SKIN
     g.strokeStyle = AIR_OUTLINE
+  }
+
+  setEggColors(g) {
+    g.fillStyle = AIR_EGG_SKIN
+    g.strokeStyle = AIR_EGG_OUTLINE
   }
 
   computeArmTethers(friendo) {

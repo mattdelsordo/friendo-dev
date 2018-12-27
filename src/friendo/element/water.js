@@ -1,5 +1,5 @@
 import { STATS } from '../constants'
-import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
+import { WATER_OUTLINE, WATER_SKIN, WATER_EGG_OUTLINE, WATER_EGG_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
@@ -18,6 +18,11 @@ export default class WATER extends Element {
   setColors(g) {
     g.fillStyle = WATER_SKIN
     g.strokeStyle = WATER_OUTLINE
+  }
+
+  setEggColors(g) {
+    g.fillStyle = WATER_EGG_SKIN
+    g.strokeStyle = WATER_EGG_OUTLINE
   }
 
   computeAnchors(friendo) {
