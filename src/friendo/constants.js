@@ -28,6 +28,7 @@ export const STATS = Object.freeze({
   TASTE: 'taste',
   DOG: 'dog',
   MEME: 'meme',
+  EGG: 'egg',
   SLEEP: 'sleep',
   PET: 'pet',
   FOOD: 'food',
@@ -46,6 +47,7 @@ export const EXP_COST = Object.freeze({
   [STATS.TASTE]: 2,
   [STATS.DOG]: 3,
   [STATS.MEME]: 4,
+  [STATS.EGG]: 1,
 })
 
 // time required for one excersize of a particular stat
@@ -58,4 +60,5 @@ export const WORKOUT_LENGTH = Object.freeze({
   [STATS.TASTE]: 5,
   [STATS.DOG]: 5,
   [STATS.MEME]: 5,
+  [STATS.EGG]: 1,
 })
