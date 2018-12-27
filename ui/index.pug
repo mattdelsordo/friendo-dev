@@ -13,11 +13,14 @@ html(lang='en')
                 .col
                     include ./components/name-input
                     +nameInput("Friendo Name", "Owner Name")
-                    include ./components/level
+                    .row
+                        include ./components/level
+                        include ./components/zodiac
                     include ./components/canvas
                     include ./components/hook-markers
                     include ./components/state-picker
                 .col-sm
                     include ./components/type-picker
+                    include ./components/birthday-picker
                     include ./components/stat-sliders
                     include components/constant-sliders

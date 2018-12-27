@@ -6,6 +6,7 @@ import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
 import { TICKRATE } from './game-config'
+import getZodiac from '../friendo/horoscope/get-zodiac'
 
 /**
  * Contains code to interface the user display with the friendo code.
@@ -246,6 +247,23 @@ $(document)
     $('#meme-num')
       .html(friendo.getStat(STATS.MEME))
 
+    /**
+     * Zodiac sign and birthday-picker
+     */
+    $('#zodiac-display')
+      .html(friendo.zodiac.symbol)
+      .popover({ content: `Born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
+
+    $('#birthday-calendar')
+      .change(function setBirthday() {
+        friendo.zodiac = getZodiac(this.value)
+        // update zodiac display
+        $('#zodiac-display').html(friendo.zodiac.symbol)
+        $('#zodiac-display').data('bs.popover').config.content = `Born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+
+        save(JSON.stringify(friendo))
+      })
+
     // set names and element to defaults regardless of saved data
     $('#owner-name')
       .val(friendo.owner)
@@ -296,6 +314,7 @@ $(document)
       })
     // load state
     $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
+
 
     // draw game to the screen at some interval
     setInterval(() => {

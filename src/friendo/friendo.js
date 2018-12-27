@@ -9,6 +9,7 @@ import { LEVEL_MAX, MAX_DOGS, STATS } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
+import getZodiac from './horoscope/get-zodiac'
 import {
   DEFAULT_NAME,
   DEFAULT_OWNER,
@@ -26,6 +27,7 @@ export default class Friendo {
     this.name = DEFAULT_NAME
     this.owner = DEFAULT_OWNER
     this.element = DEFAULT_ELEMENT
+    this.zodiac = getZodiac()
 
     // set stat defaults
     this._stats = Object.assign({}, DEFAULT_STATS)
@@ -51,6 +53,7 @@ export default class Friendo {
       this.name = fromJSON.name
       this.owner = fromJSON.owner
       this.element = selectElement(fromJSON.element)
+      this.zodiac = getZodiac(fromJSON.zodiac)
     }
 
     // initialize stat stages, level, and anchors
@@ -67,6 +70,7 @@ export default class Friendo {
       element: this.element,
       stats: this._stats,
       state: this.state,
+      zodiac: this.zodiac,
     }
   }
 
