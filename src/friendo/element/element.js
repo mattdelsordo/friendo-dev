@@ -267,10 +267,14 @@ export default class Element {
 
   drawEgg(g, x, y, friendo) {
     g.save()
+    // This is incredibly hacky but use head segment to compute tethers since
+    // head and egg are same size
+    const tethers = this.drawHeadSegment(g, x, y, friendo, true)
     this.setEggColors(g)
     this.drawCoreSegment(g, x, y)
     this.drawEggCracks(g, x, y, friendo)
     g.restore()
+    return tethers
   }
 
   // core drawing delegated to child elements
@@ -288,10 +292,13 @@ export default class Element {
       // 2 segments
       return this.drawLvl2Core(g, x, y, friendo, doBlink)
       /* eslint-disable-next-line */
-    } else {
+    } else if (friendo.getStatStage(STATS.CORE) > 0) {
       // 1 segment
       return this.drawLvl1Core(g, x, y, friendo, doBlink)
     }
+    // egg default, even though it's also a state, for redundancy
+    // it's kind of nightmarish but itll talk
+    return this.drawEgg(g, x, y, friendo)
   }
 
   // default arm is left
