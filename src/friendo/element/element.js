@@ -6,6 +6,7 @@ import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawSteve
 import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
 import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -232,10 +233,43 @@ export default class Element {
     return computedTethers
   }
 
-  drawEgg(g, x, y) {
+  // Egg cracks are factored out so they can be overridden individually
+  eggCrack1(g, x, y) {
+    crack1(g, x - 10, y - 50)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 25, y - 28)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 25, y - 10)
+  }
+  eggHalo(g, x, y) {
+    g.fillRect(x - 28, y - 53, 56, 56)
+  }
+  drawEggCracks(g, x, y, friendo) {
+    if (friendo.getStatStage(STATS.EGG) > 1) {
+      this.eggCrack1(g, x, y)
+    }
+
+    if (friendo.getStatStage(STATS.EGG) > 2) {
+      this.eggCrack2(g, x, y)
+      this.eggCrack3(g, x, y)
+    }
+
+    if (friendo.getStatStage(STATS.EGG) > 3) {
+      g.save()
+      g.globalCompositeOperation = 'destination-over'
+      g.fillStyle = 'orchid'
+      this.eggHalo(g, x, y)
+      g.restore()
+    }
+  }
+
+  drawEgg(g, x, y, friendo) {
     g.save()
     this.setEggColors(g)
     this.drawCoreSegment(g, x, y)
+    this.drawEggCracks(g, x, y, friendo)
     g.restore()
   }
 

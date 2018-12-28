@@ -25,6 +25,6 @@ export default class Egg extends State {
   }
 
   frame1(g, x, y, friendo) {
-    friendo.element.drawEgg(g, x, y)
+    friendo.element.drawEgg(g, x, y, friendo)
   }
 }

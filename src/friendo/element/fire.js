@@ -3,8 +3,9 @@ import { FIRE_SKIN, FIRE_OUTLINE, FIRE_EGG_OUTLINE, FIRE_EGG_SKIN } from '../../
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawLine, drawOutlinedPolygon } from '../../art/art-util'
+import { drawLine, drawOutlinedPolygon, drawPolygon } from '../../art/art-util'
 import { oneLens, threeLens, twoLens } from '../../art/props/glasses'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -240,5 +241,19 @@ export default class Fire extends Element {
         )
       }
     }
+  }
+
+  // Overridden egg-drawing methods
+  eggCrack1(g, x, y) {
+    crack1(g, x - 5, y - 34)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 18, y - 14)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 14, y)
+  }
+  eggHalo(g, x, y) {
+    drawPolygon(g, [x, x - 29, x + 29], [y - 49, y + 3, y + 3], true)
   }
 }
