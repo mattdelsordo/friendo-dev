@@ -34,6 +34,14 @@ export const DEFAULT_STAT_STAGES = {
   [STATS.MEME]: 0,
 }
 
+export const DEFAULT_HIDDEN_STATS = {
+  [STATS.EGG]: 1,
+}
+
+export const DEFAULT_HIDDEN_STAT_STAGES = {
+  [STATS.EGG]: 1,
+}
+
 export const DEFAULT_ELEMENT = selectElement(ELEMENTS.EARTH)
 export const DEFAULT_STATE = new Idle()
 

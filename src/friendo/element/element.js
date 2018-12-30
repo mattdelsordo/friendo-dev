@@ -1,4 +1,4 @@
-import { DEFAULT_SKIN, DEFAULT_OUTLINE } from '../../art/colors'
+import { DEFAULT_SKIN, DEFAULT_OUTLINE, DEFAULT_EGG_SKIN, DEFAULT_EGG_OUTLINE } from '../../art/colors'
 import { STATS } from '../constants'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
@@ -6,6 +6,7 @@ import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawSteve
 import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
 import * as Measurements from '../measurements'
 import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -39,6 +40,11 @@ export default class Element {
   setColors(g) {
     g.fillStyle = DEFAULT_SKIN
     g.strokeStyle = DEFAULT_OUTLINE
+  }
+
+  setEggColors(g) {
+    g.fillStyle = DEFAULT_EGG_SKIN
+    g.strokeStyle = DEFAULT_EGG_OUTLINE
   }
 
   // compute where arms should be tethered
@@ -227,6 +233,50 @@ export default class Element {
     return computedTethers
   }
 
+  // Egg cracks are factored out so they can be overridden individually
+  eggCrack1(g, x, y) {
+    crack1(g, x - 10, y - 50)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 25, y - 28)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 25, y - 10)
+  }
+  eggHalo(g, x, y) {
+    g.fillRect(x - 28, y - 53, 56, 56)
+  }
+  drawEggCracks(g, x, y, friendo) {
+    if (friendo.getStatStage(STATS.EGG) > 1) {
+      this.eggCrack1(g, x, y)
+    }
+
+    if (friendo.getStatStage(STATS.EGG) > 2) {
+      this.eggCrack2(g, x, y)
+      this.eggCrack3(g, x, y)
+    }
+
+    if (friendo.getStatStage(STATS.EGG) > 3) {
+      g.save()
+      g.globalCompositeOperation = 'destination-over'
+      g.fillStyle = 'orchid'
+      this.eggHalo(g, x, y)
+      g.restore()
+    }
+  }
+
+  drawEgg(g, x, y, friendo) {
+    g.save()
+    // This is incredibly hacky but use head segment to compute tethers since
+    // head and egg are same size
+    const tethers = this.drawHeadSegment(g, x, y, friendo, true)
+    this.setEggColors(g)
+    this.drawCoreSegment(g, x, y)
+    this.drawEggCracks(g, x, y, friendo)
+    g.restore()
+    return tethers
+  }
+
   // core drawing delegated to child elements
   drawCore(g, x, y, friendo, doBlink) {
     if (friendo.getStatStage(STATS.CORE) > 8) {
@@ -242,10 +292,13 @@ export default class Element {
       // 2 segments
       return this.drawLvl2Core(g, x, y, friendo, doBlink)
       /* eslint-disable-next-line */
-    } else {
+    } else if (friendo.getStatStage(STATS.CORE) > 0) {
       // 1 segment
       return this.drawLvl1Core(g, x, y, friendo, doBlink)
     }
+    // egg default, even though it's also a state, for redundancy
+    // it's kind of nightmarish but itll talk
+    return this.drawEgg(g, x, y, friendo)
   }
 
   // default arm is left

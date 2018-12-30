@@ -136,6 +136,19 @@ $(document)
           save(JSON.stringify(friendo))
         },
       })
+    $('#egg-range')
+      .on({
+        input() {
+          $('#egg-num')
+            .html(this.value)
+        },
+        change() {
+          $('#egg-num')
+            .html(this.value)
+          friendo.setStat(STATS.EGG, this.value)
+          save(JSON.stringify(friendo))
+        },
+      })
     // update level on stat change
     $('#stat-sliders input').change(() => {
       $('#level-display').html(` ${friendo.level}`)
@@ -246,6 +259,11 @@ $(document)
       .val(friendo.getStat(STATS.MEME))
     $('#meme-num')
       .html(friendo.getStat(STATS.MEME))
+
+    $('#egg-range')
+      .val(friendo.getStat(STATS.EGG))
+    $('#egg-num')
+      .html(friendo.getStat(STATS.EGG))
 
     /**
      * Zodiac sign and birthday-picker

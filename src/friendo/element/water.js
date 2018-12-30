@@ -1,9 +1,10 @@
 import { STATS } from '../constants'
-import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
+import { WATER_OUTLINE, WATER_SKIN, WATER_EGG_OUTLINE, WATER_EGG_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawOval, drawOutlinedOval } from '../../art/art-util'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies how a water friendo is drawn
@@ -18,6 +19,11 @@ export default class WATER extends Element {
   setColors(g) {
     g.fillStyle = WATER_SKIN
     g.strokeStyle = WATER_OUTLINE
+  }
+
+  setEggColors(g) {
+    g.fillStyle = WATER_EGG_SKIN
+    g.strokeStyle = WATER_EGG_OUTLINE
   }
 
   computeAnchors(friendo) {
@@ -137,5 +143,19 @@ export default class WATER extends Element {
         )
       }
     }
+  }
+
+  // Overridden egg-drawing methods
+  eggCrack1(g, x, y) {
+    crack1(g, x - 10, y - 48)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 24, y - 28)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 20, y - 10)
+  }
+  eggHalo(g, x, y) {
+    drawOval(g, x - 28, y - 53, 56, 56, true)
   }
 }
