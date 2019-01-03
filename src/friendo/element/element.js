@@ -27,6 +27,8 @@ export default class Element {
     this.bodyOffset = this.legHeight
     this.armOffset = { xOffset: 0, yOffset: 0 }
     this.handCoord = { x: 0, y: 0 }
+
+    this.hairY = -50
   }
 
   toJSON() {
@@ -170,12 +172,10 @@ export default class Element {
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
-    const hairY = -50
-
-    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
+    this.drawBackHair(g, x, y + this.hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
     const mouthTethers = this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
+    this.drawFrontHair(g, x, y + this.hairY, friendo) // front hair on top of head core
 
     let speechX = 30
     // move speech more to right if hair too big
@@ -187,7 +187,7 @@ export default class Element {
     drawHookMarker(g, x, y)
 
     return Object.assign({}, {
-      hairY: y + hairY,
+      hairY: y + this.hairY,
       speech: { y: y - 36, x: speechX },
     }, mouthTethers)
   }
