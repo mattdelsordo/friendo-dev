@@ -119,6 +119,11 @@ export default class Fire extends Element {
     return { mouth: { x: MOUTH_START + (MOUTH_LENGTH / 2), y } }
   }
 
+  // override to reposition hat
+  drawBirthday(g, x, y, friendo) {
+    super.drawBirthday(g, x, y + 16, friendo)
+  }
+
   drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment

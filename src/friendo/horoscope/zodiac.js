@@ -25,6 +25,17 @@ class Zodiac {
   getBirthday() {
     return this.birthday.toDateString()
   }
+
+  // returns true if it is the friendo's birthday
+  isBirthday() {
+    const today = new Date()
+    if (today.getMonth() === this.birthday.getMonth()
+      && today.getDate() === this.birthday.getDate()
+      && today.getFullYear() > this.birthday.getFullYear()) {
+      return true
+    }
+    return false
+  }
 }
 
 export class Aries extends Zodiac {
