@@ -36,6 +36,16 @@ class Zodiac {
     }
     return false
   }
+
+  // calculates the friendo's age
+  getAge() {
+    // convert difference in times to days
+    const days = (new Date() - this.birthday) / 86400000
+    if (days < 365) {
+      return `${Math.floor(days)} days`
+    }
+    return `${Math.floor(days / 365)} yrs.`
+  }
 }
 
 export class Aries extends Zodiac {

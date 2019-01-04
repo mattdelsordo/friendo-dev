@@ -270,14 +270,18 @@ $(document)
      */
     $('#zodiac-display')
       .html(friendo.zodiac.symbol)
-      .popover({ content: `Born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
+      .popover({ content: `${friendo.zodiac.getAge()} old - born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
+    // highlight if birthday
+    if (friendo.zodiac.isBirthday()) {
+      $('#zodiac-display').css('border-radius', '25px').css('border', '4px dotted gold')
+    }
 
     $('#birthday-calendar')
       .change(function setBirthday() {
         friendo.zodiac = getZodiac(this.value)
         // update zodiac display
         $('#zodiac-display').html(friendo.zodiac.symbol)
-        $('#zodiac-display').data('bs.popover').config.content = `Born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+        $('#zodiac-display').data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
 
         save(JSON.stringify(friendo))
       })
