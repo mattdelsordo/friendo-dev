@@ -26,6 +26,11 @@ export default class Air extends Element {
     g.strokeStyle = AIR_EGG_OUTLINE
   }
 
+  // override to reposition hat
+  drawBirthday(g, x, y, friendo) {
+    super.drawBirthday(g, x, y + 12, friendo)
+  }
+
   computeArmTethers(friendo) {
     if (friendo.getStatStage(STATS.CORE) > 8) {
       return {

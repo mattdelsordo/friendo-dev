@@ -15,6 +15,7 @@ export default class Fire extends Element {
   constructor() {
     super()
     this.id = ELEMENTS.FIRE
+    this.hairY = -42
   }
 
   setColors(g) {
@@ -118,6 +119,11 @@ export default class Fire extends Element {
     return { mouth: { x: MOUTH_START + (MOUTH_LENGTH / 2), y } }
   }
 
+  // override to reposition hat
+  drawBirthday(g, x, y, friendo) {
+    super.drawBirthday(g, x, y + 16, friendo)
+  }
+
   drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
@@ -129,28 +135,6 @@ export default class Fire extends Element {
 
     drawHookMarker(g, x, y)
     return mouthTether
-  }
-
-  drawHeadSegment(g, x, y, friendo, doBlink) {
-    const hairY = -42
-    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
-    this.drawCoreSegment(g, x, y, friendo) // head core
-    const mouthTethers = this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
-
-    let speechX = 30
-    // move speech more to right if hair too big
-    if (friendo.getStatStage(STATS.HAIR) === 10) speechX += 14
-    else if (friendo.getStatStage(STATS.HAIR) === 9) speechX += 10
-    else if (friendo.getStatStage(STATS.HAIR) === 8) speechX += 6
-    // this.speak(g, speechX, y - 36, friendo) // handle speech
-
-    drawHookMarker(g, x, y)
-
-    return Object.assign({}, {
-      hairY: y + hairY,
-      speech: { y: y - 36, x: speechX },
-    }, mouthTethers)
   }
 
   drawLvl5Core(g, x, y, friendo, doBlink) {

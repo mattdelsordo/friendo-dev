@@ -7,6 +7,8 @@ import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech }
 import * as Measurements from '../measurements'
 import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
 import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
+import birthdayHat from '../../art/props/birthday-hat'
+import birthdayText from '../../art/props/birthday-banner'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -27,6 +29,8 @@ export default class Element {
     this.bodyOffset = this.legHeight
     this.armOffset = { xOffset: 0, yOffset: 0 }
     this.handCoord = { x: 0, y: 0 }
+
+    this.hairY = -50
   }
 
   toJSON() {
@@ -137,6 +141,14 @@ export default class Element {
     drawHookMarker(g, x, y)
   }
 
+  // check whether it's the friendo's birthday and place hat if so
+  drawBirthday(g, x, y, friendo) {
+    if (friendo.zodiac.isBirthday()) {
+      birthdayHat(g, x, y)
+      birthdayText(g, x, y - 150)
+    }
+  }
+
   drawMouth(g, x, y, friendo) {
     const MOUTH_START = x - 5
     const MOUTH_LENGTH = 10
@@ -170,12 +182,12 @@ export default class Element {
   }
 
   drawHeadSegment(g, x, y, friendo, doBlink) {
-    const hairY = -50
-
-    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
+    this.drawBackHair(g, x, y + this.hairY, friendo) // back hair on top of head core
     this.drawCoreSegment(g, x, y, friendo) // head core
     const mouthTethers = this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
+    this.drawFrontHair(g, x, y + this.hairY, friendo) // front hair on top of head core
+
+    this.drawBirthday(g, x, y + this.hairY, friendo)
 
     let speechX = 30
     // move speech more to right if hair too big
@@ -187,7 +199,7 @@ export default class Element {
     drawHookMarker(g, x, y)
 
     return Object.assign({}, {
-      hairY: y + hairY,
+      hairY: y + this.hairY,
       speech: { y: y - 36, x: speechX },
     }, mouthTethers)
   }

@@ -25,6 +25,27 @@ class Zodiac {
   getBirthday() {
     return this.birthday.toDateString()
   }
+
+  // returns true if it is the friendo's birthday
+  isBirthday() {
+    const today = new Date()
+    if (today.getMonth() === this.birthday.getMonth()
+      && today.getDate() === this.birthday.getDate()
+      && today.getFullYear() > this.birthday.getFullYear()) {
+      return true
+    }
+    return false
+  }
+
+  // calculates the friendo's age
+  getAge() {
+    // convert difference in times to days
+    const days = (new Date() - this.birthday) / 86400000
+    if (days < 365) {
+      return `${Math.floor(days)} days`
+    }
+    return `${Math.floor(days / 365)} yrs.`
+  }
 }
 
 export class Aries extends Zodiac {
