@@ -8,6 +8,7 @@ import * as Measurements from '../measurements'
 import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
 import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 import birthdayHat from '../../art/props/birthday-hat'
+import birthdayText from '../../art/props/birthday-banner'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -142,7 +143,10 @@ export default class Element {
 
   // check whether it's the friendo's birthday and place hat if so
   drawBirthday(g, x, y, friendo) {
-    if (friendo.zodiac.isBirthday()) birthdayHat(g, x, y)
+    if (friendo.zodiac.isBirthday()) {
+      birthdayHat(g, x, y)
+      birthdayText(g, x, y - 150)
+    }
   }
 
   drawMouth(g, x, y, friendo) {
