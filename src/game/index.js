@@ -6,6 +6,7 @@ import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
 import { TICKRATE } from './game-config'
+import getZodiac from '../friendo/horoscope/get-zodiac'
 
 /**
  * Contains code to interface the user display with the friendo code.
@@ -135,6 +136,29 @@ $(document)
           save(JSON.stringify(friendo))
         },
       })
+    $('#egg-range')
+      .on({
+        input() {
+          $('#egg-num')
+            .html(this.value)
+        },
+        change() {
+          $('#egg-num')
+            .html(this.value)
+          friendo.setStat(STATS.EGG, this.value)
+          save(JSON.stringify(friendo))
+        },
+      })
+    // update level on stat change
+    $('#stat-sliders input').change(() => {
+      $('#level-display').html(` ${friendo.level}`)
+      /* eslint-disable-next-line no-restricted-globals */
+      if (isNaN(friendo.level)) {
+        $('#level-display').css('color', 'gold')
+      } else {
+        $('#level-display').css('color', 'black')
+      }
+    })
 
     // handle hook marker toggle
     $('#hook-marker-toggle')
@@ -186,46 +210,81 @@ $(document)
       })
     $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
 
+    // initialize level display
+    $('#level-display').html(` ${friendo.level}`)
+    /* eslint-disable-next-line no-restricted-globals */
+    if (isNaN(friendo.level)) {
+      $('#level-display').css('color', 'gold')
+    } else {
+      $('#level-display').css('color', 'black')
+    }
+
     // display current stat values
     $('#core-range')
-      .val(friendo.stats[STATS.CORE])
+      .val(friendo.getStat(STATS.CORE))
     $('#core-num')
-      .html(friendo.stats[STATS.CORE])
+      .html(friendo.getStat(STATS.CORE))
 
     $('#leg-range')
-      .val(friendo.stats[STATS.LEG])
+      .val(friendo.getStat(STATS.LEG))
     $('#leg-num')
-      .html(friendo.stats[STATS.LEG])
+      .html(friendo.getStat(STATS.LEG))
 
     $('#arm-range')
-      .val(friendo.stats[STATS.ARM])
+      .val(friendo.getStat(STATS.ARM))
     $('#arm-num')
-      .html(friendo.stats[STATS.ARM])
+      .html(friendo.getStat(STATS.ARM))
 
     $('#sight-range')
-      .val(friendo.stats[STATS.SIGHT])
+      .val(friendo.getStat(STATS.SIGHT))
     $('#sight-num')
-      .html(friendo.stats[STATS.SIGHT])
+      .html(friendo.getStat(STATS.SIGHT))
 
     $('#hair-range')
-      .val(friendo.stats[STATS.HAIR])
+      .val(friendo.getStat(STATS.HAIR))
     $('#hair-num')
-      .html(friendo.stats[STATS.HAIR])
+      .html(friendo.getStat(STATS.HAIR))
 
     $('#taste-range')
-      .val(friendo.stats[STATS.TASTE])
+      .val(friendo.getStat(STATS.TASTE))
     $('#taste-num')
-      .html(friendo.stats[STATS.TASTE])
+      .html(friendo.getStat(STATS.TASTE))
 
     $('#dog-range')
-      .val(friendo.stats[STATS.DOG])
+      .val(friendo.getStat(STATS.DOG))
     $('#dog-num')
-      .html(friendo.stats[STATS.DOG])
+      .html(friendo.getStat(STATS.DOG))
 
     $('#meme-range')
-      .val(friendo.stats[STATS.MEME])
+      .val(friendo.getStat(STATS.MEME))
     $('#meme-num')
-      .html(friendo.stats[STATS.MEME])
+      .html(friendo.getStat(STATS.MEME))
+
+    $('#egg-range')
+      .val(friendo.getStat(STATS.EGG))
+    $('#egg-num')
+      .html(friendo.getStat(STATS.EGG))
+
+    /**
+     * Zodiac sign and birthday-picker
+     */
+    $('#zodiac-display')
+      .html(friendo.zodiac.symbol)
+      .popover({ content: `${friendo.zodiac.getAge()} old - born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
+    // highlight if birthday
+    if (friendo.zodiac.isBirthday()) {
+      $('#zodiac-display').css('border-radius', '25px').css('border', '4px dotted gold')
+    }
+
+    $('#birthday-calendar')
+      .change(function setBirthday() {
+        friendo.zodiac = getZodiac(this.value)
+        // update zodiac display
+        $('#zodiac-display').html(friendo.zodiac.symbol)
+        $('#zodiac-display').data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+
+        save(JSON.stringify(friendo))
+      })
 
     // set names and element to defaults regardless of saved data
     $('#owner-name')
@@ -277,6 +336,7 @@ $(document)
       })
     // load state
     $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
+
 
     // draw game to the screen at some interval
     setInterval(() => {

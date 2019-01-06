@@ -2,40 +2,48 @@
     var stats = [
         {
             name: 'Core',
-            initial: 1,
-            points: [3, 5, 7, 9]
+            initial: 0,
+            points: [20, 40, 60, 80]
         },
         {
             name: 'Leg',
-            initial: 0
+            initial: 0,
+            points: [1]
         },
         {
             name: 'Arm',
-            initial: 0
+            initial: 0,
+            points: [1]
         },
         {
             name: 'Sight',
-            initial: 1,
-            points: [4, 7]
+            initial: 0,
+            points: [30, 60]
         },
         {
             name: 'Hair',
             initial: 0,
-            points: [1, 4, 8]
+            points: [1, 30, 70]
         },
         {
             name: 'Taste',
-            initial: 1,
+            initial: 0,
         },
         {
             name: 'Dog Affinity',
             initial: 0,
-            points: [2, 4, 6, 8, 10]
+            points: [1, 20, 40, 60, 80]
         },
         {
             name: 'Meme Tolerance',
-            initial: 1,
+            initial: 0,
         },
+        {
+            name: 'Egg Stage',
+            initial: 1,
+            max: 30,
+            points: [1,10,20,30]
+        }
     ]
 
 mixin statSlider(stat)
@@ -45,10 +53,11 @@ mixin statSlider(stat)
         input.mr-1.ml-1.align-bottom(
             type='range'
             min=stat.initial
-            max=10,
+            max=`${stat.max||100}`,
             value=stat.initial
             id=`${statId}-range`
             list=`${statId}-list`
+            step=1
         )
         if stat.points
             datalist(id=`${statId}-list`)
@@ -56,7 +65,7 @@ mixin statSlider(stat)
                     option= point
         span(id=`${statId}-num`)= stat.initial
 
-.border.p-1.mt-1
+.border.p-1.mt-1#stat-sliders
     h5 Stats:
     each stat in stats
         +statSlider(stat)

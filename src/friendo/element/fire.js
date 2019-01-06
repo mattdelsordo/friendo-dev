@@ -1,10 +1,11 @@
 import { STATS } from '../constants'
-import { FIRE_SKIN, FIRE_OUTLINE } from '../../art/colors'
+import { FIRE_SKIN, FIRE_OUTLINE, FIRE_EGG_OUTLINE, FIRE_EGG_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
-import { drawLine, drawOutlinedPolygon } from '../../art/art-util'
+import { drawLine, drawOutlinedPolygon, drawPolygon } from '../../art/art-util'
 import { oneLens, threeLens, twoLens } from '../../art/props/glasses'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -14,6 +15,7 @@ export default class Fire extends Element {
   constructor() {
     super()
     this.id = ELEMENTS.FIRE
+    this.hairY = -42
   }
 
   setColors(g) {
@@ -21,23 +23,28 @@ export default class Fire extends Element {
     g.strokeStyle = FIRE_OUTLINE
   }
 
+  setEggColors(g) {
+    g.fillStyle = FIRE_EGG_SKIN
+    g.strokeStyle = FIRE_EGG_OUTLINE
+  }
+
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 42,
         yOffset: -70,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 42,
         yOffset: -50,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 22,
         yOffset: -50,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 22,
         yOffset: -20,
@@ -64,7 +71,7 @@ export default class Fire extends Element {
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
-    if (friendo.stats[STATS.SIGHT] > 6) {
+    if (friendo.getStatStage(STATS.SIGHT) > 6) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
       this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
@@ -73,8 +80,8 @@ export default class Fire extends Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.stats[STATS.SIGHT] < 10) threeLens(g, x, y + 3)
-    } else if (friendo.stats[STATS.SIGHT] > 3) {
+      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 10) threeLens(g, x, y + 3)
+    } else if (friendo.getStatStage(STATS.SIGHT) > 3) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
@@ -112,6 +119,11 @@ export default class Fire extends Element {
     return { mouth: { x: MOUTH_START + (MOUTH_LENGTH / 2), y } }
   }
 
+  // override to reposition hat
+  drawBirthday(g, x, y, friendo) {
+    super.drawBirthday(g, x, y + 16, friendo)
+  }
+
   drawFace(g, x, y, friendo, doBlink) {
     // if the friendo is a fire element, the face needs to be drawn
     // farther down to fit in the core segment
@@ -123,28 +135,6 @@ export default class Fire extends Element {
 
     drawHookMarker(g, x, y)
     return mouthTether
-  }
-
-  drawHeadSegment(g, x, y, friendo, doBlink) {
-    const hairY = -42
-    this.drawBackHair(g, x, y + hairY, friendo) // back hair on top of head core
-    this.drawCoreSegment(g, x, y, friendo) // head core
-    const mouthTethers = this.drawFace(g, x, y - 12, friendo, doBlink) // face relative to head core
-    this.drawFrontHair(g, x, y + hairY, friendo) // front hair on top of head core
-
-    let speechX = 30
-    // move speech more to right if hair too big
-    if (friendo.stats[STATS.HAIR] === 10) speechX += 14
-    else if (friendo.stats[STATS.HAIR] === 9) speechX += 10
-    else if (friendo.stats[STATS.HAIR] === 8) speechX += 6
-    // this.speak(g, speechX, y - 36, friendo) // handle speech
-
-    drawHookMarker(g, x, y)
-
-    return Object.assign({}, {
-      hairY: y + hairY,
-      speech: { y: y - 36, x: speechX },
-    }, mouthTethers)
   }
 
   drawLvl5Core(g, x, y, friendo, doBlink) {
@@ -213,7 +203,7 @@ export default class Fire extends Element {
 
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedPolygon(
           _g,
           [0, -(this.armGirth / 2), 0],
@@ -226,7 +216,7 @@ export default class Fire extends Element {
 
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedPolygon(
           _g,
           [0, 0, 0 - this.legGirth, 0, -(this.footLength / 2), -this.footLength],
@@ -235,5 +225,19 @@ export default class Fire extends Element {
         )
       }
     }
+  }
+
+  // Overridden egg-drawing methods
+  eggCrack1(g, x, y) {
+    crack1(g, x - 5, y - 34)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 18, y - 14)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 14, y)
+  }
+  eggHalo(g, x, y) {
+    drawPolygon(g, [x, x - 29, x + 29], [y - 49, y + 3, y + 3], true)
   }
 }

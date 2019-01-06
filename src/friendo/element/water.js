@@ -1,9 +1,10 @@
 import { STATS } from '../constants'
-import { WATER_OUTLINE, WATER_SKIN } from '../../art/colors'
+import { WATER_OUTLINE, WATER_SKIN, WATER_EGG_OUTLINE, WATER_EGG_SKIN } from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
 import { drawOval, drawOutlinedOval } from '../../art/art-util'
+import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
 
 /**
  * Specifies how a water friendo is drawn
@@ -20,28 +21,33 @@ export default class WATER extends Element {
     g.strokeStyle = WATER_OUTLINE
   }
 
+  setEggColors(g) {
+    g.fillStyle = WATER_EGG_SKIN
+    g.strokeStyle = WATER_EGG_OUTLINE
+  }
+
   computeAnchors(friendo) {
     super.computeAnchors(friendo)
     this.bodyOffset -= 5 // tweak body offset to make sure body and legs connect
   }
 
   computeArmTethers(friendo) {
-    if (friendo.stats[STATS.CORE] > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 8) {
       return {
         xOffset: 60,
         yOffset: -90,
       }
-    } else if (friendo.stats[STATS.CORE] > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 6) {
       return {
         xOffset: 50,
         yOffset: -75,
       }
-    } else if (friendo.stats[STATS.CORE] > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 50,
         yOffset: -64,
       }
-    } else if (friendo.stats[STATS.CORE] > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 22,
         yOffset: -40,
@@ -64,7 +70,7 @@ export default class WATER extends Element {
     const computedTethers = this.drawHeadSegment(g, x, y - 100, friendo, doBlink)
 
     // Only draw "shoulder pads" if the friendo HAS arms
-    if (friendo.stats[STATS.ARM] > 0) {
+    if (friendo.getStatStage(STATS.ARM) > 0) {
       this.drawCoreSegment(g, x - 44, y - 75, friendo)
       this.drawCoreSegment(g, x + 44, y - 75, friendo)
     } else {
@@ -104,7 +110,7 @@ export default class WATER extends Element {
 
   armBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.ARM] > 0) {
+      if (friendo.getStatStage(STATS.ARM) > 0) {
         drawOutlinedOval(_g, 0, 0, this.armGirth, this.armLength)
       }
     }
@@ -112,7 +118,7 @@ export default class WATER extends Element {
 
   legBrush(friendo) {
     return (_g) => {
-      if (friendo.stats[STATS.LEG] > 0) {
+      if (friendo.getStatStage(STATS.LEG) > 0) {
         drawOutlinedOval(
           _g,
           -this.footLength,
@@ -137,5 +143,19 @@ export default class WATER extends Element {
         )
       }
     }
+  }
+
+  // Overridden egg-drawing methods
+  eggCrack1(g, x, y) {
+    crack1(g, x - 10, y - 48)
+  }
+  eggCrack2(g, x, y) {
+    crack2(g, x + 24, y - 28)
+  }
+  eggCrack3(g, x, y) {
+    crack3(g, x - 20, y - 10)
+  }
+  eggHalo(g, x, y) {
+    drawOval(g, x - 28, y - 53, 56, 56, true)
   }
 }

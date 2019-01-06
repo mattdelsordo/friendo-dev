@@ -1,5 +1,5 @@
 // maximum level in a given element
-export const STAT_MAX = 10
+export const STAT_MAX = 100
 
 // how much energy petting restores
 export const PET_INCREMENT = 4
@@ -18,6 +18,9 @@ export const TOTAL_EVENT_CHANCE = 100
 export const BLINK_CHANCE = 5
 export const SPEAK_CHANCE = 5
 
+// Only the first X stats are shown to the user, the rest are only used internally
+export const EXPOSED_STATS = 8
+
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',
@@ -28,7 +31,14 @@ export const STATS = Object.freeze({
   TASTE: 'taste',
   DOG: 'dog',
   MEME: 'meme',
+  EGG: 'egg',
+  SLEEP: 'sleep',
+  PET: 'pet',
+  FOOD: 'food',
 })
+
+// maximum total level
+export const LEVEL_MAX = (EXPOSED_STATS * 99) + 1
 
 // energy cost per exercise
 export const EXP_COST = Object.freeze({
@@ -40,6 +50,7 @@ export const EXP_COST = Object.freeze({
   [STATS.TASTE]: 2,
   [STATS.DOG]: 3,
   [STATS.MEME]: 4,
+  [STATS.EGG]: 1,
 })
 
 // time required for one excersize of a particular stat
@@ -52,4 +63,5 @@ export const WORKOUT_LENGTH = Object.freeze({
   [STATS.TASTE]: 5,
   [STATS.DOG]: 5,
   [STATS.MEME]: 5,
+  [STATS.EGG]: 1,
 })
