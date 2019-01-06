@@ -31,10 +31,10 @@
     "dev-html": "pug -P ui/index.pug -o docs/ && yarn copy-res",
     "dev-js": "webpack -d --progress",
     "build-prod": "NODE_ENV=production yarn prod-js && yarn prod-html",
-    "prod-html": "pug ui/index.pug -o docs/ && yarn copy-res",
+    "prod-html": "pug ui/pages/anim-test.pug -o docs/ && yarn copy-res",
     "copy-res": "cp -r ui/resources/. docs/",
     "prod-js": "webpack -p",
-    "dev-server": "yarn copy-res & webpack-dev-server & pug -P ui/index.pug -o docs/ -w",
+    "dev-server": "yarn copy-res & webpack-dev-server & pug -P ui/pages/ -o docs/ -w",
     "test": "eslint src"
   },
   "dependencies": {
