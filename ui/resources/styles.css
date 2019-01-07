@@ -1,0 +1,36 @@
+.elementRadio {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.elementRadio:hover + .elementPickFrame {
+    border: 4px solid gold;
+}
+.elementRadio:checked + .elementPickFrame {
+    border: 4px solid gold;
+}
+
+.elementRadio + .elementPickFrame {
+    cursor: pointer;
+    border-width: 4px;
+}
+
+.elementEx {
+    animation: bounce 1s 0s infinite alternate;
+}
+.elementRadio:hover + .elementPickFrame .elementEx {
+    animation: bounce 0.25s 0s infinite alternate;
+}
+.elementRadio:checked + .elementPickFrame .elementEx {
+    animation: bounce 0.25s 0s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-6px); }
+}
+
+#friendo-name-input {
+    font-size: 20px;
+}
