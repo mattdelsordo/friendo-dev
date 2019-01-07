@@ -34,3 +34,9 @@
 #friendo-name-input {
     font-size: 20px;
 }
+
+.stat-display:hover {
+    border: 2px solid var(--info);
+    border-radius: 10px;
+    background: ghostwhite;
+}

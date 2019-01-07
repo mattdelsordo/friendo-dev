@@ -1,0 +1,50 @@
+-
+    var stats = [
+    {
+    name: 'Core',
+    icon: '\u{1f455}'
+    },
+    {
+    name: 'Leg',
+    icon: '\u{1f9b5}'
+    },
+    {
+    name: 'Arm',
+    icon: '\u{1f4aa}'
+    },
+    {
+    name: 'Sight',
+    icon: '\u{1f441}'
+    },
+    {
+    name: 'Hair',
+    icon: '\u{1f488}'
+    },
+    {
+    name: 'Taste',
+    icon: '\u{1f445}'
+    },
+    {
+    name: 'Dog Affinity',
+    icon: '\u{1f415}'
+    },
+    {
+    name: 'Meme Tolerance',
+    icon: '\u{1f9e0}'
+    }
+    ]
+
+mixin statdisplay(stat)
+  - var statId = stat.name.split(' ')[0].toLowerCase()
+  .d-flex.flex-row.align-items-center.stat-display.p-2
+      span.mr-1(id=`${statId}-icon`) #{stat.icon}
+      span.mr-1(id=`${statId}-name`) #{stat.name}
+      .progress.ml-auto.w-50
+          .progress-bar.bg-info.w-75(id=`${statId}-prog` role=progressbar)
+      span.ml-1(id=`${statId}-num`) 000
+
+.row
+    .col
+        h5 Stats
+        each stat in stats
+            +statdisplay(stat)
