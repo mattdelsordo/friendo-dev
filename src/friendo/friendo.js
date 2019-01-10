@@ -153,9 +153,15 @@ export default class Friendo {
   }
 
   // adds energy to the friendo's reserve
-  addEnergy(amnt) {
+  modifyEnergy(amnt) {
     if (amnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
+    else if (this.energy + amnt <= 0) this.energy = 0
     else this.energy = this.energy + amnt
+  }
+
+  // adds exp for a given stat
+  addExp(stat) {
+    console.log(stat)
   }
 
   // Initialize pet dogs for the eventuality of them existing
@@ -186,7 +192,7 @@ export default class Friendo {
     this.state.draw(context, x, y, this)
   }
 
-  handleAction(action) {
-    this.state.handleAction(action, this)
+  handleAction(action, callback) {
+    this.state.handleAction(action, this, callback)
   }
 }

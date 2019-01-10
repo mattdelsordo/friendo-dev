@@ -3,19 +3,23 @@
  */
 
 import $ from 'jquery'
-import { setEnergy } from './ui-update'
-import { PET_ENERGY, FEED_ENERGY } from '../friendo/constants'
+import { exercise } from './actions'
+import { ACTIONS } from '../friendo/constants'
+import { ID as petID } from '../friendo/state/pet'
+import { ID as feedID } from '../friendo/state/feed'
 
-export const mainSetup = (friendo) => {
+export default (friendo) => {
   // pet button
   $('#pet-button').click(() => {
-    friendo.addEnergy(PET_ENERGY)
-    setEnergy(friendo.getEnergyLeft())
+    friendo.handleAction(petID, () => {
+      exercise(friendo, ACTIONS.PET)
+    })
   })
 
   // feed button
   $('#feed-button').click(() => {
-    friendo.addEnergy(FEED_ENERGY)
-    setEnergy(friendo.getEnergyLeft())
+    friendo.handleAction(feedID, () => {
+      exercise(friendo, ACTIONS.FEED)
+    })
   })
 }

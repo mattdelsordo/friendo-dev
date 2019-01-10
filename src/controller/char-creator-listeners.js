@@ -26,7 +26,7 @@ export const hideCreator = () => {
   $('#main-display').css('display', 'block')
 }
 
-export const creatorSetup = (setFriendo) => {
+export default (setFriendo) => {
   // radio buttons select a friendo type
   $('.elementRadio')
     .change(() => {

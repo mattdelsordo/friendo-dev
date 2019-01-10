@@ -1,9 +1,6 @@
 // maximum level in a given element
 export const STAT_MAX = 100
 
-// how much energy petting restores
-export const PET_INCREMENT = 4
-
 // maximum amount of dogs on the screen
 export const MAX_DOGS = 5
 export const LICK_CHANCE = 0.5
@@ -32,36 +29,23 @@ export const STATS = Object.freeze({
   DOG: 'dog',
   MEME: 'meme',
   EGG: 'egg',
+})
+
+// 'enum' of potential actions
+export const ACTIONS = Object.freeze({
+  CORE: 'core',
+  LEG: 'leg',
+  ARM: 'arm',
+  SIGHT: 'sight',
+  HAIR: 'hair',
+  TASTE: 'taste',
+  DOG: 'dog',
+  MEME: 'meme',
+  EGG: 'egg',
   SLEEP: 'sleep',
   PET: 'pet',
-  FOOD: 'food',
+  FEED: 'feed',
 })
 
 // maximum total level
 export const LEVEL_MAX = (EXPOSED_STATS * 99) + 1
-
-// energy cost per exercise
-export const EXP_COST = Object.freeze({
-  [STATS.CORE]: 1,
-  [STATS.LEG]: 1,
-  [STATS.ARM]: 1,
-  [STATS.SIGHT]: 1,
-  [STATS.HAIR]: 2,
-  [STATS.TASTE]: 2,
-  [STATS.DOG]: 3,
-  [STATS.MEME]: 4,
-  [STATS.EGG]: 1,
-})
-
-// time required for one excersize of a particular stat
-export const WORKOUT_LENGTH = Object.freeze({
-  [STATS.CORE]: 5,
-  [STATS.LEG]: 5,
-  [STATS.ARM]: 5,
-  [STATS.SIGHT]: 5,
-  [STATS.HAIR]: 5,
-  [STATS.TASTE]: 5,
-  [STATS.DOG]: 5,
-  [STATS.MEME]: 5,
-  [STATS.EGG]: 1,
-})

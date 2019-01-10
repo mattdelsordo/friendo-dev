@@ -68,10 +68,10 @@ export default class State {
     friendo.element.setColors(g)
   }
 
-  handleAction(action, friendo) {
+  handleAction(action, friendo, callback) {
     /* eslint-disable-next-line no-console */
-    console.log(`Handling ${action}`)
     friendo.state = loadState(this, action)
+    if (callback) callback()
   }
 
   pickPhrase(friendo) {
