@@ -14,18 +14,15 @@ mixin typePick(type)
             h4.mx-auto #{type}
 
 
-.container.mt-5
-    link(rel='stylesheet' href='bootstrap.min.css')
-    link(rel='stylesheet' href='styles.css')
-    form
-        .row
-            h1.mx-auto Create your new Friendo:
-        .row
-            .mx-auto
-                each type in types
-                    +typePick(type)
-        .row
-            .mx-auto
-                input.align-middle#friendo-name-input(type='text' placeholder='Name your Friendo:' disabled)
-                input.align-middle#player-name-input(type='text' placeholder='What is your name?' disabled)
-                button.align-middle.btn.btn-primary(type='submit' disabled) Create
+#char-creator
+    .row
+        h1.mx-auto Create your new Friendo:
+    .row
+        .mx-auto
+            each type in types
+                +typePick(type)
+    .row
+        .mx-auto
+            input.align-middle#friendo-name-input(type='text' placeholder='Name your Friendo:' disabled)
+            input.align-middle#player-name-input(type='text' placeholder='What is your name?' disabled)
+            button.align-middle.btn.btn-primary(type='button' disabled) Create
