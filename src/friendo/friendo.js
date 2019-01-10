@@ -26,46 +26,26 @@ import {
 export default class Friendo {
   // helper method to create a friendo based on character creation
   static newFriendo(name, owner, element) {
-    return new Friendo({ name, owner, element })
+    return new Friendo(JSON.stringify({ name, owner, element }))
   }
 
   // constructor takes context on which to draw
   constructor(json) {
-    this.name = DEFAULT_NAME
-    this.owner = DEFAULT_OWNER
-    this.element = DEFAULT_ELEMENT
-    this.zodiac = getZodiac()
+    // initialize friendo from save file
+    console.log(`Loading Friendo from ${json}`)
+    const fromJSON = JSON.parse(json || '{}')
+    this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
+    this._h_stats = fromJSON.hstats || Object.assign({}, DEFAULT_HIDDEN_STATS)
+    this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
+    this.name = fromJSON.name || DEFAULT_NAME
+    this.owner = fromJSON.owner || DEFAULT_OWNER
+    this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
+    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : getZodiac()
 
-    // set stat defaults
-    this._stats = Object.assign({}, DEFAULT_STATS)
-    // stat stages are cached rather than recomputed on each draw
+    // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
-    this.level = DEFAULT_LEVEL
-    // hidden stats stored separately because they are only used internally
-    this._h_stats = Object.assign({}, DEFAULT_HIDDEN_STATS)
     this._h_statStage = Object.assign({}, DEFAULT_HIDDEN_STAT_STAGES)
-
-    // set state
-    this.state = DEFAULT_STATE
-
-    // if JSON is passed in, load
-    if (json) {
-      console.log(`Loading Friendo from ${json}`)
-
-      const fromJSON = JSON.parse(json)
-      // console.log(typeof fromJSON)
-      // console.log(`Stats: ${fromJSON.stats}`)
-      // console.log(`Name: ${fromJSON.name}`)
-      // console.log(`Owner: ${fromJSON.owner}`)
-      // console.log(`Element: ${fromJSON.element}`)
-      this._stats = fromJSON.stats
-      this._h_stats = fromJSON.hstats
-      this.state = loadState(fromJSON.state, fromJSON.state.id)
-      this.name = fromJSON.name
-      this.owner = fromJSON.owner
-      this.element = selectElement(fromJSON.element)
-      this.zodiac = getZodiac(fromJSON.zodiac)
-    }
+    this.level = DEFAULT_LEVEL
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()

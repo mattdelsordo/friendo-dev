@@ -24,8 +24,11 @@ $(document)
     // set up UI listeners
     creatorSetup((newFriendo) => {
       friendo = newFriendo
+      save(JSON.stringify(friendo))
     })
 
+
+    // initialize friendo
     const savegame = load()
     // show creator if no savegame
     if (!savegame) showCreator()
