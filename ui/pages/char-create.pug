@@ -1,0 +1,28 @@
+-
+    var types = [
+        'Earth',
+        'Water',
+        'Fire',
+        'Air',
+    ]
+
+mixin typePick(type)
+    label
+        input.elementRadio(name='typeChooser' type='radio' value=`${type.toLowerCase()}`)
+        .elementPickFrame.card.m-1.p-1.pt-2
+            img(src=`img/${type.toLowerCase()}-ex.png`).elementEx
+            h4.mx-auto #{type}
+
+
+#char-creator
+    .row
+        h1.mx-auto Create your new Friendo:
+    .row
+        .mx-auto
+            each type in types
+                +typePick(type)
+    .row
+        .mx-auto
+            input.align-middle#friendo-name-input(type='text' placeholder='Name your Friendo:' disabled)
+            input.align-middle#player-name-input(type='text' placeholder='What is your name?' disabled)
+            button.align-middle.btn.btn-primary(type='button' disabled) Create
