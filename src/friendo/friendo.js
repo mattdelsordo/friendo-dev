@@ -5,7 +5,7 @@
 
 /* eslint-disable no-console */
 
-import { LEVEL_MAX, MAX_DOGS, STATS } from './constants'
+import { EXP_THRESHOLD, LEVEL_MAX, MAX_DOGS, STATS } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -23,6 +23,7 @@ import {
   DEFAULT_HIDDEN_STAT_STAGES,
   DEFAULT_ENERGY,
   DEFAULT_MAX_ENERGY,
+  DEFAULT_EXP,
 } from './default'
 
 export default class Friendo {
@@ -44,6 +45,7 @@ export default class Friendo {
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
     this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : getZodiac()
     this.energy = fromJSON.energy || DEFAULT_ENERGY
+    this.exp = fromJSON.exp || DEFAULT_EXP
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
@@ -68,6 +70,7 @@ export default class Friendo {
       state: this.state,
       zodiac: this.zodiac,
       energy: this.energy,
+      exp: this.exp,
     }
   }
 
@@ -160,8 +163,19 @@ export default class Friendo {
   }
 
   // adds exp for a given stat
-  addExp(stat) {
-    console.log(stat)
+  addExp(stat, amnt) {
+    if (stat in this.exp) {
+      // increment exp amount
+      this.exp[stat] += amnt
+
+      // check to see if a levelup is possible
+      // TODO: Separating egg from everything was a bad idea
+      const threshold = EXP_THRESHOLD[this._h_stats[stat]]
+      if (this.exp[stat] >= threshold) {
+        this.exp[stat] -= threshold
+        this.setStat(stat, this._h_stats[stat] + 1)
+      }
+    }
   }
 
   // Initialize pet dogs for the eventuality of them existing

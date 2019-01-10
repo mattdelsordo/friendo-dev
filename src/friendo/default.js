@@ -36,6 +36,18 @@ export const DEFAULT_STAT_STAGES = {
   [STATS.MEME]: 0,
 }
 
+export const DEFAULT_EXP = {
+  [STATS.CORE]: 0,
+  [STATS.LEG]: 0,
+  [STATS.ARM]: 0,
+  [STATS.SIGHT]: 0,
+  [STATS.HAIR]: 0,
+  [STATS.TASTE]: 0,
+  [STATS.DOG]: 0,
+  [STATS.MEME]: 0,
+  [STATS.EGG]: 0,
+}
+
 export const DEFAULT_HIDDEN_STATS = {
   [STATS.EGG]: 1,
 }

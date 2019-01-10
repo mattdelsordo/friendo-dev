@@ -79,11 +79,11 @@ mixin trainingDialog(stat)
                     div
                         label(for=`${statId}-trainbtn`)
                             | #{stat.verb} for
-                            input.mr-1(id=`${statId}-trainamnt` type='number')
+                            input.mr-1(id=`${statId}-trainamnt` type='number' step=0.2 min=0)
                             | minutes
                 .modal-footer
                     button.btn.btn-secondary(data-dismiss='modal') Cancel
-                    button.btn.btn-success(disabled) Begin
+                    button.btn.btn-success(id=`start-${statId}`) Begin
 
 .row
     .col

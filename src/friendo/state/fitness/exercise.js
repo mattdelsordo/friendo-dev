@@ -16,4 +16,6 @@ export default class Exercise extends State {
     this.frame = 0
     this.id = ID
   }
+
+  handleAction() {}
 }
