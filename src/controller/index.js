@@ -1,23 +1,33 @@
 import $ from 'jquery'
 import Tether from 'tether'
 import { load, save } from '../game/game-util'
-import getZodiac from '../friendo/horoscope/get-zodiac'
-import { TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
 
 import { creatorSetup, showCreator } from './char-creator'
+import { initialize } from './ui-update'
 
 window.jQuery = $
 window.Tether = Tether
 
 require('bootstrap')
 
+// initializes UI based on friendo and starts game processes
+const start = (friendo) => {
+  initialize(friendo)
+
+  const canvas = document.getElementById('canvas')
+  const context = canvas.getContext('2d')
+  setInterval(() => {
+    context.save() // save and restore context to prevent colors from getting donged up
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    friendo.draw(canvas, context)
+    context.restore()
+  }, TICKRATE)
+}
+
 $(document)
   .ready(() => {
-    const canvas = document.getElementById('canvas')
-    const context = canvas.getContext('2d')
-
     // define store of game state
     let friendo
 
@@ -25,8 +35,8 @@ $(document)
     creatorSetup((newFriendo) => {
       friendo = newFriendo
       save(JSON.stringify(friendo))
+      start(friendo)
     })
-
 
     // initialize friendo
     const savegame = load()
@@ -35,5 +45,6 @@ $(document)
     else {
       // else, initialize game
       friendo = new Friendo(savegame)
+      start(friendo)
     }
   })
