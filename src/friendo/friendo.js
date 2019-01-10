@@ -21,6 +21,8 @@ import {
   DEFAULT_LEVEL,
   DEFAULT_HIDDEN_STATS,
   DEFAULT_HIDDEN_STAT_STAGES,
+  DEFAULT_ENERGY,
+  DEFAULT_MAX_ENERGY,
 } from './default'
 
 export default class Friendo {
@@ -41,11 +43,13 @@ export default class Friendo {
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
     this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : getZodiac()
+    this.energy = fromJSON.energy || DEFAULT_ENERGY
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
     this._h_statStage = Object.assign({}, DEFAULT_HIDDEN_STAT_STAGES)
     this.level = DEFAULT_LEVEL
+    this.maxEnergy = DEFAULT_MAX_ENERGY
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()
@@ -63,6 +67,7 @@ export default class Friendo {
       hstats: this._h_stats,
       state: this.state,
       zodiac: this.zodiac,
+      energy: this.energy,
     }
   }
 
@@ -140,6 +145,11 @@ export default class Friendo {
     if (stat in this._statStage) return this._statStage[stat]
     else if (stat in this._h_statStage) return this._h_statStage[stat]
     throw new Error(`${stat} is not a valid stored stat!`)
+  }
+
+  // returns percentage of energy the friendo currently has
+  getEnergyLeft() {
+    return this.energy / this.maxEnergy
   }
 
   // Initialize pet dogs for the eventuality of them existing
