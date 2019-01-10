@@ -5,7 +5,8 @@ import getZodiac from '../friendo/horoscope/get-zodiac'
 import { TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
-import { toggleHookMarkers } from '../art/art-util'
+
+import { creatorSetup, showCreator } from './char-creator'
 
 window.jQuery = $
 window.Tether = Tether
@@ -17,7 +18,19 @@ $(document)
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('2d')
 
-    // attempt to load friendo
+    // define store of game state
+    let friendo
+
+    // set up UI listeners
+    creatorSetup((newFriendo) => {
+      friendo = newFriendo
+    })
+
     const savegame = load()
-    const friendo = new Friendo(savegame)
+    // show creator if no savegame
+    if (!savegame) showCreator()
+    else {
+      // else, initialize game
+      friendo = new Friendo(savegame)
+    }
   })

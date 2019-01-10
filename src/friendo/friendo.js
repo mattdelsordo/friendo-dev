@@ -24,6 +24,11 @@ import {
 } from './default'
 
 export default class Friendo {
+  // helper method to create a friendo based on character creation
+  static newFriendo(name, owner, element) {
+    return new Friendo({ name, owner, element })
+  }
+
   // constructor takes context on which to draw
   constructor(json) {
     this.name = DEFAULT_NAME

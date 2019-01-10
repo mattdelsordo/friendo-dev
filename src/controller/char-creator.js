@@ -1,0 +1,66 @@
+/**
+ * Controller for character creation display
+ * Handles showing/hiding screen, verifying input, etc.
+ */
+
+import $ from 'jquery'
+import Friendo from '../friendo/friendo'
+
+// verifies input fields and returns a friendo if they're valid
+const createFriendo = () => {
+  const type = $('.elementRadio:checked').val()
+  const name = $('#name-input').val().trim()
+  const player = $('#player-input').val().trim()
+
+  if (!type || !name || !player) return undefined
+  return Friendo.newFriendo(name, player, type)
+}
+
+export const showCreator = () => {
+  $('#char-creator').css('display', 'block')
+  $('#main-display').css('display', 'none')
+}
+
+export const hideCreator = () => {
+  $('#char-creator').css('display', 'none')
+  $('#main-display').css('display', 'block')
+}
+
+export const creatorSetup = (setFriendo) => {
+  // radio buttons select a friendo type
+  $('.elementRadio')
+    .change(() => {
+      $('#name-input').prop('disabled', '')
+    })
+
+  // name field enables owner name field
+  $('#name-input').on('input', () => {
+    $('#player-input').prop('disabled', '')
+  }).on('blur', function disableInName() {
+    // disable fields if no input
+    if (this.value.trim().length < 1) {
+      $('#player-input').prop('disabled', 'disabled')
+      $('#btnCreate').prop('disabled', 'disabled')
+    }
+  })
+
+  // player field enables button
+  $('#player-input').on('input', () => {
+    $('#btnCreate').prop('disabled', '')
+  }).on('blur', function disableInPlayer() {
+    // disable fields if no input
+    if (this.value.trim().length < 1) {
+      $('#btnCreate').prop('disabled', 'disabled')
+    }
+  })
+
+  // button creates a friendo
+  $('#btnCreate').click(() => {
+    // try to make a new friendo, set it if it worked
+    const f = createFriendo()
+    if (f) {
+      setFriendo(f)
+      hideCreator()
+    }
+  })
+}
