@@ -152,6 +152,12 @@ export default class Friendo {
     return this.energy / this.maxEnergy
   }
 
+  // adds energy to the friendo's reserve
+  addEnergy(amnt) {
+    if (amnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
+    else this.energy = this.energy + amnt
+  }
+
   // Initialize pet dogs for the eventuality of them existing
   initializeDogs(canvasW, canvasH) {
     this.petDogs = {

@@ -4,8 +4,9 @@ import { load, save } from '../game/game-util'
 import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
 
-import { creatorSetup, showCreator } from './char-creator'
+import { creatorSetup, showCreator } from './char-creator-listeners'
 import { initialize } from './ui-update'
+import { mainSetup } from './main-listeners'
 
 window.jQuery = $
 window.Tether = Tether
@@ -14,6 +15,7 @@ require('bootstrap')
 
 // initializes UI based on friendo and starts game processes
 const start = (friendo) => {
+  mainSetup(friendo)
   initialize(friendo)
 
   const canvas = document.getElementById('canvas')
