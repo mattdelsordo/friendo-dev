@@ -5,7 +5,7 @@
 
 /* eslint-disable no-console */
 
-import { EXP_THRESHOLD, LEVEL_MAX, MAX_DOGS, STATS } from './constants'
+import { EXP_THRESHOLD, LEVEL_MAX, LVL_CALC_WHITELIST, MAX_DOGS, STATS } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -19,8 +19,6 @@ import {
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
   DEFAULT_LEVEL,
-  DEFAULT_HIDDEN_STATS,
-  DEFAULT_HIDDEN_STAT_STAGES,
   DEFAULT_ENERGY,
   DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
@@ -38,7 +36,6 @@ export default class Friendo {
     console.log(`Loading Friendo from ${json}`)
     const fromJSON = JSON.parse(json || '{}')
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
-    this._h_stats = fromJSON.hstats || Object.assign({}, DEFAULT_HIDDEN_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
@@ -49,7 +46,6 @@ export default class Friendo {
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
-    this._h_statStage = Object.assign({}, DEFAULT_HIDDEN_STAT_STAGES)
     this.level = DEFAULT_LEVEL
     this.maxEnergy = DEFAULT_MAX_ENERGY
 
@@ -66,7 +62,6 @@ export default class Friendo {
       owner: this.owner,
       element: this.element,
       stats: this._stats,
-      hstats: this._h_stats,
       state: this.state,
       zodiac: this.zodiac,
       energy: this.energy,
@@ -82,15 +77,9 @@ export default class Friendo {
 
   // stat stage is used to draw the friendo
   setStatStage(stat) {
-    // differentiate between hidden and displayed stats
-    if (stat in this._stats) {
-      // stage 1 starts at 1, and then in 10 level increments
-      this._statStage[stat] =
-        (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
-    } else if (stat in this._h_stats) {
-      this._h_statStage[stat] =
-        (this._h_stats[stat] > 0 ? Math.floor(this._h_stats[stat] / 10) + 1 : 0)
-    } else throw new Error(`${stat} is not a valid stored stat!`)
+    // stage 1 starts at 1, and then in 10 level increments
+    this._statStage[stat] =
+      (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
   }
 
   // calls setStatStage on every stat
@@ -99,15 +88,13 @@ export default class Friendo {
     Object.keys(this._stats).forEach((key) => {
       this.setStatStage(key)
     })
-    Object.keys(this._h_stats).forEach((key) => {
-      this.setStatStage(key)
-    })
   }
 
   computeLevel() {
     // compute cumulative sum but skip the first level of each stat
     // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
-    const statSum = Object.values(this._stats).reduce((l, r) => Number(l) + (r < 2 ? 0 : r - 1))
+    const statSum = LVL_CALC_WHITELIST.reduce((l, r) =>
+      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 0)
 
     // if the sum of all stats is less than one, skip rest of calcs
     if (statSum < 1) return 0
@@ -126,9 +113,7 @@ export default class Friendo {
 
   // sets the value of a stat
   setStat(stat, value) {
-    if (stat in this._stats) this._stats[stat] = value
-    else if (stat in this._h_stats) this._h_stats[stat] = value
-    else throw new Error(`${stat} is not a valid stored stat!`)
+    this._stats[stat] = value
     // recompute stage of stat
     this.setStatStage(stat)
     // recompute level
@@ -138,16 +123,12 @@ export default class Friendo {
   }
 
   getStat(stat) {
-    if (stat in this._stats) return this._stats[stat]
-    else if (stat in this._h_stats) return this._h_stats[stat]
-    throw new Error(`${stat} is not a valid stored stat!`)
+    return this._stats[stat]
   }
 
   // For calculating rank-ups, since they happen in 10 stat intervals
   getStatStage(stat) {
-    if (stat in this._statStage) return this._statStage[stat]
-    else if (stat in this._h_statStage) return this._h_statStage[stat]
-    throw new Error(`${stat} is not a valid stored stat!`)
+    return this._statStage[stat]
   }
 
   // returns percentage of energy the friendo currently has
@@ -170,10 +151,10 @@ export default class Friendo {
 
       // check to see if a levelup is possible
       // TODO: Separating egg from everything was a bad idea
-      const threshold = EXP_THRESHOLD[this._h_stats[stat]]
+      const threshold = EXP_THRESHOLD[this._stats[stat]]
       if (this.exp[stat] >= threshold) {
         this.exp[stat] -= threshold
-        this.setStat(stat, this._h_stats[stat] + 1)
+        this.setStat(stat, this._stats[stat] + 1)
       }
     }
   }

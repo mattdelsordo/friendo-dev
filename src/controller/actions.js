@@ -62,7 +62,7 @@ export const exercise = (friendo, action, callback, reps = 0) => {
     // update energy bar
     setEnergy(friendo.getEnergyLeft())
     // update stat displays
-    setAllStats(friendo._h_stats, friendo.exp)
+    setAllStats(friendo._stats, friendo.exp)
 
     // save state of friendo
     save(JSON.stringify(friendo))

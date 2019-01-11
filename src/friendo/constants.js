@@ -15,9 +15,6 @@ export const TOTAL_EVENT_CHANCE = 100
 export const BLINK_CHANCE = 5
 export const SPEAK_CHANCE = 5
 
-// Only the first X stats are shown to the user, the rest are only used internally
-export const EXPOSED_STATS = 8
-
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',
@@ -30,6 +27,18 @@ export const STATS = Object.freeze({
   MEME: 'meme',
   EGG: 'egg',
 })
+
+// array of stats to actually include in level calculations
+export const LVL_CALC_WHITELIST = [
+  STATS.CORE,
+  STATS.LEG,
+  STATS.ARM,
+  STATS.SIGHT,
+  STATS.HAIR,
+  STATS.TASTE,
+  STATS.DOG,
+  STATS.MEME,
+]
 
 // 'enum' of potential actions
 export const ACTIONS = Object.freeze({
@@ -48,7 +57,7 @@ export const ACTIONS = Object.freeze({
 })
 
 // maximum total level
-export const LEVEL_MAX = (EXPOSED_STATS * 99) + 1
+export const LEVEL_MAX = (LVL_CALC_WHITELIST.length * 99) + 1
 
 /**
  * Defines the amount of exp needed to level up a given stat

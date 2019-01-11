@@ -53,6 +53,5 @@ export const initialize = (friendo) => {
   setLevel(friendo.level)
   setZodiac(friendo.zodiac)
   setAllStats(friendo._stats, friendo.exp)
-  setAllStats(friendo._h_stats, friendo.exp)
   setEnergy(friendo.getEnergyLeft())
 }
