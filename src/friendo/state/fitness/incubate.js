@@ -4,8 +4,9 @@
 
 import Egg from '../egg'
 import lamp from '../../../art/props/lamp'
+import { STATS } from '../../constants'
 
-export const ID = 'state_incubate'
+export const ID = `state_${STATS.EGG}`
 
 export default class Incubate extends Egg {
   constructor(savedState) {

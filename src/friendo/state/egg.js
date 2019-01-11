@@ -6,7 +6,7 @@
 import State from './state'
 import { STATS } from '../constants'
 
-export const ID = 'state_egg'
+export const ID = 'state_baby'
 
 export default class Egg extends State {
   constructor(savedState) {
