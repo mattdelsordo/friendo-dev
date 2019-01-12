@@ -33,9 +33,9 @@ export const setStat = (stat, exp, lvl) => {
   $(`#${stat}-prog`).css('width', `${Math.floor(exp * 100)}%`)
   $(`#${stat}-num`).html(lvl.toString().padStart(4))
 }
-export const setAllStats = (stats, exps) => {
-  Object.keys(stats).forEach((s) => {
-    setStat(s, exps[s], stats[s])
+export const setAllStats = (friendo) => {
+  Object.values(STATS).forEach((s) => {
+    setStat(s, friendo.getExpPercent(s), friendo.getStat(s))
   })
 }
 
@@ -52,7 +52,7 @@ export const initialize = (friendo) => {
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac)
-  setAllStats(friendo._stats, friendo.exp)
+  setAllStats(friendo)
   setEnergy(friendo.getEnergyLeft())
 }
 
@@ -72,7 +72,8 @@ export const performAction = (friendo, action, reps = 1) => {
       // update energy bar
       setEnergy(f.getEnergyLeft())
       // update stat displays
-      setAllStats(f._stats, f.exp)
+      const stat = action.split('_')[1] || ''
+      setStat(stat, f.getExpPercent(stat), f.getStat(stat))
     },
     // function to call at end
     () => {

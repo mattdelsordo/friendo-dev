@@ -124,7 +124,8 @@ export default class Friendo {
   }
 
   getStat(stat) {
-    return this._stats[stat]
+    if (stat in this._stats) return this._stats[stat]
+    return 0
   }
 
   // For calculating rank-ups, since they happen in 10 stat intervals
@@ -157,6 +158,19 @@ export default class Friendo {
         this.setStat(stat, this._stats[stat] + 1)
       }
     }
+  }
+
+  getExp(stat) {
+    if (stat in this.exp) return this.exp[stat]
+    return 0
+  }
+
+  // returns exp as a percentage of the exp needed for the level
+  getExpPercent(stat) {
+    if (stat in this.exp) {
+      return this.exp[stat] / EXP_THRESHOLD[this._stats[stat]]
+    }
+    return 0
   }
 
   // Initialize pet dogs for the eventuality of them existing
