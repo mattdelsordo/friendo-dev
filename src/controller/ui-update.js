@@ -24,6 +24,21 @@ export const setZodiac = (zodiac, color = 'black') => {
     .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
 }
 
+// sets and triggers tutorial content
+const showTutorial = () => {
+  $('#egg-display')
+    .popover({
+      trigger: 'manual',
+      content: 'Click on a stat to train your Friendo.',
+      title: 'Click me!',
+    })
+    .click(() => {
+      $('#egg-display').popover('hide')
+    })
+
+  $('#egg-display').popover('show')
+}
+
 /**
  * Updates a stat display bar
  * @param stat - id of the stat
@@ -55,6 +70,9 @@ export const initialize = (friendo) => {
   setZodiac(friendo.zodiac)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyLeft())
+
+  // show tutorial if egg level is 0
+  if (friendo.getStat(STATS.EGG) === 1) showTutorial()
 }
 
 // enable/disable all friendo interaction buttons to prevent the
