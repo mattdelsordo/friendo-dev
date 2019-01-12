@@ -4,6 +4,7 @@
 
 import $ from 'jquery'
 import { save } from '../game/game-util'
+import { STATS } from '../friendo/constants'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -56,8 +57,22 @@ export const initialize = (friendo) => {
   setEnergy(friendo.getEnergyLeft())
 }
 
-export const enableButtons = () => {}
-export const disableButtons = () => {}
+// enable/disable all friendo interaction buttons to prevent the
+// player from breaking the entire game state
+export const enableButtons = () => {
+  $('#pet-button').prop('disabled', '')
+  $('#feed-button').prop('disabled', '')
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', '')
+  })
+}
+export const disableButtons = () => {
+  $('#pet-button').prop('disabled', 'disabled')
+  $('#feed-button').prop('disabled', 'disabled')
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', 'disabled')
+  })
+}
 
 // generalized action peforming routine for the buttons
 export const performAction = (friendo, action, reps = 1) => {
