@@ -71,6 +71,33 @@ export const initialize = (friendo) => {
   setAllStats(friendo)
   setEnergy(friendo.getEnergyLeft())
 
+  // show stats based on level
+  // CORE=0 means we're still in the tutorial
+  if (friendo.getStat(STATS.CORE) === 0) {
+    $('#stat-display').css('display', 'none')
+    $('#energy-zone').css('visibility', 'hidden')
+    $('#egg-display').css('display', 'block')
+  }
+  // unlockable stats
+  if (friendo.getStat(STATS.LEG) > 0) {
+    $(`#${STATS.LEG}-bar`).css('visibility', 'visible')
+  }
+  if (friendo.getStat(STATS.ARM) > 0) {
+    $(`#${STATS.ARM}-bar`).css('visibility', 'visible')
+  }
+  if (friendo.getStat(STATS.SIGHT) > 0) {
+    $(`#${STATS.SIGHT}-bar`).css('visibility', 'visible')
+  }
+  if (friendo.getStat(STATS.HAIR) > 0) {
+    $(`#${STATS.HAIR}-bar`).css('visibility', 'visible')
+  }
+  if (friendo.getStat(STATS.TASTE) > 0) {
+    $(`#${STATS.TASTE}-bar`).css('visibility', 'visible')
+  }
+  if (friendo.getStat(STATS.DOG) > 0) {
+    $(`#${STATS.DOG}-bar`).css('visibility', 'visible')
+  }
+
   // show tutorial if egg level is 0
   if (friendo.getStat(STATS.EGG) === 1) showTutorial()
 }
