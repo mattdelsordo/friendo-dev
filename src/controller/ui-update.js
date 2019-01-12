@@ -3,6 +3,7 @@
  */
 
 import $ from 'jquery'
+import { save } from '../game/game-util'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -48,10 +49,34 @@ export const setEnergy = (energy) => {
 
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
-  console.log('Initializing game state...')
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac)
   setAllStats(friendo._stats, friendo.exp)
   setEnergy(friendo.getEnergyLeft())
+}
+
+export const enableButtons = () => {}
+export const disableButtons = () => {}
+
+// generalized action peforming routine for the buttons
+export const performAction = (friendo, action, reps = 1) => {
+  disableButtons()
+  friendo.startExercise(
+    action,
+    reps,
+    // function to call on every rep
+    (f) => {
+      // save
+      save(JSON.stringify(f))
+      // update energy bar
+      setEnergy(f.getEnergyLeft())
+      // update stat displays
+      setAllStats(f._stats, f.exp)
+    },
+    // function to call at end
+    () => {
+      enableButtons()
+    },
+  )
 }

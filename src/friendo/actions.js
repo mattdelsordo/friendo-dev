@@ -1,9 +1,6 @@
-import loadState from '../friendo/state/load-state'
-import { save } from '../game/game-util'
-import { setEnergy, setAllStats } from './ui-update'
-import { ID as idleID } from '../friendo/state/idle'
-import { ID as sleepID } from '../friendo/state/sleep'
-import { ACTIONS } from '../friendo/constants'
+import loadState from './state/load-state'
+import { ID as sleepID } from './state/fitness/sleep'
+import { ACTIONS } from './constants'
 
 // returns the time cost of a given single exercise (in ms)
 export const REP_TIME = {
@@ -53,48 +50,41 @@ export const REP_REWARD = {
   [ACTIONS.PET]: 0,
 }
 
-export const exercise = (friendo, action, callback, reps = 0) => {
+// TODO: remove debug statements
+/* eslint-disable no-console, no-else-return */
+export const exercise = (friendo, action, reps = 0, everyRep, end) => {
   setTimeout(() => {
+    console.log(`Rep: ${reps}`)
     // add or subtract energy
     friendo.modifyEnergy(REP_COST[action])
     // add exp if applicable
-    friendo.addExp(action, REP_REWARD[action])
-    // update energy bar
-    setEnergy(friendo.getEnergyLeft())
-    // update stat displays
-    setAllStats(friendo._stats, friendo.exp)
+    // have to parse out the action id to get the state id
+    friendo.addExp(action.split('_')[1], REP_REWARD[action])
+    // update reps in stat
+    friendo.state.setReps(reps)
 
-    // save state of friendo
-    save(JSON.stringify(friendo))
+    everyRep(friendo)
 
     // check if energy has dipped below zero, if so, sleep
     if (friendo.getEnergyLeft() <= 0) {
+      console.log('Next rep! (exhausted)')
       friendo.state = loadState(this, sleepID)
-      exercise(friendo, ACTIONS.SLEEP, callback, -1)
-      return
+      return exercise(friendo, ACTIONS.SLEEP, -1, everyRep, end)
     }
 
-    // check if energy >= max, if so, return to idle (for sleep case)
-    if (friendo.getEnergyLeft() >= 1.0) {
-      // else, return to idle
-      friendo.state = loadState(this, idleID)
-
-      // callback if applicable, ex. to re-enable buttons
-      if (callback) callback()
-      return
+    // if sleeping, check if energy >= max, if so, return to idle
+    if (action === ACTIONS.SLEEP && friendo.getEnergyLeft() >= 1.0) {
+      console.log('Done (sleeping && energy = max)')
+      return end()
     }
 
     // do next rep if there are any left
     if (reps !== 0) {
-      exercise(friendo, action, callback, reps - 1)
-      return
+      console.log('Next rep! (reps!=0)')
+      return exercise(friendo, action, reps - 1, everyRep, end)
     } else {
-      // else, return to idle
-      friendo.state = loadState(this, idleID)
-
-      // callback if applicable, ex. to re-enable buttons
-      if (callback) callback()
-      return
+      console.log('Done (rep==0)')
+      return end()
     }
   }, REP_TIME[action])
 }

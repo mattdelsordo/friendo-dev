@@ -1,7 +1,7 @@
 import { STATS } from './constants'
 import ELEMENTS from './element/elements'
 import selectElement from './element/select-element'
-import Egg from './state/egg'
+import Egg from './state/idle/egg'
 
 /**
  * Specifies default values for new Friendos

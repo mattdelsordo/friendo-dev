@@ -5,8 +5,11 @@ import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
 
 import creatorSetup, { showCreator } from './char-creator-listeners'
-import { initialize } from './ui-update'
+import { initialize, performAction } from './ui-update'
 import mainSetup from './main-listeners'
+
+import { ID as idleID } from '../friendo/state/idle/idle'
+import { ID as eggID } from '../friendo/state/idle/egg'
 
 window.jQuery = $
 window.Tether = Tether
@@ -18,6 +21,7 @@ const start = (friendo) => {
   mainSetup(friendo)
   initialize(friendo)
 
+  // connect friendo to canvas in order to draw it
   const canvas = document.getElementById('canvas')
   const context = canvas.getContext('2d')
   setInterval(() => {
@@ -26,6 +30,11 @@ const start = (friendo) => {
     friendo.draw(canvas, context)
     context.restore()
   }, TICKRATE)
+
+  // resume an exercise if applicable
+  if (!(friendo.state.id === idleID || friendo.state.id === eggID)) {
+    performAction(friendo, friendo.state.id, friendo.state.getReps())
+  }
 }
 
 $(document)

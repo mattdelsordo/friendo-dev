@@ -4,9 +4,9 @@
 
 import Exercise from './exercise'
 import { left, down } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 
-export const ID = `state_${STATS.CORE}`
+export const ID = ACTIONS.CORE
 
 export default class Situp extends Exercise {
   constructor(savedState) {

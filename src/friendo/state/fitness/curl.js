@@ -1,10 +1,10 @@
 
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 import dumbbell from '../../../art/props/dumbbell'
 
-export const ID = `state_${STATS.ARM}`
+export const ID = ACTIONS.ARM
 
 export default class Curls extends Exercise {
   constructor(savedState) {

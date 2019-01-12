@@ -42,18 +42,18 @@ export const LVL_CALC_WHITELIST = [
 
 // 'enum' of potential actions
 export const ACTIONS = Object.freeze({
-  CORE: 'core',
-  LEG: 'leg',
-  ARM: 'arm',
-  SIGHT: 'sight',
-  HAIR: 'hair',
-  TASTE: 'taste',
-  DOG: 'dog',
-  MEME: 'meme',
-  EGG: 'egg',
-  SLEEP: 'sleep',
-  PET: 'pet',
-  FEED: 'feed',
+  CORE: `state_${STATS.CORE}`,
+  LEG: `state_${STATS.LEG}`,
+  ARM: `state_${STATS.ARM}`,
+  SIGHT: `state_${STATS.SIGHT}`,
+  HAIR: `state_${STATS.HAIR}`,
+  TASTE: `state_${STATS.TASTE}`,
+  DOG: `state_${STATS.DOG}`,
+  MEME: `state_${STATS.MEME}`,
+  EGG: `state_${STATS.EGG}`,
+  SLEEP: 'state_sleep',
+  PET: 'state_pet',
+  FEED: 'state_feed',
 })
 
 // maximum total level

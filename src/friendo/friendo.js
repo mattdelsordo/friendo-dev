@@ -23,6 +23,7 @@ import {
   DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
 } from './default'
+import { exercise } from './actions'
 
 export default class Friendo {
   // helper method to create a friendo based on character creation
@@ -150,7 +151,6 @@ export default class Friendo {
       this.exp[stat] += amnt
 
       // check to see if a levelup is possible
-      // TODO: Separating egg from everything was a bad idea
       const threshold = EXP_THRESHOLD[this._stats[stat]]
       if (this.exp[stat] >= threshold) {
         this.exp[stat] -= threshold
@@ -187,7 +187,30 @@ export default class Friendo {
     this.state.draw(context, x, y, this)
   }
 
-  handleAction(action, callback) {
-    this.state.handleAction(action, this, callback)
+  setState(id) {
+    this.state = loadState(this.state, id)
+  }
+
+  /**
+   * Changes state and begins a new exercise routine
+   * @param action - id of state/exercise to do
+   * @param reps - # of reps to do
+   * @param everyRep - function to execute on every rep (save, update UI)
+   * @param end - function to call once complete (updateUI)
+   */
+  startExercise(action, reps = 1, everyRep, end) {
+    // change state and then save
+    this.setState(action)
+    this.state.setReps(reps)
+    everyRep(this)
+
+    // start exercise at (reps-1) because the way they're set up
+    // the 0th rep gets performed
+    exercise(this, action, reps - 1, everyRep, () => {
+      // reset state and then save
+      this.setState(this.state.returnTo)
+      everyRep(this)
+      end()
+    })
   }
 }

@@ -4,9 +4,9 @@
 
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 
-export const ID = `state_${STATS.LEG}`
+export const ID = ACTIONS.LEG
 
 export default class Squat extends Exercise {
   constructor(savedState) {
