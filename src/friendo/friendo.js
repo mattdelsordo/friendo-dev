@@ -104,10 +104,13 @@ export default class Friendo {
   }
 
   computeLevel() {
+    // if core == 0, we're still an egg
+    if (this.getStat(STATS.CORE) === 0) return 0
+
     // compute cumulative sum but skip the first level of each stat
     // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
     const statSum = LVL_CALC_WHITELIST.reduce((l, r) =>
-      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 0)
+      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
 
     // if the sum of all stats is less than one, skip rest of calcs
     if (statSum < 1) return 0

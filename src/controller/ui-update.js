@@ -58,7 +58,6 @@ export const setStat = (stat, exp, lvl) => {
     $(`#${stat}-prog`).css('width', `${Math.floor(exp * 100)}%`)
     $(`#${stat}-num`).html(lvl.toString().padStart(4))
   }
-
 }
 export const setAllStats = (friendo) => {
   Object.values(STATS).forEach((s) => {
@@ -163,6 +162,8 @@ export const performAction = (friendo, action, reps = 1) => {
       // update stat displays
       const stat = action.split('_')[1] || ''
       setStat(stat, f.getExpPercent(stat), f.getStat(stat))
+      // update level
+      setLevel(friendo.level)
     },
     // function to call at end
     () => {
