@@ -4,7 +4,7 @@
 
 import $ from 'jquery'
 import { save } from '../game/game-util'
-import { STATS } from '../friendo/constants'
+import { MAX_EGG_LEVEL, STATS } from '../friendo/constants'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -127,6 +127,14 @@ const updateStatVisibility = (friendo) => {
   })
 }
 
+const hideEggDisplay = (friendo) => {
+  // show hidden content
+  $('#egg-display').css('display', 'none')
+  $('#stat-display').css('display', 'block')
+  $('#energy-zone').css('visibility', 'visible')
+  setAllStats(friendo)
+}
+
 // generalized action peforming routine for the buttons
 export const performAction = (friendo, action, reps = 1) => {
   disableButtons()
@@ -148,6 +156,9 @@ export const performAction = (friendo, action, reps = 1) => {
     // function to call at end
     () => {
       enableButtons()
+
+      // check whether incubation tutorial is over
+      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) hideEggDisplay(friendo)
     },
   )
 }
