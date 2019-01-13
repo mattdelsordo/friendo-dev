@@ -4,7 +4,7 @@
 
 import $ from 'jquery'
 import { save } from '../game/game-util'
-import { MAX_EGG_LEVEL, STATS } from '../friendo/constants'
+import { MAX_EGG_LEVEL, STAT_MAX, STATS } from '../friendo/constants'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -46,8 +46,19 @@ const showTutorial = () => {
  * @param lvl - current stat level
  */
 export const setStat = (stat, exp, lvl) => {
-  $(`#${stat}-prog`).css('width', `${Math.floor(exp * 100)}%`)
-  $(`#${stat}-num`).html(lvl.toString().padStart(4))
+  // special case if stat is maxed out
+  if ((stat === STATS.EGG || lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
+    $(`#${stat}-prog`)
+      .css('width', '100%')
+      .removeClass('bg-info')
+      .addClass('bg-success')
+    $(`#${stat}-prog`).css('background-color', '#28a745 !important')
+    $(`#${stat}-num`).html(lvl.toString().padStart(4))
+  } else {
+    $(`#${stat}-prog`).css('width', `${Math.floor(exp * 100)}%`)
+    $(`#${stat}-num`).html(lvl.toString().padStart(4))
+  }
+
 }
 export const setAllStats = (friendo) => {
   Object.values(STATS).forEach((s) => {

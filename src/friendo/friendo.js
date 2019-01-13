@@ -15,7 +15,7 @@ import {
   LVL_CALC_WHITELIST,
   MAX_DOGS,
   MAX_EGG_LEVEL,
-  STATS,
+  STATS, STAT_MAX,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
@@ -166,6 +166,10 @@ export default class Friendo {
   // adds exp for a given stat
   addExp(stat, amnt) {
     if (stat in this.exp) {
+      // do nothing if stat is maxed out
+      if (stat === STATS.EGG && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) return
+      else if (this.getStat(STATS.EGG) === STAT_MAX) return
+
       // increment exp amount
       this.exp[stat] += amnt
 
