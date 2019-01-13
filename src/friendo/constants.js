@@ -1,5 +1,13 @@
 // maximum level in a given element
 export const STAT_MAX = 100
+// egg stat has different max
+export const MAX_EGG_LEVEL = 30
+
+// cumulative levels at which you unlock certain stats
+export const LEG_LEVEL = 2
+export const ARM_LEVEL = 3
+export const HAIR_LEVEL = 5
+export const DOG_LEVEL = 10
 
 // maximum amount of dogs on the screen
 export const MAX_DOGS = 5

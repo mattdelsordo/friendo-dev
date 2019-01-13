@@ -119,6 +119,14 @@ export const disableButtons = () => {
   })
 }
 
+// checks whether or not a new stat has been unlocked and
+// updates the UI accordingly
+const updateStatVisibility = (friendo) => {
+  Object.values(STATS).forEach((s) => {
+    if (friendo.getStat(s) >= 1) $(`#${s}-bar`).css('visibility', 'visible')
+  })
+}
+
 // generalized action peforming routine for the buttons
 export const performAction = (friendo, action, reps = 1) => {
   disableButtons()
@@ -131,6 +139,8 @@ export const performAction = (friendo, action, reps = 1) => {
       save(JSON.stringify(f))
       // update energy bar
       setEnergy(f.getEnergyLeft())
+      // check to see if any stat can be made visible
+      updateStatVisibility(f)
       // update stat displays
       const stat = action.split('_')[1] || ''
       setStat(stat, f.getExpPercent(stat), f.getStat(stat))

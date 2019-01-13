@@ -5,7 +5,18 @@
 
 /* eslint-disable no-console */
 
-import { EXP_THRESHOLD, LEVEL_MAX, LVL_CALC_WHITELIST, MAX_DOGS, STATS } from './constants'
+import {
+  LEG_LEVEL,
+  ARM_LEVEL,
+  HAIR_LEVEL,
+  DOG_LEVEL,
+  EXP_THRESHOLD,
+  LEVEL_MAX,
+  LVL_CALC_WHITELIST,
+  MAX_DOGS,
+  MAX_EGG_LEVEL,
+  STATS,
+} from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -24,6 +35,7 @@ import {
   DEFAULT_EXP,
 } from './default'
 import { exercise } from './actions'
+import { ID as idleID } from './state/idle/idle'
 
 export default class Friendo {
   // helper method to create a friendo based on character creation
@@ -110,6 +122,12 @@ export default class Friendo {
   // compute level and set it in the friendo
   updateLevel() {
     this.level = this.computeLevel()
+
+    // check to see if any stats are unlocked
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_LEVEL) this.setStat(STATS.LEG, 1)
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_LEVEL) this.setStat(STATS.ARM, 1)
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_LEVEL) this.setStat(STATS.HAIR, 1)
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_LEVEL) this.setStat(STATS.DOG, 1)
   }
 
   // sets the value of a stat
@@ -221,8 +239,17 @@ export default class Friendo {
     // start exercise at (reps-1) because the way they're set up
     // the 0th rep gets performed
     exercise(this, action, reps - 1, everyRep, () => {
-      // reset state and then save
-      this.setState(this.state.returnTo)
+      // if egg is maxed out, enable starting levels set state to idle
+      if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
+        this.setStat(STATS.CORE, 1)
+        this.setStat(STATS.SIGHT, 1)
+        this.setStat(STATS.TASTE, 1)
+        this.setStat(STATS.MEME, 1)
+        this.setState(idleID)
+      } else {
+        // reset state and then save
+        this.setState(this.state.returnTo)
+      }
       everyRep(this)
       end()
     })
