@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import Tether from 'tether'
 
-import { save, load } from './game-util'
+import { save, load } from '../game/game-util'
 import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 import { toggleHookMarkers } from '../art/art-util'
-import { TICKRATE } from './game-config'
+import { TICKRATE } from '../game/game-config'
 import getZodiac from '../friendo/horoscope/get-zodiac'
 
 /**

@@ -1,9 +1,9 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
 import { drawGenericFood } from '../../../art/props/food'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 
-export const ID = `state_${STATS.TASTE}`
+export const ID = ACTIONS.TASTE
 
 export default class Munch extends Exercise {
   constructor(savedState) {

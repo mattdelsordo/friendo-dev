@@ -1,9 +1,9 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 import { drawPhone, PHONE_SCREEN_ON, PHONE_SCREEN_OFF } from '../../../art/props/phone'
 
-export const ID = `state_${STATS.MEME}`
+export const ID = ACTIONS.MEME
 
 export default class SurfWeb extends Exercise {
   constructor(savedState) {

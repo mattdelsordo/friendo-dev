@@ -1,6 +1,5 @@
 import { BLINK_TIME, SPEAK_TIME, BLINK_CHANCE, SPEAK_CHANCE, TOTAL_EVENT_CHANCE } from '../constants'
 import phrasebook from '../phrases/idle-phrases'
-import loadState from './load-state'
 
 /**
  *  defines the animation to be done in a given state
@@ -10,28 +9,23 @@ export const ID = 'state_default'
 
 export default class State {
   constructor(oldState) {
-    if (oldState) {
-      this.id = oldState.id
+    if (!oldState) oldState = {}
 
-      this.blinkRate = oldState.blinkRate
-      this.speakRate = oldState.speakRate
-      this.blink = oldState.blink
-      this.speak = oldState.speak
+    this.id = oldState.id || ID
 
-      // handle case where oldState is JSON rather than an object
-      this.phrasebook = oldState.phrasebook || phrasebook
-      this.words = oldState.words
-    } else {
-      this.id = ID
+    this.blinkRate = oldState.blinkRate || BLINK_CHANCE
+    this.speakRate = oldState.speakRate || SPEAK_CHANCE
+    this.blink = oldState.blink || 0
+    this.speak = oldState.speak || 0
+    // helps store how much longer to remain in this state
+    this.reps = oldState.reps || 0
 
-      this.blinkRate = BLINK_CHANCE
-      this.speakRate = SPEAK_CHANCE
-      this.blink = 0
-      this.speak = 0
+    // handle case where oldState is JSON rather than an object
+    this.phrasebook = oldState.phrasebook || phrasebook
+    this.words = oldState.words || 'Hi!'
 
-      this.phrasebook = phrasebook
-      this.words = 'Hi'
-    }
+    // keep track of the state this should default back to
+    this.returnTo = this.id
   }
 
   toJSON() {
@@ -42,8 +36,12 @@ export default class State {
       blink: this.blink,
       speak: this.speak,
       words: this.words,
+      reps: this.reps,
     }
   }
+
+  setReps(reps) { this.reps = reps }
+  getReps() { return this.reps }
 
   draw(g, x, y, friendo) {
     /**
@@ -66,12 +64,6 @@ export default class State {
     }
 
     friendo.element.setColors(g)
-  }
-
-  handleAction(action, friendo) {
-    /* eslint-disable-next-line no-console */
-    console.log(`Handling ${action}`)
-    friendo.state = loadState(this, action)
   }
 
   pickPhrase(friendo) {

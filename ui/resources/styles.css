@@ -41,10 +41,27 @@
     background: ghostwhite;
 }
 
+/* Displays that are invisible by default */
 #egg-display{
     display: none;
 }
 
 #char-creator {
     display: none;
+}
+
+#leg-bar {
+    visibility: hidden;
+}
+
+#arm-bar {
+    visibility: hidden;
+}
+
+#hair-bar {
+    visibility: hidden;
+}
+
+#dog-bar {
+    visibility: hidden;
 }
