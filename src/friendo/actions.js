@@ -36,9 +36,9 @@ export const REP_COST = {
   [ACTIONS.DOG]: -10,
   [ACTIONS.MEME]: -10,
   [ACTIONS.EGG]: 0,
-  [ACTIONS.SLEEP]: 1,
-  [ACTIONS.FEED]: 1,
-  [ACTIONS.PET]: 1,
+  [ACTIONS.SLEEP]: 4,
+  [ACTIONS.FEED]: 4,
+  [ACTIONS.PET]: 2,
 }
 
 // returns exp reward based on the given exercise
