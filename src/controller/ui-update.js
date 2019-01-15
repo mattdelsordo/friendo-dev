@@ -80,7 +80,7 @@ export const setEnergy = (energy) => {
 export const initialize = (friendo) => {
   setName(friendo.name)
   setLevel(friendo.level)
-  setZodiac(friendo.zodiac)
+  setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyLeft())
 
@@ -174,7 +174,7 @@ export const performAction = (friendo, action, reps = 1) => {
 
       // check whether incubation tutorial is over
       if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        setZodiac(friendo.zodiac)
+        setZodiac(friendo.zodiac, friendo.element.strokeStyle)
         hideEggDisplay(friendo)
       }
     },

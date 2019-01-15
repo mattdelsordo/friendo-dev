@@ -1,5 +1,10 @@
 import { STATS } from '../constants'
-import { EARTH_EGG_OUTLINE, EARTH_EGG_SKIN, EARTH_OUTLINE, EARTH_SKIN } from '../../art/colors'
+import {
+  EARTH_EGG_OUTLINE,
+  EARTH_EGG_SKIN,
+  EARTH_OUTLINE,
+  EARTH_SKIN,
+} from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 
@@ -11,16 +16,11 @@ export default class Earth extends Element {
   constructor() {
     super()
     this.id = ELEMENTS.EARTH
-  }
 
-  setColors(g) {
-    g.fillStyle = EARTH_SKIN
-    g.strokeStyle = EARTH_OUTLINE
-  }
-
-  setEggColors(g) {
-    g.fillStyle = EARTH_EGG_SKIN
-    g.strokeStyle = EARTH_EGG_OUTLINE
+    this.strokeStyle = EARTH_OUTLINE
+    this.fillStyle = EARTH_SKIN
+    this.eggStroke = EARTH_EGG_OUTLINE
+    this.eggFill = EARTH_EGG_SKIN
   }
 
   computeArmTethers(friendo) {
