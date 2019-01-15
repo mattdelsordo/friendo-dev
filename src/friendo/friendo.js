@@ -33,6 +33,7 @@ import {
   DEFAULT_ENERGY,
   DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
+  DEFAULT_ZODIAC,
 } from './default'
 import { exercise } from './actions'
 import { ID as idleID } from './state/idle/idle'
@@ -53,7 +54,7 @@ export default class Friendo {
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
-    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : getZodiac()
+    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
     this.energy = fromJSON.energy || DEFAULT_ENERGY
     this.exp = fromJSON.exp || DEFAULT_EXP
 
@@ -230,6 +231,17 @@ export default class Friendo {
     this.state = loadState(this.state, id)
   }
 
+  // performs behaviors associated with hatching the egg and
+  // ending the tutorial
+  hatch() {
+    this.setStat(STATS.CORE, 1)
+    this.setStat(STATS.SIGHT, 1)
+    this.setStat(STATS.TASTE, 1)
+    this.setStat(STATS.MEME, 1)
+    this.setState(idleID)
+    this.zodiac = getZodiac()
+  }
+
   /**
    * Changes state and begins a new exercise routine
    * @param action - id of state/exercise to do
@@ -248,11 +260,7 @@ export default class Friendo {
     exercise(this, action, reps - 1, everyRep, () => {
       // if egg is maxed out, enable starting levels set state to idle
       if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        this.setStat(STATS.CORE, 1)
-        this.setStat(STATS.SIGHT, 1)
-        this.setStat(STATS.TASTE, 1)
-        this.setStat(STATS.MEME, 1)
-        this.setState(idleID)
+        this.hatch()
       } else {
         // reset state and then save
         this.setState(this.state.returnTo)

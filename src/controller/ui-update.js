@@ -18,10 +18,13 @@ export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
     .html(zodiac.symbol)
     .css('color', color)
-    .popover({ content: '?', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover' })
+
   // separately set content so that the popover will be updated every time this function
-  $('#zodiac-display')
-    .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+  if (zodiac.sign !== 'Egg') {
+    $('#zodiac-display')
+      .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+  }
 }
 
 // sets and triggers tutorial content
@@ -170,7 +173,10 @@ export const performAction = (friendo, action, reps = 1) => {
       enableButtons()
 
       // check whether incubation tutorial is over
-      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) hideEggDisplay(friendo)
+      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
+        setZodiac(friendo.zodiac)
+        hideEggDisplay(friendo)
+      }
     },
   )
 }

@@ -3,6 +3,7 @@
  */
 
 import {
+  Egg,
   Capricorn,
   Aquarius,
   Pisces,
@@ -18,6 +19,9 @@ import {
 } from './zodiac'
 
 export default (birth) => {
+  // check if egg
+  if (birth === '0') return new Egg()
+
   // Perform check for pre-existing date
   let date
   if (!birth) date = new Date()

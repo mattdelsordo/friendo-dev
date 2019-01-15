@@ -48,6 +48,21 @@ class Zodiac {
   }
 }
 
+// default zodiac sign - a birthdayless egg
+export class Egg extends Zodiac {
+  constructor() {
+    super(0)
+    this.sign = 'Egg'
+    this.symbol = '\u{1f95a}'
+  }
+
+  isBirthday() { return false }
+
+  getAge() { return 0 }
+
+  getBirthday() { return '???' }
+}
+
 export class Aries extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
