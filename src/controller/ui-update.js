@@ -24,6 +24,12 @@ export const setZodiac = (zodiac, color = 'black') => {
   if (zodiac.sign !== 'Egg') {
     $('#zodiac-display')
       .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+    // determine if birthday and show it
+    if (zodiac.isBirthday()) {
+      $('#zodiac-display')
+        .css('border-radius', '25px')
+        .css('border', '4px dotted gold')
+    }
   }
 }
 
@@ -76,6 +82,23 @@ export const setEnergy = (energy) => {
   $('#energybar').css('width', `${Math.floor(energy * 100)}%`)
 }
 
+// handle daily events for if someone plays continuously past midnight
+const daily = (friendo) => {
+  // get relative dates to calculate time until the next midnight
+  const today = new Date()
+  // number is the amount of MS in a day
+  const tomorrow = new Date(today.getTime() + 86400000)
+  tomorrow.setUTCMinutes(0)
+  tomorrow.setUTCHours(0)
+  tomorrow.setUTCSeconds(0)
+  tomorrow.setUTCMilliseconds(0)
+  setTimeout(() => {
+    setZodiac(friendo.zodiac)
+
+    daily(friendo)
+  }, tomorrow.getTime() - today.getTime())
+}
+
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
   setName(friendo.name)
@@ -113,6 +136,9 @@ export const initialize = (friendo) => {
 
   // show tutorial if egg level is 0
   if (friendo.getStat(STATS.EGG) === 1) showTutorial()
+
+  // start daily event timer
+  daily(friendo)
 }
 
 // enable/disable all friendo interaction buttons to prevent the
