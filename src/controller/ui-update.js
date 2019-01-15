@@ -50,7 +50,7 @@ const showTutorial = () => {
  */
 export const setStat = (stat, exp, lvl) => {
   // special case if stat is maxed out
-  if ((stat === STATS.EGG || lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
+  if ((stat === STATS.EGG && lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
     $(`#${stat}-prog`)
       .css('width', '100%')
       .removeClass('bg-info')
