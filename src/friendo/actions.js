@@ -1,21 +1,21 @@
 import loadState from './state/load-state'
 import { ID as sleepID } from './state/fitness/sleep'
-import { ACTIONS } from './constants'
+import { ACTIONS, FEED_REP_LENGTH, PET_REP_LENGTH, REP_LENGTH } from './constants'
 
 // returns the time cost of a given single exercise (in ms)
 export const REP_TIME = {
-  [ACTIONS.CORE]: 12000,
-  [ACTIONS.LEG]: 12000,
-  [ACTIONS.ARM]: 12000,
-  [ACTIONS.SIGHT]: 12000,
-  [ACTIONS.HAIR]: 12000,
-  [ACTIONS.TASTE]: 12000,
-  [ACTIONS.DOG]: 12000,
-  [ACTIONS.MEME]: 36000,
-  [ACTIONS.EGG]: 12000,
-  [ACTIONS.SLEEP]: 12000,
-  [ACTIONS.FEED]: 2750,
-  [ACTIONS.PET]: 2000,
+  [ACTIONS.CORE]: REP_LENGTH,
+  [ACTIONS.LEG]: REP_LENGTH,
+  [ACTIONS.ARM]: REP_LENGTH,
+  [ACTIONS.SIGHT]: REP_LENGTH,
+  [ACTIONS.HAIR]: REP_LENGTH,
+  [ACTIONS.TASTE]: REP_LENGTH,
+  [ACTIONS.DOG]: REP_LENGTH,
+  [ACTIONS.MEME]: REP_LENGTH * 3,
+  [ACTIONS.EGG]: REP_LENGTH / 3,
+  [ACTIONS.SLEEP]: REP_LENGTH,
+  [ACTIONS.FEED]: FEED_REP_LENGTH, // specific to feeding
+  [ACTIONS.PET]: PET_REP_LENGTH,
 }
 
 // returns energy cost of a given exercise

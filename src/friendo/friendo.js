@@ -10,12 +10,12 @@ import {
   ARM_LEVEL,
   HAIR_LEVEL,
   DOG_LEVEL,
-  EXP_THRESHOLD,
   LEVEL_MAX,
   LVL_CALC_WHITELIST,
   MAX_DOGS,
   MAX_EGG_LEVEL,
   STATS, STAT_MAX,
+  getExpCurve,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
@@ -178,7 +178,7 @@ export default class Friendo {
       this.exp[stat] += amnt
 
       // check to see if a levelup is possible
-      const threshold = EXP_THRESHOLD[this._stats[stat]]
+      const threshold = getExpCurve(stat)[this._stats[stat]]
       if (this.exp[stat] >= threshold) {
         this.exp[stat] -= threshold
         this.setStat(stat, this._stats[stat] + 1)
@@ -194,7 +194,7 @@ export default class Friendo {
   // returns exp as a percentage of the exp needed for the level
   getExpPercent(stat) {
     if (stat in this.exp) {
-      return this.exp[stat] / EXP_THRESHOLD[this._stats[stat]]
+      return this.exp[stat] / getExpCurve(stat)[this._stats[stat]]
     }
     return 0
   }
