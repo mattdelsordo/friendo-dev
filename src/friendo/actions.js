@@ -1,6 +1,13 @@
 import loadState from './state/load-state'
 import { ID as sleepID } from './state/fitness/sleep'
-import { ACTIONS, FEED_REP_LENGTH, PET_REP_LENGTH, REP_LENGTH } from './constants'
+import {
+  ACTIONS,
+  FEED_REP_LENGTH,
+  MAX_EGG_LEVEL,
+  PET_REP_LENGTH,
+  REP_LENGTH,
+  STAT_MAX,
+} from './constants'
 
 // returns the time cost of a given single exercise (in ms)
 export const REP_TIME = {
@@ -54,12 +61,13 @@ export const REP_REWARD = {
 /* eslint-disable no-console, no-else-return */
 export const exercise = (friendo, action, reps = 0, everyRep, end) => {
   setTimeout(() => {
+    const stat = action.split('_')[1]
     console.log(`Rep: ${reps}`)
     // add or subtract energy
     friendo.modifyEnergy(REP_COST[action])
     // add exp if applicable
     // have to parse out the action id to get the state id
-    friendo.addExp(action.split('_')[1], REP_REWARD[action])
+    friendo.addExp(stat, REP_REWARD[action])
     // update reps in stat
     friendo.state.setReps(reps)
 
@@ -75,6 +83,12 @@ export const exercise = (friendo, action, reps = 0, everyRep, end) => {
     // if sleeping, check if energy >= max, if so, return to idle
     if (action === ACTIONS.SLEEP && friendo.getEnergyLeft() >= 1.0) {
       console.log('Done (sleeping && energy = max)')
+      return end()
+    }
+
+    // if stat is maxed, end immediately
+    if ((action === ACTIONS.EGG && friendo.getStat(stat) === MAX_EGG_LEVEL)
+      || friendo.getStat(stat) === STAT_MAX) {
       return end()
     }
 
