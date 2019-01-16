@@ -14,7 +14,9 @@ import {
   LVL_CALC_WHITELIST,
   MAX_DOGS,
   MAX_EGG_LEVEL,
-  STATS, STAT_MAX,
+  STATS,
+  STAT_MAX,
+  EXP_PER_LEVEL,
   getExpCurve,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
@@ -123,9 +125,17 @@ export default class Friendo {
     return level
   }
 
+  // maxumum energy is the default + 5 per every level past 1
+  computeMaxEnergy() {
+    // disregard level 1 in calcs
+    return DEFAULT_MAX_ENERGY + ((this.level * EXP_PER_LEVEL) - EXP_PER_LEVEL)
+  }
+
   // compute level and set it in the friendo
+  // also compute energy
   updateLevel() {
     this.level = this.computeLevel()
+    this.maxEnergy = this.computeMaxEnergy()
 
     // check to see if any stats are unlocked
     if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_LEVEL) this.setStat(STATS.LEG, 1)

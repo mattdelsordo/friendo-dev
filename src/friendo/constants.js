@@ -28,6 +28,9 @@ export const REP_LENGTH = 12000 // 12 seconds/.2 minutes
 export const FEED_REP_LENGTH = 2750
 export const PET_REP_LENGTH = 2000
 
+// amount of experience a friendo gains per level
+export const EXP_PER_LEVEL = 5
+
 // 'enum' of stat indices
 export const STATS = Object.freeze({
   CORE: 'core',
