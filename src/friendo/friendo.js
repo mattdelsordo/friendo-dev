@@ -6,10 +6,10 @@
 /* eslint-disable no-console */
 
 import {
-  LEG_LEVEL,
-  ARM_LEVEL,
-  HAIR_LEVEL,
-  DOG_LEVEL,
+  LEG_UNLOCK_LEVEL,
+  ARM_UNLOCK_LEVEL,
+  HAIR_UNLOCK_LEVEL,
+  DOG_UNLOCK_LEVEL,
   LEVEL_MAX,
   LVL_CALC_WHITELIST,
   MAX_DOGS,
@@ -138,10 +138,10 @@ export default class Friendo {
     this.maxEnergy = this.computeMaxEnergy()
 
     // check to see if any stats are unlocked
-    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_LEVEL) this.setStat(STATS.LEG, 1)
-    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_LEVEL) this.setStat(STATS.ARM, 1)
-    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_LEVEL) this.setStat(STATS.HAIR, 1)
-    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_LEVEL) this.setStat(STATS.DOG, 1)
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) this.setStat(STATS.LEG, 1)
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) this.setStat(STATS.ARM, 1)
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) this.setStat(STATS.HAIR, 1)
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) this.setStat(STATS.DOG, 1)
   }
 
   // sets the value of a stat

@@ -4,10 +4,10 @@ export const STAT_MAX = 100
 export const MAX_EGG_LEVEL = 30
 
 // cumulative levels at which you unlock certain stats
-export const LEG_LEVEL = 2
-export const ARM_LEVEL = 3
-export const HAIR_LEVEL = 5
-export const DOG_LEVEL = 10
+export const LEG_UNLOCK_LEVEL = 2
+export const ARM_UNLOCK_LEVEL = 3
+export const HAIR_UNLOCK_LEVEL = 5
+export const DOG_UNLOCK_LEVEL = 10
 
 // maximum amount of dogs on the screen
 export const MAX_DOGS = 5
