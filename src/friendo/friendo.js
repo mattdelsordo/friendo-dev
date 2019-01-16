@@ -167,6 +167,11 @@ export default class Friendo {
     else this.energy = this.energy + amnt
   }
 
+  // exp multiplier based off meme tolerance
+  getExpMultiplier() {
+    return 1 + (this.getStat(STATS.MEME) / 10)
+  }
+
   // adds exp for a given stat
   addExp(stat, amnt) {
     if (stat in this.exp) {
@@ -174,8 +179,8 @@ export default class Friendo {
       if (stat === STATS.EGG && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) return
       else if (this.getStat(STATS.EGG) === STAT_MAX) return
 
-      // increment exp amount
-      this.exp[stat] += amnt
+      // increment exp amount, multiplied by a factor based on meme-tolerance
+      this.exp[stat] += Math.floor(amnt * this.getExpMultiplier())
 
       // check to see if a levelup is possible
       const threshold = getExpCurve(stat)[this._stats[stat]]
