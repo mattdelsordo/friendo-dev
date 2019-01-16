@@ -160,11 +160,21 @@ export default class Friendo {
     return this.energy / this.maxEnergy
   }
 
-  // adds energy to the friendo's reserve
-  modifyEnergy(amnt) {
-    if (amnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
-    else if (this.energy + amnt <= 0) this.energy = 0
-    else this.energy = this.energy + amnt
+  // exp multiplier based off taste level
+  getFoodMultiplier() {
+    return 1 + (this.getStat(STATS.TASTE) / 10)
+  }
+
+  /**
+   * Adds energy to the friendo's reserve
+   * @param amnt - amount of energy to add
+   * @param feed - whether or not to factor in taste multiplier
+   */
+  modifyEnergy(amnt, feed = false) {
+    const newAmnt = feed ? Math.floor(amnt * this.getFoodMultiplier()) : amnt
+    if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
+    else if (this.energy + newAmnt <= 0) this.energy = 0
+    else this.energy = this.energy + newAmnt
   }
 
   // exp multiplier based off meme tolerance
