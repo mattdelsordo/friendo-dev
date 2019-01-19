@@ -4,6 +4,7 @@ import { load, save } from '../game/game-util'
 import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
 
+import footer from './footer'
 import creatorSetup, { showCreator } from './char-creator-listeners'
 import { initialize, performAction } from './ui-update'
 import mainSetup from './main-listeners'
@@ -41,6 +42,9 @@ $(document)
   .ready(() => {
     // define store of game state
     let friendo
+
+    // set footer listeners
+    footer()
 
     // set up UI listeners
     creatorSetup((newFriendo) => {
