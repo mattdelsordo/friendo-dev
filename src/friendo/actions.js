@@ -1,21 +1,28 @@
 import loadState from './state/load-state'
 import { ID as sleepID } from './state/fitness/sleep'
-import { ACTIONS } from './constants'
+import {
+  ACTIONS,
+  FEED_REP_LENGTH,
+  MAX_EGG_LEVEL,
+  PET_REP_LENGTH,
+  REP_LENGTH,
+  STAT_MAX,
+} from './constants'
 
 // returns the time cost of a given single exercise (in ms)
 export const REP_TIME = {
-  [ACTIONS.CORE]: 12000,
-  [ACTIONS.LEG]: 12000,
-  [ACTIONS.ARM]: 12000,
-  [ACTIONS.SIGHT]: 12000,
-  [ACTIONS.HAIR]: 12000,
-  [ACTIONS.TASTE]: 12000,
-  [ACTIONS.DOG]: 12000,
-  [ACTIONS.MEME]: 36000,
-  [ACTIONS.EGG]: 12000,
-  [ACTIONS.SLEEP]: 12000,
-  [ACTIONS.FEED]: 2750,
-  [ACTIONS.PET]: 2000,
+  [ACTIONS.CORE]: REP_LENGTH,
+  [ACTIONS.LEG]: REP_LENGTH,
+  [ACTIONS.ARM]: REP_LENGTH,
+  [ACTIONS.SIGHT]: REP_LENGTH,
+  [ACTIONS.HAIR]: REP_LENGTH,
+  [ACTIONS.TASTE]: REP_LENGTH,
+  [ACTIONS.DOG]: REP_LENGTH,
+  [ACTIONS.MEME]: REP_LENGTH * 2,
+  [ACTIONS.EGG]: REP_LENGTH / 3,
+  [ACTIONS.SLEEP]: REP_LENGTH,
+  [ACTIONS.FEED]: FEED_REP_LENGTH, // specific to feeding
+  [ACTIONS.PET]: PET_REP_LENGTH,
 }
 
 // returns energy cost of a given exercise
@@ -27,11 +34,11 @@ export const REP_COST = {
   [ACTIONS.HAIR]: -10,
   [ACTIONS.TASTE]: -10,
   [ACTIONS.DOG]: -10,
-  [ACTIONS.MEME]: -7,
+  [ACTIONS.MEME]: -10,
   [ACTIONS.EGG]: 0,
-  [ACTIONS.SLEEP]: 1,
-  [ACTIONS.FEED]: 1,
-  [ACTIONS.PET]: 1,
+  [ACTIONS.SLEEP]: 4,
+  [ACTIONS.FEED]: 4,
+  [ACTIONS.PET]: 2,
 }
 
 // returns exp reward based on the given exercise
@@ -54,12 +61,14 @@ export const REP_REWARD = {
 /* eslint-disable no-console, no-else-return */
 export const exercise = (friendo, action, reps = 0, everyRep, end) => {
   setTimeout(() => {
+    const stat = action.split('_')[1]
     console.log(`Rep: ${reps}`)
     // add or subtract energy
-    friendo.modifyEnergy(REP_COST[action])
+    const cost = REP_COST[action] * friendo.zodiac.getStatBonus(action)
+    friendo.modifyEnergy(cost, action === ACTIONS.FEED)
     // add exp if applicable
     // have to parse out the action id to get the state id
-    friendo.addExp(action.split('_')[1], REP_REWARD[action])
+    friendo.addExp(stat, REP_REWARD[action])
     // update reps in stat
     friendo.state.setReps(reps)
 
@@ -75,6 +84,12 @@ export const exercise = (friendo, action, reps = 0, everyRep, end) => {
     // if sleeping, check if energy >= max, if so, return to idle
     if (action === ACTIONS.SLEEP && friendo.getEnergyLeft() >= 1.0) {
       console.log('Done (sleeping && energy = max)')
+      return end()
+    }
+
+    // if stat is maxed, end immediately
+    if ((action === ACTIONS.EGG && friendo.getStat(stat) === MAX_EGG_LEVEL)
+      || friendo.getStat(stat) === STAT_MAX) {
       return end()
     }
 

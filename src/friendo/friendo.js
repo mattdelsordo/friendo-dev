@@ -6,16 +6,18 @@
 /* eslint-disable no-console */
 
 import {
-  LEG_LEVEL,
-  ARM_LEVEL,
-  HAIR_LEVEL,
-  DOG_LEVEL,
-  EXP_THRESHOLD,
+  LEG_UNLOCK_LEVEL,
+  ARM_UNLOCK_LEVEL,
+  HAIR_UNLOCK_LEVEL,
+  DOG_UNLOCK_LEVEL,
   LEVEL_MAX,
   LVL_CALC_WHITELIST,
   MAX_DOGS,
   MAX_EGG_LEVEL,
-  STATS, STAT_MAX,
+  STATS,
+  STAT_MAX,
+  EXP_PER_LEVEL,
+  getExpCurve,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
@@ -33,6 +35,7 @@ import {
   DEFAULT_ENERGY,
   DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
+  DEFAULT_ZODIAC,
 } from './default'
 import { exercise } from './actions'
 import { ID as idleID } from './state/idle/idle'
@@ -53,7 +56,7 @@ export default class Friendo {
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
-    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : getZodiac()
+    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
     this.energy = fromJSON.energy || DEFAULT_ENERGY
     this.exp = fromJSON.exp || DEFAULT_EXP
 
@@ -122,15 +125,23 @@ export default class Friendo {
     return level
   }
 
+  // maxumum energy is the default + 5 per every level past 1
+  computeMaxEnergy() {
+    // disregard level 1 in calcs
+    return DEFAULT_MAX_ENERGY + ((this.level * EXP_PER_LEVEL) - EXP_PER_LEVEL)
+  }
+
   // compute level and set it in the friendo
+  // also compute energy
   updateLevel() {
     this.level = this.computeLevel()
+    this.maxEnergy = this.computeMaxEnergy()
 
     // check to see if any stats are unlocked
-    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_LEVEL) this.setStat(STATS.LEG, 1)
-    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_LEVEL) this.setStat(STATS.ARM, 1)
-    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_LEVEL) this.setStat(STATS.HAIR, 1)
-    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_LEVEL) this.setStat(STATS.DOG, 1)
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) this.setStat(STATS.LEG, 1)
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) this.setStat(STATS.ARM, 1)
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) this.setStat(STATS.HAIR, 1)
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) this.setStat(STATS.DOG, 1)
   }
 
   // sets the value of a stat
@@ -159,11 +170,26 @@ export default class Friendo {
     return this.energy / this.maxEnergy
   }
 
-  // adds energy to the friendo's reserve
-  modifyEnergy(amnt) {
-    if (amnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
-    else if (this.energy + amnt <= 0) this.energy = 0
-    else this.energy = this.energy + amnt
+  // exp multiplier based off taste level
+  getFoodMultiplier() {
+    return 1 + (this.getStat(STATS.TASTE) / 10)
+  }
+
+  /**
+   * Adds energy to the friendo's reserve
+   * @param amnt - amount of energy to add
+   * @param feed - whether or not to factor in taste multiplier
+   */
+  modifyEnergy(amnt, feed = false) {
+    const newAmnt = feed ? Math.floor(amnt * this.getFoodMultiplier()) : amnt
+    if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
+    else if (this.energy + newAmnt <= 0) this.energy = 0
+    else this.energy = this.energy + newAmnt
+  }
+
+  // exp multiplier based off meme tolerance
+  getExpMultiplier() {
+    return 1 + (this.getStat(STATS.MEME) / 10)
   }
 
   // adds exp for a given stat
@@ -173,11 +199,11 @@ export default class Friendo {
       if (stat === STATS.EGG && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) return
       else if (this.getStat(STATS.EGG) === STAT_MAX) return
 
-      // increment exp amount
-      this.exp[stat] += amnt
+      // increment exp amount, multiplied by a factor based on meme-tolerance
+      this.exp[stat] += Math.floor(amnt * this.getExpMultiplier() * this.zodiac.getStatBonus(stat))
 
       // check to see if a levelup is possible
-      const threshold = EXP_THRESHOLD[this._stats[stat]]
+      const threshold = getExpCurve(stat)[this._stats[stat]]
       if (this.exp[stat] >= threshold) {
         this.exp[stat] -= threshold
         this.setStat(stat, this._stats[stat] + 1)
@@ -193,7 +219,7 @@ export default class Friendo {
   // returns exp as a percentage of the exp needed for the level
   getExpPercent(stat) {
     if (stat in this.exp) {
-      return this.exp[stat] / EXP_THRESHOLD[this._stats[stat]]
+      return this.exp[stat] / getExpCurve(stat)[this._stats[stat]]
     }
     return 0
   }
@@ -230,6 +256,17 @@ export default class Friendo {
     this.state = loadState(this.state, id)
   }
 
+  // performs behaviors associated with hatching the egg and
+  // ending the tutorial
+  hatch() {
+    this.setStat(STATS.CORE, 1)
+    this.setStat(STATS.SIGHT, 1)
+    this.setStat(STATS.TASTE, 1)
+    this.setStat(STATS.MEME, 1)
+    this.setState(idleID)
+    this.zodiac = getZodiac()
+  }
+
   /**
    * Changes state and begins a new exercise routine
    * @param action - id of state/exercise to do
@@ -248,11 +285,7 @@ export default class Friendo {
     exercise(this, action, reps - 1, everyRep, () => {
       // if egg is maxed out, enable starting levels set state to idle
       if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        this.setStat(STATS.CORE, 1)
-        this.setStat(STATS.SIGHT, 1)
-        this.setStat(STATS.TASTE, 1)
-        this.setStat(STATS.MEME, 1)
-        this.setState(idleID)
+        this.hatch()
       } else {
         // reset state and then save
         this.setState(this.state.returnTo)

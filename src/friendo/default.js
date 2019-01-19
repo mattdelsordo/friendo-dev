@@ -2,6 +2,7 @@ import { STATS } from './constants'
 import ELEMENTS from './element/elements'
 import selectElement from './element/select-element'
 import Egg from './state/idle/egg'
+import { Egg as Zodiac } from './horoscope/zodiac'
 
 /**
  * Specifies default values for new Friendos
@@ -52,6 +53,7 @@ export const DEFAULT_EXP = {
 
 export const DEFAULT_ELEMENT = selectElement(ELEMENTS.EARTH)
 export const DEFAULT_STATE = new Egg()
+export const DEFAULT_ZODIAC = new Zodiac()
 
 // default x/y at which a friendo is drawn
 export const DEFAULT_HOOK = { x: 200, y: 350 }

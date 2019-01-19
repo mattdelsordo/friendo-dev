@@ -18,10 +18,19 @@ export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
     .html(zodiac.symbol)
     .css('color', color)
-    .popover({ content: '?', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover' })
+
   // separately set content so that the popover will be updated every time this function
-  $('#zodiac-display')
-    .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+  if (zodiac.sign !== 'Egg') {
+    $('#zodiac-display')
+      .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+    // determine if birthday and show it
+    if (zodiac.isBirthday()) {
+      $('#zodiac-display')
+        .css('border-radius', '25px')
+        .css('border', '4px dotted gold')
+    }
+  }
 }
 
 // sets and triggers tutorial content
@@ -47,7 +56,7 @@ const showTutorial = () => {
  */
 export const setStat = (stat, exp, lvl) => {
   // special case if stat is maxed out
-  if ((stat === STATS.EGG || lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
+  if ((stat === STATS.EGG && lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
     $(`#${stat}-prog`)
       .css('width', '100%')
       .removeClass('bg-info')
@@ -73,11 +82,28 @@ export const setEnergy = (energy) => {
   $('#energybar').css('width', `${Math.floor(energy * 100)}%`)
 }
 
+// handle daily events for if someone plays continuously past midnight
+const daily = (friendo) => {
+  // get relative dates to calculate time until the next midnight
+  const today = new Date()
+  // number is the amount of MS in a day
+  const tomorrow = new Date(today.getTime() + 86400000)
+  tomorrow.setUTCMinutes(0)
+  tomorrow.setUTCHours(0)
+  tomorrow.setUTCSeconds(0)
+  tomorrow.setUTCMilliseconds(0)
+  setTimeout(() => {
+    setZodiac(friendo.zodiac)
+
+    daily(friendo)
+  }, tomorrow.getTime() - today.getTime())
+}
+
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
   setName(friendo.name)
   setLevel(friendo.level)
-  setZodiac(friendo.zodiac)
+  setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyLeft())
 
@@ -110,6 +136,9 @@ export const initialize = (friendo) => {
 
   // show tutorial if egg level is 0
   if (friendo.getStat(STATS.EGG) === 1) showTutorial()
+
+  // start daily event timer
+  daily(friendo)
 }
 
 // enable/disable all friendo interaction buttons to prevent the
@@ -170,7 +199,10 @@ export const performAction = (friendo, action, reps = 1) => {
       enableButtons()
 
       // check whether incubation tutorial is over
-      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) hideEggDisplay(friendo)
+      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
+        setZodiac(friendo.zodiac, friendo.element.strokeStyle)
+        hideEggDisplay(friendo)
+      }
     },
   )
 }
