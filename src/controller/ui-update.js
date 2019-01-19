@@ -55,6 +55,7 @@ const showTutorial = () => {
  * @param lvl - current stat level
  */
 export const setStat = (stat, exp, lvl) => {
+  const percent = Math.floor(exp * 100)
   // special case if stat is maxed out
   if ((stat === STATS.EGG && lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
     $(`#${stat}-prog`)
@@ -63,10 +64,25 @@ export const setStat = (stat, exp, lvl) => {
       .addClass('bg-success')
     $(`#${stat}-prog`).css('background-color', '#28a745 !important')
     $(`#${stat}-num`).html(lvl.toString().padStart(4))
+  } else if (($(`#${stat}-prog`).data('lastVal') || 0) > percent) {
+    // if this value is LESS than the last value, do special animation
+    // this is necessary to circumvent the stuff bootstrap has by default
+    $(`#${stat}-prog`).css('width', '100%')
+    setTimeout(() => {
+      $(`#${stat}-num`).html(lvl.toString().padStart(4))
+      $(`#${stat}-prog`)
+        .css('visibility', 'hidden')
+        .css('width', `${percent}%`)
+      setTimeout(() => {
+        $(`#${stat}-prog`).css('visibility', 'visible')
+      }, 600)
+    }, 700)
   } else {
-    $(`#${stat}-prog`).css('width', `${Math.floor(exp * 100)}%`)
+    $(`#${stat}-prog`).css('width', `${percent}%`)
     $(`#${stat}-num`).html(lvl.toString().padStart(4))
   }
+
+  $(`#${stat}-prog`).data('lastVal', percent)
 }
 export const setAllStats = (friendo) => {
   Object.values(STATS).forEach((s) => {
