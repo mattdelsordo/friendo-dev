@@ -64,7 +64,8 @@ export const exercise = (friendo, action, reps = 0, everyRep, end) => {
     const stat = action.split('_')[1]
     console.log(`Rep: ${reps}`)
     // add or subtract energy
-    friendo.modifyEnergy(REP_COST[action], action === ACTIONS.FEED)
+    const cost = REP_COST[action] * friendo.zodiac.getStatBonus(action)
+    friendo.modifyEnergy(cost, action === ACTIONS.FEED)
     // add exp if applicable
     // have to parse out the action id to get the state id
     friendo.addExp(stat, REP_REWARD[action])

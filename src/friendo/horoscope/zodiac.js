@@ -3,7 +3,7 @@
  * bonuses certain stats get based on horoscope
  */
 
-import STATS from '../constants'
+import { ACTIONS, STATS } from '../constants'
 
 class Zodiac {
   constructor(birthtime) {
@@ -84,7 +84,7 @@ export class Taurus extends Zodiac {
   }
 
   getStatBonus(stat) {
-    if (stat === STATS.SLEEP) return 1.2
+    if (stat === ACTIONS.SLEEP) return 1.2
     return 1
   }
 }
@@ -170,7 +170,7 @@ export class Scorpio extends Zodiac {
   }
 
   getStatBonus(stat) {
-    if (stat === STATS.PET) return 1.2
+    if (stat === ACTIONS.PET) return 1.2
     return 1
   }
 }
@@ -222,7 +222,7 @@ export class Pisces extends Zodiac {
   }
 
   getStatBonus(stat) {
-    if (stat === STATS.FOOD) return 1.2
+    if (stat === ACTIONS.FEED) return 1.2
     return 1
   }
 }
