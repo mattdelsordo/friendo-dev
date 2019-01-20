@@ -5,7 +5,7 @@ import { TICKRATE } from '../game/game-config'
 import Friendo from '../friendo/friendo'
 
 import footer from './footer'
-import creatorSetup, { showCreator } from './char-creator-listeners'
+import creatorSetup, { showCreator, hideCreator } from './char-creator-listeners'
 import { initialize, performAction } from './ui-update'
 import mainSetup from './main-listeners'
 
@@ -61,5 +61,6 @@ $(document)
       // else, initialize game
       friendo = new Friendo(savegame)
       start(friendo)
+      hideCreator()
     }
   })
