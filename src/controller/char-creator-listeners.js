@@ -17,11 +17,13 @@ const createFriendo = () => {
 }
 
 export const showCreator = () => {
+  $('#loading, .loader').css('display', 'none')
   $('#char-creator').css('display', 'block')
   $('#main-display').css('display', 'none')
 }
 
 export const hideCreator = () => {
+  $('#loading, .loader').css('display', 'none')
   $('#char-creator').css('display', 'none')
   $('#main-display').css('display', 'block')
 }
