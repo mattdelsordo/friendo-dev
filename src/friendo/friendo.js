@@ -290,7 +290,7 @@ export default class Friendo {
         // reset state and then save
         this.setState(this.state.returnTo)
       }
-      everyRep(this)
+      everyRep(this, false)
       end()
     })
   }

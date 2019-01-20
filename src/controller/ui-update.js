@@ -74,10 +74,16 @@ export const setStat = (stat, exp, lvl) => {
         .addClass('lvlup')
       $(`#${stat}-prog`)
         .css('visibility', 'hidden')
-        .css('width', `${percent}%`)
+
       setTimeout(() => {
-        $(`#${stat}-prog`).css('visibility', 'visible')
+        $(`#${stat}-prog`)
+          .css('width', `${percent}%`)
         $(`#${stat}-num`).removeClass('lvlup')
+
+        setTimeout(() => {
+          $(`#${stat}-prog`)
+            .css('visibility', 'visible')
+        }, 600)
       }, 600)
     }, 700)
   } else {
@@ -200,16 +206,22 @@ export const performAction = (friendo, action, reps = 1) => {
     action,
     reps,
     // function to call on every rep
-    (f) => {
+    (f, updatebar = true) => {
       // save
       save(JSON.stringify(f))
       // update energy bar
       setEnergy(f.getEnergyLeft())
       // check to see if any stat can be made visible
       updateStatVisibility(f)
-      // update stat displays
-      const stat = action.split('_')[1] || ''
-      setStat(stat, f.getExpPercent(stat), f.getStat(stat))
+
+      // we need to be able to untoggle this to prevent breaking the
+      // progress bar animation
+      if (updatebar) {
+        // update stat displays
+        const stat = action.split('_')[1] || ''
+        setStat(stat, f.getExpPercent(stat), f.getStat(stat))
+      }
+
       // update level
       setLevel(friendo.level)
     },
