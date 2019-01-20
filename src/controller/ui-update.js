@@ -5,11 +5,6 @@
 import $ from 'jquery'
 import { save } from '../game/game-util'
 import { MAX_EGG_LEVEL, STAT_MAX, STATS } from '../friendo/constants'
-import { version } from '../../package.json'
-
-export const setVernum = (num) => {
-  $('#vernum').html(`v${num}`)
-}
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -131,7 +126,6 @@ const daily = (friendo) => {
 
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
-  setVernum(version)
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
