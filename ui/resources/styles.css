@@ -35,10 +35,30 @@
     font-size: 20px;
 }
 
+
+/* Stat display row styles */
 .stat-row:hover {
-    border: 2px solid var(--info);
+    border: 1px solid var(--warning);
     border-radius: 10px;
-    background: ghostwhite;
+    background: floralwhite;
+}
+
+.stat-row {
+    border: 1px solid white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: white;
+}
+
+.lock {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background: whitesmoke;
 }
 
 /* Displays that are invisible by default */
