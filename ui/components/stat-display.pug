@@ -60,12 +60,14 @@
 
 mixin statdisplay(stat)
   - var statId = stat.name.split(' ')[0].toLowerCase()
-  .d-flex.flex-row.align-items-center.stat-row.p-2(data-toggle='modal' data-target=`#train-${statId}` id=`${statId}-bar`)
-      span.mr-1(id=`${statId}-icon`) #{stat.icon}
-      span.mr-1(id=`${statId}-name`) #{stat.name}
-      .progress.ml-auto.w-50
-          .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
-      span.ml-1.p-2.statlvl(id=`${statId}-num` style='white-space: pre-wrap;') 000
+  .position-relative.p-2
+      .w-100.text-center.lock #{'\u{1F512}'}
+      .d-flex.flex-row.align-items-center.stat-row.p-2(data-toggle='modal' data-target=`#train-${statId}` id=`${statId}-bar`)
+          span.mr-1(id=`${statId}-icon`) #{stat.icon}
+          span.mr-1(id=`${statId}-name`) #{stat.name}
+          .progress.ml-auto.w-50
+              .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
+          span.ml-1.p-2.statlvl(id=`${statId}-num` style='white-space: pre-wrap;') 000
 
 mixin trainingDialog(stat)
     - var statId = stat.name.split(' ')[0].toLowerCase()
