@@ -69,12 +69,15 @@ export const setStat = (stat, exp, lvl) => {
     // this is necessary to circumvent the stuff bootstrap has by default
     $(`#${stat}-prog`).css('width', '100%')
     setTimeout(() => {
-      $(`#${stat}-num`).html(lvl.toString().padStart(4))
+      $(`#${stat}-num`)
+        .html(lvl.toString().padStart(4))
+        .addClass('lvlup')
       $(`#${stat}-prog`)
         .css('visibility', 'hidden')
         .css('width', `${percent}%`)
       setTimeout(() => {
         $(`#${stat}-prog`).css('visibility', 'visible')
+        $(`#${stat}-num`).removeClass('lvlup')
       }, 600)
     }, 700)
   } else {

@@ -66,6 +66,21 @@
     visibility: hidden;
 }
 
+/* Stat level animation */
+@keyframes lvlup {
+    0% {
+        background-color: gold;
+        font-weight: bold;
+    }
+    100% { background-color: white; }
+}
+.lvlup {
+    animation: lvlup 0.5s 0s infinite alternate;
+}
+.statlvl {
+    border-radius: 20px;
+}
+
 /* Footer styles */
 footer {
     position: absolute;

@@ -65,7 +65,7 @@ mixin statdisplay(stat)
       span.mr-1(id=`${statId}-name`) #{stat.name}
       .progress.ml-auto.w-50
           .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
-      span.ml-1(id=`${statId}-num` style='white-space: pre-wrap;') 000
+      span.ml-1.p-2.statlvl(id=`${statId}-num` style='white-space: pre-wrap;') 000
 
 mixin trainingDialog(stat)
     - var statId = stat.name.split(' ')[0].toLowerCase()
