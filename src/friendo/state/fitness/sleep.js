@@ -2,13 +2,14 @@
  * Define behavior for a sleeping friendo
  */
 
-import State from './state'
-import { left, right } from '../../art/art-util'
-import phrasebook from '../phrases/sleep-phrases'
+import { left, right } from '../../../art/art-util'
+import phrasebook from '../../phrases/sleep-phrases'
+import { ACTIONS } from '../../constants'
+import Exercise from './exercise'
 
-export const ID = 'state_sleep'
+export const ID = ACTIONS.SLEEP
 
-export default class Sleep extends State {
+export default class Sleep extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID

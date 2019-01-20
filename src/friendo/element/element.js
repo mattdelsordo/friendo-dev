@@ -31,6 +31,11 @@ export default class Element {
     this.handCoord = { x: 0, y: 0 }
 
     this.hairY = -50
+
+    this.strokeStyle = DEFAULT_OUTLINE
+    this.fillStyle = DEFAULT_SKIN
+    this.eggStroke = DEFAULT_EGG_OUTLINE
+    this.eggFill = DEFAULT_EGG_SKIN
   }
 
   toJSON() {
@@ -42,13 +47,13 @@ export default class Element {
   }
 
   setColors(g) {
-    g.fillStyle = DEFAULT_SKIN
-    g.strokeStyle = DEFAULT_OUTLINE
+    g.fillStyle = this.fillStyle
+    g.strokeStyle = this.strokeStyle
   }
 
   setEggColors(g) {
-    g.fillStyle = DEFAULT_EGG_SKIN
-    g.strokeStyle = DEFAULT_EGG_OUTLINE
+    g.fillStyle = this.eggFill
+    g.strokeStyle = this.eggStroke
   }
 
   // compute where arms should be tethered

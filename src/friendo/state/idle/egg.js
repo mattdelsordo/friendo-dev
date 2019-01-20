@@ -3,20 +3,23 @@
  * Egg shakes at an interval based on egg stat level
  */
 
-import State from './state'
-import { STATS } from '../constants'
+import State from '../state'
+import { STATS } from '../../constants'
 
-export const ID = 'state_egg'
+export const ID = 'state_baby'
 
 export default class Egg extends State {
   constructor(savedState) {
+    if (!savedState) savedState = {}
     super(savedState)
     this.id = ID
-    this.shaking = false
+    this.shaking = savedState.shaking || false
 
     // Left blank to avoid speaking while and egg
     this.phrasebook = () => ['']
     this.words = ''
+
+    this.returnTo = this.id
   }
 
   draw(g, x, y, friendo) {
@@ -25,7 +28,7 @@ export default class Egg extends State {
     // Shake if not currently shaking and with a probability
     // based on egg level
     const rand = Math.floor(Math.random() * 100)
-    const shake = friendo._h_stats[STATS.EGG] >= rand
+    const shake = friendo._stats[STATS.EGG] >= rand
     if (!this.shaking && shake) {
       this.shaking = true
     }

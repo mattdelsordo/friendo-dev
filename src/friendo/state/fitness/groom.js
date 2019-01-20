@@ -1,9 +1,9 @@
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 import Exercise from './exercise'
 import drawHairbrush from '../../../art/props/hairbrush'
 
-export const ID = `state_${STATS.HAIR}`
+export const ID = ACTIONS.HAIR
 
 const rotateHairbrush = (g, x, y, angle = 0) => {
   g.save()

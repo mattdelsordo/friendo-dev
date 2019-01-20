@@ -1,9 +1,9 @@
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS, STATS } from '../../constants'
 import { Dog } from '../../../art/props/dog'
 
-export const ID = `state_${STATS.DOG}`
+export const ID = ACTIONS.DOG
 
 const DOG_COORDS = [
   { x: 32, y: 0 },

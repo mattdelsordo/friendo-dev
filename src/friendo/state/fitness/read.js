@@ -1,10 +1,10 @@
 
 import Exercise from './exercise'
 import { left, right } from '../../../art/art-util'
-import { STATS } from '../../constants'
+import { ACTIONS } from '../../constants'
 import { drawOpenBook } from '../../../art/props/book'
 
-export const ID = `state_${STATS.SIGHT}`
+export const ID = ACTIONS.SIGHT
 
 export default class ReadBook extends Exercise {
   constructor(savedState) {

@@ -5,7 +5,20 @@
 
 /* eslint-disable no-console */
 
-import { LEVEL_MAX, MAX_DOGS, STATS } from './constants'
+import {
+  LEG_UNLOCK_LEVEL,
+  ARM_UNLOCK_LEVEL,
+  HAIR_UNLOCK_LEVEL,
+  DOG_UNLOCK_LEVEL,
+  LEVEL_MAX,
+  LVL_CALC_WHITELIST,
+  MAX_DOGS,
+  MAX_EGG_LEVEL,
+  STATS,
+  STAT_MAX,
+  EXP_PER_LEVEL,
+  getExpCurve,
+} from './constants'
 import { Dog, calcDogX, calcDogY } from '../art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -19,48 +32,38 @@ import {
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
   DEFAULT_LEVEL,
-  DEFAULT_HIDDEN_STATS,
-  DEFAULT_HIDDEN_STAT_STAGES,
+  DEFAULT_ENERGY,
+  DEFAULT_MAX_ENERGY,
+  DEFAULT_EXP,
+  DEFAULT_ZODIAC,
 } from './default'
+import { exercise } from './actions'
+import { ID as idleID } from './state/idle/idle'
 
 export default class Friendo {
+  // helper method to create a friendo based on character creation
+  static newFriendo(name, owner, element) {
+    return new Friendo(JSON.stringify({ name, owner, element }))
+  }
+
   // constructor takes context on which to draw
   constructor(json) {
-    this.name = DEFAULT_NAME
-    this.owner = DEFAULT_OWNER
-    this.element = DEFAULT_ELEMENT
-    this.zodiac = getZodiac()
+    // initialize friendo from save file
+    console.log(`Loading Friendo from ${json}`)
+    const fromJSON = JSON.parse(json || '{}')
+    this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
+    this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
+    this.name = fromJSON.name || DEFAULT_NAME
+    this.owner = fromJSON.owner || DEFAULT_OWNER
+    this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
+    this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
+    this.energy = fromJSON.energy || DEFAULT_ENERGY
+    this.exp = fromJSON.exp || DEFAULT_EXP
 
-    // set stat defaults
-    this._stats = Object.assign({}, DEFAULT_STATS)
-    // stat stages are cached rather than recomputed on each draw
+    // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
     this.level = DEFAULT_LEVEL
-    // hidden stats stored separately because they are only used internally
-    this._h_stats = Object.assign({}, DEFAULT_HIDDEN_STATS)
-    this._h_statStage = Object.assign({}, DEFAULT_HIDDEN_STAT_STAGES)
-
-    // set state
-    this.state = DEFAULT_STATE
-
-    // if JSON is passed in, load
-    if (json) {
-      console.log(`Loading Friendo from ${json}`)
-
-      const fromJSON = JSON.parse(json)
-      // console.log(typeof fromJSON)
-      // console.log(`Stats: ${fromJSON.stats}`)
-      // console.log(`Name: ${fromJSON.name}`)
-      // console.log(`Owner: ${fromJSON.owner}`)
-      // console.log(`Element: ${fromJSON.element}`)
-      this._stats = fromJSON.stats
-      this._h_stats = fromJSON.hstats
-      this.state = loadState(fromJSON.state, fromJSON.state.id)
-      this.name = fromJSON.name
-      this.owner = fromJSON.owner
-      this.element = selectElement(fromJSON.element)
-      this.zodiac = getZodiac(fromJSON.zodiac)
-    }
+    this.maxEnergy = DEFAULT_MAX_ENERGY
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()
@@ -75,9 +78,10 @@ export default class Friendo {
       owner: this.owner,
       element: this.element,
       stats: this._stats,
-      hstats: this._h_stats,
       state: this.state,
       zodiac: this.zodiac,
+      energy: this.energy,
+      exp: this.exp,
     }
   }
 
@@ -89,15 +93,9 @@ export default class Friendo {
 
   // stat stage is used to draw the friendo
   setStatStage(stat) {
-    // differentiate between hidden and displayed stats
-    if (stat in this._stats) {
-      // stage 1 starts at 1, and then in 10 level increments
-      this._statStage[stat] =
-        (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
-    } else if (stat in this._h_stats) {
-      this._h_statStage[stat] =
-        (this._h_stats[stat] > 0 ? Math.floor(this._h_stats[stat] / 10) + 1 : 0)
-    } else throw new Error(`${stat} is not a valid stored stat!`)
+    // stage 1 starts at 1, and then in 10 level increments
+    this._statStage[stat] =
+      (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
   }
 
   // calls setStatStage on every stat
@@ -106,15 +104,16 @@ export default class Friendo {
     Object.keys(this._stats).forEach((key) => {
       this.setStatStage(key)
     })
-    Object.keys(this._h_stats).forEach((key) => {
-      this.setStatStage(key)
-    })
   }
 
   computeLevel() {
+    // if core == 0, we're still an egg
+    if (this.getStat(STATS.CORE) === 0) return 0
+
     // compute cumulative sum but skip the first level of each stat
     // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
-    const statSum = Object.values(this._stats).reduce((l, r) => Number(l) + (r < 2 ? 0 : r - 1))
+    const statSum = LVL_CALC_WHITELIST.reduce((l, r) =>
+      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
 
     // if the sum of all stats is less than one, skip rest of calcs
     if (statSum < 1) return 0
@@ -126,16 +125,28 @@ export default class Friendo {
     return level
   }
 
+  // maxumum energy is the default + 5 per every level past 1
+  computeMaxEnergy() {
+    // disregard level 1 in calcs
+    return DEFAULT_MAX_ENERGY + ((this.level * EXP_PER_LEVEL) - EXP_PER_LEVEL)
+  }
+
   // compute level and set it in the friendo
+  // also compute energy
   updateLevel() {
     this.level = this.computeLevel()
+    this.maxEnergy = this.computeMaxEnergy()
+
+    // check to see if any stats are unlocked
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) this.setStat(STATS.LEG, 1)
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) this.setStat(STATS.ARM, 1)
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) this.setStat(STATS.HAIR, 1)
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) this.setStat(STATS.DOG, 1)
   }
 
   // sets the value of a stat
   setStat(stat, value) {
-    if (stat in this._stats) this._stats[stat] = value
-    else if (stat in this._h_stats) this._h_stats[stat] = value
-    else throw new Error(`${stat} is not a valid stored stat!`)
+    this._stats[stat] = value
     // recompute stage of stat
     this.setStatStage(stat)
     // recompute level
@@ -146,15 +157,71 @@ export default class Friendo {
 
   getStat(stat) {
     if (stat in this._stats) return this._stats[stat]
-    else if (stat in this._h_stats) return this._h_stats[stat]
-    throw new Error(`${stat} is not a valid stored stat!`)
+    return 0
   }
 
   // For calculating rank-ups, since they happen in 10 stat intervals
   getStatStage(stat) {
-    if (stat in this._statStage) return this._statStage[stat]
-    else if (stat in this._h_statStage) return this._h_statStage[stat]
-    throw new Error(`${stat} is not a valid stored stat!`)
+    return this._statStage[stat]
+  }
+
+  // returns percentage of energy the friendo currently has
+  getEnergyLeft() {
+    return this.energy / this.maxEnergy
+  }
+
+  // exp multiplier based off taste level
+  getFoodMultiplier() {
+    return 1 + (this.getStat(STATS.TASTE) / 10)
+  }
+
+  /**
+   * Adds energy to the friendo's reserve
+   * @param amnt - amount of energy to add
+   * @param feed - whether or not to factor in taste multiplier
+   */
+  modifyEnergy(amnt, feed = false) {
+    const newAmnt = feed ? Math.floor(amnt * this.getFoodMultiplier()) : amnt
+    if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
+    else if (this.energy + newAmnt <= 0) this.energy = 0
+    else this.energy = this.energy + newAmnt
+  }
+
+  // exp multiplier based off meme tolerance
+  getExpMultiplier() {
+    return 1 + (this.getStat(STATS.MEME) / 10)
+  }
+
+  // adds exp for a given stat
+  addExp(stat, amnt) {
+    if (stat in this.exp) {
+      // do nothing if stat is maxed out
+      if (stat === STATS.EGG && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) return
+      else if (this.getStat(STATS.EGG) === STAT_MAX) return
+
+      // increment exp amount, multiplied by a factor based on meme-tolerance
+      this.exp[stat] += Math.floor(amnt * this.getExpMultiplier() * this.zodiac.getStatBonus(stat))
+
+      // check to see if a levelup is possible
+      const threshold = getExpCurve(stat)[this._stats[stat]]
+      if (this.exp[stat] >= threshold) {
+        this.exp[stat] -= threshold
+        this.setStat(stat, this._stats[stat] + 1)
+      }
+    }
+  }
+
+  getExp(stat) {
+    if (stat in this.exp) return this.exp[stat]
+    return 0
+  }
+
+  // returns exp as a percentage of the exp needed for the level
+  getExpPercent(stat) {
+    if (stat in this.exp) {
+      return this.exp[stat] / getExpCurve(stat)[this._stats[stat]]
+    }
+    return 0
   }
 
   // Initialize pet dogs for the eventuality of them existing
@@ -185,7 +252,46 @@ export default class Friendo {
     this.state.draw(context, x, y, this)
   }
 
-  handleAction(action) {
-    this.state.handleAction(action, this)
+  setState(id) {
+    this.state = loadState(this.state, id)
+  }
+
+  // performs behaviors associated with hatching the egg and
+  // ending the tutorial
+  hatch() {
+    this.setStat(STATS.CORE, 1)
+    this.setStat(STATS.SIGHT, 1)
+    this.setStat(STATS.TASTE, 1)
+    this.setStat(STATS.MEME, 1)
+    this.setState(idleID)
+    this.zodiac = getZodiac()
+  }
+
+  /**
+   * Changes state and begins a new exercise routine
+   * @param action - id of state/exercise to do
+   * @param reps - # of reps to do
+   * @param everyRep - function to execute on every rep (save, update UI)
+   * @param end - function to call once complete (updateUI)
+   */
+  startExercise(action, reps = 1, everyRep, end) {
+    // change state and then save
+    this.setState(action)
+    this.state.setReps(reps)
+    everyRep(this)
+
+    // start exercise at (reps-1) because the way they're set up
+    // the 0th rep gets performed
+    exercise(this, action, reps - 1, everyRep, () => {
+      // if egg is maxed out, enable starting levels set state to idle
+      if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
+        this.hatch()
+      } else {
+        // reset state and then save
+        this.setState(this.state.returnTo)
+      }
+      everyRep(this, false)
+      end()
+    })
   }
 }

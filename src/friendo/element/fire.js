@@ -1,5 +1,10 @@
 import { STATS } from '../constants'
-import { FIRE_SKIN, FIRE_OUTLINE, FIRE_EGG_OUTLINE, FIRE_EGG_SKIN } from '../../art/colors'
+import {
+  FIRE_SKIN,
+  FIRE_OUTLINE,
+  FIRE_EGG_OUTLINE,
+  FIRE_EGG_SKIN,
+} from '../../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 import { drawHookMarker } from '../../art/hook-marker'
@@ -16,16 +21,11 @@ export default class Fire extends Element {
     super()
     this.id = ELEMENTS.FIRE
     this.hairY = -42
-  }
 
-  setColors(g) {
-    g.fillStyle = FIRE_SKIN
-    g.strokeStyle = FIRE_OUTLINE
-  }
-
-  setEggColors(g) {
-    g.fillStyle = FIRE_EGG_SKIN
-    g.strokeStyle = FIRE_EGG_OUTLINE
+    this.strokeStyle = FIRE_OUTLINE
+    this.fillStyle = FIRE_SKIN
+    this.eggStroke = FIRE_EGG_OUTLINE
+    this.eggFill = FIRE_EGG_SKIN
   }
 
   computeArmTethers(friendo) {

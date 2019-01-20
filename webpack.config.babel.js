@@ -5,7 +5,7 @@ import { isProd } from './src/config'
 
 export default {
   entry: [
-    './src/game/index.js',
+    './src/controller/index.js',
   ],
   output: {
     filename: 'bundle.js',

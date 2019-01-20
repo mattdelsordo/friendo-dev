@@ -1,0 +1,14 @@
+#main-display
+    .row
+        .col-sm-2
+            //- This is for spacing
+        .col-auto
+            include ../components/canvas
+            #energy-zone
+                include ../components/energy
+                include ../components/interact
+        .col-lg-4
+            include ../components/id-bar
+            .row.border.mb-1.mt-2
+                //- Again for spacing
+            include ../components/stat-display

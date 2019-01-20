@@ -2,19 +2,19 @@
  * Factory method to properly load a state from json
  */
 
-import Idle, { ID as idleID } from './idle'
-import Sleep, { ID as sleepID } from './sleep'
-import Pet, { ID as petID } from './pet'
+import Idle, { ID as idleID } from './idle/idle'
+import Sleep, { ID as sleepID } from './fitness/sleep'
+import Pet, { ID as petID } from './fitness/pet'
 import Core, { ID as coreID } from './fitness/situp'
 import Leg, { ID as legID } from './fitness/squat'
 import Arm, { ID as armID } from './fitness/curl'
 import Sight, { ID as sightID } from './fitness/read'
 import Hair, { ID as hairID } from './fitness/groom'
-import Feed, { ID as feedID } from './feed'
+import Feed, { ID as feedID } from './fitness/feed'
 import Taste, { ID as tasteID } from './fitness/munch'
 import Dog, { ID as dogID } from './fitness/dog-cuddle'
 import Meme, { ID as memeID } from './fitness/surf-web'
-import Egg, { ID as eggID } from './egg'
+import Egg, { ID as eggID } from './idle/egg'
 import Incubate, { ID as incubateID } from './fitness/incubate'
 
 export default (savedState, id) => {
