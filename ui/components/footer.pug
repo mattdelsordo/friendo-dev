@@ -2,7 +2,9 @@
 
 footer#footer
     .container.text-muted.align-middle
-        span#game-info-icon #{'\u{1f6c8}'}
-        span.ml-3#game-info
-            a(href="https://github.com/mattdelsordo/friendo") [ A game by Matt DelSordo ]
-            a.ml-4(href="https://github.com/mattdelsordo/friendo/issues" aria-label="Issue mattdelsordo/friendo on GitHub") [ #{'\u{1f41b}'} Report a bug ]
+        .d-flex
+            span#game-info-icon #{'\u{1f6c8}'}
+            span.ml-3.w-100.d-flex#game-info
+                a(href="https://github.com/mattdelsordo/friendo") [ A game by Matt DelSordo ]
+                a.ml-4(href="https://github.com/mattdelsordo/friendo/issues" aria-label="Issue mattdelsordo/friendo on GitHub") [ #{'\u{1f41b}'} Report a bug ]
+                span.ml-auto#vernum v0.0.0
