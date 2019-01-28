@@ -3,8 +3,8 @@
  */
 
 import $ from 'jquery'
-import { save } from '../game/game-util'
-import { MAX_EGG_LEVEL, STAT_MAX, STATS } from '../friendo/constants'
+import { save } from '../game-util'
+import { MAX_EGG_LEVEL, STAT_MAX, STATS } from '../../friendo/constants'
 
 export const setName = (name) => {
   $('#name-display').html(name)

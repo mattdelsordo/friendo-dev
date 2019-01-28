@@ -1,7 +1,7 @@
 import Exercise from './exercise'
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import { ACTIONS } from '../../constants'
-import { drawPhone, PHONE_SCREEN_ON, PHONE_SCREEN_OFF } from '../../../art/props/phone'
+import { drawPhone, PHONE_SCREEN_ON, PHONE_SCREEN_OFF } from '../../art/props/phone'
 
 export const ID = ACTIONS.MEME
 

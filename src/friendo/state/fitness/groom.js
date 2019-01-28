@@ -1,7 +1,7 @@
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import { ACTIONS } from '../../constants'
 import Exercise from './exercise'
-import drawHairbrush from '../../../art/props/hairbrush'
+import drawHairbrush from '../../art/props/hairbrush'
 
 export const ID = ACTIONS.HAIR
 

@@ -2,7 +2,7 @@
  * Define behavior for a sleeping friendo
  */
 
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import phrasebook from '../../phrases/sleep-phrases'
 import { ACTIONS } from '../../constants'
 import Exercise from './exercise'

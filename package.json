@@ -29,15 +29,15 @@
   },
   "scripts": {
     "build-dev": "NODE_ENV=development yarn dev-js && yarn dev-html",
-    "dev-html": "pug -P ui/pages/index.pug -o docs/ && yarn copy-res",
+    "dev-html": "pug -P src/ui/pages/index.pug -o docs/ && yarn copy-res",
     "dev-js": "webpack -d --progress",
     "build-prod": "NODE_ENV=production yarn prod-js && yarn prod-html",
-    "prod-html": "pug ui/pages/index.pug -o docs/ && yarn copy-res",
-    "copy-res": "cp -r ui/resources/. docs/",
+    "prod-html": "pug src/ui/pages/index.pug -o docs/ && yarn copy-res",
+    "copy-res": "cp -r res/. docs/",
     "prod-js": "webpack -p",
-    "dev-server": "yarn copy-res & webpack-dev-server & pug -P ui/pages/ -o docs/ -w",
     "test": "./scripts/test-vernum.sh && eslint src",
-    "release": "gren release --token=$FRIENDO_GREN_TOKEN"
+    "release": "gren release --token=$FRIENDO_GREN_TOKEN",
+    "dev-server": "yarn copy-res & webpack-dev-server & pug -P src/ui/pages/ -o docs/ -w"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
