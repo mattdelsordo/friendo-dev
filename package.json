@@ -1,6 +1,6 @@
 {
   "name": "friendo",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "description": "Friendo: a virtual pal.",
   "main": "index.js",
   "repository": "https://github.com/mattdelsordo/friendo.git",
@@ -35,7 +35,7 @@
     "copy-res": "cp -r ui/resources/. docs/",
     "prod-js": "webpack -p",
     "dev-server": "yarn copy-res & webpack-dev-server & pug -P ui/pages/ -o docs/ -w",
-    "test": "eslint src"
+    "test": "./scripts/test-vernum.sh && eslint src"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
