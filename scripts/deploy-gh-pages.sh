@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # check to see if the last build was a build commit, don't build if so
-if [[ $(git log -1 --pretty=%B) != ":rocket:" ]]; then
+if [[ $(git log --oneline -n1) != *":rocket:"* ]]; then
     # build webpage
     git checkout master
     yarn build-prod
