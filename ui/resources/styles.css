@@ -132,3 +132,11 @@ body {
 #game-info {
     visibility: hidden;
 }
+
+/* Mute link text as well */
+.text-muted a {
+    color: #6c757d;
+}
+.text-muted a:hover {
+    color: #454b50;
+}
