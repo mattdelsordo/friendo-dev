@@ -1,0 +1,12 @@
+{
+  "dataSource": "issues",
+  "prefix": "",
+  "ignoreIssuesWith": ["wontfix"],
+  "onlyMilestones": false,
+  "groupBy": {
+    "New Features:": ["feature"],
+    "Bug Fixes:": ["bug"],
+    "Other:": ["internal"]
+  },
+  "changelogFilename": "CHANGELOG.md"
+}

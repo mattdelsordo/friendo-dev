@@ -17,4 +17,7 @@ if [[ $(git log --oneline -n1) != *":rocket:"* ]]; then
     echo "Pushing to master"
     git push "${PUSH_URI}" >/dev/null 2>&1 # don't print secrets
     git push "${PUSH_URI}" --tags  >/dev/null 2>&1
+
+    # create release notes
+    yarn release
 fi
