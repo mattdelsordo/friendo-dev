@@ -4,7 +4,7 @@
  */
 
 import Egg from '../idle/egg'
-import lamp from '../../../art/props/lamp'
+import lamp from '../../art/props/lamp'
 import { ACTIONS } from '../../constants'
 
 export const ID = ACTIONS.EGG

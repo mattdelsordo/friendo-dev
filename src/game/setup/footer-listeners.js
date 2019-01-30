@@ -3,7 +3,7 @@
  */
 
 import $ from 'jquery'
-import { version } from '../../package.json'
+import { version } from '../../../package.json'
 
 export default () => {
   $('#vernum').html(`[ v${version} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${version}`)

@@ -4,7 +4,7 @@
  */
 
 import $ from 'jquery'
-import Friendo from '../friendo/friendo'
+import Friendo from '../../friendo/friendo'
 
 // verifies input fields and returns a friendo if they're valid
 const createFriendo = () => {

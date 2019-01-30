@@ -1,7 +1,7 @@
 import { DOG_SKIN, DOG_OUTLINE, TONGUE_FILL, TONGUE_LINE } from '../colors'
 import { drawOval, drawPolygon, drawLine, drawOutlinedRect } from '../art-util'
 import { drawHookMarker } from '../hook-marker'
-import { LICK_CHANCE } from '../../friendo/constants'
+import { LICK_CHANCE } from '../../constants'
 
 /**
  * Paints a dog on the canvas

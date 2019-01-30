@@ -4,13 +4,13 @@ import {
   FIRE_OUTLINE,
   FIRE_EGG_OUTLINE,
   FIRE_EGG_SKIN,
-} from '../../art/colors'
+} from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
-import { drawHookMarker } from '../../art/hook-marker'
-import { drawLine, drawOutlinedPolygon, drawPolygon } from '../../art/art-util'
-import { oneLens, threeLens, twoLens } from '../../art/props/glasses'
-import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
+import { drawHookMarker } from '../art/hook-marker'
+import { drawLine, drawOutlinedPolygon, drawPolygon } from '../art/art-util'
+import { oneLens, threeLens, twoLens } from '../art/props/glasses'
+import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 
 /**
  * Specifies how a fire friendo is drawn

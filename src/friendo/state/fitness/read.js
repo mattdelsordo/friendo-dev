@@ -1,8 +1,8 @@
 
 import Exercise from './exercise'
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import { ACTIONS } from '../../constants'
-import { drawOpenBook } from '../../../art/props/book'
+import { drawOpenBook } from '../../art/props/book'
 
 export const ID = ACTIONS.SIGHT
 

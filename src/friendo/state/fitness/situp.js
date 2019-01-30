@@ -3,7 +3,7 @@
  */
 
 import Exercise from './exercise'
-import { left, down } from '../../../art/art-util'
+import { left, down } from '../../art/art-util'
 import { ACTIONS } from '../../constants'
 
 export const ID = ACTIONS.CORE

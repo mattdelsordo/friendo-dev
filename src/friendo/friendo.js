@@ -19,7 +19,7 @@ import {
   EXP_PER_LEVEL,
   getExpCurve,
 } from './constants'
-import { Dog, calcDogX, calcDogY } from '../art/props/dog'
+import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
 import getZodiac from './horoscope/get-zodiac'

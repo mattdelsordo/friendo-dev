@@ -1,14 +1,14 @@
-import { DEFAULT_SKIN, DEFAULT_OUTLINE, DEFAULT_EGG_SKIN, DEFAULT_EGG_OUTLINE } from '../../art/colors'
+import { DEFAULT_SKIN, DEFAULT_OUTLINE, DEFAULT_EGG_SKIN, DEFAULT_EGG_OUTLINE } from '../art/colors'
 import { STATS } from '../constants'
 import ELEMENTS from './elements'
-import { drawHookMarker } from '../../art/hook-marker'
-import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../../art/props/hair'
-import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../../art/art-util'
+import { drawHookMarker } from '../art/hook-marker'
+import { drawDiglettHair, drawLusciousHairBack, drawLusciousHairFront, drawStevenHair } from '../art/props/hair'
+import { drawOval, drawLine, drawOutlinedRect, drawOutlinedPolygon, drawSpeech } from '../art/art-util'
 import * as Measurements from '../measurements'
-import { oneLens, twoLens, threeLens } from '../../art/props/glasses'
-import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
-import birthdayHat from '../../art/props/birthday-hat'
-import birthdayText from '../../art/props/birthday-banner'
+import { oneLens, twoLens, threeLens } from '../art/props/glasses'
+import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
+import birthdayHat from '../art/props/birthday-hat'
+import birthdayText from '../art/props/birthday-banner'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo

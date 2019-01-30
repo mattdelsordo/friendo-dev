@@ -4,7 +4,7 @@ import {
   EARTH_EGG_SKIN,
   EARTH_OUTLINE,
   EARTH_SKIN,
-} from '../../art/colors'
+} from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
 

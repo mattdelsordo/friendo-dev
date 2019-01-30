@@ -1,7 +1,7 @@
 import Exercise from './exercise'
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import phrasebook from '../../phrases/feed-phrases'
-import { drawGenericFood } from '../../../art/props/food'
+import { drawGenericFood } from '../../art/props/food'
 import { ACTIONS } from '../../constants'
 
 export const ID = ACTIONS.FEED
