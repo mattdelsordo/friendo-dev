@@ -1,4 +1,12 @@
 // Custom scss goes here
-body {
-  color: red;
+// imported modules along with misc styling
+
+@import "components/loader";
+@import "components/footer";
+@import "components/char-creator";
+@import "components/stat-bar";
+
+// Displays that are invisible by default
+#egg-display, #char-creator, #main-display {
+  display: none;
 }

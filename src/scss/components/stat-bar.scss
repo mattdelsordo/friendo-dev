@@ -1,0 +1,47 @@
+// Styles for the stat level bars
+
+.stat-row {
+  border: 1px solid white;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: white;
+
+  &:hover {
+    border: 1px solid var(--warning);
+    border-radius: 10px;
+    background: floralwhite;
+  }
+}
+
+.lock {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  background: whitesmoke;
+}
+
+// Stats that are locked by default
+#leg-bar, #arm-bar, #hair-bar, #dog-bar {
+  visibility: hidden;
+}
+
+// stat levellup animation
+@keyframes lvlup {
+  0% {
+    background-color: gold;
+    font-weight: bold;
+  }
+  100% { background-color: white; }
+}
+
+.lvlup {
+  animation: lvlup 0.5s 0s infinite alternate;
+}
+
+.statlvl {
+  border-radius: 20px;
+}
