@@ -62,14 +62,14 @@ export const setStat = (stat, exp, lvl) => {
       .removeClass('bg-info')
       .addClass('bg-success')
     $(`#${stat}-prog`).css('background-color', '#28a745 !important')
-    $(`#${stat}-num`).html(lvl.toString().padStart(4))
+    $(`#${stat}-num`).html(lvl)
   } else if (($(`#${stat}-prog`).data('lastVal') || 0) > percent) {
     // if this value is LESS than the last value, do special animation
     // this is necessary to circumvent the stuff bootstrap has by default
     $(`#${stat}-prog`).css('width', '100%')
     setTimeout(() => {
       $(`#${stat}-num`)
-        .html(lvl.toString().padStart(4))
+        .html(lvl)
         .addClass('lvlup')
       $(`#${stat}-prog`)
         .css('visibility', 'hidden')
@@ -87,7 +87,7 @@ export const setStat = (stat, exp, lvl) => {
     }, 700)
   } else {
     $(`#${stat}-prog`).css('width', `${percent}%`)
-    $(`#${stat}-num`).html(lvl.toString().padStart(4))
+    $(`#${stat}-num`).html(lvl)
   }
 
   $(`#${stat}-prog`).data('lastVal', percent)

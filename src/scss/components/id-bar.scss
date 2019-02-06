@@ -15,3 +15,8 @@
   border-radius: 15px !important;
   animation: spin 2s linear infinite;
 }
+
+#level-display {
+  white-space: pre-wrap;
+  width: 3em;
+}
