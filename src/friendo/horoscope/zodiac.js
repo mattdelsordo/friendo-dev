@@ -53,7 +53,7 @@ export class Egg extends Zodiac {
   constructor() {
     super(0)
     this.sign = 'Egg'
-    this.symbol = '\u{1f95a}'
+    this.symbol = '1f95a'
   }
 
   isBirthday() { return false }
@@ -67,7 +67,7 @@ export class Aries extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Aries'
-    this.symbol = '\u2648'
+    this.symbol = '2648'
   }
 
   getStatBonus(stat) {
@@ -80,7 +80,7 @@ export class Taurus extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Taurus'
-    this.symbol = '\u2649'
+    this.symbol = '2649'
   }
 
   getStatBonus(stat) {
@@ -93,7 +93,7 @@ export class Gemini extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Gemini'
-    this.symbol = '\u264A'
+    this.symbol = '264A'
   }
 
   getStatBonus(stat) {
@@ -106,7 +106,7 @@ export class Cancer extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Cancer'
-    this.symbol = '\u264B'
+    this.symbol = '264B'
   }
 
   getStatBonus(stat) {
@@ -119,7 +119,7 @@ export class Leo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Leo'
-    this.symbol = '\u264C'
+    this.symbol = '264C'
   }
 
   getStatBonus(stat) {
@@ -132,7 +132,7 @@ export class Virgo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Virgo'
-    this.symbol = '\u264D'
+    this.symbol = '264D'
   }
 
   getStatBonus(stat) {
@@ -145,7 +145,7 @@ export class Libra extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Libra'
-    this.symbol = '\u264E'
+    this.symbol = '264E'
   }
 
   getStatBonus(stat) {
@@ -166,7 +166,7 @@ export class Scorpio extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Scorpio'
-    this.symbol = '\u264F'
+    this.symbol = '264F'
   }
 
   getStatBonus(stat) {
@@ -179,7 +179,7 @@ export class Sagittarius extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Sagittarius'
-    this.symbol = '\u2650'
+    this.symbol = '2650'
   }
 
   getStatBonus(stat) {
@@ -192,7 +192,7 @@ export class Capricorn extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Capricorn'
-    this.symbol = '\u2651'
+    this.symbol = '2651'
   }
 
   getStatBonus(stat) {
@@ -205,7 +205,7 @@ export class Aquarius extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Aquarius'
-    this.symbol = '\u2652'
+    this.symbol = '2652'
   }
 
   getStatBonus(stat) {
@@ -218,7 +218,7 @@ export class Pisces extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Pisces'
-    this.symbol = '\u2653'
+    this.symbol = '2653'
   }
 
   getStatBonus(stat) {

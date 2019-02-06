@@ -2,49 +2,49 @@
     var stats = [
     {
     name: 'Core',
-    icon: '\u{1f455}',
+    icon: '1f94b',
     trainDesc: 'Do some sit ups?',
     verb: 'Crunch'
     },
     {
     name: 'Leg',
-    icon: '\u{1f9b5}',
+    icon: '1f9b5',
     trainDesc: 'Do some squats?',
     verb: 'Squat'
     },
     {
     name: 'Arm',
-    icon: '\u{1f4aa}',
+    icon: '1f4aa',
     trainDesc: 'Do some curls?',
     verb: 'Curl'
     },
     {
     name: 'Sight',
-    icon: '\u{1f441}',
+    icon: '1f441',
     trainDesc: 'Read a book?',
     verb: 'Read'
     },
     {
     name: 'Hair',
-    icon: '\u{1f488}',
+    icon: '1f488',
     trainDesc: 'Brush hair?',
     verb: 'Groom'
     },
     {
     name: 'Taste',
-    icon: '\u{1f445}',
+    icon: '1f445',
     trainDesc: 'Do some extreme eating?',
     verb: 'Munch'
     },
     {
     name: 'Dog Affinity',
-    icon: '\u{1f415}',
+    icon: '1f436',
     trainDesc: 'Play with a dog?',
     verb: 'Get licked'
     },
     {
     name: 'Meme Tolerance',
-    icon: '\u{1f9e0}',
+    icon: '1f5e3',
     trainDesc: 'Scope some dank memes?',
     verb: 'Surf the web'
     }
@@ -53,7 +53,7 @@
 -
     var egginfo = {
     name: 'Egg',
-    icon: '\u{1f95a}',
+    icon: '1f95a',
     trainDesc: 'Incubate the egg?',
     verb: 'Incubate'
     }
@@ -61,9 +61,11 @@
 mixin statdisplay(stat)
   - var statId = stat.name.split(' ')[0].toLowerCase()
   .position-relative.p-2
-      .w-100.text-center.lock #{'\u{1F512}'}
+      .w-100.text-center.lock
+          +emoji('1f512')
+
       .d-flex.flex-row.align-items-center.stat-row.p-2(data-toggle='modal' data-target=`#train-${statId}` id=`${statId}-bar`)
-          span.mr-1(id=`${statId}-icon`) #{stat.icon}
+          +emoji(stat.icon)(id=`${statId}-icon` class="mr-1")
           span.mr-1(id=`${statId}-name`) #{stat.name}
           .progress.ml-auto.w-50
               .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
@@ -89,6 +91,7 @@ mixin trainingDialog(stat)
 
 .row
     .col
+        include emoji
         .hidden#egg-display
             +statdisplay(egginfo)
             +trainingDialog(egginfo)

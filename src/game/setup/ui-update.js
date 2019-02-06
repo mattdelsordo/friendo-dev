@@ -16,7 +16,7 @@ export const setLevel = (level) => {
 
 export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
-    .html(zodiac.symbol)
+    .attr('src', `./img/emoji/${zodiac.symbol}.png`)
     .css('color', color)
     .popover({ content: '???', trigger: 'hover' })
 

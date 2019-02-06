@@ -10,3 +10,11 @@
 #egg-display, #char-creator, #main-display {
   display: none;
 }
+
+// Emoji
+img.emoji {
+  height: 1.2em;
+  width: 1.2em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
