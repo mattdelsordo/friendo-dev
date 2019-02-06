@@ -33,6 +33,14 @@ header {
   margin: 0.4em 0 0 .1em;
 }
 
+// Hide header button text when screen is too small
+@media screen and (max-width: 1000px) {
+  .header-btn span {
+    display: none;
+  }
+}
+
+
 .text-muted a {
   color: #6c757d;
 

@@ -1,3 +1,13 @@
+// Structure of the header
+
+mixin header-btn(txt, emo)
+    a.ml-3.header-btn&attributes(attributes)
+        | [
+        |
+        +emoji(emo)
+        span #{txt}
+        |
+        | ]
 
 mixin attribution-dialog
     .modal.fade(id='attributions' role='dialog')
@@ -33,15 +43,6 @@ header#header
             span.ml-3#game-info-icon #{'\u{1f6c8}'}
             span.ml-2.w-100.d-flex#game-info
                 a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
-                a.ml-3(href="https://github.com/mattdelsordo/friendo" target="_blank")
-                    | [
-                    +emoji('1f3b2')(class="mr-1 ml-1")
-                    | A game by Matt DelSordo ]
-                a.ml-3(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
-                    | [
-                    +emoji('1f41b')(class="mr-1 ml-1")
-                    | Report a bug ]
-                a.ml-3(href="" data-toggle="modal" data-target="#attributions")
-                    | [
-                    +emoji('1f4dc')(class="mr-1 ml-1")
-                    | Attributions ]
+                +header-btn('A game by Matt DelSordo', '1f3b2')(href="https://github.com/mattdelsordo/friendo" target="_blank")
+                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
+                +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
