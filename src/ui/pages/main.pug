@@ -1,13 +1,11 @@
 #main-display
-    .row
-        .col-sm-2
-            //- This is for spacing
+    .row.justify-content-center
         .col-auto
             include ../components/canvas
             #energy-zone
                 include ../components/energy
                 include ../components/interact
-        .col-lg-4
+        .col-lg-5
             include ../components/id-bar
             .row.border.mb-1.mt-2
                 //- Again for spacing

@@ -65,11 +65,11 @@ mixin statdisplay(stat)
           +emoji('1f512')
 
       .d-flex.flex-row.align-items-center.stat-row.p-2(data-toggle='modal' data-target=`#train-${statId}` id=`${statId}-bar`)
-          +emoji(stat.icon)(id=`${statId}-icon` class="mr-1")
+          +emoji(stat.icon)(id=`${statId}-icon` class="mr-2")
           span.mr-1(id=`${statId}-name`) #{stat.name}
           .progress.ml-auto.w-50
               .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
-          span.ml-1.p-2.statlvl(id=`${statId}-num` style='white-space: pre-wrap;') 000
+          span.ml-1.p-2.statlvl(id=`${statId}-num`) 0
 
 mixin trainingDialog(stat)
     - var statId = stat.name.split(' ')[0].toLowerCase()
