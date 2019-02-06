@@ -17,6 +17,7 @@ mixin attribution-dialog
                     h5.modal-title Attributions
                 .modal-body
                     ul
+                        li Game by Matt DelSordo
                         li
                             | Emoji from
                             |
@@ -37,12 +38,12 @@ include emoji
 header#header
     .container.text-muted.align-middle.h-100
         .d-flex.h-100
-            img#favicon(src="favicon.png")
-            span.ml-1#title Friendo
+            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;")
+                img#favicon(src="favicon.png")
+                span.ml-1#title Friendo
             // not an emoji - just unicode
-            span.ml-3#game-info-icon #{'\u{1f6c8}'}
+            span.ml-4#game-info-icon #{'\u{1f6c8}'}
             span.ml-2.w-100.d-flex#game-info
                 a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
-                +header-btn('A game by Matt DelSordo', '1f3b2')(href="https://github.com/mattdelsordo/friendo" target="_blank")
                 +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")

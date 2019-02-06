@@ -30,11 +30,11 @@ header {
 #favicon {
   height: 1.2em;
   width: 1.2em;
-  margin: 0.4em 0 0 .1em;
+  margin-bottom: 0.2em;
 }
 
 // Hide header button text when screen is too small
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 550px) {
   .header-btn span {
     display: none;
   }
