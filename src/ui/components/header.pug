@@ -25,21 +25,22 @@ mixin attribution-dialog
 include emoji
 +attribution-dialog()
 header#header
-    .container.text-muted.align-middle
-        .d-flex
+    .container.text-muted.align-middle.h-100
+        .d-flex.h-100
+            span#title Friendo
             // not an emoji - just unicode
-            span#game-info-icon #{'\u{1f6c8}'}
-            span.ml-3.w-100.d-flex#game-info
+            span.ml-3#game-info-icon #{'\u{1f6c8}'}
+            span.ml-2.w-100.d-flex#game-info
                 a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
-                a.ml-4(href="https://github.com/mattdelsordo/friendo" target="_blank")
+                a.ml-3(href="https://github.com/mattdelsordo/friendo" target="_blank")
                     | [
                     +emoji('1f3b2')(class="mr-1 ml-1")
                     | A game by Matt DelSordo ]
-                a.ml-4(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
+                a.ml-3(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
                     | [
                     +emoji('1f41b')(class="mr-1 ml-1")
                     | Report a bug ]
-                a.ml-4(href="" data-toggle="modal" data-target="#attributions")
+                a.ml-3(href="" data-toggle="modal" data-target="#attributions")
                     | [
                     +emoji('1f4dc')(class="mr-1 ml-1")
                     | Attributions ]
