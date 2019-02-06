@@ -16,19 +16,18 @@ export const setLevel = (level) => {
 
 export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
-    .html(zodiac.symbol)
-    .css('color', color)
+    .attr('src', `./img/emoji/${zodiac.symbol}.png`)
     .popover({ content: '???', trigger: 'hover' })
 
   // separately set content so that the popover will be updated every time this function
   if (zodiac.sign !== 'Egg') {
     $('#zodiac-display')
+      .css('border-color', color)
       .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
     // determine if birthday and show it
     if (zodiac.isBirthday()) {
       $('#zodiac-display')
-        .css('border-radius', '25px')
-        .css('border', '4px dotted gold')
+        .addClass('z-birthday')
     }
   }
 }
