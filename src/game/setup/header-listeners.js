@@ -4,18 +4,24 @@
 
 import $ from 'jquery'
 import { version } from '../../../package.json'
+import { reload, erase } from '../game-util'
 
 const deleteFriendo = (friendo) => {
   console.log('called')
   if (!friendo) {
     alert('No Friendo DNA found!')
   } else if ($('#delete-check1').prop('checked') && $('#delete-check2').prop('checked')) {
+
     // handle deletion flavor text
     if (friendo.level >= 1) {
       alert(`"... ${friendo.owner}... goodbye..."`)
     } else {
       alert('You hear a cracking noise as the egg fades into nothingness.')
     }
+
+    // delete friendo and refresh
+    erase()
+    reload()
   }
 }
 
