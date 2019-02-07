@@ -4,7 +4,7 @@ import { load, save } from './game-util'
 import { TICKRATE } from './game-config'
 import Friendo from '../friendo/friendo'
 
-import header from './setup/header-listeners'
+import header, { updateDelete } from './setup/header-listeners'
 import creatorSetup, { showCreator, hideCreator } from './setup/char-creator-listeners'
 import { initialize, performAction } from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
@@ -19,6 +19,7 @@ require('bootstrap')
 
 // initializes UI based on friendo and starts game processes
 const start = (friendo) => {
+  updateDelete(friendo)
   mainSetup(friendo)
   initialize(friendo)
 
