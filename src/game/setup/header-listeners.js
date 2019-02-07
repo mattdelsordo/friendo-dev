@@ -1,5 +1,5 @@
 /**
- * Listeners for footer
+ * Listeners for header
  */
 
 import $ from 'jquery'
@@ -12,7 +12,7 @@ export default () => {
     $('#game-info').css('visibility', 'visible')
   })
 
-  $('#footer').mouseleave(() => {
+  $('#header').mouseleave(() => {
     $('#game-info').css('visibility', 'hidden')
   })
 }
