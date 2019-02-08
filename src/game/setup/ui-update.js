@@ -10,7 +10,7 @@ import {
   MAX_EGG_LEVEL,
   STAT_MAX,
   STAT_STAGES,
-  STATS
+  STATS,
 } from '../../friendo/constants'
 
 export const setName = (name) => {
@@ -61,6 +61,9 @@ const showTutorial = () => {
  * @param stage - number of stages completed
  */
 const setLevelAndStars = (stat, lvl, stage) => {
+  // check whether stat actually exists (sleep etc. edge case)
+  if (!(stat in STAT_STAGES)) return
+
   // total amount of stars == the number of stages
   const totalStars = STAT_STAGES[stat].length
 
