@@ -70,7 +70,7 @@ mixin statdisplay(stat)
           .d-flex.flex-column.align-items.center.ml-auto.w-50
               .progress
                   .progress-bar.bg-info(id=`${statId}-prog` role=progressbar)
-              .statstars
+              .statstars(id=`${statId}-stars`)
                   | #{'\u2606'}#{'\u2606'}#{'\u2606'}#{'\u2606'}#{'\u2606'}
           span.ml-1.p-2.statlvl(id=`${statId}-num`) 0
 

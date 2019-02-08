@@ -1,3 +1,7 @@
+// characters for stat stage display
+export const EMPTY_STAR = '\u2606'
+export const FULL_STAR = '\u2605'
+
 // maximum level in a given element
 export const STAT_MAX = 100
 // egg stat has different max
