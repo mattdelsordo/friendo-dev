@@ -32,22 +32,22 @@ export default class WATER extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 60,
         yOffset: -90,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       return {
         xOffset: 50,
         yOffset: -75,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 50,
         yOffset: -64,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       return {
         xOffset: 22,
         yOffset: -40,

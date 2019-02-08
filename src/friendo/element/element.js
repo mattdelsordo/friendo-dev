@@ -117,7 +117,7 @@ export default class Element {
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
-    if (friendo.getStatStage(STATS.SIGHT) > 6) {
+    if (friendo.getStatStage(STATS.SIGHT) > 2) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
       this.drawEye(g, x, y - 8, doBlink, friendo.state.isSmiling)
@@ -126,8 +126,8 @@ export default class Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 10) threeLens(g, x, y)
-    } else if (friendo.getStatStage(STATS.SIGHT) > 3) {
+      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 3) threeLens(g, x, y)
+    } else if (friendo.getStatStage(STATS.SIGHT) > 1) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 8, y, doBlink, friendo.state.isSmiling)
@@ -196,9 +196,9 @@ export default class Element {
 
     let speechX = 30
     // move speech more to right if hair too big
-    if (friendo.getStatStage(STATS.HAIR) === 10) speechX += 14
-    else if (friendo.getStatStage(STATS.HAIR) === 9) speechX += 10
-    else if (friendo.getStatStage(STATS.HAIR) === 8) speechX += 6
+    if (friendo.getStat(STATS.HAIR) > 90) speechX += 14
+    else if (friendo.getStat(STATS.HAIR) > 80) speechX += 10
+    else if (friendo.getStat(STATS.HAIR) > 70) speechX += 6
     // this.speak(g, speechX, y - 36, friendo) // handle speech
 
     drawHookMarker(g, x, y)
@@ -296,16 +296,16 @@ export default class Element {
 
   // core drawing delegated to child elements
   drawCore(g, x, y, friendo, doBlink) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       // 5-6 segments
       return this.drawLvl5Core(g, x, y, friendo, doBlink)
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       // 4 segments
       return this.drawLvl4Core(g, x, y, friendo, doBlink)
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       // 3 segments
       return this.drawLvl3Core(g, x, y, friendo, doBlink)
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       // 2 segments
       return this.drawLvl2Core(g, x, y, friendo, doBlink)
       /* eslint-disable-next-line */
@@ -363,9 +363,9 @@ export default class Element {
     // hair needs to be at the back of EVERYTHING
     // this draws it to the 'underside' of the canvas
     g.globalCompositeOperation = 'destination-over'
-    if (friendo.getStatStage(STATS.HAIR) > 7) {
+    if (friendo.getStatStage(STATS.HAIR) === 3) {
       drawLusciousHairBack(g, x, y, friendo.getStat(STATS.HAIR))
-    } else if (friendo.getStatStage(STATS.HAIR) > 3) {
+    } else if (friendo.getStatStage(STATS.HAIR) === 2) {
       drawStevenHair(g, x, y, friendo.getStat(STATS.HAIR))
     }
     g.restore()
@@ -374,9 +374,9 @@ export default class Element {
 
   // hair that gets painted in front of the head segment
   drawFrontHair(g, x, y, friendo) {
-    if (friendo.getStatStage(STATS.HAIR) > 7) {
+    if (friendo.getStatStage(STATS.HAIR) === 3) {
       drawLusciousHairFront(g, x, y, friendo.getStat(STATS.HAIR))
-    } else if (friendo.getStatStage(STATS.HAIR) > 0 && friendo.getStatStage(STATS.HAIR) < 4) {
+    } else if (friendo.getStatStage(STATS.HAIR) === 1) {
       drawDiglettHair(g, x, y, friendo.getStat(STATS.HAIR))
     }
 

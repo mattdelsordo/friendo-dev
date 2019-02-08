@@ -17,6 +17,7 @@ import {
   STATS,
   STAT_MAX,
   EXP_PER_LEVEL,
+  STAT_STAGES,
   getExpCurve,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
@@ -93,9 +94,22 @@ export default class Friendo {
 
   // stat stage is used to draw the friendo
   setStatStage(stat) {
-    // stage 1 starts at 1, and then in 10 level increments
-    this._statStage[stat] =
-      (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
+    const stages = STAT_STAGES[stat]
+
+    // case where stat is scalar
+    if (stages.length === 1) this._statStage[stat] = this.getStat(stat)
+    else {
+      // stage = index of largest threshold less than or equal to the stat level
+      let stage = 0
+
+      for (let i = 0; i < stages.length; i += 1) {
+        if (this.getStat(stat) >= stages[i]) {
+          stage = i + 1 // the stat stages are 1-indexed so you gotta correct
+        }
+      }
+
+      this._statStage[stat] = stage
+    }
   }
 
   // calls setStatStage on every stat
@@ -243,7 +257,7 @@ export default class Friendo {
     if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
     else {
       const { dog, location } = this.petDogs
-      for (let i = 0, j = 0; j < this.getStatStage(STATS.DOG) && i < dog.length; j += 2, i += 1) {
+      for (let i = 0; i < this.getStatStage(STATS.DOG) && i < dog.length; i += 1) {
         dog[i].paint(context, location[i].x, location[i].y)
       }
     }
