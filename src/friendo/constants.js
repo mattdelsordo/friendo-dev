@@ -44,6 +44,19 @@ export const STATS = Object.freeze({
   EGG: 'egg',
 })
 
+// thresholds at which stat appearance changes
+export const STAT_STAGES = {
+  [STATS.CORE]: [1, 6, 14, 36, 55],
+  [STATS.LEG]: [1],
+  [STATS.ARM]: [1],
+  [STATS.SIGHT]: [1, 12, 72, 90],
+  [STATS.HAIR]: [1, 20, 64],
+  [STATS.TASTE]: [1],
+  [STATS.DOG]: [1, 20, 40, 65, 90],
+  [STATS.MEME]: [1],
+  [STATS.EGG]: [1, 2, 3, 4],
+}
+
 // array of stats to actually include in level calculations
 export const LVL_CALC_WHITELIST = [
   STATS.CORE,
