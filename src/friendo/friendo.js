@@ -141,8 +141,9 @@ export default class Friendo {
 
   // maxumum energy is the default + 5 per every level past 1
   computeMaxEnergy() {
-    // disregard level 1 in calcs
-    return DEFAULT_MAX_ENERGY + ((this.level * ENERGY_PER_LEVEL) - ENERGY_PER_LEVEL)
+    // disregard level 0-1 in calcs, don't factor lvl in in to calc
+    return DEFAULT_MAX_ENERGY
+      + (this.level > 1 ? ((this.level * ENERGY_PER_LEVEL) - ENERGY_PER_LEVEL) : 0)
   }
 
   // compute level and set it in the friendo
