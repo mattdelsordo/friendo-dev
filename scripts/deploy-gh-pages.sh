@@ -5,7 +5,7 @@ if [[ $(git log --oneline -n1) != *":rocket:"* ]]; then
     # build webpage
     git checkout master
     yarn build-prod
-    git add -A
+    git add docs/
 
     TAG=$(egrep '"version": "([0-9]+\.[0-9]+\.[0-9]+"),' package.json | egrep -o '[0-9]+\.[0-9]+\.[0-9]+')
 
