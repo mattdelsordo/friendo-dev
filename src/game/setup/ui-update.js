@@ -4,7 +4,14 @@
 
 import $ from 'jquery'
 import { save } from '../game-util'
-import { MAX_EGG_LEVEL, STAT_MAX, STATS } from '../../friendo/constants'
+import {
+  EMPTY_STAR,
+  FULL_STAR,
+  MAX_EGG_LEVEL,
+  STAT_MAX,
+  STAT_STAGES,
+  STATS,
+} from '../../friendo/constants'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -48,12 +55,38 @@ const showTutorial = () => {
 }
 
 /**
+ * Updates the lvl and stat stars fields
+ * @param stat - stat bar to update
+ * @param lvl - lvl to set to
+ * @param stage - number of stages completed
+ */
+const setLevelAndStars = (stat, lvl, stage) => {
+  // check whether stat actually exists (sleep etc. edge case)
+  if (!(stat in STAT_STAGES)) return
+
+  // total amount of stars == the number of stages
+  const totalStars = STAT_STAGES[stat].length
+
+  // fill string with stars if the stat has more than one stage
+  let starString = ''
+  const empty = totalStars - stage
+  if (totalStars > 1) {
+    starString = FULL_STAR.repeat(stage) + EMPTY_STAR.repeat(empty)
+  }
+
+  $(`#${stat}-num`).html(lvl)
+  $(`#${stat}-stars`).html(starString)
+  // turn stars gold if theyre maxed out
+  if (empty === 0) $(`#${stat}-stars`).css('color', 'gold')
+}
+
+/**
  * Updates a stat display bar
  * @param stat - id of the stat
  * @param exp - % exp to next level (0.0-0.1)
  * @param lvl - current stat level
  */
-export const setStat = (stat, exp, lvl) => {
+export const setStat = (stat, exp, lvl, stage) => {
   const percent = Math.floor(exp * 100)
   // special case if stat is maxed out
   if ((stat === STATS.EGG && lvl === MAX_EGG_LEVEL) || lvl === STAT_MAX) {
@@ -62,15 +95,14 @@ export const setStat = (stat, exp, lvl) => {
       .removeClass('bg-info')
       .addClass('bg-success')
     $(`#${stat}-prog`).css('background-color', '#28a745 !important')
-    $(`#${stat}-num`).html(lvl)
+    setLevelAndStars(stat, lvl, stage)
   } else if (($(`#${stat}-prog`).data('lastVal') || 0) > percent) {
     // if this value is LESS than the last value, do special animation
     // this is necessary to circumvent the stuff bootstrap has by default
     $(`#${stat}-prog`).css('width', '100%')
     setTimeout(() => {
-      $(`#${stat}-num`)
-        .html(lvl)
-        .addClass('lvlup')
+      setLevelAndStars(stat, lvl, stage)
+      $(`#${stat}-num`).addClass('lvlup')
       $(`#${stat}-prog`)
         .css('visibility', 'hidden')
 
@@ -87,14 +119,14 @@ export const setStat = (stat, exp, lvl) => {
     }, 700)
   } else {
     $(`#${stat}-prog`).css('width', `${percent}%`)
-    $(`#${stat}-num`).html(lvl)
+    setLevelAndStars(stat, lvl, stage)
   }
 
   $(`#${stat}-prog`).data('lastVal', percent)
 }
 export const setAllStats = (friendo) => {
   Object.values(STATS).forEach((s) => {
-    setStat(s, friendo.getExpPercent(s), friendo.getStat(s))
+    setStat(s, friendo.getExpPercent(s), friendo.getStat(s), friendo.getStatStage(s))
   })
 }
 
@@ -218,7 +250,7 @@ export const performAction = (friendo, action, reps = 1) => {
       if (updatebar) {
         // update stat displays
         const stat = action.split('_')[1] || ''
-        setStat(stat, f.getExpPercent(stat), f.getStat(stat))
+        setStat(stat, f.getExpPercent(stat), f.getStat(stat), f.getStatStage(stat))
       }
 
       // update level

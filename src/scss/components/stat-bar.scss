@@ -1,7 +1,8 @@
 // Styles for the stat level bars
 
 .stat-row {
-  border: 1px solid white;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -46,4 +47,11 @@
   border-radius: 20px;
   white-space: pre-wrap;
   width: 3em;
+  text-align: center;
+}
+
+.statstars {
+  line-height: 1;
+  text-align: center;
+  color: #17a2b8;
 }

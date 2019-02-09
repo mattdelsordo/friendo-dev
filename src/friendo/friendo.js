@@ -16,8 +16,9 @@ import {
   MAX_EGG_LEVEL,
   STATS,
   STAT_MAX,
-  EXP_PER_LEVEL,
-  getExpCurve,
+  ENERGY_PER_LEVEL,
+  STAT_STAGES,
+  getExpCurve, MEME_EXP_MODIFIER, TASTE_ENERGY_MODIFIER,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
@@ -93,9 +94,22 @@ export default class Friendo {
 
   // stat stage is used to draw the friendo
   setStatStage(stat) {
-    // stage 1 starts at 1, and then in 10 level increments
-    this._statStage[stat] =
-      (this._stats[stat] > 0 ? Math.floor(this._stats[stat] / 10) + 1 : 0)
+    const stages = STAT_STAGES[stat]
+
+    // case where stat is scalar
+    if (stages.length === 1) this._statStage[stat] = this.getStat(stat)
+    else {
+      // stage = index of largest threshold less than or equal to the stat level
+      let stage = 0
+
+      for (let i = 0; i < stages.length; i += 1) {
+        if (this.getStat(stat) >= stages[i]) {
+          stage = i + 1 // the stat stages are 1-indexed so you gotta correct
+        }
+      }
+
+      this._statStage[stat] = stage
+    }
   }
 
   // calls setStatStage on every stat
@@ -127,8 +141,9 @@ export default class Friendo {
 
   // maxumum energy is the default + 5 per every level past 1
   computeMaxEnergy() {
-    // disregard level 1 in calcs
-    return DEFAULT_MAX_ENERGY + ((this.level * EXP_PER_LEVEL) - EXP_PER_LEVEL)
+    // disregard level 0-1 in calcs, don't factor lvl in in to calc
+    return DEFAULT_MAX_ENERGY
+      + (this.level > 1 ? ((this.level * ENERGY_PER_LEVEL) - ENERGY_PER_LEVEL) : 0)
   }
 
   // compute level and set it in the friendo
@@ -162,7 +177,8 @@ export default class Friendo {
 
   // For calculating rank-ups, since they happen in 10 stat intervals
   getStatStage(stat) {
-    return this._statStage[stat]
+    if (stat in this._statStage) return this._statStage[stat]
+    return 0
   }
 
   // returns percentage of energy the friendo currently has
@@ -172,7 +188,7 @@ export default class Friendo {
 
   // exp multiplier based off taste level
   getFoodMultiplier() {
-    return 1 + (this.getStat(STATS.TASTE) / 10)
+    return 1 + (this.getStat(STATS.TASTE) * TASTE_ENERGY_MODIFIER)
   }
 
   /**
@@ -181,7 +197,7 @@ export default class Friendo {
    * @param feed - whether or not to factor in taste multiplier
    */
   modifyEnergy(amnt, feed = false) {
-    const newAmnt = feed ? Math.floor(amnt * this.getFoodMultiplier()) : amnt
+    const newAmnt = feed ? (amnt * this.getFoodMultiplier()) : amnt
     if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
     else if (this.energy + newAmnt <= 0) this.energy = 0
     else this.energy = this.energy + newAmnt
@@ -189,7 +205,7 @@ export default class Friendo {
 
   // exp multiplier based off meme tolerance
   getExpMultiplier() {
-    return 1 + (this.getStat(STATS.MEME) / 10)
+    return 1 + (this.getStat(STATS.MEME) * MEME_EXP_MODIFIER)
   }
 
   // adds exp for a given stat
@@ -200,7 +216,7 @@ export default class Friendo {
       else if (this.getStat(STATS.EGG) === STAT_MAX) return
 
       // increment exp amount, multiplied by a factor based on meme-tolerance
-      this.exp[stat] += Math.floor(amnt * this.getExpMultiplier() * this.zodiac.getStatBonus(stat))
+      this.exp[stat] += amnt * this.getExpMultiplier() * this.zodiac.getStatBonus(stat)
 
       // check to see if a levelup is possible
       const threshold = getExpCurve(stat)[this._stats[stat]]
@@ -243,7 +259,7 @@ export default class Friendo {
     if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
     else {
       const { dog, location } = this.petDogs
-      for (let i = 0, j = 0; j < this.getStatStage(STATS.DOG) && i < dog.length; j += 2, i += 1) {
+      for (let i = 0; i < this.getStatStage(STATS.DOG) && i < dog.length; i += 1) {
         dog[i].paint(context, location[i].x, location[i].y)
       }
     }

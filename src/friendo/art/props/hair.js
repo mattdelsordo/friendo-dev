@@ -53,14 +53,14 @@ export const drawStevenHair = (g, x, y, level) => {
   const curls = [
     [x - ((curlSize / 2) - 8), y - (curlSize - 8)],
     [x - ((curlSize / 2) + 12), y - (curlSize - 8)],
-    [x - ((curlSize / 2) + 2), y - (curlSize - 16)],
+    [x - ((curlSize / 2) + 5), y - (curlSize - 8)],
     [x - ((curlSize / 2) - 10), y - (curlSize - 5)],
     [x - ((curlSize / 2) + 9), y - (curlSize - 4)],
     [x - ((curlSize / 2)), y - (curlSize)],
   ]
   drawOval(g, curls[0][0], curls[0][1], curlSize, curlSize, true)
   drawOval(g, curls[1][0], curls[1][1], curlSize, curlSize, true)
-  drawOval(g, curls[2][0], curls[2][1], curlSize, curlSize, true)
+  drawOval(g, curls[2][0], curls[2][1], curlSize + 4, curlSize + 4, true)
   drawOval(g, curls[3][0], curls[3][1], curlSize, curlSize, true)
   drawOval(g, curls[4][0], curls[4][1], curlSize, curlSize, true)
   // this one just fills gaps in the middle of the design

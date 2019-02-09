@@ -32,22 +32,22 @@ export default class Air extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 56,
         yOffset: -100,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       return {
         xOffset: 54,
         yOffset: -44,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 50,
         yOffset: -10,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       return {
         xOffset: 24,
         yOffset: -18,
