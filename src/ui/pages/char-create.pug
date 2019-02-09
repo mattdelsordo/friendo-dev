@@ -15,14 +15,14 @@ mixin typePick(type)
 
 
 #char-creator
-    .row
+    .row.text-center
         h1.mx-auto Create your new Friendo:
     .row
-        .mx-auto#type-picker
+        .mx-auto.text-center#type-picker
             each type in types
                 +typePick(type)
     .row
-        .mx-auto
-            input.align-middle.mr-1#name-input(type='text' placeholder='Name your Friendo:' disabled)
-            input.align-middle.mr-1#player-input(type='text' placeholder='What is your name?' disabled)
-            button.align-middle.btn.btn-primary#btnCreate(type='button' disabled) Create
+        .mx-auto.text-center
+            input.mr-1.mb-2#name-input(type='text' placeholder='Name your Friendo:' disabled)
+            input.mr-1#player-input(type='text' placeholder='What is your name?' disabled)
+            button.btn.btn-primary#btnCreate(type='button' disabled) Create
