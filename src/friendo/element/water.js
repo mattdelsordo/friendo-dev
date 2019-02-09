@@ -4,12 +4,12 @@ import {
   WATER_SKIN,
   WATER_EGG_OUTLINE,
   WATER_EGG_SKIN,
-} from '../../art/colors'
+} from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
-import { drawHookMarker } from '../../art/hook-marker'
-import { drawOval, drawOutlinedOval } from '../../art/art-util'
-import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
+import { drawHookMarker } from '../art/hook-marker'
+import { drawOval, drawOutlinedOval } from '../art/art-util'
+import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 
 /**
  * Specifies how a water friendo is drawn
@@ -32,22 +32,22 @@ export default class WATER extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 60,
         yOffset: -90,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       return {
         xOffset: 50,
         yOffset: -75,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 50,
         yOffset: -64,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       return {
         xOffset: 22,
         yOffset: -40,

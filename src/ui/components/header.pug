@@ -1,0 +1,93 @@
+// Structure of the header
+
+// format of header links
+mixin header-btn(txt, emo)
+    a.ml-3.header-btn&attributes(attributes)
+        | [
+        |
+        +emoji(emo)
+        span #{txt}
+        |
+        | ]
+
+// dialog that displays attributions
+mixin attribution-dialog
+    .modal.fade(id='attributions' role='dialog')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Attributions
+                .modal-body
+                    ul
+                        li Game by Matt DelSordo
+                        li
+                            | Emoji from
+                            |
+                            a(href="https://github.com/twitter/twemoji" target="_blank") twemoji
+                            |
+                            | by
+                            |
+                            a(href="https://github.com/twitter" target="_blank") Twitter
+                            |
+                            | are licensed under
+                            |
+                            a(href="https://creativecommons.org/licenses/by/4.0/" target="_blank") CC BY 4.0
+                .modal-footer
+                    button.btn.btn-secondary(data-dismiss='modal') Nice
+
+// UI segment for friendo deletion
+mixin delete()
+    #delete-zone.collapse.mt-2
+        .card.card-body
+            h5 ARE YOU SURE ABOUT THIS ONE BUD
+            p This will banish your Friendo's pattern from the time stream.
+            .form-group.form-check
+                label.form-check-label(for="delete-check1" data-toggle="collapse" data-target="#reallydoit")
+                    input.form-check-input#delete-check1(type="checkbox")
+                    | I understand.
+            #reallydoit.collapse
+                .form-group.form-check
+                    label.form-check-label(for="delete-check2" data-toggle="collapse" data-target="#imserious")
+                        input.form-check-input#delete-check2(type="checkbox")
+                        | Do it.
+            #imserious.collapse
+                button.btn.btn-danger#delete-btn
+                    +emoji('2620')(style="margin-right: 1em;")
+                    | Begone
+                    +emoji('2620')(style="margin-left: 1em;")
+
+mixin settings-dialog
+    .modal.fade(id='settings-dialog' role='dialog')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Settings
+                .modal-body
+                    button.btn.btn-danger(data-toggle="collapse" data-target="#delete-zone")
+                        +emoji('1f5d1')
+                        |
+                        | Delete your Friendo
+                    +delete()
+                .modal-footer
+                    button.btn.btn-secondary(data-dismiss='modal') Close
+
+// set of modals the header controls have to be set before the header
+mixin modals
+    +attribution-dialog()
+    +settings-dialog()
+
+include emoji
++modals()
+header#header
+    .container.text-muted.align-middle.h-100
+        .d-flex.h-100
+            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;")
+                img#favicon(src="favicon.png")
+                span.ml-1#title Friendo
+            // not an emoji - just unicode
+            span.ml-4#game-info-icon #{'\u{1f6c8}'}
+            span.ml-2.w-100.d-flex#game-info
+                a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
+                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
+                +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
+            a#settings(href="" data-toggle="modal" data-target="#settings-dialog") #{'\u2699'}

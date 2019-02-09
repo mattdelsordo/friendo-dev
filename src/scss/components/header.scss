@@ -1,0 +1,54 @@
+// header styles
+
+body {
+  margin-top: 60px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+#title {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+#game-info {
+  visibility: hidden;
+
+  &-icon {
+    font-size: 20px;
+  }
+}
+
+#settings {
+  font-size: 20px;
+}
+
+#favicon {
+  height: 1.2em;
+  width: 1.2em;
+  margin-bottom: 0.2em;
+}
+
+// Hide header button text when screen is too small
+@media screen and (max-width: 550px) {
+  .header-btn span {
+    display: none;
+  }
+}
+
+
+.text-muted a {
+  color: #6c757d;
+
+  &:hover {
+    color: #454b50;
+  }
+}

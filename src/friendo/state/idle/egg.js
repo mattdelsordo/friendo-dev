@@ -28,7 +28,8 @@ export default class Egg extends State {
     // Shake if not currently shaking and with a probability
     // based on egg level
     const rand = Math.floor(Math.random() * 100)
-    const shake = friendo._stats[STATS.EGG] >= rand
+    const shake =
+      (friendo.getStat(STATS.EGG) < 2 ? 0 : ((friendo.getStat(STATS.EGG) - 1) * 10 >= rand))
     if (!this.shaking && shake) {
       this.shaking = true
     }

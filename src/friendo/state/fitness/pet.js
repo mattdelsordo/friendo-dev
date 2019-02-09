@@ -1,6 +1,6 @@
 import State from '../state'
-import { left, right } from '../../../art/art-util'
-import { drawHandDown as paintHand } from '../../../art/props/hand'
+import { left, right } from '../../art/art-util'
+import { drawHandDown as paintHand } from '../../art/props/hand'
 import { ACTIONS } from '../../constants'
 import phrasebook from '../../phrases/idle-phrases'
 

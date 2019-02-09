@@ -1,7 +1,7 @@
 import Exercise from './exercise'
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import { ACTIONS, STATS } from '../../constants'
-import { Dog } from '../../../art/props/dog'
+import { Dog } from '../../art/props/dog'
 
 export const ID = ACTIONS.DOG
 

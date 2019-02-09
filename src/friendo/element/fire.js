@@ -4,13 +4,13 @@ import {
   FIRE_OUTLINE,
   FIRE_EGG_OUTLINE,
   FIRE_EGG_SKIN,
-} from '../../art/colors'
+} from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
-import { drawHookMarker } from '../../art/hook-marker'
-import { drawLine, drawOutlinedPolygon, drawPolygon } from '../../art/art-util'
-import { oneLens, threeLens, twoLens } from '../../art/props/glasses'
-import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
+import { drawHookMarker } from '../art/hook-marker'
+import { drawLine, drawOutlinedPolygon, drawPolygon } from '../art/art-util'
+import { oneLens, threeLens, twoLens } from '../art/props/glasses'
+import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -29,22 +29,22 @@ export default class Fire extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 42,
         yOffset: -70,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       return {
         xOffset: 42,
         yOffset: -50,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 22,
         yOffset: -50,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       return {
         xOffset: 22,
         yOffset: -20,
@@ -71,7 +71,7 @@ export default class Fire extends Element {
   }
 
   drawEyes(g, x, y, friendo, doBlink) {
-    if (friendo.getStatStage(STATS.SIGHT) > 6) {
+    if (friendo.getStatStage(STATS.SIGHT) > 2) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
       this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
@@ -80,8 +80,8 @@ export default class Fire extends Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 10) threeLens(g, x, y + 3)
-    } else if (friendo.getStatStage(STATS.SIGHT) > 3) {
+      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 3) threeLens(g, x, y + 3)
+    } else if (friendo.getStatStage(STATS.SIGHT) > 1) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
       this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)

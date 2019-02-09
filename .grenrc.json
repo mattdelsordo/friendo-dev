@@ -6,7 +6,7 @@
   "groupBy": {
     "New Features:": ["feature"],
     "Bug Fixes:": ["bug"],
-    "Other:": ["internal"]
+    "Internal Changes:": ["internal"]
   },
   "changelogFilename": "CHANGELOG.md"
 }

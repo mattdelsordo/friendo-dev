@@ -4,12 +4,12 @@ import {
   AIR_SKIN,
   AIR_EGG_OUTLINE,
   AIR_EGG_SKIN,
-} from '../../art/colors'
+} from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
-import { drawHookMarker } from '../../art/hook-marker'
-import { drawOutlinedPolygon, drawPolygon } from '../../art/art-util'
-import { crack1, crack2, crack3 } from '../../art/props/egg-cracks'
+import { drawHookMarker } from '../art/hook-marker'
+import { drawOutlinedPolygon, drawPolygon } from '../art/art-util'
+import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 
 /**
  * Specifies how a air friendo is drawn
@@ -32,22 +32,22 @@ export default class Air extends Element {
   }
 
   computeArmTethers(friendo) {
-    if (friendo.getStatStage(STATS.CORE) > 8) {
+    if (friendo.getStatStage(STATS.CORE) > 4) {
       return {
         xOffset: 56,
         yOffset: -100,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 6) {
+    } else if (friendo.getStatStage(STATS.CORE) > 3) {
       return {
         xOffset: 54,
         yOffset: -44,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 4) {
+    } else if (friendo.getStatStage(STATS.CORE) > 2) {
       return {
         xOffset: 50,
         yOffset: -10,
       }
-    } else if (friendo.getStatStage(STATS.CORE) > 2) {
+    } else if (friendo.getStatStage(STATS.CORE) > 1) {
       return {
         xOffset: 24,
         yOffset: -18,

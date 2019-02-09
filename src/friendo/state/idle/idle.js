@@ -1,5 +1,5 @@
 import State from '../state'
-import { left, right } from '../../../art/art-util'
+import { left, right } from '../../art/art-util'
 import phrasebook from '../../phrases/idle-phrases'
 
 export const ID = 'state_idle'
