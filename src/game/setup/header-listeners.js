@@ -6,12 +6,11 @@ import $ from 'jquery'
 import { version } from '../../../package.json'
 import { reload, erase } from '../game-util'
 
+/* eslint-disable no-alert */
 const deleteFriendo = (friendo) => {
-  console.log('called')
   if (!friendo) {
     alert('No Friendo DNA found!')
   } else if ($('#delete-check1').prop('checked') && $('#delete-check2').prop('checked')) {
-
     // handle deletion flavor text
     if (friendo.level >= 1) {
       alert(`"... ${friendo.owner}... goodbye..."`)
@@ -24,6 +23,7 @@ const deleteFriendo = (friendo) => {
     reload()
   }
 }
+/* eslint-enable no-alert */
 
 export default () => {
   $('#vernum').html(`[ v${version} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${version}`)
