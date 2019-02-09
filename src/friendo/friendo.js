@@ -29,7 +29,6 @@ import {
   DEFAULT_OWNER,
   DEFAULT_STATS,
   DEFAULT_ELEMENT,
-  DEFAULT_HOOK,
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
   DEFAULT_LEVEL,
@@ -254,7 +253,7 @@ export default class Friendo {
   }
 
   // draws the friendo to the context specified by g at specified coordinate
-  draw(canvas, context, x = DEFAULT_HOOK.x, y = DEFAULT_HOOK.y) {
+  draw(canvas, context, x = canvas.width / 2, y = canvas.height * (7 / 8)) {
     // draw dog(s)
     if (!this.petDogs) this.initializeDogs(canvas.width, canvas.height)
     else {
