@@ -4,6 +4,7 @@ import { load, save } from './game-util'
 import { TICKRATE } from './game-config'
 import Friendo from '../friendo/friendo'
 
+import canvasListeners from './setup/canvas-listeners'
 import header, { updateDelete } from './setup/header-listeners'
 import creatorSetup, { showCreator, hideCreator } from './setup/char-creator-listeners'
 import { initialize, performAction } from './setup/ui-update'
@@ -22,6 +23,7 @@ const start = (friendo) => {
   updateDelete(friendo)
   mainSetup(friendo)
   initialize(friendo)
+  canvasListeners()
 
   // connect friendo to canvas in order to draw it
   const canvas = document.getElementById('canvas')
