@@ -29,11 +29,15 @@ export default () => {
   $('#vernum').html(`[ v${version} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${version}`)
 
   $('#game-info-icon').mouseenter(() => {
+    // make links visible, change icon to open book
     $('#game-info').css('visibility', 'visible')
+    $('#game-info-icon').attr('src', './img/emoji/1f4d6.png')
   })
 
   $('#header').mouseleave(() => {
+    // hide links, close book
     $('#game-info').css('visibility', 'hidden')
+    $('#game-info-icon').attr('src', './img/emoji/1f516.png')
   })
 
   $('#delete-btn').click(() => {
