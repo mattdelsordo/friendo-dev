@@ -85,9 +85,10 @@ header#header
                 img#favicon(src="favicon.png")
                 span.ml-1#title Friendo
             // not an emoji - just unicode
-            span.ml-4#game-info-icon #{'\u{1f6c8}'}
+            +emoji('1f516')(class='ml-4' id='game-info-icon')
             span.ml-2.w-100.d-flex#game-info
                 a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
                 +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
-            a#settings(href="" data-toggle="modal" data-target="#settings-dialog") #{'\u2699'}
+            a#settings(href="" data-toggle="modal" data-target="#settings-dialog")
+                +emoji('2699')
