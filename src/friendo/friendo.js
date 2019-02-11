@@ -32,7 +32,7 @@ import {
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
   DEFAULT_LEVEL,
-  DEFAULT_ENERGY,
+  DEFAULT_FATIGUE,
   DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
@@ -57,7 +57,7 @@ export default class Friendo {
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
     this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
-    this.energy = fromJSON.energy || DEFAULT_ENERGY
+    this.fatigue = fromJSON.fatigue || DEFAULT_FATIGUE
     this.exp = fromJSON.exp || DEFAULT_EXP
 
     // set default derived values
@@ -80,7 +80,7 @@ export default class Friendo {
       stats: this._stats,
       state: this.state,
       zodiac: this.zodiac,
-      energy: this.energy,
+      fatigue: this.fatigue,
       exp: this.exp,
     }
   }
@@ -181,8 +181,8 @@ export default class Friendo {
   }
 
   // returns percentage of energy the friendo currently has
-  getEnergyLeft() {
-    return this.energy / this.maxEnergy
+  getEnergyPercent() {
+    return (this.maxEnergy - this.fatigue) / this.maxEnergy
   }
 
   // exp multiplier based off taste level
@@ -192,14 +192,14 @@ export default class Friendo {
 
   /**
    * Adds energy to the friendo's reserve
-   * @param amnt - amount of energy to add
+   * @param amnt - amount of fatigue to remove
    * @param feed - whether or not to factor in taste multiplier
    */
-  modifyEnergy(amnt, feed = false) {
+  modifyFatigue(amnt, feed = false) {
     const newAmnt = feed ? (amnt * this.getFoodMultiplier()) : amnt
-    if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
-    else if (this.energy + newAmnt <= 0) this.energy = 0
-    else this.energy = this.energy + newAmnt
+    if (this.fatigue - newAmnt >= this.maxEnergy) this.fatigue = this.maxEnergy
+    else if (this.fatigue - newAmnt <= 0) this.fatigue = 0
+    else this.fatigue = this.fatigue - newAmnt
   }
 
   // exp multiplier based off meme tolerance
