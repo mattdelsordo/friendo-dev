@@ -13,7 +13,7 @@ export const DEFAULT_OWNER = 'Mrot'
 
 export const DEFAULT_LEVEL = 0
 export const DEFAULT_MAX_ENERGY = 100
-export const DEFAULT_ENERGY = DEFAULT_MAX_ENERGY
+export const DEFAULT_FATIGUE = 0
 
 export const DEFAULT_STATS = {
   [STATS.CORE]: 0,

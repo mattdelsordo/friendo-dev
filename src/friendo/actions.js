@@ -65,7 +65,7 @@ export const exercise = (friendo, action, reps = 0, everyRep, end) => {
     console.log(`Rep: ${reps}`)
     // add or subtract energy
     const cost = REP_COST[action] * friendo.zodiac.getStatBonus(action)
-    friendo.modifyEnergy(cost, action === ACTIONS.FEED)
+    friendo.modifyFatigue(cost, action === ACTIONS.FEED)
     // add exp if applicable
     // have to parse out the action id to get the state id
     friendo.addExp(stat, REP_REWARD[action])
@@ -75,14 +75,14 @@ export const exercise = (friendo, action, reps = 0, everyRep, end) => {
     everyRep(friendo)
 
     // check if energy has dipped below zero, if so, sleep
-    if (friendo.getEnergyLeft() <= 0) {
+    if (friendo.getEnergyPercent() <= 0) {
       console.log('Next rep! (exhausted)')
       friendo.state = loadState(this, sleepID)
       return exercise(friendo, ACTIONS.SLEEP, -1, everyRep, end)
     }
 
     // if sleeping, check if energy >= max, if so, return to idle
-    if (action === ACTIONS.SLEEP && friendo.getEnergyLeft() >= 1.0) {
+    if (action === ACTIONS.SLEEP && friendo.getEnergyPercent() >= 1.0) {
       console.log('Done (sleeping && energy = max)')
       return end()
     }

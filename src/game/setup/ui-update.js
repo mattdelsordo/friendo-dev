@@ -161,7 +161,7 @@ export const initialize = (friendo) => {
   setLevel(friendo.level)
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
-  setEnergy(friendo.getEnergyLeft())
+  setEnergy(friendo.getEnergyPercent())
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
@@ -241,7 +241,7 @@ export const performAction = (friendo, action, reps = 1) => {
       // save
       save(JSON.stringify(f))
       // update energy bar
-      setEnergy(f.getEnergyLeft())
+      setEnergy(f.getEnergyPercent())
       // check to see if any stat can be made visible
       updateStatVisibility(f)
 
