@@ -19,6 +19,7 @@ require('bootstrap')
 
 $(document)
   .ready(() => {
+    $('h1').css('color', 'red')
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('2d')
 

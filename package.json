@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build-dev": "NODE_ENV=development yarn dev-js && yarn dev-html && yarn dev-sass",
-    "build-prod": "NODE_ENV=production yarn prod-js && yarn prod-html && yarn prod-sass",
+    "build-prod": "NODE_ENV=production yarn prod-js && yarn prod-html && yarn prod-sass && rm docs/debug.js",
     "copy-res": "cp -r res/. docs/",
     "dev-html": "pug -P src/ui/pages/index.pug src/ui/debug.pug -o docs/ && yarn copy-res",
     "dev-js": "webpack -d --progress",

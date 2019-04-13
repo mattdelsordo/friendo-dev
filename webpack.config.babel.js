@@ -2,13 +2,12 @@ import path from 'path'
 
 import { isProd } from './src/config'
 
-
-export default {
+const buildConfig = (inName, outName) => ({
   entry: [
-    './src/game/index.js',
+    `./src/game/${inName}.js`,
   ],
   output: {
-    filename: 'bundle.js',
+    filename: `${outName}.js`,
     path: path.resolve(__dirname, 'docs'),
     publicPath: '/',
   },
@@ -27,4 +26,6 @@ export default {
     watchContentBase: true,
   },
   mode: isProd ? 'production' : 'development',
-}
+})
+
+export default [buildConfig('index', 'bundle'), buildConfig('debug', 'debug')]
