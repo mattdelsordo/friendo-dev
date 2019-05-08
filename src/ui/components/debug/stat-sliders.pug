@@ -48,9 +48,9 @@
 
 mixin statSlider(stat)
     - var statId = stat.name.split(' ')[0].toLowerCase()
-    .p-1.mt-1.w-100
-        span= stat.name
-        input.mr-1.ml-1.align-bottom(
+    .d-flex.flex-row.align-items-center
+        span.mr-1= stat.name
+        input.ml-auto.w-50.align-bottom(
             type='range'
             min=stat.initial
             max=`${stat.max||100}`,
@@ -59,13 +59,17 @@ mixin statSlider(stat)
             list=`${statId}-list`
             step=1
         )
-        if stat.points
-            datalist(id=`${statId}-list`)
-                each point in stat.points
-                    option= point
-        span(id=`${statId}-num`)= stat.initial
+        //if stat.points
+        //    datalist(id=`${statId}-list`)
+        //        each point in stat.points
+        //            option= point
+        span.ml-1.p-2(id=`${statId}-num`)= stat.initial
 
-.border.p-1.mt-1#stat-sliders
-    h5 Stats:
-    each stat in stats
-        +statSlider(stat)
+.border.m-1#stat-sliders
+    .p-1
+        .d-flex.flex-row
+            h6.d-inline-block Stats:
+            h6.d-inline-block.ml-auto Level:
+                span.ml-1#level-display 000
+        each stat in stats
+            +statSlider(stat)

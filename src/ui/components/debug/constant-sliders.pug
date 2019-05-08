@@ -11,16 +11,18 @@
     ]
 
 mixin constantSlider(constant)
-    .p-1.mt-1.w-100
-        span #{constant.name} Chance
-        input.mr-1.ml-1.align-bottom(
+    .d-flex.flex-row.align-items-center
+        span.mr-1 #{constant.name} Chance
+        input.ml-auto.w-50(
             type='range'
             min='1'
             max='100'
             value=constant.initial
             id=`${constant.name.toLowerCase()}-rate`
         )
-        span(id=`${constant.name.toLowerCase()}-rate-indicator`) #{constant.initial}/100
+        span.p-2.ml-1(id=`${constant.name.toLowerCase()}-rate-indicator`) #{constant.initial}/100
 
-each constant in constants
-    +constantSlider(constant)
+.m-1
+    .p-1
+        each constant in constants
+            +constantSlider(constant)

@@ -29,8 +29,9 @@ mixin stateSetterGroup(s, btnType)
         'incubate'
     ]
 
-#state-picker.border.p-1.mt-1
-    h5 State:
-    .btn-toolbar(data-toggle='buttons' role='toolbar')
-        +stateSetterGroup(states, 'info')
-        +stateSetterGroup(exercises, 'success')
+#state-picker.border.m-1
+    .p-1
+        h6 State:
+        .btn-toolbar.d-flex.flex-column(data-toggle='buttons' role='toolbar')
+            +stateSetterGroup(states, 'info')
+            +stateSetterGroup(exercises, 'success')
