@@ -93,7 +93,7 @@ export class Gemini extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Gemini'
-    this.symbol = '264A'
+    this.symbol = '264a'
   }
 
   getStatBonus(stat) {
@@ -106,7 +106,7 @@ export class Cancer extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Cancer'
-    this.symbol = '264B'
+    this.symbol = '264b'
   }
 
   getStatBonus(stat) {
@@ -119,7 +119,7 @@ export class Leo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Leo'
-    this.symbol = '264C'
+    this.symbol = '264c'
   }
 
   getStatBonus(stat) {
@@ -132,7 +132,7 @@ export class Virgo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Virgo'
-    this.symbol = '264D'
+    this.symbol = '264d'
   }
 
   getStatBonus(stat) {
@@ -145,7 +145,7 @@ export class Libra extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Libra'
-    this.symbol = '264E'
+    this.symbol = '264e'
   }
 
   getStatBonus(stat) {
@@ -166,7 +166,7 @@ export class Scorpio extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Scorpio'
-    this.symbol = '264F'
+    this.symbol = '264f'
   }
 
   getStatBonus(stat) {

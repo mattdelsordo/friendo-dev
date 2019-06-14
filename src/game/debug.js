@@ -4,9 +4,8 @@ import Tether from 'tether'
 import { save, load } from './game-util'
 import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
-import { toggleHookMarkers } from '../friendo/art/art-util'
+// import { toggleHookMarkers } from '../friendo/art/art-util'
 import { TICKRATE } from './game-config'
-import getZodiac from '../friendo/horoscope/get-zodiac'
 
 /**
  * Contains code to interface the user display with the friendo code.
@@ -17,201 +16,44 @@ window.Tether = Tether
 
 require('bootstrap')
 
-$(document)
-  .ready(() => {
-    $('h1').css('color', 'red')
-    const canvas = document.getElementById('canvas')
-    const context = canvas.getContext('2d')
+// bookmark stat list for reuse, might want to put this somewhere else but
+const STAT_LIST = ['core', 'leg', 'arm', 'sight', 'hair', 'taste', 'dog', 'meme', 'egg']
 
-    // attempt to load friendo
-    const savegame = load()
-    const friendo = new Friendo(savegame)
+// dont know what to do with this
+// const hookMarkerListeners = (friendo) => {
+//   // handle hook marker toggle
+//   $('#hook-marker-toggle')
+//     .change(toggleHookMarkers)
+// }
 
-    /**
-     * TEST-SLIDER LISTENERS
-     * Each slider should update the indicator with its value,
-     * update the corresponding stat in the game state,
-     * and save the game on a change event (when user lifts mouse)
-     */
-    $('#core-range')
-      .on({
-        input() {
-          $('#core-num')
-            .html(this.value)
-        },
-        change() {
-          $('#core-num')
-            .html(this.value)
-          friendo.setStat(STATS.CORE, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#arm-range')
-      .on({
-        input() {
-          $('#arm-num')
-            .html(this.value)
-        },
-        change() {
-          $('#arm-num')
-            .html(this.value)
-          friendo.setStat(STATS.ARM, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#leg-range')
-      .on({
-        input() {
-          $('#leg-num')
-            .html(this.value)
-        },
-        change() {
-          $('#leg-num')
-            .html(this.value)
-          friendo.setStat(STATS.LEG, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#sight-range')
-      .on({
-        input() {
-          $('#sight-num')
-            .html(this.value)
-        },
-        change() {
-          $('#sight-num')
-            .html(this.value)
-          friendo.setStat(STATS.SIGHT, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#hair-range')
-      .on({
-        input() {
-          $('#hair-num')
-            .html(this.value)
-        },
-        change() {
-          $('#hair-num')
-            .html(this.value)
-          friendo.setStat(STATS.HAIR, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#taste-range')
-      .on({
-        input() {
-          $('#taste-num')
-            .html(this.value)
-        },
-        change() {
-          $('#taste-num')
-            .html(this.value)
-          friendo.setStat(STATS.TASTE, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#dog-range')
-      .on({
-        input() {
-          $('#dog-num')
-            .html(this.value)
-        },
-        change() {
-          $('#dog-num')
-            .html(this.value)
-          friendo.setStat(STATS.DOG, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#meme-range')
-      .on({
-        input() {
-          $('#meme-num')
-            .html(this.value)
-        },
-        change() {
-          $('#meme-num')
-            .html(this.value)
-          friendo.setStat(STATS.MEME, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    $('#egg-range')
-      .on({
-        input() {
-          $('#egg-num')
-            .html(this.value)
-        },
-        change() {
-          $('#egg-num')
-            .html(this.value)
-          friendo.setStat(STATS.EGG, this.value)
-          save(JSON.stringify(friendo))
-        },
-      })
-    // update level on stat change
-    $('#stat-sliders input').change(() => {
-      $('#level-display').html(` ${friendo.level}`)
-      /* eslint-disable-next-line no-restricted-globals */
-      if (isNaN(friendo.level)) {
-        $('#level-display').css('color', 'gold')
-      } else {
-        $('#level-display').css('color', 'black')
-      }
-    })
-
-    // handle hook marker toggle
-    $('#hook-marker-toggle')
-      .change(toggleHookMarkers)
-
-    // name inputs
-    $('#friendo-name')
-      .focusout(function setFriendoName() {
-        const content = this.value.trim()
-        if (content && content !== friendo.name) {
-          friendo.name = content
-          save(JSON.stringify(friendo))
-        }
-      })
-      .on('keypress', function setFriendoNameE(e) {
-        if (e.which === 13) {
-          const content = this.value.trim()
-          if (content && content !== friendo.name) {
-            friendo.name = content
-            save(JSON.stringify(friendo))
-          }
-        }
-      })
-    $('#owner-name')
-      .focusout(function setOwnerName() {
-        const content = this.value.trim()
-        if (content && content !== friendo.owner) {
-          friendo.owner = content
-          save(JSON.stringify(friendo))
-        }
-      })
-      .on('keypress', function setOwnerNameE(e) {
-        if (e.which === 13) {
-          const content = this.value.trim()
-          if (content && content !== friendo.owner) {
-            friendo.owner = content
-            save(JSON.stringify(friendo))
-          }
-        }
-      })
-
-    // handle element togglers
-    $('#type-picker input[type=radio]')
-      // Note: changing this to an arrow function leads to the 'this'
-      // in it being undefined
-      .change(function setElement() {
-        friendo.setElement(this.value)
+/**
+ * TEST-SLIDER LISTENERS
+ * Each slider should update the indicator with its value,
+ * update the corresponding stat in the game state,
+ * and save the game on a change event (when user lifts mouse)
+ */
+const statSliderListeners = (friendo) => {
+  STAT_LIST.forEach((stat) => {
+    $(`#${stat}-range`).on({
+      input() {
+        // only update the stat in question on input
+        $(`#${stat}-num`).html(this.value)
+      },
+      change() {
+        // when user stops interacting, save and update all stats
+        friendo.setStat(STATS[stat.toUpperCase()], this.value)
         save(JSON.stringify(friendo))
-      })
-    $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
 
-    // initialize level display
+        STAT_LIST.forEach((s) => {
+          $(`#${s}-range`).val(friendo.getStat(STATS[s.toUpperCase()]))
+          $(`#${s}-num`).html(friendo.getStat(STATS[s.toUpperCase()]))
+        })
+      },
+    })
+  })
+
+  // update level on stat change
+  $('#stat-sliders input').change(() => {
     $('#level-display').html(` ${friendo.level}`)
     /* eslint-disable-next-line no-restricted-globals */
     if (isNaN(friendo.level)) {
@@ -219,131 +61,189 @@ $(document)
     } else {
       $('#level-display').css('color', 'black')
     }
+  })
+}
 
-    // display current stat values
-    $('#core-range')
-      .val(friendo.getStat(STATS.CORE))
-    $('#core-num')
-      .html(friendo.getStat(STATS.CORE))
-
-    $('#leg-range')
-      .val(friendo.getStat(STATS.LEG))
-    $('#leg-num')
-      .html(friendo.getStat(STATS.LEG))
-
-    $('#arm-range')
-      .val(friendo.getStat(STATS.ARM))
-    $('#arm-num')
-      .html(friendo.getStat(STATS.ARM))
-
-    $('#sight-range')
-      .val(friendo.getStat(STATS.SIGHT))
-    $('#sight-num')
-      .html(friendo.getStat(STATS.SIGHT))
-
-    $('#hair-range')
-      .val(friendo.getStat(STATS.HAIR))
-    $('#hair-num')
-      .html(friendo.getStat(STATS.HAIR))
-
-    $('#taste-range')
-      .val(friendo.getStat(STATS.TASTE))
-    $('#taste-num')
-      .html(friendo.getStat(STATS.TASTE))
-
-    $('#dog-range')
-      .val(friendo.getStat(STATS.DOG))
-    $('#dog-num')
-      .html(friendo.getStat(STATS.DOG))
-
-    $('#meme-range')
-      .val(friendo.getStat(STATS.MEME))
-    $('#meme-num')
-      .html(friendo.getStat(STATS.MEME))
-
-    $('#egg-range')
-      .val(friendo.getStat(STATS.EGG))
-    $('#egg-num')
-      .html(friendo.getStat(STATS.EGG))
-
-    /**
-     * Zodiac sign and birthday-picker
-     */
-    $('#zodiac-display')
-      .html(friendo.zodiac.symbol)
-      .popover({ content: `${friendo.zodiac.getAge()} old - born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`, trigger: 'hover' })
-    // highlight if birthday
-    if (friendo.zodiac.isBirthday()) {
-      $('#zodiac-display').css('border-radius', '25px').css('border', '4px dotted gold')
-    }
-
-    $('#birthday-calendar')
-      .change(function setBirthday() {
-        friendo.zodiac = getZodiac(this.value)
-        // update zodiac display
-        $('#zodiac-display').html(friendo.zodiac.symbol)
-        $('#zodiac-display').data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
-
-        save(JSON.stringify(friendo))
-      })
-
-    // set names and element to defaults regardless of saved data
-    $('#owner-name')
-      .val(friendo.owner)
-    $('#friendo-name')
-      .val(friendo.name)
-    $(`#type-picker input[type=radio][value='${friendo.element.toString()}']`)
-      .prop('checked', true)
-
-    // configure speaking and blinking rates
-    $('#blink-rate')
-      .val(friendo.state.blinkRate)
-      .on({
-        input() {
-          $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
-        },
-        change() {
-          $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
-          friendo.state.blinkRate = this.value
+/**
+ * Friendo and owner name input listeners
+ */
+const nameInputListeners = (friendo) => {
+  ['name', 'parent'].forEach((s) => {
+    $(`#${s}-input`)
+      .focusout(function setFriendoName() {
+        const content = this.value.trim()
+        if (content && content !== friendo[s]) {
+          friendo[s] = content
           save(JSON.stringify(friendo))
-        },
+        }
       })
-    $('#blink-rate-indicator').html(`${friendo.state.blinkRate}/${TOTAL_EVENT_CHANCE}`)
-
-    $('#speak-rate')
-      .val(friendo.state.speakRate)
-      .on({
-        input() {
-          $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
-        },
-        change() {
-          $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
-          friendo.state.speakRate = this.value
-          save(JSON.stringify(friendo))
-        },
+      .on('keypress', function setFriendoNameE(e) {
+        if (e.which === 13) {
+          const content = this.value.trim()
+          if (content && content !== friendo[s]) {
+            friendo[s] = content
+            save(JSON.stringify(friendo))
+          }
+        }
       })
-    $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
+  })
+}
 
-
-    /**
-     * State toggler listeners
-     */
-    $('#state-picker input[type=radio]')
+/**
+ * Element-picker
+ */
+const typeSelectorListeners = (friendo) => {
+  $('#type-picker input[type=radio]')
     // Note: changing this to an arrow function leads to the 'this'
     // in it being undefined
-      .change(function setState() {
-        friendo.handleAction(this.value)
+    .change(function setElement() {
+      friendo.setElement(this.value)
+      $('#zodiac-display').css('border-color', friendo.element.strokeStyle)
+      save(JSON.stringify(friendo))
+    })
+
+  $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
+}
+
+/**
+ * Birthday and zodiac sign controllers
+ */
+const birthdayListeners = (friendo) => {
+  $('#zodiac-display')
+    .css('border-color', friendo.element.strokeStyle)
+    .attr('src', `img/emoji/${friendo.zodiac.symbol}.png`)
+    .popover({ content: '???', trigger: 'hover' })
+
+  $('#birthday-calendar')
+    .change(function setBirthday() {
+      // UI element counts days from 0?????? 1 must be added
+      const date = new Date(this.value)
+      date.setDate(date.getDate() + 1)
+      friendo.setBirthday(date)
+      save(JSON.stringify(friendo))
+
+      // separately set content so that the popover will be updated every time this function
+      if (friendo.zodiac.sign !== 'Egg') {
+        $('#zodiac-display')
+          .attr('src', `img/emoji/${friendo.zodiac.symbol}.png`)
+          .data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+
+        // determine if birthday and show it
+        if (friendo.zodiac.isBirthday()) {
+          $('#zodiac-display')
+            .addClass('z-birthday')
+        }
+      }
+    })
+
+  // separately set content so that the popover will be updated every time this function
+  if (friendo.zodiac.sign !== 'Egg') {
+    $('#zodiac-display')
+      .css('border-color', friendo.element.strokeStyle)
+      .data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+    // determine if birthday and show it
+    if (friendo.zodiac.isBirthday()) {
+      $('#zodiac-display')
+        .addClass('z-birthday')
+    }
+  }
+}
+
+/**
+ * Listeners that affect blink and speech rate
+ */
+const rateListeners = (friendo) => {
+  $('#blink-rate')
+    .on({
+      input() {
+        $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+      },
+      change() {
+        $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+        friendo.state.blinkRate = this.value
         save(JSON.stringify(friendo))
-      })
-    // load state
-    $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
+      },
+    })
 
 
-    // draw game to the screen at some interval
+  $('#speak-rate')
+    .on({
+      input() {
+        $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+      },
+      change() {
+        $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
+        friendo.state.speakRate = this.value
+        save(JSON.stringify(friendo))
+      },
+    })
+}
+
+/**
+ * Listeners for the state toggler
+ * Note: changing this to an arrow function leads to the 'this' in it being undefined
+ */
+const stateListeners = (friendo) => {
+  $('#state-picker input[type=radio]')
+
+    .change(function setState() {
+      friendo.setState(this.value)
+      save(JSON.stringify(friendo))
+    })
+}
+
+/**
+ * Initializes all UI elements
+ */
+const initialize = (friendo) => {
+  // level and stat displays
+  $('#level-display').html(` ${friendo.level}`)
+  STAT_LIST.forEach((s) => {
+    $(`#${s}-range`).val(friendo.getStat(STATS[s.toUpperCase()]))
+    $(`#${s}-num`).html(friendo.getStat(STATS[s.toUpperCase()]))
+  })
+
+  $('#parent-input').val(friendo.owner)
+  $('#name-input').val(friendo.name)
+
+  $(`#type-picker input[type=radio][value='${friendo.element.toString()}']`)
+    .prop('checked', true)
+
+  $('#blink-rate').val(friendo.state.blinkRate)
+  $('#speak-rate').val(friendo.state.speakRate)
+  $('#blink-rate-indicator').html(`${friendo.state.blinkRate}/${TOTAL_EVENT_CHANCE}`)
+  $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
+
+  $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
+}
+
+$(document)
+  .ready(() => {
+    // load last state of debug page
+    let friendo
+
+    // load the game
+    const savegame = load()
+    if (!savegame) friendo = new Friendo()
+    else friendo = new Friendo(savegame)
+
+    const canvas = document.getElementById('canvas')
+    const context = canvas.getContext('2d')
     setInterval(() => {
       context.save() // save and restore context to prevent colors from getting donged up
       context.clearRect(0, 0, canvas.width, canvas.height)
       friendo.draw(canvas, context)
       context.restore()
     }, TICKRATE)
+
+    // set up correct listeners
+    statSliderListeners(friendo)
+    nameInputListeners(friendo)
+    typeSelectorListeners(friendo)
+    birthdayListeners(friendo)
+    rateListeners(friendo)
+    stateListeners(friendo)
+
+    // initialize the UI
+    initialize(friendo)
   })

@@ -14,7 +14,7 @@ mixin stateSetterGroup(s, btnType)
         'sleep',
         'pet',
         'feed',
-        'egg',
+        'baby',
     ]
 
     var exercises = [
@@ -26,12 +26,14 @@ mixin stateSetterGroup(s, btnType)
         'taste',
         'dog',
         'meme',
-        'incubate'
+        'egg'
     ]
 
 #state-picker.border.m-1
     .p-1
         h6 State:
         .btn-toolbar.d-flex.flex-column(data-toggle='buttons' role='toolbar')
+            | Idle:
             +stateSetterGroup(states, 'info')
+            | Exercise:
             +stateSetterGroup(exercises, 'success')

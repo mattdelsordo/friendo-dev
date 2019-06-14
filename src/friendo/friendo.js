@@ -279,7 +279,16 @@ export default class Friendo {
     this.setStat(STATS.TASTE, 1)
     this.setStat(STATS.MEME, 1)
     this.setState(idleID)
-    this.zodiac = getZodiac()
+    this.setBirthday() // get new birthday
+  }
+
+  // set new birthday
+  setBirthday(date) {
+    if (date) {
+      this.zodiac = getZodiac(date)
+    } else {
+      this.zodiac = getZodiac()
+    }
   }
 
   /**
