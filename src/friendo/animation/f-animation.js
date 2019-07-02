@@ -69,7 +69,8 @@ export default class FAnimation {
     return list[selected]
   }
 
-  draw(g, x, y, friendo) {
+  // prerequisite setup for the draw method
+  predraw(g, x, y, friendo) {
     /**
      *  I know this is terrible practice but sorry yes my draw method has side effects
      */
@@ -95,6 +96,10 @@ export default class FAnimation {
     }
 
     friendo.element.setColors(g)
+  }
+
+  draw(g, x, y, friendo) {
+    this.predraw(g, x, y, friendo)
 
     // only update the frame if the delay has elapsed
     this.tickCounter = (this.tickCounter + 1) % this.frameDelay
