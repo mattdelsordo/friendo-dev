@@ -384,9 +384,7 @@ export default class Element {
   }
 
   // positions speech and handles speaking when in a speaking state
-  speak(g, x, y, friendo) {
-    if (friendo.state.speak) {
-      drawSpeech(g, x, y, friendo.state.words)
-    }
+  speak(g, x, y, words) {
+    drawSpeech(g, x, y, words)
   }
 }
