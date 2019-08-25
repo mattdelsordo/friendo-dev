@@ -126,7 +126,7 @@ export default class Element {
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 3) threeLens(g, x, y)
+      if (friendo.state.anim.glasses && friendo.getStatStage(STATS.SIGHT) < 4) threeLens(g, x, y)
     } else if (friendo.getStatStage(STATS.SIGHT) > 1) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
@@ -134,13 +134,13 @@ export default class Element {
       this.drawEye(g, x + 8, y, doBlink, friendo.state.anim.isSmiling)
 
       // handle glasses
-      if (friendo.state.glasses) twoLens(g, x, y)
+      if (friendo.state.anim.glasses) twoLens(g, x, y)
     } else {
       // default = 1 eye
       this.drawEye(g, x, y, doBlink, friendo.state.anim.isSmiling)
 
       // handle glasses
-      if (friendo.state.glasses) oneLens(g, x, y)
+      if (friendo.state.anim.glasses) oneLens(g, x, y)
     }
 
     drawHookMarker(g, x, y)
