@@ -3,24 +3,19 @@
  * TECHNICALLY this is an exercise but it shares more code with the egg class
  */
 
-import Egg from '../idle/egg'
-import lamp from '../../art/props/lamp'
+import AIncubate from '../../animation/incubate'
 import { ACTIONS } from '../../constants'
+import Exercise from './exercise'
+import { ID as eggID } from '../idle/egg'
 
 export const ID = ACTIONS.EGG
 
-export default class Incubate extends Egg {
+export default class Incubate extends Exercise {
   constructor(savedState) {
     super(savedState)
     this.id = ID
-  }
 
-  draw(g, x, y, friendo) {
-    // draw egg and return tethers, etc.
-    const s = super.draw(g, x, y, friendo)
-
-    lamp(g, x, y)
-
-    return s
+    this.returnTo = eggID
+    this.anim = new AIncubate(savedState, () => [''])
   }
 }
