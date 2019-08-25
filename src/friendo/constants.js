@@ -69,7 +69,7 @@ export const STAT_STAGES = {
   [STATS.TASTE]: [1],
   [STATS.DOG]: [1, 20, 40, 65, 90],
   [STATS.MEME]: [1],
-  [STATS.EGG]: [1, 2, 3, 4],
+  [STATS.EGG]: [1, 10, 20, 30],
 }
 
 // array of stats to actually include in level calculations
