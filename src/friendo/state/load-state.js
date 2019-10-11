@@ -2,80 +2,81 @@
  * Factory method to properly load a state from json
  */
 
-import Idle, { ID as idleID } from './idle/idle'
-import Sleep, { ID as sleepID } from './fitness/sleep'
-import Pet, { ID as petID } from './fitness/pet'
-import Core, { ID as coreID } from './fitness/situp'
-import Leg, { ID as legID } from './fitness/squat'
-import Arm, { ID as armID } from './fitness/curl'
-import Sight, { ID as sightID } from './fitness/read'
-import Hair, { ID as hairID } from './fitness/groom'
-import Feed, { ID as feedID } from './fitness/feed'
-import Taste, { ID as tasteID } from './fitness/munch'
-import Dog, { ID as dogID } from './fitness/dog-cuddle'
-import Meme, { ID as memeID } from './fitness/surf-web'
-import Egg, { ID as eggID } from './idle/egg'
-import Incubate, { ID as incubateID } from './fitness/incubate'
+import Idle from './idle/idle'
+import Sleep from './relax/sleep'
+import Pet from './relax/pet'
+import Core from './exert/situp'
+import Leg from './exert/squat'
+import Arm from './exert/curl'
+import Sight from './exert/read'
+import Hair from './exert/groom'
+import Feed from './relax/feed'
+import Taste from './exert/munch'
+import Dog from './exert/dog-cuddle'
+import Meme from './exert/surf-web'
+import Egg from './idle/egg'
+import Incubate from './exert/incubate'
+import { STATES } from '../constants'
 
-export default (savedState, id) => {
+export default (savedState, id, reps) => {
   switch (id) {
-    case idleID:
+    case STATES.IDLE:
       /* eslint-disable-next-line no-console */
       console.log('Loading idle state')
-      return new Idle(savedState)
-    case sleepID:
+      return new Idle(savedState, reps)
+    case STATES.SLEEP:
       /* eslint-disable-next-line no-console */
       console.log('Loading sleep state')
-      return new Sleep(savedState)
-    case petID:
+      return new Sleep(savedState, reps)
+    case STATES.PET:
       /* eslint-disable-next-line no-console */
       console.log('Loading pet state')
-      return new Pet(savedState)
-    case feedID:
+      return new Pet(savedState, reps)
+    case STATES.FEED:
       /* eslint-disable-next-line no-console */
       console.log('Loading feeding state')
-      return new Feed(savedState)
+      return new Feed(savedState, reps)
 
-    case coreID:
+    case STATES.CORE:
       /* eslint-disable-next-line no-console */
       console.log('Loading core training state')
-      return new Core(savedState)
-    case legID:
+      return new Core(savedState, reps)
+    case STATES.LEG:
       /* eslint-disable-next-line no-console */
       console.log('Loading leg training state')
-      return new Leg(savedState)
-    case armID:
+      return new Leg(savedState, reps)
+    case STATES.ARM:
       /* eslint-disable-next-line no-console */
       console.log('Loading arm training state')
-      return new Arm(savedState)
-    case sightID:
+      return new Arm(savedState, reps)
+    case STATES.SIGHT:
       /* eslint-disable-next-line no-console */
       console.log('Loading sight training state')
-      return new Sight(savedState)
-    case hairID:
+      return new Sight(savedState, reps)
+    case STATES.HAIR:
       /* eslint-disable-next-line no-console */
       console.log('Loading hair training state')
-      return new Hair(savedState)
-    case tasteID:
+      return new Hair(savedState, reps)
+    case STATES.TASTE:
       /* eslint-disable-next-line no-console */
       console.log('Loading taste training state')
-      return new Taste(savedState)
-    case dogID:
+      return new Taste(savedState, reps)
+    case STATES.DOG:
       /* eslint-disable-next-line no-console */
       console.log('Loading dog training state')
-      return new Dog(savedState)
-    case memeID:
+      return new Dog(savedState, reps)
+    case STATES.MEME:
       /* eslint-disable-next-line no-console */
       console.log('Loading meme training state')
-      return new Meme(savedState)
-    case eggID:
+      return new Meme(savedState, reps)
+    case STATES.BABY:
       /* eslint-disable-next-line no-console */
       console.log('Loading egg state')
-      return new Egg(savedState)
-    case incubateID:
+      return new Egg(savedState, reps)
+    case STATES.EGG:
       /* eslint-disable-next-line no-console */
       console.log('Loading incubation state')
-      return new Incubate(savedState)
+      return new Incubate(savedState, reps)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }

@@ -3,7 +3,7 @@
  */
 
 import $ from 'jquery'
-import { save } from '../game-util'
+import { saveFriendo } from '../game-util'
 import {
   EMPTY_STAR,
   FULL_STAR,
@@ -216,11 +216,15 @@ export const disableButtons = () => {
 
 // checks whether or not a new stat has been unlocked and
 // updates the UI accordingly
-const updateStatVisibility = (friendo) => {
-  Object.values(STATS).forEach((s) => {
-    if (friendo.getStat(s) >= 1) $(`#${s}-bar`).css('visibility', 'visible')
-  })
+const updateStatVisibility = (friendo, stat) => {
+  if (friendo.getStat(stat) >= 1) $(`#${stat}-bar`).css('visibility', 'visible')
 }
+// // not useful now, may be useful later
+// const updateAllStatVisibility = (friendo) => {
+//   Object.values(STATS).forEach((s) => {
+//     updateStatVisibility(friendo, s)
+//   })
+// }
 
 const hideEggDisplay = (friendo) => {
   // show hidden content
@@ -230,41 +234,50 @@ const hideEggDisplay = (friendo) => {
   setAllStats(friendo)
 }
 
-// generalized action peforming routine for the buttons
+// update these elements every lifetime tick
+export const onHeartbeat = (friendo, stat, updatebar = true) => {
+  // update energy bar
+  setEnergy(friendo.getEnergyPercent())
+
+  // we need to be able to untoggle this to prevent breaking the
+  // progress bar animation
+  if (stat && updatebar) {
+    // update stat displays
+    setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+  }
+
+  // update level
+  setLevel(friendo.level)
+}
+
+// do this once some task is completed
+export const onNonIdleComplete = (friendo, stat) => {
+  onHeartbeat(friendo, stat, false)
+  enableButtons()
+}
+
+// stuff to update when the friendo hatches!
+export const onHatch = (friendo) => {
+  setZodiac(friendo.zodiac, friendo.element.strokeStyle)
+  hideEggDisplay(friendo)
+}
+
+// stuff to do when friendo changes state
+export const onStateChange = (friendo) => {
+  saveFriendo(friendo)
+}
+
+// makes a previously invisible stat field visible
+export const onStatUnlocked = (friendo, stat) => {
+  setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+  updateStatVisibility(friendo, stat)
+}
+
+// send message to friendo to change state
+// if the friendo can transition (returns true),
+// disable buttons (friendo will already have changed state)
 export const performAction = (friendo, action, reps = 1) => {
-  disableButtons()
-  friendo.startExercise(
-    action,
-    reps,
-    // function to call on every rep
-    (f, updatebar = true) => {
-      // save
-      save(JSON.stringify(f))
-      // update energy bar
-      setEnergy(f.getEnergyPercent())
-      // check to see if any stat can be made visible
-      updateStatVisibility(f)
-
-      // we need to be able to untoggle this to prevent breaking the
-      // progress bar animation
-      if (updatebar) {
-        // update stat displays
-        const stat = action.split('_')[1] || ''
-        setStat(stat, f.getExpPercent(stat), f.getStat(stat), f.getStatStage(stat))
-      }
-
-      // update level
-      setLevel(friendo.level)
-    },
-    // function to call at end
-    () => {
-      enableButtons()
-
-      // check whether incubation tutorial is over
-      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        setZodiac(friendo.zodiac, friendo.element.strokeStyle)
-        hideEggDisplay(friendo)
-      }
-    },
-  )
+  if (friendo.handleAction(action, reps)) {
+    disableButtons()
+  }
 }

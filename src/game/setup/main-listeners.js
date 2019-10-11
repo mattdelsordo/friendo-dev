@@ -3,20 +3,18 @@
  */
 
 import $ from 'jquery'
-import { STATS } from '../../friendo/constants'
-import { ID as petID } from '../../friendo/state/fitness/pet'
-import { ID as feedID } from '../../friendo/state/fitness/feed'
+import { STATS, STATES } from '../../friendo/constants'
 import { performAction } from './ui-update'
 
 export default (friendo) => {
   // pet button
   $('#pet-button').click(() => {
-    performAction(friendo, petID)
+    performAction(friendo, STATES.PET)
   })
 
   // feed button
   $('#feed-button').click(() => {
-    performAction(friendo, feedID)
+    performAction(friendo, STATES.FEED)
   })
 
   // training buttons

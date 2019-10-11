@@ -1,25 +1,33 @@
 import phrasebook from '../phrases/idle-phrases'
 import FAnimation from '../animation/f-animation'
+import { STATES } from '../constants'
 
 /**
  *  defines the animation to be done in a given state
  */
 
-export const ID = 'state_default'
-
 export default class State {
-  constructor(oldState) {
+  constructor(oldState, initialReps) {
     if (!oldState) oldState = {}
-    this.id = oldState.id || ID
+    this.id = oldState.id || 'state default'
 
     // helps store how much longer to remain in this state
-    this.reps = oldState.reps || 0
+    // currently 1 rep == 1 second
+    this.reps = initialReps || oldState.reps
+
+    // exp added to a stat's total on a rep
+    this.expReward = 0
+    this.stat = null
+
+    // modifier on fatigue when existing in this state
+    this.fatigueCost = 0
 
     // set animation
     this.anim = new FAnimation(oldState.anim, phrasebook)
 
-    // keep track of the state this should default back to
-    this.returnTo = this.id
+    // override to transition to something OTHER than idle
+    // e.g. for incubate
+    this.idleState = STATES.IDLE
   }
 
   toJSON() {
@@ -30,10 +38,53 @@ export default class State {
     }
   }
 
-  setReps(reps) { this.reps = reps }
   getReps() { return this.reps }
 
+  // handle transitions to a new state given input of a state ID
+  // returns true if the transition was a success
+  handleAction() {
+    return false
+  }
+
+  // draws a single frame of this state's associated animation
   draw(g, x, y, friendo) {
     this.anim.draw(g, x, y, friendo)
+  }
+
+  // conditions to return to Idle and Sleep respectively
+  // base check is just for whether
+  _doTransitionToIdle() {
+    return false
+  }
+  _doTransitionToSleep() {
+    return false
+  }
+
+  // behavior associated with a single rep of an exercise, a single "tick" of a state
+  doRep(friendo) {
+    // reduce reps to time the amount of time in the state
+    if (this.reps >= 0) {
+      this.reps -= 1
+    }
+
+    // if exercising, reward exp
+    if (this.stat !== null) {
+      friendo.addExp(this.stat, this.expReward)
+    }
+
+    // modify friendo fatigue
+    friendo.modifyFatigue(this.fatigueCost)
+
+    // console.log(`reps: ${this.reps}, state: ${this.id}, energy: ${friendo.getNetEnergy()},
+    //   stat exp: ${friendo.getExp(this.stat)}, stat level: ${friendo.getStat(this.stat)}`)
+
+    // check for exhaustion condition, transition to sleep if satisfied
+    if (this._doTransitionToSleep(friendo)) {
+      friendo.setState(STATES.SLEEP)
+    }
+    // check for the completion of the state timer
+    if (this._doTransitionToIdle(friendo)) {
+      friendo.setState(this.idleState)
+    }
   }
 }

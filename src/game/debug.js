@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import Tether from 'tether'
 
-import { save, load } from './game-util'
+import { saveFriendo, loadFriendoJSON } from './game-util'
 import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
 import Friendo from '../friendo/friendo'
 // import { toggleHookMarkers } from '../friendo/art/art-util'
-import { TICKRATE } from './game-config'
+import { FRAMERATE } from './game-config'
 
 /**
  * Contains code to interface the user display with the friendo code.
@@ -42,7 +42,7 @@ const statSliderListeners = (friendo) => {
       change() {
         // when user stops interacting, save and update all stats
         friendo.setStat(STATS[stat.toUpperCase()], this.value)
-        save(JSON.stringify(friendo))
+        saveFriendo(friendo)
 
         STAT_LIST.forEach((s) => {
           $(`#${s}-range`).val(friendo.getStat(STATS[s.toUpperCase()]))
@@ -74,7 +74,7 @@ const nameInputListeners = (friendo) => {
         const content = this.value.trim()
         if (content && content !== friendo[s]) {
           friendo[s] = content
-          save(JSON.stringify(friendo))
+          saveFriendo(friendo)
         }
       })
       .on('keypress', function setFriendoNameE(e) {
@@ -82,7 +82,7 @@ const nameInputListeners = (friendo) => {
           const content = this.value.trim()
           if (content && content !== friendo[s]) {
             friendo[s] = content
-            save(JSON.stringify(friendo))
+            saveFriendo(friendo)
           }
         }
       })
@@ -99,7 +99,7 @@ const typeSelectorListeners = (friendo) => {
     .change(function setElement() {
       friendo.setElement(this.value)
       $('#zodiac-display').css('border-color', friendo.element.strokeStyle)
-      save(JSON.stringify(friendo))
+      saveFriendo(friendo)
     })
 
   $(`#type-picker label[for*=${friendo.element.id}]`).addClass('active')
@@ -120,7 +120,7 @@ const birthdayListeners = (friendo) => {
       const date = new Date(this.value)
       date.setDate(date.getDate() + 1)
       friendo.setBirthday(date)
-      save(JSON.stringify(friendo))
+      saveFriendo(friendo)
 
       // separately set content so that the popover will be updated every time this function
       if (friendo.zodiac.sign !== 'Egg') {
@@ -161,7 +161,7 @@ const rateListeners = (friendo) => {
       change() {
         $('#blink-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
         friendo.state.blinkRate = this.value
-        save(JSON.stringify(friendo))
+        saveFriendo(friendo)
       },
     })
 
@@ -174,7 +174,7 @@ const rateListeners = (friendo) => {
       change() {
         $('#speak-rate-indicator').html(`${this.value}/${TOTAL_EVENT_CHANCE}`)
         friendo.state.speakRate = this.value
-        save(JSON.stringify(friendo))
+        saveFriendo(friendo)
       },
     })
 }
@@ -187,8 +187,8 @@ const stateListeners = (friendo) => {
   $('#state-picker input[type=radio]')
 
     .change(function setState() {
-      friendo.setState(this.value)
-      save(JSON.stringify(friendo))
+      friendo.setState(this.value, -1)
+      saveFriendo(friendo)
     })
 }
 
@@ -223,7 +223,7 @@ $(document)
     let friendo
 
     // load the game
-    const savegame = load()
+    const savegame = loadFriendoJSON()
     if (!savegame) friendo = new Friendo()
     else friendo = new Friendo(savegame)
 
@@ -234,7 +234,7 @@ $(document)
       context.clearRect(0, 0, canvas.width, canvas.height)
       friendo.draw(canvas, context)
       context.restore()
-    }, TICKRATE)
+    }, FRAMERATE)
 
     // set up correct listeners
     statSliderListeners(friendo)

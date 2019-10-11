@@ -18,7 +18,10 @@ import {
   STAT_MAX,
   ENERGY_PER_LEVEL,
   STAT_STAGES,
-  getExpCurve, MEME_EXP_MODIFIER, TASTE_ENERGY_MODIFIER,
+  getExpCurve,
+  MEME_EXP_MODIFIER,
+  TASTE_ENERGY_MODIFIER,
+  STATES,
 } from './constants'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
@@ -37,8 +40,6 @@ import {
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
 } from './default'
-import { exercise } from './actions'
-import { ID as idleID } from './state/idle/idle'
 
 export default class Friendo {
   // helper method to create a friendo based on character creation
@@ -69,7 +70,21 @@ export default class Friendo {
     this.initializeStatStages()
     this.updateLevel()
     this.element.computeAnchors(this)
+
+    // establish UI listener fields
+    this.onHeartbeat = () => {}
+    this.onNonIdleComplete = () => {}
+    this.onHatch = () => {}
+    this.onStateChange = () => {}
+    this.onStatUnlocked = () => {}
   }
+
+  // UI listener setters
+  setOnHeartbeat(ohb) { this.onHeartbeat = ohb }
+  setOnNonIdleComplete(ot) { this.onNonIdleComplete = ot }
+  setOnHatch(oh) { this.onHatch = oh }
+  setOnStateChange(osc) { this.onStateChange = osc }
+  setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
 
   // converts ya boi to a JSON string
   toJSON() {
@@ -82,6 +97,7 @@ export default class Friendo {
       zodiac: this.zodiac,
       fatigue: this.fatigue,
       exp: this.exp,
+      savedAt: new Date(), // not sure if this is operation is too expensive
     }
   }
 
@@ -152,10 +168,22 @@ export default class Friendo {
     this.maxEnergy = this.computeMaxEnergy()
 
     // check to see if any stats are unlocked
-    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) this.setStat(STATS.LEG, 1)
-    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) this.setStat(STATS.ARM, 1)
-    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) this.setStat(STATS.HAIR, 1)
-    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) this.setStat(STATS.DOG, 1)
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) {
+      this.setStat(STATS.LEG, 1)
+      this.onStatUnlocked(this, STATS.LEG)
+    }
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) {
+      this.setStat(STATS.ARM, 1)
+      this.onStatUnlocked(this, STATS.ARM)
+    }
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) {
+      this.setStat(STATS.HAIR, 1)
+      this.onStatUnlocked(this, STATS.HAIR)
+    }
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) {
+      this.setStat(STATS.DOG, 1)
+      this.onStatUnlocked(this, STATS.DOG)
+    }
   }
 
   // sets the value of a stat
@@ -180,9 +208,15 @@ export default class Friendo {
     return 0
   }
 
+  // raw number of energy the friendo has remaining
+  getNetEnergy() {
+    return this.maxEnergy - this.fatigue
+  }
+
   // returns percentage of energy the friendo currently has
+  // !! as a decimal value !!
   getEnergyPercent() {
-    return (this.maxEnergy - this.fatigue) / this.maxEnergy
+    return this.getNetEnergy() / this.maxEnergy
   }
 
   // exp multiplier based off taste level
@@ -267,8 +301,16 @@ export default class Friendo {
     this.state.draw(context, x, y, this)
   }
 
-  setState(id) {
-    this.state = loadState(this.state, id)
+  setState(id, reps) {
+    // if the new state is idle or egg, call transition listener
+    if (id === STATES.IDLE || id === STATES.BABY) {
+      this.onNonIdleComplete(this, this.state.stat)
+    }
+
+    // actually swtich the state
+    this.state = loadState(this.state, id, reps)
+
+    this.onStateChange(this)
   }
 
   // performs behaviors associated with hatching the egg and
@@ -278,8 +320,10 @@ export default class Friendo {
     this.setStat(STATS.SIGHT, 1)
     this.setStat(STATS.TASTE, 1)
     this.setStat(STATS.MEME, 1)
-    this.setState(idleID)
+    this.setState(STATES.IDLE)
     this.setBirthday() // get new birthday
+
+    this.onHatch(this)
   }
 
   // set new birthday
@@ -291,31 +335,15 @@ export default class Friendo {
     }
   }
 
-  /**
-   * Changes state and begins a new exercise routine
-   * @param action - id of state/exercise to do
-   * @param reps - # of reps to do
-   * @param everyRep - function to execute on every rep (save, update UI)
-   * @param end - function to call once complete (updateUI)
-   */
-  startExercise(action, reps = 1, everyRep, end) {
-    // change state and then save
-    this.setState(action)
-    this.state.setReps(reps)
-    everyRep(this)
+  // perform one rep
+  heartbeat() {
+    this.state.doRep(this)
+    this.onHeartbeat(this, this.state.stat)
+  }
 
-    // start exercise at (reps-1) because the way they're set up
-    // the 0th rep gets performed
-    exercise(this, action, reps - 1, everyRep, () => {
-      // if egg is maxed out, enable starting levels set state to idle
-      if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        this.hatch()
-      } else {
-        // reset state and then save
-        this.setState(this.state.returnTo)
-      }
-      everyRep(this, false)
-      end()
-    })
+  // handle messages directed at the friendo
+  handleAction(action, reps) {
+    const actionSucceeded = this.state.handleAction(this, action, reps)
+    return actionSucceeded
   }
 }

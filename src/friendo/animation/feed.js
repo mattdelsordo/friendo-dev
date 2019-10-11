@@ -8,6 +8,8 @@ export default class AFeed extends FAnimation {
     this.frameDelay = 1
     this.frames = [
       this.frame1.bind(this),
+      this.frame1.bind(this),
+      this.frame1.bind(this),
       this.frame2.bind(this),
       this.frame3.bind(this),
       this.frame4.bind(this),
