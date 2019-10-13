@@ -18,6 +18,7 @@ export default (friendo) => {
   })
 
   // training buttons
+  /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((v) => {
     $(`#start-${v}`).click(() => {
       const reps = $(`#${v}-trainamnt`).val()

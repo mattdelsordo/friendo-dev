@@ -125,6 +125,7 @@ export const setStat = (stat, exp, lvl, stage) => {
   $(`#${stat}-prog`).data('lastVal', percent)
 }
 export const setAllStats = (friendo) => {
+  /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     setStat(s, friendo.getExpPercent(s), friendo.getStat(s), friendo.getStatStage(s))
   })
@@ -202,6 +203,7 @@ export const initialize = (friendo) => {
 export const enableButtons = () => {
   $('#pet-button').prop('disabled', '')
   $('#feed-button').prop('disabled', '')
+  /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     $(`#start-${s}`).prop('disabled', '')
   })
@@ -209,6 +211,7 @@ export const enableButtons = () => {
 export const disableButtons = () => {
   $('#pet-button').prop('disabled', 'disabled')
   $('#feed-button').prop('disabled', 'disabled')
+  /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     $(`#start-${s}`).prop('disabled', 'disabled')
   })
