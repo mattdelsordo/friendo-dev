@@ -27,17 +27,16 @@ export const TOTAL_EVENT_CHANCE = 100
 export const BLINK_CHANCE = 5
 export const SPEAK_CHANCE = 5
 
-// default rep length in MS - related to value in UI
-export const REP_LENGTH = 5000 // 5 seconds
-export const FEED_REP_LENGTH = 2750
-export const PET_REP_LENGTH = 2000
-
 // energy costs
-export const EXERCISE_COST = -10
-export const FOOD_COST = 4
-export const PET_COST = 2
-export const SLEEP_COST = 1
-export const EGG_COST = 0
+export const ENERGY_COST_EXERT = -10
+export const ENERGY_COST_FOOD = 10
+export const ENERGY_COST_PET = 0.5
+export const ENERGY_COST_SLEEP = 20
+export const ENERGY_COST_EGG = 0
+export const ENERGY_COST_IDLE = -0.25
+
+// exp reward
+export const BASE_EXP_REWARD = 1
 
 // amount of energy a friendo gains per level
 export const ENERGY_PER_LEVEL = 10
@@ -85,7 +84,7 @@ export const LVL_CALC_WHITELIST = [
 ]
 
 // 'enum' of potential actions
-export const ACTIONS = Object.freeze({
+export const STATES = Object.freeze({
   CORE: `state_${STATS.CORE}`,
   LEG: `state_${STATS.LEG}`,
   ARM: `state_${STATS.ARM}`,
@@ -98,6 +97,8 @@ export const ACTIONS = Object.freeze({
   SLEEP: 'state_sleep',
   PET: 'state_pet',
   FEED: 'state_feed',
+  IDLE: 'state_idle',
+  BABY: 'state_baby',
 })
 
 // maximum total level

@@ -23,7 +23,7 @@ export default class FAnimation {
     this.speakRate = old.speakRate || SPEAK_CHANCE
     this.blink = old.blink || 0
     this.speak = old.speak || 0
-    this.frame = old.frame || 0
+    this.frame = 0
     this.tickCounter = old.frame || 0
     this.words = old.words || ''
 
