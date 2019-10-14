@@ -4,7 +4,7 @@
 
 import State from '../state'
 import phrasebook from '../../phrases/fitness-phrases'
-import { BASE_EXP_REWARD, ENERGY_COST_EXERT, STAT_MAX } from '../../constants'
+import { BASE_EXP_REWARD, BELLY_COST_EXERT, ENERGY_COST_EXERT, STAT_MAX } from '../../balance'
 
 export default class Exert extends State {
   constructor(savedState, reps) {
@@ -16,6 +16,7 @@ export default class Exert extends State {
     this.stat = 'error'
     this.expReward = BASE_EXP_REWARD
     this.fatigueCost = ENERGY_COST_EXERT
+    this.hungerCost = BELLY_COST_EXERT
   }
 
   _doTransitionToIdle(friendo) {

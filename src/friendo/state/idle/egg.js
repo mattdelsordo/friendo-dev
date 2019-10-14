@@ -5,7 +5,8 @@
 
 import State from '../state'
 import AEgg from '../../animation/egg'
-import { MAX_EGG_LEVEL, STATS, STATES, ENERGY_COST_EGG } from '../../constants'
+import { STATS, STATES } from '../../constants'
+import { MAX_EGG_LEVEL, ENERGY_COST_EGG, BELLY_COST_EGG } from '../../balance'
 
 export default class Egg extends State {
   constructor(savedState) {
@@ -13,6 +14,7 @@ export default class Egg extends State {
     super(savedState)
     this.id = STATES.BABY
     this.fatigueCost = ENERGY_COST_EGG
+    this.hungerCost = BELLY_COST_EGG
 
     // check for "idleness" using this field,
     // not sure how great a polymorphic check would be since
@@ -28,6 +30,11 @@ export default class Egg extends State {
     if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
       friendo.hatch()
     }
+  }
+
+  // egg can't have fatigue
+  _getFatigueCost() {
+    return 0
   }
 
   handleAction(friendo, action, reps) {

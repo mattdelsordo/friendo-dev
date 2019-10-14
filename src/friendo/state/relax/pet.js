@@ -1,4 +1,5 @@
-import { ENERGY_COST_PET, STATES } from '../../constants'
+import { STATES } from '../../constants'
+import { ENERGY_COST_PET } from '../../balance'
 import phrasebook from '../../phrases/idle-phrases'
 import APet from '../../animation/pet'
 import Relax from './relax'

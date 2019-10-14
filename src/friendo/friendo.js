@@ -6,23 +6,30 @@
 /* eslint-disable no-console */
 
 import {
+  LVL_CALC_WHITELIST,
+  MAX_DOGS,
+  STATS,
+  STAT_STAGES,
+  STATES,
+} from './constants'
+import {
   LEG_UNLOCK_LEVEL,
   ARM_UNLOCK_LEVEL,
   HAIR_UNLOCK_LEVEL,
   DOG_UNLOCK_LEVEL,
   LEVEL_MAX,
-  LVL_CALC_WHITELIST,
-  MAX_DOGS,
   MAX_EGG_LEVEL,
-  STATS,
   STAT_MAX,
-  ENERGY_PER_LEVEL,
-  STAT_STAGES,
   getExpCurve,
   MEME_EXP_MODIFIER,
   TASTE_ENERGY_MODIFIER,
-  STATES,
-} from './constants'
+  calcBellyCap,
+  calcMaxEnergy,
+  DEFAULT_LEVEL,
+  DEFAULT_FATIGUE,
+  DEFAULT_MAX_ENERGY,
+  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER,
+} from './balance'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -34,9 +41,6 @@ import {
   DEFAULT_ELEMENT,
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
-  DEFAULT_LEVEL,
-  DEFAULT_FATIGUE,
-  DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
 } from './default'
@@ -60,11 +64,13 @@ export default class Friendo {
     this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
     this.fatigue = fromJSON.fatigue || DEFAULT_FATIGUE
     this.exp = fromJSON.exp || DEFAULT_EXP
+    this.hunger = fromJSON.hunger || DEFAULT_HUNGER
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
     this.level = DEFAULT_LEVEL
     this.maxEnergy = DEFAULT_MAX_ENERGY
+    this.maxBelly = DEFAULT_MAX_BELLY
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()
@@ -96,6 +102,7 @@ export default class Friendo {
       state: this.state,
       zodiac: this.zodiac,
       fatigue: this.fatigue,
+      hunger: this.hunger,
       exp: this.exp,
       savedAt: new Date(), // not sure if this is operation is too expensive
     }
@@ -154,18 +161,18 @@ export default class Friendo {
     return level
   }
 
-  // maxumum energy is the default + 5 per every level past 1
-  computeMaxEnergy() {
-    // disregard level 0-1 in calcs, don't factor lvl in in to calc
-    return DEFAULT_MAX_ENERGY
-      + (this.level > 1 ? ((this.level * ENERGY_PER_LEVEL) - ENERGY_PER_LEVEL) : 0)
+  // stat combination by which maximum belly capacity scales
+  getBellyFactor() {
+    // combination of physical body stats
+    return ((2 * this.getStat(STATS.CORE)) + this.getStat(STATS.ARM) + this.getStat(STATS.LEG)) / 4
   }
 
   // compute level and set it in the friendo
   // also compute energy
   updateLevel() {
     this.level = this.computeLevel()
-    this.maxEnergy = this.computeMaxEnergy()
+    this.maxEnergy = calcMaxEnergy(this.level)
+    this.maxBelly = calcBellyCap(this.getBellyFactor())
 
     // check to see if any stats are unlocked
     if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) {
@@ -219,9 +226,28 @@ export default class Friendo {
     return this.getNetEnergy() / this.maxEnergy
   }
 
+  getNetBelly() {
+    return this.maxBelly - this.hunger
+  }
+
+  getBellyPercent() {
+    return this.getNetBelly() / this.maxBelly
+  }
+
   // exp multiplier based off taste level
   getFoodMultiplier() {
     return 1 + (this.getStat(STATS.TASTE) * TASTE_ENERGY_MODIFIER)
+  }
+
+  // additive multiplier to energy recovery rate, based on hunger
+  getHungerModifier() {
+    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
+      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
+        return HUNGER_MODIFIERS[i].value
+      }
+    }
+
+    return BASE_HUNGER_MODIFIER
   }
 
   /**
@@ -229,11 +255,17 @@ export default class Friendo {
    * @param amnt - amount of fatigue to remove
    * @param feed - whether or not to factor in taste multiplier
    */
-  modifyFatigue(amnt, feed = false) {
+  modifyFatigue(amnt) {
+    if (this.fatigue - amnt >= this.maxEnergy) this.fatigue = this.maxEnergy
+    else if (this.fatigue - amnt <= 0) this.fatigue = 0
+    else this.fatigue = this.fatigue - amnt
+  }
+
+  modifyHunger(amnt, feed = false) {
     const newAmnt = feed ? (amnt * this.getFoodMultiplier()) : amnt
-    if (this.fatigue - newAmnt >= this.maxEnergy) this.fatigue = this.maxEnergy
-    else if (this.fatigue - newAmnt <= 0) this.fatigue = 0
-    else this.fatigue = this.fatigue - newAmnt
+    if (this.hunger - newAmnt >= this.maxBelly) this.hunger = this.maxBelly
+    else if (this.hunger - newAmnt <= 0) this.hunger = 0
+    else this.hunger = this.hunger - newAmnt
   }
 
   // exp multiplier based off meme tolerance

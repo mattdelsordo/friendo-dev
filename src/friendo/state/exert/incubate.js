@@ -4,7 +4,8 @@
  */
 
 import AIncubate from '../../animation/incubate'
-import { MAX_EGG_LEVEL, STATS, STATES, ENERGY_COST_EGG } from '../../constants'
+import { STATS, STATES } from '../../constants'
+import { MAX_EGG_LEVEL, ENERGY_COST_EGG } from '../../balance'
 import Exert from './exert'
 
 export default class Incubate extends Exert {
