@@ -1,6 +1,6 @@
 // utilities used to balance the game
 
-import { LVL_CALC_WHITELIST, STATS } from './constants'
+import { HATCH_DUR, LVL_CALC_WHITELIST, STATS } from './constants'
 
 // energy costs
 export const EXERCISE_COST = -60
@@ -72,9 +72,9 @@ export const BASE_HUNGER_MODIFIER = EXERCISE_COST
 // maximum total level
 export const LEVEL_MAX = (LVL_CALC_WHITELIST.length * 99) + 1
 
-const EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.1) + 3))
-const STEEP_EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.2) + 3))
-const EGG_EXP = Array.from(Array(5), (_, i) => i + 4)
+const EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.8) + 8))
+const STEEP_EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.9) + 6))
+const EGG_EXP = [0, 240, 180, 180, HATCH_DUR]
 
 // returns the exp curve for a given stat
 export const getExpCurve = (stat) => {
