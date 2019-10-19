@@ -30,7 +30,6 @@ export const ENERGY_PER_LEVEL = EXERCISE_COST * -2
 
 // bonuses associated with meme/taste level
 export const MEME_EXP_MODIFIER = 0.03
-export const TASTE_ENERGY_MODIFIER = 0.24
 
 // maximum level in a given element
 export const STAT_MAX = 100

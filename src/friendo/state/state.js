@@ -30,8 +30,6 @@ export default class State {
     // override to transition to something OTHER than idle
     // e.g. for incubate
     this.idleState = STATES.IDLE
-
-    this.feeding = false
   }
 
   toJSON() {
@@ -87,7 +85,7 @@ export default class State {
     }
 
     // modify friendo fatigue and hunger
-    friendo.modifyHunger(this._getHungerCost(friendo), this.feeding)
+    friendo.modifyHunger(this._getHungerCost(friendo))
     friendo.modifyFatigue(this._getFatigueCost(friendo))
 
     // console.log(`reps: ${this.reps}, state: ${this.id}, energy: ${friendo.getNetEnergy()},

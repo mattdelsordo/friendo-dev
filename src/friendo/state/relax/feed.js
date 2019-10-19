@@ -13,7 +13,6 @@ export default class Feed extends Relax {
     this.anim = new AFeed(savedState.anim, phrasebook)
     this.fatigueCost = ENERGY_COST_FOOD
     this.reps = INITIAL_REPS
-    this.feeding = false
   }
 
   _getHungerCost(friendo) {
