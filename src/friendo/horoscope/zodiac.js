@@ -46,6 +46,10 @@ class Zodiac {
     }
     return `${Math.floor(days / 365)} yrs.`
   }
+
+  toString() {
+    return `${this.getAge()} old - born ${this.birthday.toLocaleDateString()} (${this.sign})`
+  }
 }
 
 // default zodiac sign - a birthdayless egg

@@ -30,7 +30,7 @@ export const setZodiac = (zodiac, color = 'black') => {
   if (zodiac.sign !== 'Egg') {
     $('#zodiac-display')
       .css('border-color', color)
-      .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+      .data('bs.popover').config.content = zodiac.toString()
     // determine if birthday and show it
     if (zodiac.isBirthday()) {
       $('#zodiac-display')
