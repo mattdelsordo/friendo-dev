@@ -4,7 +4,7 @@
 
 import State from '../state'
 import phrasebook from '../../phrases/fitness-phrases'
-import { BASE_EXP_REWARD, ENERGY_COST_EXERT, STAT_MAX } from '../../constants'
+import { BASE_EXP_REWARD, HUNGER_MULTIPLIER_EXERT, EXERCISE_COST, STAT_MAX } from '../../balance'
 
 export default class Exert extends State {
   constructor(savedState, reps) {
@@ -15,11 +15,12 @@ export default class Exert extends State {
     this.id = 'abstract_exert'
     this.stat = 'error'
     this.expReward = BASE_EXP_REWARD
-    this.fatigueCost = ENERGY_COST_EXERT
+    this.fatigueCost = EXERCISE_COST
+    this.hungerMultiplier = HUNGER_MULTIPLIER_EXERT
   }
 
   _doTransitionToIdle(friendo) {
-    if (friendo.getStat(this.stat) === STAT_MAX) return true
+    if (friendo.getStat(this.stat) >= STAT_MAX) return true
     else if (this.reps <= 0) return true
     return false
   }
@@ -27,5 +28,10 @@ export default class Exert extends State {
   _doTransitionToSleep(friendo) {
     if (friendo.getNetEnergy() <= 0) return true
     return false
+  }
+
+  // exercise returns a flat fatigue cost
+  _getFatigueCost() {
+    return this.fatigueCost
   }
 }

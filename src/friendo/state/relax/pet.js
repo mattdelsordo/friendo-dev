@@ -1,4 +1,5 @@
-import { ENERGY_COST_PET, STATES } from '../../constants'
+import { STATES } from '../../constants'
+import { ENERGY_COST_PET } from '../../balance'
 import phrasebook from '../../phrases/idle-phrases'
 import APet from '../../animation/pet'
 import Relax from './relax'
@@ -10,5 +11,10 @@ export default class Petting extends Relax {
     this.fatigueCost = ENERGY_COST_PET
     this.anim = new APet(savedState.old, phrasebook)
     this.reps = 2
+  }
+
+  // exercise returns a flat fatigue cost
+  _getFatigueCost() {
+    return this.fatigueCost
   }
 }

@@ -5,6 +5,8 @@ import { STATS } from '../constants'
  * Idle egg state
  */
 
+const SHAKE_CHANCES = [0, 0, 10, 30, 50]
+
 export default class AEgg extends FAnimation {
   constructor(old, phrases) {
     super(old, phrases)
@@ -17,9 +19,7 @@ export default class AEgg extends FAnimation {
 
     // Shake if not currently shaking and with a probability
     // based on egg level
-    const rand = Math.floor(Math.random() * 100)
-    const shake =
-      (friendo.getStat(STATS.EGG) < 2 ? 0 : ((friendo.getStat(STATS.EGG) - 1) * 10 >= rand))
+    const shake = SHAKE_CHANCES[friendo.getStat(STATS.EGG)] >= Math.floor(Math.random() * 100)
     if (!this.shaking && shake) {
       this.shaking = true
     }

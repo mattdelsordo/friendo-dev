@@ -139,6 +139,17 @@ export const setEnergy = (energy) => {
   $('#energybar').css('width', `${Math.floor(energy * 100)}%`)
 }
 
+export const setBelly = (belly) => {
+  if (belly >= 0.5) {
+    $('#hungerbar').css('background-color', 'var(--success)')
+  } else if (belly >= 0.2) {
+    $('#hungerbar').css('background-color', 'var(--warning)')
+  } else {
+    $('#hungerbar').css('background-color', 'var(--danger)')
+  }
+  $('#hungerbar').css('width', `${Math.floor(belly * 100)}%`)
+}
+
 // handle daily events for if someone plays continuously past midnight
 const daily = (friendo) => {
   // get relative dates to calculate time until the next midnight
@@ -163,6 +174,7 @@ export const initialize = (friendo) => {
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyPercent())
+  setBelly(friendo.getBellyPercent())
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
@@ -241,6 +253,7 @@ const hideEggDisplay = (friendo) => {
 export const onHeartbeat = (friendo, stat, updatebar = true) => {
   // update energy bar
   setEnergy(friendo.getEnergyPercent())
+  setBelly(friendo.getBellyPercent())
 
   // we need to be able to untoggle this to prevent breaking the
   // progress bar animation

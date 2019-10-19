@@ -5,14 +5,14 @@
 
 import State from '../state'
 import AEgg from '../../animation/egg'
-import { MAX_EGG_LEVEL, STATS, STATES, ENERGY_COST_EGG } from '../../constants'
+import { STATS, STATES } from '../../constants'
+import { MAX_EGG_LEVEL } from '../../balance'
 
 export default class Egg extends State {
   constructor(savedState) {
     if (!savedState) savedState = {}
     super(savedState)
     this.id = STATES.BABY
-    this.fatigueCost = ENERGY_COST_EGG
 
     // check for "idleness" using this field,
     // not sure how great a polymorphic check would be since
@@ -24,10 +24,19 @@ export default class Egg extends State {
     this.anim = new AEgg(savedState.anim, () => [''])
   }
 
-  _doTransitionToIdle(friendo) {
-    if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-      friendo.hatch()
-    }
+  _doTransitionToHatch(friendo) {
+    return friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL
+  }
+  _doHatch(friendo) {
+    friendo.setState(STATES.HATCH)
+  }
+
+  // egg can't have fatigue
+  _getFatigueCost() {
+    return 0
+  }
+  _getHungerCost() {
+    return 0
   }
 
   handleAction(friendo, action, reps) {
@@ -37,6 +46,15 @@ export default class Egg extends State {
         return true
       default:
         return false
+    }
+  }
+
+  // overload this to trigger the hatching animation
+  doRep(friendo) {
+    super.doRep(friendo)
+
+    if (this._doTransitionToHatch(friendo)) {
+      this._doHatch(friendo)
     }
   }
 }

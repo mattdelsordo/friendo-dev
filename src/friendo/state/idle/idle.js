@@ -6,7 +6,8 @@
 import State from '../state'
 import phrasebook from '../../phrases/idle-phrases'
 import AIdle from '../../animation/idle'
-import { ENERGY_COST_IDLE, STATES } from '../../constants'
+import { STATES } from '../../constants'
+import { HUNGER_MULTIPLIER_IDLE } from '../../balance'
 
 export default class Idle extends State {
   constructor(savedState) {
@@ -14,8 +15,7 @@ export default class Idle extends State {
     this.id = STATES.IDLE
     this.phrasebook = phrasebook
     this.anim = new AIdle(savedState.anim, phrasebook)
-    this.returnTo = this.id
-    this.fatigueCost = ENERGY_COST_IDLE
+    this.hungerMultiplier = HUNGER_MULTIPLIER_IDLE
 
     // check for "idleness" using this field,
     // not sure how great a polymorphic check would be since

@@ -11,10 +11,6 @@ import { Egg as Zodiac } from './horoscope/zodiac'
 export const DEFAULT_NAME = 'Friendtholemew'
 export const DEFAULT_OWNER = 'Mrot'
 
-export const DEFAULT_LEVEL = 0
-export const DEFAULT_MAX_ENERGY = 100
-export const DEFAULT_FATIGUE = 0
-
 export const DEFAULT_STATS = {
   [STATS.CORE]: 0,
   [STATS.LEG]: 0,
