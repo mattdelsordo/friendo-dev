@@ -12,4 +12,9 @@ export default class Petting extends Relax {
     this.anim = new APet(savedState.old, phrasebook)
     this.reps = 2
   }
+
+  // exercise returns a flat fatigue cost
+  _getFatigueCost() {
+    return this.fatigueCost
+  }
 }

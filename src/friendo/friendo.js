@@ -256,12 +256,22 @@ export default class Friendo {
    * @param feed - whether or not to factor in taste multiplier
    */
   modifyFatigue(amnt) {
+    if (Number.isNaN(amnt)) {
+      console.error(`Tried to modify fatigue by ${amnt}`)
+      return
+    }
+
     if (this.fatigue - amnt >= this.maxEnergy) this.fatigue = this.maxEnergy
     else if (this.fatigue - amnt <= 0) this.fatigue = 0
     else this.fatigue = this.fatigue - amnt
   }
 
   modifyHunger(amnt, feed = false) {
+    if (Number.isNaN(amnt)) {
+      console.error(`Tried to modify hunger by ${amnt}`)
+      return
+    }
+
     const newAmnt = feed ? (amnt * this.getFoodMultiplier()) : amnt
     if (this.hunger - newAmnt >= this.maxBelly) this.hunger = this.maxBelly
     else if (this.hunger - newAmnt <= 0) this.hunger = 0

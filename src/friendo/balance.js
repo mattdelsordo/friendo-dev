@@ -2,31 +2,31 @@
 
 import { LVL_CALC_WHITELIST, STATS } from './constants'
 
+// energy costs
+export const EXERCISE_COST = -60
+export const ENERGY_COST_PET = EXERCISE_COST / -10
+export const ENERGY_COST_SLEEP = EXERCISE_COST / -4 // should be positive
+export const ENERGY_COST_INCUBATE = 0
+export const ENERGY_COST_FOOD = 0
+
+// belly costs
+export const HUNGER_MULTIPLIER_IDLE = -1 / 18000
+export const HUNGER_MULTIPLIER_SLEEP = 0.02
+export const HUNGER_MULTIPLIER_EXERT = HUNGER_MULTIPLIER_IDLE * 4
+export const SLEEP_BELLY_THRESHOLD = 0.4
+
+// default base values
 export const DEFAULT_LEVEL = 0
-export const DEFAULT_MAX_ENERGY = 100
+export const DEFAULT_MAX_ENERGY = EXERCISE_COST * -10.5
 export const DEFAULT_FATIGUE = 0
 export const DEFAULT_MAX_BELLY = 10
 export const DEFAULT_HUNGER = 0
-
-// energy costs
-export const ENERGY_COST_EXERT = -10
-export const ENERGY_COST_FOOD = 0
-export const ENERGY_COST_PET = 0.5
-export const ENERGY_COST_SLEEP = 20
-export const ENERGY_COST_EGG = 0
-export const ENERGY_COST_IDLE = 0
-
-// belly costs
-export const BELLY_COST_EXERT = -1
-export const BELLY_COST_SLEEP = 1
-export const BELLY_COST_EGG = 0
-export const BELLY_COST_IDLE = -0.25
 
 // exp reward
 export const BASE_EXP_REWARD = 1
 
 // amount of energy a friendo gains per level
-export const ENERGY_PER_LEVEL = 10
+export const ENERGY_PER_LEVEL = EXERCISE_COST * -2
 
 // bonuses associated with meme/taste level
 export const MEME_EXP_MODIFIER = 0.03
@@ -46,8 +46,12 @@ export const DOG_UNLOCK_LEVEL = 10
 // for hunger% >= the threshold, modify hunger by the value
 export const HUNGER_MODIFIERS = [
   {
+    threshold: 0.8,
+    value: EXERCISE_COST / -2, // should be additive
+  },
+  {
     threshold: 0.5,
-    value: -2,
+    value: EXERCISE_COST / -4, // should be additive
   },
   {
     threshold: 0.2,
@@ -55,11 +59,11 @@ export const HUNGER_MODIFIERS = [
   },
   {
     threshold: 0.01,
-    value: 2,
+    value: EXERCISE_COST / 2,
   },
 ]
 // hunger modifier for if no threshold is greater than the value
-export const BASE_HUNGER_MODIFIER = 5
+export const BASE_HUNGER_MODIFIER = EXERCISE_COST
 
 /**
  * Defines the amount of exp needed to level up a given stat
@@ -94,6 +98,9 @@ export const calcMaxEnergy = level =>
 
 /**
  * Utilities managing hunger balance
+ * Calculated these values in a google doc somewhere, the idea is that each 10 levels of Taste
+ * should allow you to restore 40% of the belly given by the corresponding value for "belly factor",
+ * which is calculated off 2*core+arm+leg
  */
 export const FOOD_VALUES = [0, 4, 7, 12, 23, 46, 107, 283, 838, 2749, 9897, 39588]
 const BELLY_CAP_TARGETS = [10, 16, 28, 48, 92, 184, 428, 1132, 3352, 10996, 39588]

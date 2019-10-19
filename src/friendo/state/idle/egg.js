@@ -6,15 +6,13 @@
 import State from '../state'
 import AEgg from '../../animation/egg'
 import { STATS, STATES } from '../../constants'
-import { MAX_EGG_LEVEL, ENERGY_COST_EGG, BELLY_COST_EGG } from '../../balance'
+import { MAX_EGG_LEVEL } from '../../balance'
 
 export default class Egg extends State {
   constructor(savedState) {
     if (!savedState) savedState = {}
     super(savedState)
     this.id = STATES.BABY
-    this.fatigueCost = ENERGY_COST_EGG
-    this.hungerCost = BELLY_COST_EGG
 
     // check for "idleness" using this field,
     // not sure how great a polymorphic check would be since
@@ -34,6 +32,9 @@ export default class Egg extends State {
 
   // egg can't have fatigue
   _getFatigueCost() {
+    return 0
+  }
+  _getHungerCost() {
     return 0
   }
 

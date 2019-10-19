@@ -8,7 +8,6 @@ export default class Relax extends State {
     super(savedState)
     this.ID = 'abstract_relax'
     this.frame = 0
-    this.fatigueCost = -1
   }
 
   _doTransitionToIdle() {

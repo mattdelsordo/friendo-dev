@@ -22,7 +22,7 @@ export default class State {
     // modifier on fatigue when existing in this state
     this.fatigueCost = 0
     // base modifier on hunger
-    this.hungerCost = 0
+    this.hungerMultiplier = 0
 
     // set animation
     this.anim = new FAnimation(oldState.anim, phrasebook)
@@ -65,13 +65,13 @@ export default class State {
   }
 
   // computes food reward for feeding, flat for everything else
-  _getHungerCost() {
-    return this.hungerCost
+  _getHungerCost(friendo) {
+    return friendo.maxBelly * this.hungerMultiplier
   }
 
   // computes passive fatigue cost
   _getFatigueCost(friendo) {
-    return this.fatigueCost - friendo.getHungerModifier()
+    return friendo.getHungerModifier()
   }
 
   // behavior associated with a single rep of an exercise, a single "tick" of a state
@@ -95,7 +95,7 @@ export default class State {
 
     // check for exhaustion condition, transition to sleep if satisfied
     if (this._doTransitionToSleep(friendo)) {
-      friendo.setState(STATES.SLEEP)
+      friendo.setState(STATES.SLEEP, friendo.getBellyPercent())
     }
     // check for the completion of the state timer
     if (this._doTransitionToIdle(friendo)) {
