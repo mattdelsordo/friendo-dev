@@ -24,10 +24,11 @@ export default class Egg extends State {
     this.anim = new AEgg(savedState.anim, () => [''])
   }
 
-  _doTransitionToIdle(friendo) {
-    if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-      friendo.hatch()
-    }
+  _doTransitionToHatch(friendo) {
+    return friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL
+  }
+  _doHatch(friendo) {
+    friendo.setState(STATES.HATCH)
   }
 
   // egg can't have fatigue
@@ -45,6 +46,15 @@ export default class Egg extends State {
         return true
       default:
         return false
+    }
+  }
+
+  // overload this to trigger the hatching animation
+  doRep(friendo) {
+    super.doRep(friendo)
+
+    if (this._doTransitionToHatch(friendo)) {
+      this._doHatch(friendo)
     }
   }
 }

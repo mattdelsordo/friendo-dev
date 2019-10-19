@@ -16,6 +16,7 @@ import Dog from './exert/dog-cuddle'
 import Meme from './exert/surf-web'
 import Egg from './idle/egg'
 import Incubate from './exert/incubate'
+import Hatch from './idle/hatch'
 import { STATES } from '../constants'
 
 export default (savedState, id, reps) => {
@@ -77,6 +78,10 @@ export default (savedState, id, reps) => {
       /* eslint-disable-next-line no-console */
       console.log('Loading incubation state')
       return new Incubate(savedState, reps)
+    case STATES.HATCH:
+      /* eslint-disable-next-line no-console */
+      console.log('Loading hatch state')
+      return new Hatch(savedState, reps)
     default:
       throw new Error(`Attempted to load invalid state '${id}'`)
   }

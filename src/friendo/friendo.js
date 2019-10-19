@@ -379,13 +379,17 @@ export default class Friendo {
 
   // perform one rep
   heartbeat() {
+    /**
+     * store stat, because if doRep causes a transition to a state without a stat
+     * then the subsequent onHeartbeat call wont properly update the UI
+     */
+    const s = this.state.stat
     this.state.doRep(this)
-    this.onHeartbeat(this, this.state.stat)
+    this.onHeartbeat(this, (this.state.stat || s))
   }
 
   // handle messages directed at the friendo
   handleAction(action, reps) {
-    const actionSucceeded = this.state.handleAction(this, action, reps)
-    return actionSucceeded
+    return this.state.handleAction(this, action, reps)
   }
 }

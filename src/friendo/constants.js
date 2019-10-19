@@ -10,6 +10,7 @@ export const LICK_CHANCE = 0.5
 // (currently 4/sec)
 export const BLINK_TIME = 1
 export const SPEAK_TIME = 20
+export const HATCH_DUR = 20
 
 // chance to blink or speak
 export const TOTAL_EVENT_CHANCE = 100
@@ -39,7 +40,7 @@ export const STAT_STAGES = {
   [STATS.TASTE]: [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
   [STATS.DOG]: [1, 20, 40, 65, 90],
   [STATS.MEME]: [1],
-  [STATS.EGG]: [1, 10, 20, 30],
+  [STATS.EGG]: [1, 2, 3, 4],
 }
 
 // array of stats to actually include in level calculations
@@ -70,5 +71,6 @@ export const STATES = Object.freeze({
   FEED: 'state_feed',
   IDLE: 'state_idle',
   BABY: 'state_baby',
+  HATCH: 'state_hatch',
 })
 

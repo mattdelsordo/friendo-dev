@@ -20,7 +20,7 @@ export default class Exert extends State {
   }
 
   _doTransitionToIdle(friendo) {
-    if (friendo.getStat(this.stat) === STAT_MAX) return true
+    if (friendo.getStat(this.stat) >= STAT_MAX) return true
     else if (this.reps <= 0) return true
     return false
   }
