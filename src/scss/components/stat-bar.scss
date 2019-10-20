@@ -14,8 +14,12 @@
 
   &:hover {
     border: 1px solid var(--warning);
-    border-radius: 10px;
     background: floralwhite;
+  }
+
+  &:active {
+    border: 1px solid var(--info);
+    background: #c6ecde;
   }
 }
 
@@ -33,10 +37,13 @@
 // stat levellup animation
 @keyframes lvlup {
   0% {
-    background-color: gold;
+    color: gold;
     font-weight: bold;
+    font-size: 1.5em;
   }
-  100% { background-color: white; }
+  100% {
+
+  }
 }
 
 .lvlup {
@@ -44,7 +51,6 @@
 }
 
 .statlvl {
-  border-radius: 20px;
   white-space: pre-wrap;
   width: 3em;
   text-align: center;

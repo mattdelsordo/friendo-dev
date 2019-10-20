@@ -6,6 +6,7 @@
 import Egg from './egg'
 import AEgg from '../../animation/egg'
 import { STATES, HATCH_DUR } from '../../constants'
+import { HATCH_VERB } from '../../phrases/game-text'
 
 export default class Hatch extends Egg {
   constructor(savedState) {
@@ -19,6 +20,7 @@ export default class Hatch extends Egg {
 
     // phrasebook left blank to avoid speaking while and egg
     this.anim = new AEgg(savedState.anim, () => [''])
+    this.verb = HATCH_VERB
   }
 
   handleAction() {

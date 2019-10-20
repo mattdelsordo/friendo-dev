@@ -8,6 +8,7 @@ import phrasebook from '../../phrases/idle-phrases'
 import AIdle from '../../animation/idle'
 import { STATES } from '../../constants'
 import { HUNGER_MULTIPLIER_IDLE } from '../../balance'
+import { IDLE_EMOJI, IDLE_VERB } from '../../phrases/game-text'
 
 export default class Idle extends State {
   constructor(savedState) {
@@ -22,6 +23,8 @@ export default class Idle extends State {
     // egg and idle have different behavior
     this.isIdle = true
     this.reps = -1
+    this.verb = IDLE_VERB
+    this.emoji = IDLE_EMOJI
   }
 
   _doTransitionToSleep(friendo) {

@@ -7,11 +7,15 @@ import { saveFriendo } from '../game-util'
 import {
   EMPTY_STAR,
   FULL_STAR,
-  MAX_EGG_LEVEL,
-  STAT_MAX,
   STAT_STAGES,
   STATS,
 } from '../../friendo/constants'
+import {
+  MAX_EGG_LEVEL,
+  STAT_MAX,
+} from '../../friendo/balance'
+import Exert from '../../friendo/state/exert/exert'
+import { HEARTRATE } from '../game-config'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -30,13 +34,45 @@ export const setZodiac = (zodiac, color = 'black') => {
   if (zodiac.sign !== 'Egg') {
     $('#zodiac-display')
       .css('border-color', color)
-      .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+      .data('bs.popover').config.content = zodiac.toString()
     // determine if birthday and show it
     if (zodiac.isBirthday()) {
       $('#zodiac-display')
         .addClass('z-birthday')
     }
   }
+}
+
+// set string to status
+const updateStatus = (status) => {
+  $('#status-display').html(status)
+}
+
+// set remaining time based on reps
+const updateTimer = (reps) => {
+  if (reps < 0) reps = 0
+
+  const hours = Math.floor(reps / 3600)
+  const mins = Math.floor((reps - (reps % 3600)) / 60)
+  const secs = reps - (hours * 3600) - (mins * 60)
+
+  let string = `${secs}`.padStart(2, '0')
+  string = `${mins}:${string}`.padStart(5, '0')
+  if (hours > 0) {
+    string = `${hours}:${string}`
+  }
+
+  $('#exercise-timer').html(string)
+}
+
+export const hideTimer = () => {
+  $('#exercise-timer').css('visibility', 'hidden')
+  $('#cancel-exercise').css('visibility', 'hidden')
+}
+
+export const showTimer = () => {
+  $('#exercise-timer').css('visibility', 'visible')
+  $('#cancel-exercise').css('visibility', 'visible')
 }
 
 // sets and triggers tutorial content
@@ -52,6 +88,10 @@ const showTutorial = () => {
     })
 
   $('#egg-display').popover('show')
+}
+
+const setPageTitle = (name, emoji) => {
+  $(document).prop('title', `Friendo \u{00b7} ${name} ${emoji}`)
 }
 
 /**
@@ -150,6 +190,25 @@ export const setBelly = (belly) => {
   $('#hungerbar').css('width', `${Math.floor(belly * 100)}%`)
 }
 
+// enable/disable all friendo interaction buttons to prevent the
+// player from breaking the entire game state
+export const enableButtons = () => {
+  $('#pet-button').prop('disabled', '')
+  $('#feed-button').prop('disabled', '')
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', '')
+  })
+}
+export const disableButtons = () => {
+  $('#pet-button').prop('disabled', 'disabled')
+  $('#feed-button').prop('disabled', 'disabled')
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', 'disabled')
+  })
+}
+
 // handle daily events for if someone plays continuously past midnight
 const daily = (friendo) => {
   // get relative dates to calculate time until the next midnight
@@ -169,12 +228,15 @@ const daily = (friendo) => {
 
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
+  setPageTitle(friendo.name, friendo.state.emoji)
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyPercent())
   setBelly(friendo.getBellyPercent())
+  updateStatus(friendo.state.verb)
+  updateTimer(friendo.state.reps)
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
@@ -208,25 +270,16 @@ export const initialize = (friendo) => {
 
   // start daily event timer
   daily(friendo)
-}
 
-// enable/disable all friendo interaction buttons to prevent the
-// player from breaking the entire game state
-export const enableButtons = () => {
-  $('#pet-button').prop('disabled', '')
-  $('#feed-button').prop('disabled', '')
-  /* eslint-disable-next-line compat/compat */
-  Object.values(STATS).forEach((s) => {
-    $(`#start-${s}`).prop('disabled', '')
-  })
-}
-export const disableButtons = () => {
-  $('#pet-button').prop('disabled', 'disabled')
-  $('#feed-button').prop('disabled', 'disabled')
-  /* eslint-disable-next-line compat/compat */
-  Object.values(STATS).forEach((s) => {
-    $(`#start-${s}`).prop('disabled', 'disabled')
-  })
+  // update state-specific stuff
+  if (!friendo.state.isIdle) {
+    disableButtons()
+  }
+  if (friendo.state instanceof Exert) {
+    showTimer()
+  } else {
+    hideTimer()
+  }
 }
 
 // checks whether or not a new stat has been unlocked and
@@ -254,6 +307,7 @@ export const onHeartbeat = (friendo, stat, updatebar = true) => {
   // update energy bar
   setEnergy(friendo.getEnergyPercent())
   setBelly(friendo.getBellyPercent())
+  updateTimer(friendo.state.reps)
 
   // we need to be able to untoggle this to prevent breaking the
   // progress bar animation
@@ -266,12 +320,6 @@ export const onHeartbeat = (friendo, stat, updatebar = true) => {
   setLevel(friendo.level)
 }
 
-// do this once some task is completed
-export const onNonIdleComplete = (friendo, stat) => {
-  onHeartbeat(friendo, stat, false)
-  enableButtons()
-}
-
 // stuff to update when the friendo hatches!
 export const onHatch = (friendo) => {
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
@@ -280,6 +328,24 @@ export const onHatch = (friendo) => {
 
 // stuff to do when friendo changes state
 export const onStateChange = (friendo) => {
+  updateStatus(friendo.state.verb)
+  setPageTitle(friendo.name, friendo.state.emoji)
+
+  // handle enabling/disabling buttons based on the state
+  if (friendo.state.isIdle) {
+    enableButtons()
+  } else {
+    disableButtons()
+  }
+
+  // if exercising, show timer
+  if (friendo.state instanceof Exert) {
+    updateTimer(friendo.state.reps)
+    showTimer()
+  } else {
+    // wait a second to hide timer
+    setTimeout(hideTimer, HEARTRATE / 2)
+  }
   saveFriendo(friendo)
 }
 
@@ -293,7 +359,6 @@ export const onStatUnlocked = (friendo, stat) => {
 // if the friendo can transition (returns true),
 // disable buttons (friendo will already have changed state)
 export const performAction = (friendo, action, reps = 1) => {
-  if (friendo.handleAction(action, reps)) {
-    disableButtons()
-  }
+  // this function used to do more shit
+  friendo.handleAction(action, reps)
 }

@@ -5,6 +5,12 @@
 import $ from 'jquery'
 import { STATS, STATES } from '../../friendo/constants'
 import { performAction } from './ui-update'
+import {
+  setEnterButton,
+  setNumberInput,
+  unsetEnterButton,
+  unsetNumberInput,
+} from './key-listeners'
 
 export default (friendo) => {
   // pet button
@@ -15,6 +21,10 @@ export default (friendo) => {
   // feed button
   $('#feed-button').click(() => {
     performAction(friendo, STATES.FEED)
+  })
+
+  $('#cancel-exercise').click(() => {
+    performAction(friendo, STATES.CANCEL)
   })
 
   // training buttons
@@ -28,5 +38,26 @@ export default (friendo) => {
       // hide modal
       $(`#train-${v}`).modal('hide')
     })
+  })
+
+  // enter button management for stat training
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((v) => {
+    $(`#train-${v}`)
+      .on('shown.bs.modal', () => {
+        // mount enter button
+        if ($(`#start-${v}`).prop('disabled')) {
+          setEnterButton(`#cancel-${v}`)
+        } else {
+          setEnterButton(`#start-${v}`)
+        }
+
+        // mount up and down keys to number input
+        setNumberInput(`#${v}-trainamnt`)
+      })
+      .on('hidden.bs.modal', () => {
+        unsetEnterButton()
+        unsetNumberInput()
+      })
   })
 }

@@ -5,6 +5,7 @@
 
 import $ from 'jquery'
 import Friendo from '../../friendo/friendo'
+import { setEnterButton } from './key-listeners'
 
 // verifies input fields and returns a friendo if they're valid
 const createFriendo = () => {
@@ -65,4 +66,7 @@ export default (setFriendo) => {
       hideCreator()
     }
   })
+
+  // not sure if this is the best place for this listener long-term
+  setEnterButton('#btnCreate')
 }

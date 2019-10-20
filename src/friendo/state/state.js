@@ -1,6 +1,7 @@
 import phrasebook from '../phrases/idle-phrases'
 import FAnimation from '../animation/f-animation'
 import { STATES } from '../constants'
+import { DEFAULT_VERB } from '../phrases/game-text'
 
 /**
  *  defines the animation to be done in a given state
@@ -30,6 +31,10 @@ export default class State {
     // override to transition to something OTHER than idle
     // e.g. for incubate
     this.idleState = STATES.IDLE
+    this.isIdle = false
+
+    // text displayed to indicate state
+    this.verb = DEFAULT_VERB
   }
 
   toJSON() {

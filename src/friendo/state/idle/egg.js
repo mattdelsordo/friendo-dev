@@ -7,6 +7,7 @@ import State from '../state'
 import AEgg from '../../animation/egg'
 import { STATS, STATES } from '../../constants'
 import { MAX_EGG_LEVEL } from '../../balance'
+import { BABY_EMOJI, EGG_VERB } from '../../phrases/game-text'
 
 export default class Egg extends State {
   constructor(savedState) {
@@ -22,6 +23,8 @@ export default class Egg extends State {
 
     // phrasebook left blank to avoid speaking while and egg
     this.anim = new AEgg(savedState.anim, () => [''])
+    this.verb = EGG_VERB
+    this.emoji = BABY_EMOJI
   }
 
   _doTransitionToHatch(friendo) {
