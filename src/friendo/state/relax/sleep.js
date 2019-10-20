@@ -12,7 +12,7 @@ import {
 } from '../../balance'
 import Relax from './relax'
 import ASleep from '../../animation/sleep'
-import { SLEEP_VERB } from '../../phrases/game-text'
+import { ASLEEP_EMOJI, SLEEP_VERB } from '../../phrases/game-text'
 
 export default class Sleep extends Relax {
   constructor(savedState, bellyPercent) {
@@ -23,6 +23,7 @@ export default class Sleep extends Relax {
     this.anim = new ASleep(savedState.anim, phrasebook)
     this.reps = -1
     this.verb = SLEEP_VERB
+    this.emoji = ASLEEP_EMOJI
 
     // tracks if the friendo fell asleep from being famished
     this.famished = (bellyPercent <= 0)

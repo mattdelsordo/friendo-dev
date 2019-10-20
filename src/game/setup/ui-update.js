@@ -90,6 +90,10 @@ const showTutorial = () => {
   $('#egg-display').popover('show')
 }
 
+const setPageTitle = (name, emoji) => {
+  $(document).prop('title', `Friendo \u{00b7} ${name} ${emoji}`)
+}
+
 /**
  * Updates the lvl and stat stars fields
  * @param stat - stat bar to update
@@ -224,6 +228,7 @@ const daily = (friendo) => {
 
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
+  setPageTitle(friendo.name, friendo.state.emoji)
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
@@ -324,6 +329,7 @@ export const onHatch = (friendo) => {
 // stuff to do when friendo changes state
 export const onStateChange = (friendo) => {
   updateStatus(friendo.state.verb)
+  setPageTitle(friendo.name, friendo.state.emoji)
 
   // handle enabling/disabling buttons based on the state
   if (friendo.state.isIdle) {

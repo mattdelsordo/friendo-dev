@@ -15,3 +15,9 @@ export const CORE_VERB = 'Doing situps'
 export const LEG_VERB = 'Doing squats'
 export const MEME_VERB = 'Surfing the web'
 export const EXERT_VERB = 'Getting swole'
+
+/** Text Emojis */
+export const BABY_EMOJI = '\u{1F476}'
+export const IDLE_EMOJI = '\u{1F642}'
+export const EXERT_EMOJI = '\u{1F605}'
+export const ASLEEP_EMOJI = '\u{1F634}'
