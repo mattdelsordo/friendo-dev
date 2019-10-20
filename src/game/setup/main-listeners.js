@@ -17,6 +17,10 @@ export default (friendo) => {
     performAction(friendo, STATES.FEED)
   })
 
+  $('#cancel-exercise').click(() => {
+    performAction(friendo, STATES.CANCEL)
+  })
+
   // training buttons
   /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((v) => {

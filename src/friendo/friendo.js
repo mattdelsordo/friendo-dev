@@ -73,7 +73,6 @@ export default class Friendo {
 
     // establish UI listener fields
     this.onHeartbeat = () => {}
-    this.onNonIdleComplete = () => {}
     this.onHatch = () => {}
     this.onStateChange = () => {}
     this.onStatUnlocked = () => {}
@@ -105,7 +104,6 @@ export default class Friendo {
 
   // UI listener setters
   setOnHeartbeat(ohb) { this.onHeartbeat = ohb }
-  setOnNonIdleComplete(ot) { this.onNonIdleComplete = ot }
   setOnHatch(oh) { this.onHatch = oh }
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
@@ -158,11 +156,6 @@ export default class Friendo {
   }
 
   setState(id, reps) {
-    // if the new state is idle or egg, call transition listener
-    if (id === STATES.IDLE || id === STATES.BABY) {
-      this.onNonIdleComplete(this, this.state.stat)
-    }
-
     // actually swtich the state
     this.state = loadState(this.state, id, reps)
 

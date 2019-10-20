@@ -7,11 +7,13 @@ import { saveFriendo } from '../game-util'
 import {
   EMPTY_STAR,
   FULL_STAR,
-  MAX_EGG_LEVEL,
-  STAT_MAX,
   STAT_STAGES,
   STATS,
 } from '../../friendo/constants'
+import {
+  MAX_EGG_LEVEL,
+  STAT_MAX,
+} from '../../friendo/balance'
 import Exert from '../../friendo/state/exert/exert'
 import { HEARTRATE } from '../game-config'
 
@@ -313,12 +315,6 @@ export const onHeartbeat = (friendo, stat, updatebar = true) => {
   setLevel(friendo.level)
 }
 
-// do this once some task is completed
-export const onNonIdleComplete = (friendo, stat) => {
-  onHeartbeat(friendo, stat, false)
-  enableButtons()
-}
-
 // stuff to update when the friendo hatches!
 export const onHatch = (friendo) => {
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
@@ -328,6 +324,13 @@ export const onHatch = (friendo) => {
 // stuff to do when friendo changes state
 export const onStateChange = (friendo) => {
   updateStatus(friendo.state.verb)
+
+  // handle enabling/disabling buttons based on the state
+  if (friendo.state.isIdle) {
+    enableButtons()
+  } else {
+    disableButtons()
+  }
 
   // if exercising, show timer
   if (friendo.state instanceof Exert) {
@@ -350,7 +353,6 @@ export const onStatUnlocked = (friendo, stat) => {
 // if the friendo can transition (returns true),
 // disable buttons (friendo will already have changed state)
 export const performAction = (friendo, action, reps = 1) => {
-  if (friendo.handleAction(action, reps)) {
-    disableButtons()
-  }
+  // this function used to do more shit
+  friendo.handleAction(action, reps)
 }

@@ -72,5 +72,6 @@ export const STATES = Object.freeze({
   IDLE: 'state_idle',
   BABY: 'state_baby',
   HATCH: 'state_hatch',
+  CANCEL: 'cancel',
 })
 

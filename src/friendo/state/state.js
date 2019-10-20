@@ -31,6 +31,7 @@ export default class State {
     // override to transition to something OTHER than idle
     // e.g. for incubate
     this.idleState = STATES.IDLE
+    this.isIdle = false
 
     // text displayed to indicate state
     this.verb = DEFAULT_VERB

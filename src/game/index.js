@@ -12,7 +12,6 @@ import {
   initialize,
   onHatch,
   onHeartbeat,
-  onNonIdleComplete,
   onStateChange, onStatUnlocked,
 } from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
@@ -41,7 +40,6 @@ const start = (friendo) => {
 
   // set friendo listeners
   friendo.setOnHeartbeat(onHeartbeat)
-  friendo.setOnNonIdleComplete(onNonIdleComplete)
   friendo.setOnHatch(onHatch)
   friendo.setOnStateChange(onStateChange)
   friendo.setOnStatUnlocked(onStatUnlocked)
