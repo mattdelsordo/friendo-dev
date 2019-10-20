@@ -15,6 +15,7 @@ import {
   onStateChange, onStatUnlocked,
 } from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
+import { initializeKeyListeners, unsetEnterButton } from './setup/key-listeners'
 
 window.jQuery = $
 window.Tether = Tether
@@ -23,6 +24,7 @@ require('bootstrap')
 
 // initializes UI based on friendo and starts game processes
 const start = (friendo) => {
+  unsetEnterButton() // call this to remove the listener from the character creation page
   updateDelete(friendo)
   mainSetup(friendo)
   initialize(friendo)
@@ -67,6 +69,9 @@ $(document)
 
     // set header listeners
     header()
+
+    // set up enter-button
+    initializeKeyListeners()
 
     // set up UI listeners
     creatorSetup((newFriendo) => {

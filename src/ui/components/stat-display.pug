@@ -89,7 +89,7 @@ mixin trainingDialog(stat)
                             input.mr-1.ml-1(id=`${statId}-trainamnt` type='number' step=1 min=0 value=1)
                             | reps
                 .modal-footer
-                    button.btn.btn-secondary(data-dismiss='modal') Cancel
+                    button.btn.btn-secondary(data-dismiss='modal', id=`cancel-${statId}`) Cancel
                     button.btn.btn-success(id=`start-${statId}`) Begin
 
 .row
