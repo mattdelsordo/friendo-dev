@@ -76,7 +76,7 @@ export const showTimer = () => {
 }
 
 // sets and triggers tutorial content
-const showTutorial = () => {
+const showTrainingTutorial = () => {
   $('#egg-display')
     .popover({
       trigger: 'manual',
@@ -265,8 +265,8 @@ export const initialize = (friendo) => {
     $(`#${STATS.DOG}-bar`).css('visibility', 'visible')
   }
 
-  // show tutorial if egg level is 0
-  if (friendo.getStat(STATS.EGG) === 1) showTutorial()
+  // show tutorial if egg level is less than 3
+  if (friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
 
   // start daily event timer
   daily(friendo)
