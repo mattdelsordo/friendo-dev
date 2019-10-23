@@ -11,6 +11,12 @@ import {
   unsetEnterButton,
   unsetNumberInput,
 } from './key-listeners'
+import {
+  ENERGY_EXPLAIN_CONTENT,
+  ENERGY_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_CONTENT,
+  HUNGER_EXPLAIN_TITLE,
+} from '../../friendo/phrases/game-text'
 
 export default (friendo) => {
   // pet button
@@ -60,4 +66,36 @@ export default (friendo) => {
         unsetNumberInput()
       })
   })
+
+  /** Tutorial Listeners */
+  $('#max-energy-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: ENERGY_EXPLAIN_CONTENT,
+      title: ENERGY_EXPLAIN_TITLE,
+      offset: '0, 2',
+    })
+  $('#no-energy-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: ENERGY_EXPLAIN_CONTENT,
+      title: ENERGY_EXPLAIN_TITLE,
+      placement: 'left',
+      offset: '0, 2',
+    })
+  $('#full-belly-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: HUNGER_EXPLAIN_CONTENT,
+      title: HUNGER_EXPLAIN_TITLE,
+      offset: '0, 2',
+    })
+  $('#empty-belly-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: HUNGER_EXPLAIN_CONTENT,
+      title: HUNGER_EXPLAIN_TITLE,
+      placement: 'left',
+      offset: '0, 2',
+    })
 }

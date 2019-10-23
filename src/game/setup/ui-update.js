@@ -16,6 +16,16 @@ import {
 } from '../../friendo/balance'
 import Exert from '../../friendo/state/exert/exert'
 import { HEARTRATE } from '../game-config'
+import {
+  ENERGY_TUT_CONTENT,
+  ENERGY_TUT_TITLE,
+  HUNGER_TUT_TITLE,
+  HUNGER_TUT_CONTENT,
+  ENERGY_EXPLAIN_CONTENT,
+  ENERGY_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_CONTENT,
+  HUNGER_EXPLAIN_TITLE,
+} from '../../friendo/phrases/game-text'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -88,6 +98,32 @@ const showTrainingTutorial = () => {
     })
 
   $('#egg-display').popover('show')
+}
+
+// handles popups that teach the user about energy and hunger
+const showEnergyTutorial = () => {
+  $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_TUT_CONTENT
+  $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_TUT_TITLE
+  $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_TUT_CONTENT
+  $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_TUT_TITLE
+
+  $('#max-energy-emoji').popover('show')
+  $('#empty-belly-emoji').popover('show')
+
+  // hide popovers when hovered over
+  $('.popover').hover(() => {}, function hidePopovers() {
+    $(this).popover('hide')
+  })
+
+  setTimeout(() => {
+    $('#max-energy-emoji').popover('hide')
+    $('#empty-belly-emoji').popover('hide')
+
+    $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_EXPLAIN_CONTENT
+    $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_EXPLAIN_TITLE
+    $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_EXPLAIN_CONTENT
+    $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_EXPLAIN_TITLE
+  }, 20000)
 }
 
 const setPageTitle = (name, emoji) => {
@@ -267,6 +303,8 @@ export const initialize = (friendo) => {
 
   // show tutorial if egg level is less than 3
   if (friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
+  // show energy tutorial if no stat has levelled up
+  if (friendo.getStat(STATS.CORE) > 0 && friendo.getStatSum() === 1) showEnergyTutorial()
 
   // start daily event timer
   daily(friendo)
