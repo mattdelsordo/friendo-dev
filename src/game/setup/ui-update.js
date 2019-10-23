@@ -38,7 +38,7 @@ export const setLevel = (level) => {
 export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
     .attr('src', `./img/emoji/${zodiac.symbol}.png`)
-    .popover({ content: '???', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover focus', offset: '0, 2' })
 
   // separately set content so that the popover will be updated every time this function
   if (zodiac.sign !== 'Egg') {
@@ -92,6 +92,7 @@ const showTrainingTutorial = () => {
       trigger: 'manual',
       content: 'Click on a stat to train your Friendo.',
       title: 'Click me!',
+      offset: '0, 2',
     })
     .click(() => {
       $('#egg-display').popover('hide')

@@ -112,7 +112,7 @@ const birthdayListeners = (friendo) => {
   $('#zodiac-display')
     .css('border-color', friendo.element.strokeStyle)
     .attr('src', `img/emoji/${friendo.zodiac.symbol}.png`)
-    .popover({ content: '???', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover focus', offset: '0, 2' })
 
   $('#birthday-calendar')
     .change(function setBirthday() {
@@ -126,7 +126,7 @@ const birthdayListeners = (friendo) => {
       if (friendo.zodiac.sign !== 'Egg') {
         $('#zodiac-display')
           .attr('src', `img/emoji/${friendo.zodiac.symbol}.png`)
-          .data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+          .data('bs.popover').config.content = friendo.zodiac.toString()
 
         // determine if birthday and show it
         if (friendo.zodiac.isBirthday()) {
@@ -140,7 +140,7 @@ const birthdayListeners = (friendo) => {
   if (friendo.zodiac.sign !== 'Egg') {
     $('#zodiac-display')
       .css('border-color', friendo.element.strokeStyle)
-      .data('bs.popover').config.content = `${friendo.zodiac.getAge()} old- born ${friendo.zodiac.birthday.toLocaleDateString()} (${friendo.zodiac.sign})`
+      .data('bs.popover').config.content = friendo.zodiac.toString()
     // determine if birthday and show it
     if (friendo.zodiac.isBirthday()) {
       $('#zodiac-display')
