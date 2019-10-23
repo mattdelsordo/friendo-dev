@@ -53,7 +53,7 @@ const updateTimer = (reps) => {
   if (reps < 0) reps = 0
 
   const hours = Math.floor(reps / 3600)
-  const mins = Math.floor((reps - (reps % 3600)) / 60)
+  const mins = Math.floor((reps - (hours * 3600)) / 60)
   const secs = reps - (hours * 3600) - (mins * 60)
 
   let string = `${secs}`.padStart(2, '0')
