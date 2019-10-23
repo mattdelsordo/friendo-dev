@@ -16,6 +16,8 @@ import {
   ENERGY_EXPLAIN_TITLE,
   HUNGER_EXPLAIN_CONTENT,
   HUNGER_EXPLAIN_TITLE,
+  LOCKED_STAT_CONTENT,
+  lockedStatTitle,
 } from '../../friendo/phrases/game-text'
 
 export default (friendo) => {
@@ -98,4 +100,12 @@ export default (friendo) => {
       placement: 'left',
       offset: '0, 2',
     })
+
+  /** Locked stat popovers */
+  $('.lock-emoji').popover({
+    trigger: 'hover focus',
+    title: lockedStatTitle(friendo.name),
+    content: LOCKED_STAT_CONTENT,
+    offset: '0, 2',
+  })
 }
