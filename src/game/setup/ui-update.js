@@ -24,7 +24,7 @@ import {
   ENERGY_EXPLAIN_CONTENT,
   ENERGY_EXPLAIN_TITLE,
   HUNGER_EXPLAIN_CONTENT,
-  HUNGER_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_TITLE, STAT_EXPLAIN,
 } from '../../friendo/phrases/game-text'
 
 export const setName = (name) => {
@@ -353,6 +353,7 @@ export const onHeartbeat = (friendo, stat, updatebar = true) => {
   if (stat && updatebar) {
     // update stat displays
     setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+    $(`#${stat}-icon`).data('bs.popover').config.content = STAT_EXPLAIN[stat](friendo)
   }
 
   // update level

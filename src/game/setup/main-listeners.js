@@ -17,7 +17,7 @@ import {
   HUNGER_EXPLAIN_CONTENT,
   HUNGER_EXPLAIN_TITLE,
   LOCKED_STAT_CONTENT,
-  lockedStatTitle,
+  lockedStatTitle, STAT_EXPLAIN, STAT_TITLES,
 } from '../../friendo/phrases/game-text'
 
 export default (friendo) => {
@@ -107,5 +107,17 @@ export default (friendo) => {
     title: lockedStatTitle(friendo.name),
     content: LOCKED_STAT_CONTENT,
     offset: '0, 2',
+  })
+
+  /** Stat explaination popovers */
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((v) => {
+    $(`#${v}-icon`).popover({
+      trigger: 'hover focus',
+      title: STAT_TITLES[v],
+      content: STAT_EXPLAIN[v](friendo),
+      offset: '0, 2',
+      placement: 'left',
+    })
   })
 }

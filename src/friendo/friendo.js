@@ -230,6 +230,11 @@ export default class Friendo {
     return 0
   }
 
+  // returns the amount of exp left till the next levelup for a stat
+  getExpLeft(stat) {
+    return getExpCurve(stat)[this._stats[stat]] - this.exp[stat]
+  }
+
   // compute cumulative sum but skip the first level of each stat
   // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
   // used to calculate level

@@ -1,3 +1,5 @@
+import { STATS } from '../constants'
+
 /** State verbs */
 export const DEFAULT_VERB = 'Existing'
 export const IDLE_VERB = 'Just chillin\''
@@ -35,3 +37,28 @@ export const HUNGER_EXPLAIN_CONTENT = 'The fuller your Friendo\'s belly, the fas
 
 export const lockedStatTitle = name => `${name} has not unlocked this stat yet.`
 export const LOCKED_STAT_CONTENT = 'Who knows what potential they could have buried deep inside?'
+
+// explanations and titles for stats
+const expstring = (friendo, stat) => `\tExp to next level: ${Math.floor(friendo.getExpLeft(stat))}`
+export const STAT_EXPLAIN = {
+  [STATS.CORE]: friendo => `How big your Friendo's torso is.${expstring(friendo, STATS.CORE)}`,
+  [STATS.LEG]: friendo => `How thicc your Friendo's legs are.${expstring(friendo, STATS.LEG)}`,
+  [STATS.ARM]: friendo => `How thick your Friendo's arms are.${expstring(friendo, STATS.ARM)}`,
+  [STATS.SIGHT]: friendo => `How well your Friendo can see.${expstring(friendo, STATS.SIGHT)}`,
+  [STATS.HAIR]: friendo => `How thick your Friendo's hair is.${expstring(friendo, STATS.HAIR)}`,
+  [STATS.TASTE]: friendo => `How picky of an eater your Friendo is. Fancier food restores more energy.${expstring(friendo, STATS.TASTE)}`,
+  [STATS.DOG]: friendo => `How much your Friendo enjoys dogs.${expstring(friendo, STATS.DOG)}`,
+  [STATS.MEME]: friendo => `How receptive your Friendo is to new ideas. Helps your Friendo learn and grow more quickly.${expstring(friendo, STATS.MEME)}`,
+  [STATS.EGG]: () => 'It\'s an egg. I wonder what will hatch from it?',
+}
+export const STAT_TITLES = {
+  [STATS.CORE]: 'Core',
+  [STATS.LEG]: 'Legs',
+  [STATS.ARM]: 'Arms',
+  [STATS.SIGHT]: 'Sight',
+  [STATS.HAIR]: 'Hair',
+  [STATS.TASTE]: 'Taste',
+  [STATS.DOG]: 'Dog Affinity',
+  [STATS.MEME]: 'Meme Tolerance',
+  [STATS.EGG]: 'Egg',
+}
