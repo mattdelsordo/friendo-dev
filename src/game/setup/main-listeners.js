@@ -11,6 +11,14 @@ import {
   unsetEnterButton,
   unsetNumberInput,
 } from './key-listeners'
+import {
+  ENERGY_EXPLAIN_CONTENT,
+  ENERGY_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_CONTENT,
+  HUNGER_EXPLAIN_TITLE,
+  LOCKED_STAT_CONTENT,
+  lockedStatTitle, STAT_EXPLAIN, STAT_TITLES,
+} from '../../friendo/phrases/game-text'
 
 export default (friendo) => {
   // pet button
@@ -59,5 +67,57 @@ export default (friendo) => {
         unsetEnterButton()
         unsetNumberInput()
       })
+  })
+
+  /** Tutorial Listeners */
+  $('#max-energy-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: ENERGY_EXPLAIN_CONTENT,
+      title: ENERGY_EXPLAIN_TITLE,
+      offset: '0, 2',
+    })
+  $('#no-energy-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: ENERGY_EXPLAIN_CONTENT,
+      title: ENERGY_EXPLAIN_TITLE,
+      placement: 'left',
+      offset: '0, 2',
+    })
+  $('#full-belly-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: HUNGER_EXPLAIN_CONTENT,
+      title: HUNGER_EXPLAIN_TITLE,
+      offset: '0, 2',
+    })
+  $('#empty-belly-emoji')
+    .popover({
+      trigger: 'hover focus',
+      content: HUNGER_EXPLAIN_CONTENT,
+      title: HUNGER_EXPLAIN_TITLE,
+      placement: 'left',
+      offset: '0, 2',
+    })
+
+  /** Locked stat popovers */
+  $('.lock-emoji').popover({
+    trigger: 'hover focus',
+    title: lockedStatTitle(friendo.name),
+    content: LOCKED_STAT_CONTENT,
+    offset: '0, 2',
+  })
+
+  /** Stat explaination popovers */
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((v) => {
+    $(`#${v}-icon`).popover({
+      trigger: 'hover focus',
+      title: STAT_TITLES[v],
+      content: STAT_EXPLAIN[v](friendo),
+      offset: '0, 2',
+      placement: 'left',
+    })
   })
 }

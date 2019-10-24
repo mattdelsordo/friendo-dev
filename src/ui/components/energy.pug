@@ -2,12 +2,12 @@
     .col(style="padding: 0 6px;")
         include emoji
         .d-flex.flex-row.mb-1
-            +emoji('1f634')(class='mr-1')
+            +emoji('1f634')(class='mr-1', id='no-energy-emoji')
             .progress.ml-auto.flex-grow-1
                 .progress-bar.bg-warning#energybar
-            +emoji('1f642')(class='ml-1')
+            +emoji('1f642')(class='ml-1', id='max-energy-emoji')
         .d-flex.flex-row.mb-1
-            +emoji('1f963')(class='mr-1')
+            +emoji('1f963')(class='mr-1', id='empty-belly-emoji')
             .progress.ml-auto.flex-grow-1
                 .progress-bar#hungerbar
-            +emoji('1f35c')(class='ml-1')
+            +emoji('1f35c')(class='ml-1', id='full-belly-emoji')

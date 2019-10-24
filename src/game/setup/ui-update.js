@@ -16,6 +16,16 @@ import {
 } from '../../friendo/balance'
 import Exert from '../../friendo/state/exert/exert'
 import { HEARTRATE } from '../game-config'
+import {
+  ENERGY_TUT_CONTENT,
+  ENERGY_TUT_TITLE,
+  HUNGER_TUT_TITLE,
+  HUNGER_TUT_CONTENT,
+  ENERGY_EXPLAIN_CONTENT,
+  ENERGY_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_CONTENT,
+  HUNGER_EXPLAIN_TITLE, STAT_EXPLAIN,
+} from '../../friendo/phrases/game-text'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -28,7 +38,7 @@ export const setLevel = (level) => {
 export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
     .attr('src', `./img/emoji/${zodiac.symbol}.png`)
-    .popover({ content: '???', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover focus', offset: '0, 2' })
 
   // separately set content so that the popover will be updated every time this function
   if (zodiac.sign !== 'Egg') {
@@ -53,7 +63,7 @@ const updateTimer = (reps) => {
   if (reps < 0) reps = 0
 
   const hours = Math.floor(reps / 3600)
-  const mins = Math.floor((reps - (reps % 3600)) / 60)
+  const mins = Math.floor((reps - (hours * 3600)) / 60)
   const secs = reps - (hours * 3600) - (mins * 60)
 
   let string = `${secs}`.padStart(2, '0')
@@ -76,18 +86,45 @@ export const showTimer = () => {
 }
 
 // sets and triggers tutorial content
-const showTutorial = () => {
+const showTrainingTutorial = () => {
   $('#egg-display')
     .popover({
       trigger: 'manual',
       content: 'Click on a stat to train your Friendo.',
       title: 'Click me!',
+      offset: '0, 2',
     })
     .click(() => {
       $('#egg-display').popover('hide')
     })
 
   $('#egg-display').popover('show')
+}
+
+// handles popups that teach the user about energy and hunger
+const showEnergyTutorial = () => {
+  $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_TUT_CONTENT
+  $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_TUT_TITLE
+  $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_TUT_CONTENT
+  $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_TUT_TITLE
+
+  $('#max-energy-emoji').popover('show')
+  $('#empty-belly-emoji').popover('show')
+
+  // hide popovers when hovered over
+  $('.popover').hover(() => {}, function hidePopovers() {
+    $(this).popover('hide')
+  })
+
+  setTimeout(() => {
+    $('#max-energy-emoji').popover('hide')
+    $('#empty-belly-emoji').popover('hide')
+
+    $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_EXPLAIN_CONTENT
+    $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_EXPLAIN_TITLE
+    $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_EXPLAIN_CONTENT
+    $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_EXPLAIN_TITLE
+  }, 20000)
 }
 
 const setPageTitle = (name, emoji) => {
@@ -265,8 +302,10 @@ export const initialize = (friendo) => {
     $(`#${STATS.DOG}-bar`).css('visibility', 'visible')
   }
 
-  // show tutorial if egg level is 0
-  if (friendo.getStat(STATS.EGG) === 1) showTutorial()
+  // show tutorial if egg level is less than 3
+  if (friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
+  // show energy tutorial if no stat has levelled up
+  if (friendo.getStat(STATS.CORE) > 0 && friendo.getStatSum() === 1) showEnergyTutorial()
 
   // start daily event timer
   daily(friendo)
@@ -314,6 +353,7 @@ export const onHeartbeat = (friendo, stat, updatebar = true) => {
   if (stat && updatebar) {
     // update stat displays
     setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+    $(`#${stat}-icon`).data('bs.popover').config.content = STAT_EXPLAIN[stat](friendo)
   }
 
   // update level

@@ -230,6 +230,19 @@ export default class Friendo {
     return 0
   }
 
+  // returns the amount of exp left till the next levelup for a stat
+  getExpLeft(stat) {
+    return getExpCurve(stat)[this._stats[stat]] - this.exp[stat]
+  }
+
+  // compute cumulative sum but skip the first level of each stat
+  // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
+  // used to calculate level
+  getStatSum() {
+    return LVL_CALC_WHITELIST.reduce((l, r) =>
+      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
+  }
+
 
   /** Modifys */
 
@@ -292,12 +305,8 @@ export default class Friendo {
     // if core == 0, we're still an egg
     if (this.getStat(STATS.CORE) === 0) return 0
 
-    // compute cumulative sum but skip the first level of each stat
-    // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
-    const statSum = LVL_CALC_WHITELIST.reduce((l, r) =>
-      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
-
     // if the sum of all stats is less than one, skip rest of calcs
+    const statSum = this.getStatSum()
     if (statSum < 1) return 0
 
     const level = Math.floor((statSum / LEVEL_MAX) * 100) + 1
