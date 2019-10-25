@@ -6,6 +6,7 @@
 import $ from 'jquery'
 import Friendo from '../../friendo/friendo'
 import { setEnterButton } from './key-listeners'
+import { getErrorName } from '../../friendo/phrases/game-text'
 
 // verifies input fields and returns a friendo if they're valid
 const createFriendo = () => {
@@ -36,6 +37,7 @@ export default (setFriendo) => {
   $('.elementRadio')
     .change(() => {
       $('#name-input').prop('disabled', '')
+      $('#btn-rand-name').prop('disabled', '')
     })
 
   // name field enables owner name field
@@ -47,6 +49,23 @@ export default (setFriendo) => {
       $('#player-input').prop('disabled', 'disabled')
       $('#btnCreate').prop('disabled', 'disabled')
     }
+  })
+
+  // randomizes name
+  $('#btn-rand-name').on('click', () => {
+    // use randomuser.me api
+    $.get('https://randomuser.me/api/?inc=name')
+      .done((data) => {
+        // 90% chance of first name, otherwise last
+        const name = (Math.random() < 0.9 ? data.results[0].name.first : data.results[0].name.last)
+        $('#name-input').val(name)
+        // remember to un-disable the player name field
+        $('#player-input').prop('disabled', '')
+      })
+      .fail(() => {
+        $('#name-input').val(getErrorName())
+        $('#player-input').prop('disabled', '')
+      })
   })
 
   // player field enables button
