@@ -62,3 +62,15 @@ export const STAT_TITLES = {
   [STATS.MEME]: 'Meme Tolerance',
   [STATS.EGG]: 'Egg',
 }
+
+// for the character creator
+const ERROR_NAMES = [
+  'Big Error Bill',
+  'Errorly',
+  'Errortholemew',
+  'Errornius',
+  'Errorl',
+  'Erroar',
+  'Errormantha',
+]
+export const getErrorName = () => ERROR_NAMES[Math.floor(Math.random() * ERROR_NAMES.length)]
