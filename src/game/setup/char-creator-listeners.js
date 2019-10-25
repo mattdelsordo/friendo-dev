@@ -10,7 +10,9 @@ import { setEnterButton } from './key-listeners'
 // verifies input fields and returns a friendo if they're valid
 const createFriendo = () => {
   const type = $('.elementRadio:checked').val()
-  const name = $('#name-input').val().trim()
+  let name = $('#name-input').val().trim()
+  // capitalize name
+  name = name.charAt(0).toUpperCase() + name.slice(1)
   const player = $('#player-input').val().trim()
 
   if (!type || !name || !player) return undefined
