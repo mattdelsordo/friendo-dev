@@ -4,20 +4,18 @@
 
 /* eslint-disable no-restricted-globals */
 
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 import { SAVE_INTERVAL } from './game-config'
 
 export const STORAGE_TOKEN = 'friendo'
 
-export const loadFriendoJSON = () => {
-  const saveGame = localStorage.getItem(STORAGE_TOKEN)
-  return saveGame
-}
+const compress = friendoString => compressToUTF16(friendoString)
+const decompress = encodedString => decompressFromUTF16(encodedString)
+
+export const loadFriendoJSON = () => decompress(localStorage.getItem(STORAGE_TOKEN))
 
 export const saveFriendo = (friendo) => {
-  const json = JSON.stringify(friendo)
-  /* eslint-disable-next-line no-console */
-  console.log(`Saving ${json}`)
-  localStorage.setItem(STORAGE_TOKEN, json)
+  localStorage.setItem(STORAGE_TOKEN, compress(JSON.stringify(friendo)))
   // not sure how to avoid this use-before-define
   /* eslint-disable-next-line no-use-before-define */
   setNewSaveTimer(friendo)
