@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import Tether from 'tether'
-import { loadFriendoJSON, saveFriendo, setNewSaveTimer } from './game-util'
+import { loadFriendoJSON, saveFriendo } from './game-util'
 import { FRAMERATE, HEARTRATE, SAVE_INTERVAL } from './game-config'
 import Friendo from '../friendo/friendo'
 
 import canvasListeners from './setup/canvas-listeners'
-import header, { updateDelete } from './setup/header-listeners'
+import header, { updateDelete, updateDownload } from './setup/header-listeners'
 import creatorSetup, { showCreator, hideCreator } from './setup/char-creator-listeners'
 import {
   disableButtons,
@@ -26,6 +26,7 @@ require('bootstrap')
 const start = (friendo) => {
   unsetEnterButton() // call this to remove the listener from the character creation page
   updateDelete(friendo)
+  updateDownload(friendo)
   mainSetup(friendo)
   initialize(friendo)
   canvasListeners()

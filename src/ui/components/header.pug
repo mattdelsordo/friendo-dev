@@ -62,7 +62,12 @@ mixin settings-dialog
             .modal-content
                 .modal-header
                     h5.modal-title Settings
-                .modal-body
+                .modal-body.d-flex.flex-column.justify-content-center
+                    button.btn.btn-primary#backup-btn
+                        +emoji('1f4be')
+                        |
+                        | Backup your Friendo
+                    p.pr-2.pl-2.pb-2.pt-1 The game saves automatically, but it never hurts to play it safe. Clearing your cookies will wipe your save file.
                     button.btn.btn-danger(data-toggle="collapse" data-target="#delete-zone")
                         +emoji('1f5d1')
                         |

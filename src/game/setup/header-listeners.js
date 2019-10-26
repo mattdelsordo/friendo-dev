@@ -4,7 +4,7 @@
 
 import $ from 'jquery'
 import { version } from '../../../package.json'
-import { reload, erase } from '../game-util'
+import { reload, erase, saveFriendo } from '../game-util'
 
 /* eslint-disable no-alert */
 const deleteFriendo = (friendo) => {
@@ -25,6 +25,28 @@ const deleteFriendo = (friendo) => {
     reload()
   }
 }
+
+// downloads friendo as a file
+const downloadFriendo = (friendo) => {
+  if (!friendo) {
+    alert('No Friendo DNA found!')
+  } else {
+    // save friendo and get the compressed string back
+    const saveString = saveFriendo(friendo)
+    const pom = document.createElement('a')
+    pom.setAttribute('href', `data:text/plain;charset=utf-8,${saveString}`)
+    pom.setAttribute('download', `${friendo.name.toLowerCase()}.friendo`)
+
+    if (document.createEvent) {
+      const event = document.createEvent('MouseEvents')
+      event.initEvent('click', true, true)
+      pom.dispatchEvent(event)
+    } else {
+      pom.click()
+    }
+  }
+}
+
 /* eslint-enable no-alert */
 
 export default () => {
@@ -45,10 +67,20 @@ export default () => {
   $('#delete-btn').click(() => {
     deleteFriendo()
   })
+
+  $('#backup-btn').click(() => {
+    downloadFriendo()
+  })
 }
 
 export const updateDelete = (friendo) => {
   $('#delete-btn').off('click').click(() => {
     deleteFriendo(friendo)
+  })
+}
+
+export const updateDownload = (friendo) => {
+  $('#backup-btn').off('click').click(() => {
+    downloadFriendo(friendo)
   })
 }

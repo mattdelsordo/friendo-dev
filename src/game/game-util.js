@@ -4,15 +4,21 @@
 
 /* eslint-disable no-restricted-globals */
 
-import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string'
 
 export const STORAGE_TOKEN = 'friendo-dna'
 
-const compress = friendoString => compressToUTF16(friendoString)
-const decompress = encodedString => decompressFromUTF16(encodedString)
+const compress = friendoString => compressToEncodedURIComponent(friendoString)
+const decompress = encodedString => decompressFromEncodedURIComponent(encodedString)
 
 // convert friendo to json, compress it, store it in localstorage
-export const saveFriendo = friendo => localStorage.setItem(STORAGE_TOKEN, compress(JSON.stringify(friendo)))
+const friendoToCompressedJSON = friendo => compress(JSON.stringify(friendo))
+
+export const saveFriendo = (friendo) => {
+  const compressed = friendoToCompressedJSON(friendo)
+  localStorage.setItem(STORAGE_TOKEN, compressed)
+  return compressed
+}
 
 // get friendo json from localstorage and decompress it
 export const loadFriendoJSON = () => decompress(localStorage.getItem(STORAGE_TOKEN))
