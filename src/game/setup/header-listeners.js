@@ -19,6 +19,8 @@ const deleteFriendo = (friendo) => {
     }
 
     // delete friendo and refresh
+    // remove save listeners on the window so that it doesnt save after you erase
+    $(window).off('blur unload')
     erase()
     reload()
   }

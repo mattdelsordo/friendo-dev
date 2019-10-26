@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import Tether from 'tether'
 import { loadFriendoJSON, saveFriendo, setNewSaveTimer } from './game-util'
-import { FRAMERATE, HEARTRATE } from './game-config'
+import { FRAMERATE, HEARTRATE, SAVE_INTERVAL } from './game-config'
 import Friendo from '../friendo/friendo'
 
 import canvasListeners from './setup/canvas-listeners'
@@ -58,8 +58,10 @@ const start = (friendo) => {
     disableButtons()
   }
 
-  // set timer for next save if none happens in the interim
-  setNewSaveTimer(friendo)
+  // save every 5(?) minutes
+  setInterval(() => {
+    saveFriendo(JSON.stringify(friendo))
+  }, SAVE_INTERVAL)
 }
 
 $(document)
