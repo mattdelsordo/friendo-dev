@@ -37,7 +37,7 @@ mixin attribution-dialog
 
 // UI segment for friendo deletion
 mixin delete()
-    #delete-zone.collapse.mt-2
+    #delete-zone
         .card.card-body
             h5 ARE YOU SURE ABOUT THIS ONE BUD
             p This will banish your Friendo's pattern from the time stream.
@@ -56,23 +56,62 @@ mixin delete()
                     | Begone
                     +emoji('2620')(style="margin-left: 1em;")
 
+mixin download()
+    #download-zone
+        .card.card-body
+            p
+                | The game will save automatically, but it never hurts to keep a backup!
+                |
+                i If you clear your cookies, your Friendo's DNA will probably be deleted.
+            button.btn.btn-primary.mt-1#backup-btn Download
+
+mixin upload()
+    #upload-zone
+        .card.card-body
+            | Restore a Friendo from backed-up DNA.
+            .input-group.mt-1
+                .input-group-prepend
+                    button.btn.input-group-text#selectDNA Upload
+                .custom-file
+                    input.custom-file-input#selectDNA(type="file")
+                    label.custom-file-label(for="selectDNA") Choose file
+
+
 mixin settings-dialog
     .modal.fade(id='settings-dialog' role='dialog')
         .modal-dialog(role='document')
             .modal-content
                 .modal-header
                     h5.modal-title Settings
-                .modal-body.d-flex.flex-column.justify-content-center
-                    button.btn.btn-primary#backup-btn
+                .modal-body
+                    h6
                         +emoji('1f4be')
                         |
-                        | Backup your Friendo
-                    p.pr-2.pl-2.pb-2.pt-1 The game saves automatically, but it never hurts to play it safe. Clearing your cookies will wipe your save file.
-                    button.btn.btn-danger(data-toggle="collapse" data-target="#delete-zone")
-                        +emoji('1f5d1')
-                        |
-                        | Delete your Friendo
-                    +delete()
+                        | DNA Management
+                    // TODO: do this instead https://getbootstrap.com/docs/4.0/components/navs/#javascript-behavior
+                    ul.nav.nav-pills.mb-1#dna-pills(role="tablist")
+                        li.nav-item
+                            a.nav-link#backup-pill-tab(data-toggle="pill" href="#backup-pill" role="tab")
+                                +emoji('1f4e5')
+                                |
+                                | Backup
+                        li.nav-item
+                            a.nav-link#restore-pill-tab(data-toggle="pill" href="#restore-pill" role="tab")
+                                +emoji('1f4e4')
+                                |
+                                | Restore
+                        li.nav-item
+                            a.nav-link#delete-pill-tab(data-toggle="pill" href="#delete-pill" role="tab")
+                                +emoji('1f5d1')
+                                |
+                                | Delete
+                    .tab-content#dna-pill-content
+                        .tab-pane.fade#backup-pill(role="tabpanel")
+                            +download()
+                        .tab-pane.fade#restore-pill(role="tabpanel")
+                            +upload()
+                        .tab-pane.fade#delete-pill(role="tabpanel")
+                            +delete()
                 .modal-footer
                     button.btn.btn-secondary(data-dismiss='modal') Close
 
