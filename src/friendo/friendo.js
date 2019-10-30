@@ -48,7 +48,6 @@ export default class Friendo {
   // constructor takes context on which to draw
   constructor(json) {
     // initialize friendo from save file
-    console.log(`Loading Friendo from ${json}`)
     const fromJSON = JSON.parse(json || '{}')
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE

@@ -19,8 +19,14 @@ import {
   LOCKED_STAT_CONTENT,
   lockedStatTitle, STAT_EXPLAIN, STAT_TITLES,
 } from '../../friendo/phrases/game-text'
+import { saveFriendo } from '../game-util'
 
 export default (friendo) => {
+  // save friendo whenever window loses focus or is unloaded
+  $(window).on('blur unload', () => {
+    saveFriendo(friendo)
+  })
+
   // pet button
   $('#pet-button').click(() => {
     performAction(friendo, STATES.PET)

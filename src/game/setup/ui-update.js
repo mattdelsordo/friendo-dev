@@ -303,7 +303,7 @@ export const initialize = (friendo) => {
   }
 
   // show tutorial if egg level is less than 3
-  if (friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
+  if (friendo.getStat(STATS.CORE) === 0 && friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
   // show energy tutorial if no stat has levelled up
   if (friendo.getStat(STATS.CORE) > 0 && friendo.getStatSum() === 1) showEnergyTutorial()
 

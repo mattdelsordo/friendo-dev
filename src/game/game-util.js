@@ -4,34 +4,27 @@
 
 /* eslint-disable no-restricted-globals */
 
-import { SAVE_INTERVAL } from './game-config'
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string'
 
-export const STORAGE_TOKEN = 'friendo'
+export const STORAGE_TOKEN = 'friendo-dna'
 
-export const loadFriendoJSON = () => {
-  const saveGame = localStorage.getItem(STORAGE_TOKEN)
-  return saveGame
-}
+const compress = friendoString => compressToEncodedURIComponent(friendoString)
+const decompress = encodedString => decompressFromEncodedURIComponent(encodedString)
+
+// convert friendo to json, compress it, store it in localstorage
+const friendoToCompressedJSON = friendo => compress(JSON.stringify(friendo))
+
+// sets save file to a string
+export const storeSavefile = save => localStorage.setItem(STORAGE_TOKEN, save)
 
 export const saveFriendo = (friendo) => {
-  const json = JSON.stringify(friendo)
-  /* eslint-disable-next-line no-console */
-  console.log(`Saving ${json}`)
-  localStorage.setItem(STORAGE_TOKEN, json)
-  // not sure how to avoid this use-before-define
-  /* eslint-disable-next-line no-use-before-define */
-  setNewSaveTimer(friendo)
+  const compressed = friendoToCompressedJSON(friendo)
+  storeSavefile(compressed)
+  return compressed
 }
 
-let saveTimeout
-export const setNewSaveTimer = (friendo) => {
-  // clear last timeout, set new timeout
-  // do another save after the interval
-  clearTimeout(saveTimeout)
-  saveTimeout = setTimeout(() => {
-    saveFriendo(friendo)
-  }, SAVE_INTERVAL)
-}
+// get friendo json from localstorage and decompress it
+export const loadFriendoJSON = () => decompress(localStorage.getItem(STORAGE_TOKEN))
 
 // hard-reloads the webpage to clear the cache
 export const reload = () => location.reload(true)
