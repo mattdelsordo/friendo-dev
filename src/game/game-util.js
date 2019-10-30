@@ -14,9 +14,12 @@ const decompress = encodedString => decompressFromEncodedURIComponent(encodedStr
 // convert friendo to json, compress it, store it in localstorage
 const friendoToCompressedJSON = friendo => compress(JSON.stringify(friendo))
 
+// sets save file to a string
+export const storeSavefile = save => localStorage.setItem(STORAGE_TOKEN, save)
+
 export const saveFriendo = (friendo) => {
   const compressed = friendoToCompressedJSON(friendo)
-  localStorage.setItem(STORAGE_TOKEN, compressed)
+  storeSavefile(compressed)
   return compressed
 }
 

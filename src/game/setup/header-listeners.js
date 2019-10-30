@@ -4,9 +4,17 @@
 
 import $ from 'jquery'
 import { version } from '../../../package.json'
-import { reload, erase, saveFriendo } from '../game-util'
+import { reload, erase, saveFriendo, storeSavefile } from '../game-util'
 
+/** DNA Management functions */
 /* eslint-disable no-alert */
+// reloads the page without saving the friendo
+const forceReloadPage = () => {
+  // remove save listeners on the window so that it doesnt save after you erase
+  $(window).off('blur unload')
+  reload()
+}
+
 const deleteFriendo = (friendo) => {
   if (!friendo) {
     alert('No Friendo DNA found!')
@@ -19,10 +27,8 @@ const deleteFriendo = (friendo) => {
     }
 
     // delete friendo and refresh
-    // remove save listeners on the window so that it doesnt save after you erase
-    $(window).off('blur unload')
     erase()
-    reload()
+    forceReloadPage()
   }
 }
 
@@ -44,6 +50,19 @@ const downloadFriendo = (friendo) => {
     } else {
       pom.click()
     }
+  }
+}
+
+// load friendo from file
+const loadFriendo = () => {
+  const savefile = document.getElementById('selectDNA').files[0]
+  if (savefile) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      storeSavefile(e.target.result)
+      forceReloadPage()
+    }
+    reader.readAsText(savefile)
   }
 }
 
@@ -70,6 +89,17 @@ export default () => {
 
   $('#backup-btn').click(() => {
     downloadFriendo()
+  })
+
+  // make sure upload label actually shows the name of the file
+  $('#selectDNA').on('change', function onSelectDNAChange() {
+    if (this.files[0].name) {
+      $('#selectDNAlabel').html(this.files[0].name)
+    }
+  })
+
+  $('#uploadDNA').click(() => {
+    loadFriendo()
   })
 }
 
