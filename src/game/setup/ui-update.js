@@ -229,7 +229,7 @@ export const setBelly = (belly) => {
 }
 
 export const setFoodPref = (pref) => {
-  $('#food-pref').attr('src', `./img/emoji/${FOODS[pref - 1].emoji}.png`)
+  $('#food-pref').attr('src', `./img/emoji/${FOODS[pref].emoji}.png`)
 }
 
 // enable/disable all friendo interaction buttons to prevent the

@@ -1,5 +1,5 @@
 import phrasebook from '../../phrases/feed-phrases'
-import { STATES, STATS } from '../../constants'
+import { STATES, STATS, FOODS } from '../../constants'
 import { ENERGY_COST_FOOD, FOOD_VALUES } from '../../balance'
 import AFeed from '../../animation/feed'
 import Relax from './relax'
@@ -8,10 +8,10 @@ import { EAT_VERB } from '../../phrases/game-text'
 const INITIAL_REPS = 4
 
 export default class Feed extends Relax {
-  constructor(savedState) {
+  constructor(savedState, foodID) {
     super(savedState)
     this.id = STATES.FEED
-    this.anim = new AFeed(savedState.anim, phrasebook)
+    this.anim = new AFeed(savedState.anim, phrasebook, FOODS[foodID])
     this.fatigueCost = ENERGY_COST_FOOD
     this.reps = INITIAL_REPS
     this.verb = EAT_VERB

@@ -187,7 +187,11 @@ const rateListeners = (friendo) => {
 const stateListeners = (friendo) => {
   $('#state-picker input[type=radio]')
     .change(function setState() {
-      friendo.setState(this.value, -1)
+      if (this.value === 'state_feed') {
+        friendo.setState(this.value, friendo.foodPref)
+      } else {
+        friendo.setState(this.value, -1)
+      }
       saveFriendo(friendo)
     })
 
@@ -198,7 +202,7 @@ const stateListeners = (friendo) => {
 
   FOODS.forEach((s, i) => {
     $(`#food-${i}`).click(() => {
-      friendo.setFoodPref(i + 1)
+      friendo.setFoodPref(i)
     })
   })
 }

@@ -1,10 +1,14 @@
 import FAnimation from './f-animation'
 import { left, right } from '../art/art-util'
-import { drawGenericFood } from '../art/props/food'
+import { drawFood } from '../art/props/food'
+import { DEFAULT_FOOD } from '../default'
 
 export default class AFeed extends FAnimation {
-  constructor(old, phrases) {
+  constructor(old, phrases, food = DEFAULT_FOOD) {
     super(old, phrases)
+    this.emoji = new Image()
+    this.emoji.src = `./img/emoji/${food.emoji}.png`
+    this.dir = food.dir
     this.frameDelay = 1
     this.frames = [
       this.frame1.bind(this),
@@ -72,7 +76,7 @@ export default class AFeed extends FAnimation {
   }
 
   drawFood(g, cT, frame) {
-    drawGenericFood(g, cT.mouth.x, cT.mouth.y + 20, (10 - frame) / 10)
+    drawFood(g, cT.mouth.x, cT.mouth.y + 20, this.emoji, (10 - frame) / 10, this.dir)
   }
 
   frame1(g, x, y, friendo, blink, words) {

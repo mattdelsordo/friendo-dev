@@ -75,16 +75,18 @@ export const STATES = Object.freeze({
   CANCEL: 'cancel',
 })
 
+export const LEFT2RIGHT = 'left2right'
+export const TOP2BOT = 'top2bot'
 export const FOODS = [
-  { name: 'Bread', emoji: '1f35e' },
-  { name: 'Eggs', emoji: '1f373' },
-  { name: 'Beans', emoji: '1f96b' },
-  { name: 'Hot Dog', emoji: '1f32d' },
-  { name: 'Spaghetti', emoji: '1f35d' },
-  { name: 'Burrito', emoji: '1f32f' },
-  { name: 'Gyro', emoji: '1f959' },
-  { name: 'Salad', emoji: '1f957' },
-  { name: 'Sushi', emoji: '1f363' },
-  { name: 'Curry', emoji: '1f35b' },
-  { name: 'Stew', emoji: '1f372' },
+  { name: 'Bread', emoji: '1f35e', dir: TOP2BOT },
+  { name: 'Eggs', emoji: '1f373', dir: TOP2BOT },
+  { name: 'Beans', emoji: '1f96b', dir: TOP2BOT },
+  { name: 'Hot Dog', emoji: '1f32d', dir: TOP2BOT },
+  { name: 'Spaghetti', emoji: '1f35d', dir: TOP2BOT },
+  { name: 'Burrito', emoji: '1f32f', dir: TOP2BOT },
+  { name: 'Gyro', emoji: '1f959', dir: TOP2BOT },
+  { name: 'Salad', emoji: '1f957', dir: TOP2BOT },
+  { name: 'Sushi', emoji: '1f363', dir: TOP2BOT },
+  { name: 'Curry', emoji: '1f35b', dir: TOP2BOT },
+  { name: 'Stew', emoji: '1f372', dir: TOP2BOT },
 ]

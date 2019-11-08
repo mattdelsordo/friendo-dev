@@ -159,6 +159,7 @@ export default class Friendo {
   }
 
   setState(id, reps) {
+    console.log(reps)
     // actually swtich the state
     this.state = loadState(this.state, id, reps)
 
@@ -167,7 +168,7 @@ export default class Friendo {
 
   // default food to use in feeding
   setFoodPref(pref) {
-    if (pref <= this.getStatStage(STATS.TASTE)) {
+    if (pref < this.getStatStage(STATS.TASTE)) {
       this.foodPref = pref
       this.onFoodPrefChange(pref)
     }
