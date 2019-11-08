@@ -75,3 +75,16 @@ export const STATES = Object.freeze({
   CANCEL: 'cancel',
 })
 
+export const FOODS = [
+  { name: 'Bread', emoji: '1f35e' },
+  { name: 'Eggs', emoji: '1f373' },
+  { name: 'Beans', emoji: '1f96b' },
+  { name: 'Hot Dog', emoji: '1f32d' },
+  { name: 'Spaghetti', emoji: '1f35d' },
+  { name: 'Burrito', emoji: '1f32f' },
+  { name: 'Gyro', emoji: '1f959' },
+  { name: 'Salad', emoji: '1f957' },
+  { name: 'Sushi', emoji: '1f363' },
+  { name: 'Curry', emoji: '1f35b' },
+  { name: 'Stew', emoji: '1f372' },
+]

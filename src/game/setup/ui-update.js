@@ -9,6 +9,7 @@ import {
   FULL_STAR,
   STAT_STAGES,
   STATS,
+  FOODS,
 } from '../../friendo/constants'
 import {
   MAX_EGG_LEVEL,
@@ -225,6 +226,10 @@ export const setBelly = (belly) => {
     $('#hungerbar').css('background-color', 'var(--danger)')
   }
   $('#hungerbar').css('width', `${Math.floor(belly * 100)}%`)
+}
+
+export const setFoodPref = (pref) => {
+  $('#food-pref').attr('src', `./img/emoji/${FOODS[pref - 1].emoji}.png`)
 }
 
 // enable/disable all friendo interaction buttons to prevent the

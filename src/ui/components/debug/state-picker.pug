@@ -3,12 +3,52 @@ mixin stateSetter(state, btnType)
         input(id=`set_state_${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
         | #{state[0].toUpperCase() + state.slice(1)}
 
+mixin foodDropdownItem(food, i)
+    .dropdown-item(href="#" id=`food-${i}`)
+        +emoji(food.emoji)
+        |
+        | #{food.name}
+
+mixin foodSelector()
+    button.btn.btn-info.dropdown-toggle.p-0#food-selector(type="button" data-toggle="dropdown")
+        +emoji('1f35e')(id="food-pref")
+        .dropdown-menu
+            each f, i in foods
+                +foodDropdownItem(f, i)
+
+mixin feedSetter(state)
+    label.btn.btn-info.dropdown-toggle(data-toggle="dropdown" for=`set_state_${state}`)
+        input(id=`set_state_${state}` type='radio' name='state-radio' autocomplete='off' value=`state_${state}`)
+
 mixin stateSetterGroup(s, btnType)
     .btn-group.btn-group-toggle.m-1(role='group')
         each i in s
             +stateSetter(i, btnType)
 
+mixin idleStatesGroup(btnType)
+    .btn-group.btn-group-toggle.m-1(role='group')
+        +stateSetter('idle', btnType)
+        +stateSetter('sleep', btnType)
+        +stateSetter('pet', btnType)
+        +stateSetter('feed', btnType)
+        +foodSelector()
+        +stateSetter('baby', btnType)
+
 -
+    var foods = [
+        { name: 'Bread', emoji: '1f35e' },
+        { name: 'Eggs', emoji: '1f373' },
+        { name: 'Beans', emoji: '1f96b' },
+        { name: 'Hot Dog', emoji: '1f32d' },
+        { name: 'Spaghetti', emoji: '1f35d' },
+        { name: 'Burrito', emoji: '1f32f' },        
+        { name: 'Gyro', emoji: '1f959' },
+        { name: 'Salad', emoji: '1f957' },
+        { name: 'Sushi', emoji: '1f363' },
+        { name: 'Curry', emoji: '1f35b' },
+        { name: 'Stew', emoji: '1f372' }
+    ]
+
     var states = [
         'idle',
         'sleep',
@@ -29,11 +69,12 @@ mixin stateSetterGroup(s, btnType)
         'egg'
     ]
 
+include ../emoji
 #state-picker.border.m-1
     .p-1
         h6 State:
         .btn-toolbar.d-flex.flex-column(data-toggle='buttons' role='toolbar')
             | Idle:
-            +stateSetterGroup(states, 'info')
+            +idleStatesGroup('info')
             | Exercise:
             +stateSetterGroup(exercises, 'success')

@@ -51,5 +51,7 @@ export const DEFAULT_ELEMENT = selectElement(ELEMENTS.EARTH)
 export const DEFAULT_STATE = new Egg()
 export const DEFAULT_ZODIAC = new Zodiac()
 
+export const DEFAULT_FOOD_PREF = 0
+
 // default x/y at which a friendo is drawn
 export const DEFAULT_HOOK = { x: 200, y: 350 }

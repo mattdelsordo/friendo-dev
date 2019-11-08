@@ -42,6 +42,7 @@ import {
   DEFAULT_STAT_STAGES,
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
+  DEFAULT_FOOD_PREF,
 } from './default'
 
 export default class Friendo {
@@ -58,6 +59,7 @@ export default class Friendo {
     this.fatigue = fromJSON.fatigue || DEFAULT_FATIGUE
     this.exp = fromJSON.exp || DEFAULT_EXP
     this.hunger = fromJSON.hunger || DEFAULT_HUNGER
+    this.foodPref = fromJSON.foodPref || DEFAULT_FOOD_PREF
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
@@ -75,6 +77,7 @@ export default class Friendo {
     this.onHatch = () => {}
     this.onStateChange = () => {}
     this.onStatUnlocked = () => {}
+    this.onFoodPrefChange = () => {}
   }
 
   // helper method to create a friendo based on character creation
@@ -95,6 +98,7 @@ export default class Friendo {
       hunger: this.hunger,
       exp: this.exp,
       savedAt: new Date(), // not sure if this is operation is too expensive
+      foodPref: this.foodPref,
     }
   }
 
@@ -106,7 +110,7 @@ export default class Friendo {
   setOnHatch(oh) { this.onHatch = oh }
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
-
+  setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -161,6 +165,13 @@ export default class Friendo {
     this.onStateChange(this)
   }
 
+  // default food to use in feeding
+  setFoodPref(pref) {
+    if (pref <= this.getStatStage(STATS.TASTE)) {
+      this.foodPref = pref
+      this.onFoodPrefChange(pref)
+    }
+  }
 
   /** Gets */
 
