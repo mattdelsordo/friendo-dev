@@ -81,7 +81,7 @@ export const FOODS = [
   { name: 'Bread', emoji: '1f35e', dir: TOP2BOT },
   { name: 'Eggs', emoji: '1f373', dir: TOP2BOT },
   { name: 'Beans', emoji: '1f96b', dir: TOP2BOT },
-  { name: 'Hot Dog', emoji: '1f32d', dir: TOP2BOT },
+  { name: 'Sandwich', emoji: '1f96a', dir: TOP2BOT },
   { name: 'Spaghetti', emoji: '1f35d', dir: TOP2BOT },
   { name: 'Burrito', emoji: '1f32f', dir: TOP2BOT },
   { name: 'Gyro', emoji: '1f959', dir: TOP2BOT },
@@ -90,3 +90,4 @@ export const FOODS = [
   { name: 'Curry', emoji: '1f35b', dir: TOP2BOT },
   { name: 'Stew', emoji: '1f372', dir: TOP2BOT },
 ]
+export const HOTDOG_EMOJI = { name: 'Hot Dog', emoji: '1f32d', dir: TOP2BOT }

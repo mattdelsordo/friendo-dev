@@ -101,7 +101,7 @@ const drawFoodT2B = (g, x, y, foodImg, foodPercentage) => {
   )
 }
 
-export const drawFood = (g, x, y, foodImg, foodPercentage, dir = LEFT2RIGHT) => {
+export const drawFood = (g, x, y, foodImg, foodPercentage, dir = TOP2BOT) => {
   g.save()
 
   drawPlate(g, x, y)

@@ -1,10 +1,14 @@
 import FAnimation from './f-animation'
-import { drawGenericFood } from '../art/props/food'
+import { drawFood } from '../art/props/food'
 import { left, right } from '../art/art-util'
+import { HOTDOG_EMOJI as EMOJI } from '../constants'
 
 export default class AMunch extends FAnimation {
   constructor(old, phrases) {
     super(old, phrases)
+
+    this.emoji = new Image()
+    this.emoji.src = `./img/emoji/${EMOJI.emoji}.png`
 
     this.frame = 0
     this.frameDelay = 1
@@ -49,7 +53,7 @@ export default class AMunch extends FAnimation {
   }
 
   drawFood(g, cT, frame) {
-    drawGenericFood(g, cT.mouth.x, cT.mouth.y + 20, (10 - frame) / 10)
+    drawFood(g, cT.mouth.x, cT.mouth.y + 20, this.emoji, (10 - frame) / 10, EMOJI.dir)
   }
 
   subframe1(g, x, y, friendo, blink, words) {
