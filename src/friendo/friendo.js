@@ -159,7 +159,6 @@ export default class Friendo {
   }
 
   setState(id, reps) {
-    console.log(reps)
     // actually swtich the state
     this.state = loadState(this.state, id, reps)
 

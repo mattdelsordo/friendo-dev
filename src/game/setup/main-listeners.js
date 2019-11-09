@@ -34,7 +34,7 @@ export default (friendo) => {
 
   // feed button
   $('#feed-button').click(() => {
-    performAction(friendo, STATES.FEED)
+    performAction(friendo, STATES.FEED, friendo.foodPref)
   })
 
   $('#cancel-exercise').click(() => {
@@ -126,4 +126,11 @@ export default (friendo) => {
       placement: 'left',
     })
   })
+
+  // set click events for food preference dropdown
+  for (let i = 0; i < friendo.getStatStage(STATS.TASTE); i += 1) {
+    $(`#food-${i}`).click(() => {
+      friendo.setFoodPref(i)
+    })
+  }
 }
