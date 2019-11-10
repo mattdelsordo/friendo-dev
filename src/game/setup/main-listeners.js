@@ -3,7 +3,7 @@
  */
 
 import $ from 'jquery'
-import { STATS, STATES } from '../../friendo/constants'
+import { STATS, STATES, FLAG_NEW_FOOD_ALERT } from '../../friendo/constants'
 import { performAction } from './ui-update'
 import {
   setEnterButton,
@@ -127,10 +127,23 @@ export default (friendo) => {
     })
   })
 
+  // popover to indicate new food has been unlocked
+  $('#food-selector').popover({
+    trigger: 'manual',
+    // content: 'New meal unlocked!',
+    title: 'New meal unlocked!',
+    offset: '0, 2',
+  })
+
   // set click events for food preference dropdown
   for (let i = 0; i < friendo.getStatStage(STATS.TASTE); i += 1) {
     $(`#food-${i}`).click(() => {
       friendo.setFoodPref(i)
     })
   }
+
+  $('#food-selector').click(() => {
+    $('#food-selector').popover('hide')
+    friendo.setGameFlag(FLAG_NEW_FOOD_ALERT, false)
+  })
 }

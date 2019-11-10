@@ -1,4 +1,4 @@
-import { STATS, FOODS } from './constants'
+import { STATS, FOODS, FLAG_NEW_FOOD_ALERT } from './constants'
 import ELEMENTS from './element/elements'
 import selectElement from './element/select-element'
 import Egg from './state/idle/egg'
@@ -57,3 +57,7 @@ export const DEFAULT_FOOD = FOODS[0]
 
 // default x/y at which a friendo is drawn
 export const DEFAULT_HOOK = { x: 200, y: 350 }
+
+export const DEFAULT_GAME_FLAGS = {
+  [FLAG_NEW_FOOD_ALERT]: false,
+}

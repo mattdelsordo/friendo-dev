@@ -91,3 +91,6 @@ export const FOODS = [
   { name: 'Stew', emoji: '1f372', dir: TOP2BOT },
 ]
 export const HOTDOG_EMOJI = { name: 'Hot Dog', emoji: '1f32d', dir: TOP2BOT }
+
+/** Game flags */
+export const FLAG_NEW_FOOD_ALERT = 0

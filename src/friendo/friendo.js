@@ -43,6 +43,7 @@ import {
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
   DEFAULT_FOOD_PREF,
+  DEFAULT_GAME_FLAGS,
 } from './default'
 
 export default class Friendo {
@@ -50,6 +51,7 @@ export default class Friendo {
   constructor(json) {
     // initialize friendo from save file
     const fromJSON = JSON.parse(json || '{}')
+    this.game_flags = fromJSON.game_flags || DEFAULT_GAME_FLAGS
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
     this.name = fromJSON.name || DEFAULT_NAME
@@ -78,6 +80,7 @@ export default class Friendo {
     this.onStateChange = () => {}
     this.onStatUnlocked = () => {}
     this.onFoodPrefChange = () => {}
+    this.onStatStageIncrease = () => {}
   }
 
   // helper method to create a friendo based on character creation
@@ -88,6 +91,7 @@ export default class Friendo {
   // converts ya boi to a JSON string
   toJSON() {
     return {
+      flags: this.game_flags,
       name: this.name,
       owner: this.owner,
       element: this.element,
@@ -111,6 +115,7 @@ export default class Friendo {
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
   setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
+  setOnStatStageIncreate(ossi) { this.onStatStageIncrease = ossi }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -144,8 +149,10 @@ export default class Friendo {
           stage = i + 1 // the stat stages are 1-indexed so you gotta correct
         }
       }
-
+      const old = this._statStage[stat]
       this._statStage[stat] = stage
+
+      if (stage > old) this.onStatStageIncrease(this, stat)
     }
   }
 
@@ -171,6 +178,11 @@ export default class Friendo {
       this.foodPref = pref
       this.onFoodPrefChange(pref)
     }
+  }
+
+  // modify value of a game flag
+  setGameFlag(flag, val) {
+    this.game_flags[flag] = val
   }
 
   /** Gets */
@@ -253,6 +265,9 @@ export default class Friendo {
       Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
   }
 
+  getGameFlag(flag) {
+    return this.game_flags[flag]
+  }
 
   /** Modifys */
 

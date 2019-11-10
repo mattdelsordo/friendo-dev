@@ -10,6 +10,7 @@ import {
   STAT_STAGES,
   STATS,
   FOODS,
+  FLAG_NEW_FOOD_ALERT,
 } from '../../friendo/constants'
 import {
   MAX_EGG_LEVEL,
@@ -128,6 +129,10 @@ const showEnergyTutorial = () => {
   }, 20000)
 }
 
+const showNewFoodAvailable = () => {
+  $('#food-selector').popover('show')
+}
+
 const setPageTitle = (name, emoji) => {
   $(document).prop('title', `Friendo \u{00b7} ${name} ${emoji}`)
 }
@@ -233,7 +238,7 @@ export const setFoodPref = (pref) => {
 }
 
 // enables all food options of lower value than the stage
-const showAvailableFood = (stage) => {
+const setAvailableFood = (stage) => {
   for (let i = 0; i < stage; i += 1) {
     $(`#food-${i}`).css('display', 'block')
   }
@@ -288,7 +293,7 @@ export const initialize = (friendo) => {
   setBelly(friendo.getBellyPercent())
   updateStatus(friendo.state.verb)
   updateTimer(friendo.state.reps)
-  showAvailableFood(friendo.getStatStage(STATS.TASTE))
+  setAvailableFood(friendo.getStatStage(STATS.TASTE))
   setFoodPref(friendo.foodPref)
 
   // show stats based on level
@@ -322,6 +327,9 @@ export const initialize = (friendo) => {
   if (friendo.getStat(STATS.CORE) === 0 && friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
   // show energy tutorial if no stat has levelled up
   if (friendo.getStat(STATS.CORE) > 0 && friendo.getStatSum() === 1) showEnergyTutorial()
+
+  // if new meal alert flag is set then show the new meal alert
+  if (friendo.getGameFlag(FLAG_NEW_FOOD_ALERT)) showNewFoodAvailable()
 
   // start daily event timer
   daily(friendo)
@@ -409,6 +417,15 @@ export const onStateChange = (friendo) => {
 export const onStatUnlocked = (friendo, stat) => {
   setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
   updateStatVisibility(friendo, stat)
+}
+
+export const onStatStageIncrease = (friendo, stat) => {
+  if (stat === STATS.TASTE) {
+    // when taste increases, update available foods and add a tooltip
+    setAvailableFood(friendo.getStatStage[STATS.TASTE])
+    showNewFoodAvailable()
+    friendo.setGameFlag(FLAG_NEW_FOOD_ALERT, true)
+  }
 }
 
 // send message to friendo to change state
