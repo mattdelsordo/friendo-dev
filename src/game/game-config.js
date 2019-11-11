@@ -3,7 +3,7 @@
 // interval between calls to draw()
 export const FRAMERATE = 250
 // interval between calls to
-export const HEARTRATE = 1000
+export const HEARTRATE = 100
 
 export const MILLI_TO_MIN = 60000
 

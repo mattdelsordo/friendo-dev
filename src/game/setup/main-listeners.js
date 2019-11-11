@@ -130,7 +130,7 @@ export default (friendo) => {
   // popover to indicate new food has been unlocked
   $('#food-selector').popover({
     trigger: 'manual',
-    // content: 'New meal unlocked!',
+    content: 'Yum!',
     title: 'New meal unlocked!',
     offset: '0, 2',
   })

@@ -69,11 +69,6 @@ export default class Friendo {
     this.maxEnergy = DEFAULT_MAX_ENERGY
     this.maxBelly = DEFAULT_MAX_BELLY
 
-    // initialize stat stages, level, and anchors
-    this.initializeStatStages()
-    this.updateLevel()
-    this.element.computeAnchors(this)
-
     // establish UI listener fields
     this.onHeartbeat = () => {}
     this.onHatch = () => {}
@@ -81,6 +76,11 @@ export default class Friendo {
     this.onStatUnlocked = () => {}
     this.onFoodPrefChange = () => {}
     this.onStatStageIncrease = () => {}
+
+    // initialize stat stages, level, and anchors
+    this.initializeStatStages()
+    this.updateLevel()
+    this.element.computeAnchors(this)
   }
 
   // helper method to create a friendo based on character creation
@@ -115,7 +115,7 @@ export default class Friendo {
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
   setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
-  setOnStatStageIncreate(ossi) { this.onStatStageIncrease = ossi }
+  setOnStatStageIncrease(ossi) { this.onStatStageIncrease = ossi }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -152,7 +152,9 @@ export default class Friendo {
       const old = this._statStage[stat]
       this._statStage[stat] = stage
 
-      if (stage > old) this.onStatStageIncrease(this, stat)
+      if (stage > old) {
+        this.onStatStageIncrease(this, stat)
+      }
     }
   }
 
