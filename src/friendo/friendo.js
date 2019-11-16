@@ -150,7 +150,7 @@ export default class Friendo {
       // if the stat ranked up, do the callback
       // skip if the increase only unlocks the stat
       if (stage > 1 && stage > this._statStage[stat]) {
-        this.onStatStageUp(stat, stage)
+        this.onStatStageUp(this, stat, stage)
       }
 
       this._statStage[stat] = stage

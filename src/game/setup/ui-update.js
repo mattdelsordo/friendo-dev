@@ -237,9 +237,11 @@ export const setFoodPref = (pref) => {
 }
 
 // enables all food options of lower value than the stage
-const setAvailableFood = (stage) => {
+const setAvailableFood = (friendo, stage) => {
   for (let i = 0; i < stage; i += 1) {
-    $(`#food-${i}`).css('display', 'block')
+    $(`#food-${i}`)
+      .css('display', 'block')
+      .click(() => { friendo.setFoodPref(i) })
   }
 }
 
@@ -292,7 +294,7 @@ export const initialize = (friendo) => {
   setBelly(friendo.getBellyPercent())
   updateStatus(friendo.state.verb)
   updateTimer(friendo.state.reps)
-  setAvailableFood(friendo.getStatStage(STATS.TASTE))
+  setAvailableFood(friendo, friendo.getStatStage(STATS.TASTE))
   setFoodPref(friendo.foodPref)
 
   // show stats based on level
@@ -416,9 +418,9 @@ export const onStatUnlocked = (friendo, stat) => {
 }
 
 // fire when a friendo's stat stage increases (above 1)
-export const onStatStageUp = (stat, stage) => {
+export const onStatStageUp = (friendo, stat, stage) => {
   if (stat === STATS.TASTE) {
-    setAvailableFood(stage)
+    setAvailableFood(friendo, stage)
     showNewMeal()
   }
 }
