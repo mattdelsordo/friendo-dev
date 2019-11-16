@@ -102,6 +102,10 @@ const showTrainingTutorial = () => {
   $('#egg-display').popover('show')
 }
 
+const showNewMeal = () => {
+  $('#food-selector').popover('show')
+}
+
 // handles popups that teach the user about energy and hunger
 const showEnergyTutorial = () => {
   $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_TUT_CONTENT
@@ -233,7 +237,7 @@ export const setFoodPref = (pref) => {
 }
 
 // enables all food options of lower value than the stage
-const showAvailableFood = (stage) => {
+const setAvailableFood = (stage) => {
   for (let i = 0; i < stage; i += 1) {
     $(`#food-${i}`).css('display', 'block')
   }
@@ -288,7 +292,7 @@ export const initialize = (friendo) => {
   setBelly(friendo.getBellyPercent())
   updateStatus(friendo.state.verb)
   updateTimer(friendo.state.reps)
-  showAvailableFood(friendo.getStatStage(STATS.TASTE))
+  setAvailableFood(friendo.getStatStage(STATS.TASTE))
   setFoodPref(friendo.foodPref)
 
   // show stats based on level
@@ -409,6 +413,14 @@ export const onStateChange = (friendo) => {
 export const onStatUnlocked = (friendo, stat) => {
   setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
   updateStatVisibility(friendo, stat)
+}
+
+// fire when a friendo's stat stage increases (above 1)
+export const onStatStageUp = (stat, stage) => {
+  if (stat === STATS.TASTE) {
+    setAvailableFood(stage)
+    showNewMeal()
+  }
 }
 
 // send message to friendo to change state

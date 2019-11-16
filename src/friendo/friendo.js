@@ -67,17 +67,18 @@ export default class Friendo {
     this.maxEnergy = DEFAULT_MAX_ENERGY
     this.maxBelly = DEFAULT_MAX_BELLY
 
-    // initialize stat stages, level, and anchors
-    this.initializeStatStages()
-    this.updateLevel()
-    this.element.computeAnchors(this)
-
     // establish UI listener fields
     this.onHeartbeat = () => {}
     this.onHatch = () => {}
     this.onStateChange = () => {}
     this.onStatUnlocked = () => {}
     this.onFoodPrefChange = () => {}
+    this.onStatStageUp = () => {}
+
+    // initialize stat stages, level, and anchors
+    this.initializeStatStages()
+    this.updateLevel()
+    this.element.computeAnchors(this)
   }
 
   // helper method to create a friendo based on character creation
@@ -111,6 +112,7 @@ export default class Friendo {
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
   setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
+  setOnStatStageUp(ossu) { this.onStatStageUp = ossu }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -120,7 +122,7 @@ export default class Friendo {
 
   // sets the value of a stat
   setStat(stat, value) {
-    this._stats[stat] = value
+    this._stats[stat] = Number(value)
     // recompute stage of stat
     this.setStatStage(stat)
     // recompute level
@@ -143,6 +145,12 @@ export default class Friendo {
         if (this.getStat(stat) >= stages[i]) {
           stage = i + 1 // the stat stages are 1-indexed so you gotta correct
         }
+      }
+
+      // if the stat ranked up, do the callback
+      // skip if the increase only unlocks the stat
+      if (stage > 1 && stage > this._statStage[stat]) {
+        this.onStatStageUp(stat, stage)
       }
 
       this._statStage[stat] = stage

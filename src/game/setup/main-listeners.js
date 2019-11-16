@@ -115,6 +115,18 @@ export default (friendo) => {
     offset: '0, 2',
   })
 
+  /** New food unlocked popover */
+  $('#food-selector')
+    .popover({
+      trigger: 'manual',
+      title: 'Your Friendo\'s taste expanded!',
+      content: 'A new meal is available.',
+      offset: '0, 2',
+    })
+    .on('hover click', () => {
+      $('#food-selector').popover('hide')
+    })
+
   /** Stat explaination popovers */
   /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((v) => {
