@@ -34,7 +34,7 @@ export default (friendo) => {
 
   // feed button
   $('#feed-button').click(() => {
-    performAction(friendo, STATES.FEED)
+    performAction(friendo, STATES.FEED, friendo.foodPref)
   })
 
   $('#cancel-exercise').click(() => {
@@ -114,6 +114,18 @@ export default (friendo) => {
     content: LOCKED_STAT_CONTENT,
     offset: '0, 2',
   })
+
+  /** New food unlocked popover */
+  $('#food-selector')
+    .popover({
+      trigger: 'manual',
+      title: 'Your Friendo\'s taste expanded!',
+      content: 'A new meal is available.',
+      offset: '0, 2',
+    })
+    .on('hover click', () => {
+      $('#food-selector').popover('hide')
+    })
 
   /** Stat explaination popovers */
   /* eslint-disable-next-line compat/compat */

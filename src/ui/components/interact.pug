@@ -1,5 +1,32 @@
+-
+    var foods = [
+        { name: 'Bread', emoji: '1f35e' },
+        { name: 'Eggs', emoji: '1f373' },
+        { name: 'Beans', emoji: '1f96b' },
+        { name: 'Sandwich', emoji: '1f96a' },
+        { name: 'Spaghetti', emoji: '1f35d' },
+        { name: 'Burrito', emoji: '1f32f' },        
+        { name: 'Gyro', emoji: '1f959' },
+        { name: 'Salad', emoji: '1f957' },
+        { name: 'Sushi', emoji: '1f363' },
+        { name: 'Curry', emoji: '1f35b' },
+        { name: 'Stew', emoji: '1f372' }
+    ]
+
+mixin foodDropdownItem(food, i)
+    .dropdown-item.food-option(href="#" id=`food-${i}`)
+        +emoji(food.emoji)
+        |
+        | #{food.name}
+
 .row.mb-3#interact-panel
     .col
-        button.btn.btn-warning.w-100#pet-button Pet
+        button.btn.btn-warning.w-100#pet-button(type="button") Pet
     .col
-        button.btn.btn-warning.w-100#feed-button Feed
+        .btn-group.dropdown.w-100(role="group")
+            button.btn.btn-warning.w-75#feed-button(type="button") Feed
+            button.btn.btn-warning.dropdown-toggle.p-0.m-0#food-selector(type="button" data-toggle="dropdown")
+                +emoji('1f35e')(id="food-pref")
+            .dropdown-menu
+                each f, i in foods
+                    +foodDropdownItem(f, i)

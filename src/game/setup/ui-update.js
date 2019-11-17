@@ -9,6 +9,7 @@ import {
   FULL_STAR,
   STAT_STAGES,
   STATS,
+  FOODS,
 } from '../../friendo/constants'
 import {
   MAX_EGG_LEVEL,
@@ -99,6 +100,10 @@ const showTrainingTutorial = () => {
     })
 
   $('#egg-display').popover('show')
+}
+
+const showNewMeal = () => {
+  $('#food-selector').popover('show')
 }
 
 // handles popups that teach the user about energy and hunger
@@ -227,11 +232,25 @@ export const setBelly = (belly) => {
   $('#hungerbar').css('width', `${Math.floor(belly * 100)}%`)
 }
 
+export const setFoodPref = (pref) => {
+  $('#food-pref').attr('src', `./img/emoji/${FOODS[pref].emoji}.png`)
+}
+
+// enables all food options of lower value than the stage
+const setAvailableFood = (friendo, stage) => {
+  for (let i = 0; i < stage; i += 1) {
+    $(`#food-${i}`)
+      .css('display', 'block')
+      .click(() => { friendo.setFoodPref(i) })
+  }
+}
+
 // enable/disable all friendo interaction buttons to prevent the
 // player from breaking the entire game state
 export const enableButtons = () => {
   $('#pet-button').prop('disabled', '')
   $('#feed-button').prop('disabled', '')
+  $('#food-selector').prop('disabled', '')
   /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     $(`#start-${s}`).prop('disabled', '')
@@ -240,6 +259,7 @@ export const enableButtons = () => {
 export const disableButtons = () => {
   $('#pet-button').prop('disabled', 'disabled')
   $('#feed-button').prop('disabled', 'disabled')
+  $('#food-selector').prop('disabled', 'disabled')
   /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     $(`#start-${s}`).prop('disabled', 'disabled')
@@ -274,6 +294,8 @@ export const initialize = (friendo) => {
   setBelly(friendo.getBellyPercent())
   updateStatus(friendo.state.verb)
   updateTimer(friendo.state.reps)
+  setAvailableFood(friendo, friendo.getStatStage(STATS.TASTE))
+  setFoodPref(friendo.foodPref)
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
@@ -393,6 +415,14 @@ export const onStateChange = (friendo) => {
 export const onStatUnlocked = (friendo, stat) => {
   setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
   updateStatVisibility(friendo, stat)
+}
+
+// fire when a friendo's stat stage increases (above 1)
+export const onStatStageUp = (friendo, stat, stage) => {
+  if (stat === STATS.TASTE) {
+    setAvailableFood(friendo, stage)
+    showNewMeal()
+  }
 }
 
 // send message to friendo to change state

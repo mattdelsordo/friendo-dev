@@ -101,7 +101,7 @@ export const calcMaxEnergy = level =>
  * should allow you to restore 40% of the belly given by the corresponding value for "belly factor",
  * which is calculated off 2*core+arm+leg
  */
-export const FOOD_VALUES = [0, 4, 7, 12, 23, 46, 107, 283, 838, 2749, 9897, 39588]
+export const FOOD_VALUES = [4, 7, 12, 23, 46, 107, 283, 838, 2749, 9897, 39588]
 const BELLY_CAP_TARGETS = [10, 16, 28, 48, 92, 184, 428, 1132, 3352, 10996, 39588]
 export const calcBellyCap = (bellyFactor) => {
   const factorIndex = Math.floor(bellyFactor / 10)

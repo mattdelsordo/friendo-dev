@@ -42,6 +42,7 @@ import {
   DEFAULT_STAT_STAGES,
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
+  DEFAULT_FOOD_PREF,
 } from './default'
 
 export default class Friendo {
@@ -58,6 +59,7 @@ export default class Friendo {
     this.fatigue = fromJSON.fatigue || DEFAULT_FATIGUE
     this.exp = fromJSON.exp || DEFAULT_EXP
     this.hunger = fromJSON.hunger || DEFAULT_HUNGER
+    this.foodPref = fromJSON.foodPref || DEFAULT_FOOD_PREF
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
@@ -65,16 +67,18 @@ export default class Friendo {
     this.maxEnergy = DEFAULT_MAX_ENERGY
     this.maxBelly = DEFAULT_MAX_BELLY
 
-    // initialize stat stages, level, and anchors
-    this.initializeStatStages()
-    this.updateLevel()
-    this.element.computeAnchors(this)
-
     // establish UI listener fields
     this.onHeartbeat = () => {}
     this.onHatch = () => {}
     this.onStateChange = () => {}
     this.onStatUnlocked = () => {}
+    this.onFoodPrefChange = () => {}
+    this.onStatStageUp = () => {}
+
+    // initialize stat stages, level, and anchors
+    this.initializeStatStages()
+    this.updateLevel()
+    this.element.computeAnchors(this)
   }
 
   // helper method to create a friendo based on character creation
@@ -95,6 +99,7 @@ export default class Friendo {
       hunger: this.hunger,
       exp: this.exp,
       savedAt: new Date(), // not sure if this is operation is too expensive
+      foodPref: this.foodPref,
     }
   }
 
@@ -106,7 +111,8 @@ export default class Friendo {
   setOnHatch(oh) { this.onHatch = oh }
   setOnStateChange(osc) { this.onStateChange = osc }
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
-
+  setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
+  setOnStatStageUp(ossu) { this.onStatStageUp = ossu }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -116,7 +122,7 @@ export default class Friendo {
 
   // sets the value of a stat
   setStat(stat, value) {
-    this._stats[stat] = value
+    this._stats[stat] = Number(value)
     // recompute stage of stat
     this.setStatStage(stat)
     // recompute level
@@ -141,6 +147,12 @@ export default class Friendo {
         }
       }
 
+      // if the stat ranked up, do the callback
+      // skip if the increase only unlocks the stat
+      if (stage > 1 && stage > this._statStage[stat]) {
+        this.onStatStageUp(this, stat, stage)
+      }
+
       this._statStage[stat] = stage
     }
   }
@@ -161,6 +173,13 @@ export default class Friendo {
     this.onStateChange(this)
   }
 
+  // default food to use in feeding
+  setFoodPref(pref) {
+    if (pref < this.getStatStage(STATS.TASTE)) {
+      this.foodPref = pref
+      this.onFoodPrefChange(pref)
+    }
+  }
 
   /** Gets */
 

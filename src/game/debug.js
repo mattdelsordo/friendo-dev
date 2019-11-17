@@ -2,7 +2,8 @@ import $ from 'jquery'
 import Tether from 'tether'
 
 import { saveFriendo, loadFriendoJSON } from './game-util'
-import { STATS, TOTAL_EVENT_CHANCE } from '../friendo/constants'
+import { STATS, TOTAL_EVENT_CHANCE, FOODS, STATES } from '../friendo/constants'
+import { setFoodPref } from './setup/ui-update'
 import Friendo from '../friendo/friendo'
 // import { toggleHookMarkers } from '../friendo/art/art-util'
 import { FRAMERATE } from './game-config'
@@ -185,11 +186,25 @@ const rateListeners = (friendo) => {
  */
 const stateListeners = (friendo) => {
   $('#state-picker input[type=radio]')
-
     .change(function setState() {
-      friendo.setState(this.value, -1)
+      if (this.value === STATES.FEED) {
+        friendo.setState(this.value, friendo.foodPref)
+      } else {
+        friendo.setState(this.value, -1)
+      }
       saveFriendo(friendo)
     })
+
+  friendo.setOnFoodPrefChange((pref) => {
+    setFoodPref(pref)
+    saveFriendo(friendo)
+  })
+
+  FOODS.forEach((s, i) => {
+    $(`#food-${i}`).click(() => {
+      friendo.setFoodPref(i)
+    })
+  })
 }
 
 /**
@@ -215,6 +230,7 @@ const initialize = (friendo) => {
   $('#speak-rate-indicator').html(`${friendo.state.speakRate}/${TOTAL_EVENT_CHANCE}`)
 
   $(`#state-picker label[for*=${friendo.state.id}]`).addClass('active')
+  setFoodPref(friendo.foodPref)
 }
 
 $(document)
