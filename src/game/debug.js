@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Tether from 'tether'
 
 import { saveFriendo, loadFriendoJSON } from './game-util'
-import { STATS, TOTAL_EVENT_CHANCE, FOODS } from '../friendo/constants'
+import { STATS, TOTAL_EVENT_CHANCE, FOODS, STATES } from '../friendo/constants'
 import { setFoodPref } from './setup/ui-update'
 import Friendo from '../friendo/friendo'
 // import { toggleHookMarkers } from '../friendo/art/art-util'
@@ -187,7 +187,7 @@ const rateListeners = (friendo) => {
 const stateListeners = (friendo) => {
   $('#state-picker input[type=radio]')
     .change(function setState() {
-      if (this.value === 'state_feed') {
+      if (this.value === STATES.FEED) {
         friendo.setState(this.value, friendo.foodPref)
       } else {
         friendo.setState(this.value, -1)

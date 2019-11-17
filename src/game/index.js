@@ -12,7 +12,10 @@ import {
   initialize,
   onHatch,
   onHeartbeat,
-  onStateChange, onStatUnlocked, setFoodPref, onStatStageUp,
+  onStateChange,
+  onStatUnlocked,
+  setFoodPref,
+  onStatStageUp,
 } from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
 import { initializeKeyListeners, unsetEnterButton } from './setup/key-listeners'

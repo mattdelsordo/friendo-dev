@@ -67,6 +67,7 @@ const drawPlate = (g, x, y) => {
   g.restore()
 }
 
+// draws foodImg from left to right
 const drawFoodL2R = (g, x, y, foodImg, foodPercentage) => {
   const resizeW = foodImg.width * RESIZE_FACTOR
   const resizeH = foodImg.height * RESIZE_FACTOR
@@ -84,6 +85,7 @@ const drawFoodL2R = (g, x, y, foodImg, foodPercentage) => {
   )
 }
 
+// draws foodImg from top to bottom
 const drawFoodT2B = (g, x, y, foodImg, foodPercentage) => {
   const resizeW = foodImg.width * RESIZE_FACTOR
   const resizeH = foodImg.height * RESIZE_FACTOR
