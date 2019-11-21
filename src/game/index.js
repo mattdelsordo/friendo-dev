@@ -95,6 +95,11 @@ $(document)
     else {
       // else, initialize game
       friendo = new Friendo(savegame)
+
+      // advance friendo into the future based on how much time has passed
+      const heartbeatsSinceLastSave = (new Date() - new Date(savegame.savedAt)) / HEARTRATE
+      friendo.fastForward(heartbeatsSinceLastSave)
+
       start(friendo)
       hideCreator()
     }
