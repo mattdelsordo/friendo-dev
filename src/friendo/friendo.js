@@ -47,9 +47,8 @@ import {
 
 export default class Friendo {
   // constructor takes context on which to draw
-  constructor(json) {
+  constructor(fromJSON) {
     // initialize friendo from save file
-    const fromJSON = JSON.parse(json || '{}')
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
     this.name = fromJSON.name || DEFAULT_NAME
@@ -83,7 +82,7 @@ export default class Friendo {
 
   // helper method to create a friendo based on character creation
   static newFriendo(name, owner, element) {
-    return new Friendo(JSON.stringify({ name, owner, element }))
+    return new Friendo({ name, owner, element })
   }
 
   // converts ya boi to a JSON string
@@ -416,5 +415,12 @@ export default class Friendo {
   // handle messages directed at the friendo
   handleAction(action, reps) {
     return this.state.handleAction(this, action, reps)
+  }
+
+  // advances time forward from the last save
+  fastForward(heartbeats) {
+    for (let i = 0; i < heartbeats; i += 1) {
+      this.heartbeat()
+    }
   }
 }

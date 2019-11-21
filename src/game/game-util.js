@@ -24,7 +24,7 @@ export const saveFriendo = (friendo) => {
 }
 
 // get friendo json from localstorage and decompress it
-export const loadFriendoJSON = () => decompress(localStorage.getItem(STORAGE_TOKEN))
+export const loadFriendoJSON = () => JSON.parse(decompress(localStorage.getItem(STORAGE_TOKEN)))
 
 // hard-reloads the webpage to clear the cache
 export const reload = () => location.reload(true)
