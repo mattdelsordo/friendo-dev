@@ -18,7 +18,7 @@ import {
   HUNGER_EXPLAIN_TITLE,
   LOCKED_STAT_CONTENT,
   lockedStatTitle, STAT_EXPLAIN, STAT_TITLES,
-} from '../../friendo/phrases/game-text'
+} from '../../friendo/text/game-text'
 import { saveFriendo } from '../game-util'
 
 export default (friendo) => {

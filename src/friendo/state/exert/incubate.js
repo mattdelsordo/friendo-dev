@@ -7,7 +7,8 @@ import AIncubate from '../../animation/incubate'
 import { STATS, STATES } from '../../constants'
 import { MAX_EGG_LEVEL, ENERGY_COST_INCUBATE } from '../../balance'
 import Exert from './exert'
-import { BABY_EMOJI, INCUBATE_VERB } from '../../phrases/game-text'
+import { BABY_EMOJI, INCUBATE_VERB } from '../../text/game-text'
+import { EmptyPhrasebook } from '../../text/phrasebooks/phrasebook'
 
 export default class Incubate extends Exert {
   constructor(savedState, reps) {
@@ -15,10 +16,14 @@ export default class Incubate extends Exert {
     this.id = STATES.EGG
     this.stat = STATS.EGG
     this.fatigueCost = ENERGY_COST_INCUBATE
-    this.anim = new AIncubate(savedState, () => [''])
+    this.anim = this._newAnimation(savedState.anim, new EmptyPhrasebook())
     this.idleState = STATES.BABY
     this.verb = INCUBATE_VERB
     this.emoji = BABY_EMOJI
+  }
+
+  _newAnimation(old, phrases) {
+    return new AIncubate(old, phrases)
   }
 
   // have to override this because this has a different stat max

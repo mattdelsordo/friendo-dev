@@ -1,7 +1,7 @@
-import phrasebook from '../phrases/idle-phrases'
+import EmptyPhrasebook from '../text/phrasebooks/phrasebook'
 import FAnimation from '../animation/f-animation'
 import { STATES } from '../constants'
-import { DEFAULT_VERB } from '../phrases/game-text'
+import { DEFAULT_VERB } from '../text/game-text'
 
 /**
  *  defines the animation to be done in a given state
@@ -26,7 +26,7 @@ export default class State {
     this.hungerMultiplier = 0
 
     // set animation
-    this.anim = new FAnimation(oldState.anim, phrasebook)
+    this.anim = this._newAnimation(oldState.anim, new EmptyPhrasebook())
 
     // override to transition to something OTHER than idle
     // e.g. for incubate
@@ -35,6 +35,11 @@ export default class State {
 
     // text displayed to indicate state
     this.verb = DEFAULT_VERB
+  }
+
+  // call anim's phrasebook's reloadPhrases
+  loadPhrases(friendo) {
+    this.anim.phrasebook.reloadPhrases(friendo)
   }
 
   toJSON() {
@@ -56,6 +61,11 @@ export default class State {
   // draws a single frame of this state's associated animation
   draw(g, x, y, friendo) {
     this.anim.draw(g, x, y, friendo)
+  }
+
+  // utility function to decouple setting the animation from choosing the phrasebook
+  _newAnimation(old, phrasebook) {
+    return new FAnimation(old, phrasebook)
   }
 
   // conditions to return to Idle and Sleep respectively

@@ -4,9 +4,8 @@
  */
 
 import Egg from './egg'
-import AEgg from '../../animation/egg'
 import { STATES, HATCH_DUR } from '../../constants'
-import { HATCH_VERB } from '../../phrases/game-text'
+import { HATCH_VERB } from '../../text/game-text'
 
 export default class Hatch extends Egg {
   constructor(savedState) {
@@ -17,10 +16,9 @@ export default class Hatch extends Egg {
     // keep buttons disabled if in this state
     this.isIdle = false
     this.reps = HATCH_DUR
-
-    // phrasebook left blank to avoid speaking while and egg
-    this.anim = new AEgg(savedState.anim, () => [''])
     this.verb = HATCH_VERB
+
+    // inherits animation of Egg
   }
 
   handleAction() {

@@ -1,4 +1,8 @@
-export default friendo => [
+export const nonrepeatedPhrases = () => [
+  '',
+]
+
+export const idlePhrases = friendo => [
   'Hi.',
   `I love you ${friendo.owner}`,
   `You can call me ${friendo.name}`,

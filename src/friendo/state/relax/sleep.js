@@ -2,7 +2,7 @@
  * Define behavior for a sleeping friendo
  */
 
-import phrasebook from '../../phrases/sleep-phrases'
+import SleepPhrases from '../../text/phrasebooks/sleep'
 import { STATES } from '../../constants'
 import {
   HUNGER_MULTIPLIER_SLEEP,
@@ -12,7 +12,7 @@ import {
 } from '../../balance'
 import Relax from './relax'
 import ASleep from '../../animation/sleep'
-import { ASLEEP_EMOJI, SLEEP_VERB } from '../../phrases/game-text'
+import { ASLEEP_EMOJI, SLEEP_VERB } from '../../text/game-text'
 
 export default class Sleep extends Relax {
   constructor(savedState, bellyPercent) {
@@ -20,13 +20,17 @@ export default class Sleep extends Relax {
     this.id = STATES.SLEEP
     this.fatigueCost = ENERGY_COST_SLEEP
     this.hungerMultiplier = HUNGER_MULTIPLIER_SLEEP
-    this.anim = new ASleep(savedState.anim, phrasebook)
+    this.anim = this._newAnimation(savedState.anim, new SleepPhrases())
     this.reps = -1
     this.verb = SLEEP_VERB
     this.emoji = ASLEEP_EMOJI
 
     // tracks if the friendo fell asleep from being famished
     this.famished = (bellyPercent <= 0)
+  }
+
+  _newAnimation(old, phrases) {
+    return new ASleep(old, phrases)
   }
 
   // sleep only transitions to idle when friendo is at max energy

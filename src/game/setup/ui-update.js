@@ -27,7 +27,7 @@ import {
   ENERGY_EXPLAIN_TITLE,
   HUNGER_EXPLAIN_CONTENT,
   HUNGER_EXPLAIN_TITLE, STAT_EXPLAIN,
-} from '../../friendo/phrases/game-text'
+} from '../../friendo/text/game-text'
 
 export const setName = (name) => {
   $('#name-display').html(name)

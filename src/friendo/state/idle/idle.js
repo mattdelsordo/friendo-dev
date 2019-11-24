@@ -4,18 +4,17 @@
  */
 
 import State from '../state'
-import phrasebook from '../../phrases/idle-phrases'
+import IdlePhrasebook from '../../text/phrasebooks/idle'
 import AIdle from '../../animation/idle'
 import { STATES } from '../../constants'
 import { HUNGER_MULTIPLIER_IDLE } from '../../balance'
-import { IDLE_EMOJI, IDLE_VERB } from '../../phrases/game-text'
+import { IDLE_EMOJI, IDLE_VERB } from '../../text/game-text'
 
 export default class Idle extends State {
   constructor(savedState) {
     super(savedState)
     this.id = STATES.IDLE
-    this.phrasebook = phrasebook
-    this.anim = new AIdle(savedState.anim, phrasebook)
+    this.anim = this._newAnimation(savedState.anim, new IdlePhrasebook())
     this.hungerMultiplier = HUNGER_MULTIPLIER_IDLE
 
     // check for "idleness" using this field,
@@ -25,6 +24,10 @@ export default class Idle extends State {
     this.reps = -1
     this.verb = IDLE_VERB
     this.emoji = IDLE_EMOJI
+  }
+
+  _newAnimation(old, phrases) {
+    return new AIdle(old, phrases)
   }
 
   _doTransitionToSleep(friendo) {

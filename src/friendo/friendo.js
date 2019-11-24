@@ -53,6 +53,7 @@ export default class Friendo {
     // initialize friendo from save file
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
+    this.state.loadPhrases(this)
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
@@ -156,6 +157,7 @@ export default class Friendo {
       // skip if the increase only unlocks the stat
       if (stage > 1 && stage > this._statStage[stat]) {
         this.onStatStageUp(this, stat, stage)
+        this.state.loadPhrases(this)
       }
 
       this._statStage[stat] = stage
@@ -174,6 +176,7 @@ export default class Friendo {
   setState(id, reps) {
     // actually swtich the state
     this.state = loadState(this.state, id, reps)
+    this.state.loadPhrases(this)
 
     this.onStateChange(this)
   }

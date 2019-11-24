@@ -3,15 +3,15 @@
  */
 
 import State from '../state'
-import phrasebook from '../../phrases/fitness-phrases'
+import FitnessPhrasebook from '../../text/phrasebooks/fitness'
 import { BASE_EXP_REWARD, HUNGER_MULTIPLIER_EXERT, EXERCISE_COST, STAT_MAX } from '../../balance'
-import { EXERT_EMOJI, EXERT_VERB } from '../../phrases/game-text'
+import { EXERT_EMOJI, EXERT_VERB } from '../../text/game-text'
 import { STATES } from '../../constants'
 
 export default class Exert extends State {
   constructor(savedState, reps) {
     super(savedState, reps)
-    this.phrasebook = phrasebook
+    this.anim = this._newAnimation(savedState.anim, new FitnessPhrasebook())
     this.words = 'feel the burn'
     this.frame = 0
     this.id = 'abstract_exert'
