@@ -4,8 +4,8 @@ import { drawFood } from '../art/props/food'
 import { DEFAULT_FOOD } from '../default'
 
 export default class AFeed extends FAnimation {
-  constructor(old, phrases, food = DEFAULT_FOOD) {
-    super(old, phrases)
+  constructor(old, food = DEFAULT_FOOD) {
+    super(old)
     this.emoji = new Image()
     this.emoji.src = `./img/emoji/${food.emoji}.png`
     this.dir = food.dir

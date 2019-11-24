@@ -16,7 +16,7 @@ import { left, right } from '../art/art-util'
 const FRAME_DELAY = 2
 
 export default class FAnimation {
-  constructor(old, phrasebook) {
+  constructor(old) {
     // carry over components of previous animation for continuity
     if (!old) old = {}
     this.blinkRate = old.blinkRate || BLINK_CHANCE
@@ -28,7 +28,6 @@ export default class FAnimation {
     this.words = old.words || ''
 
     // define animation-specific parameters
-    this.phrasebook = phrasebook
     this.frameDelay = FRAME_DELAY
 
     this.frames = [this.frame1]
@@ -63,12 +62,6 @@ export default class FAnimation {
     }
   }
 
-  pickPhrase(friendo) {
-    const list = this.phrasebook(friendo)
-    const selected = Math.floor(Math.random() * list.length)
-    return list[selected]
-  }
-
   // prerequisite setup for the draw method
   predraw(g, x, y, friendo) {
     /**
@@ -89,7 +82,7 @@ export default class FAnimation {
     } else if (Math.random() * TOTAL_EVENT_CHANCE < this.speakRate) {
       // chance to reset speech timer and pick a new phrase
       this.speak = SPEAK_TIME
-      this.words = this.pickPhrase(friendo)
+      this.words = friendo.state.phrasebook.pick(friendo)
     } else {
       // if speak <= 0, don't speak
       this.words = ''

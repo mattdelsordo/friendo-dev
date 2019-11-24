@@ -1,0 +1,14 @@
+[
+    {
+        "phrase": "I love you ${friendo.owner}"
+    },
+    {
+        "phrase": "You can call me ${friendo.name}"
+    },
+    {
+        "phrase": "❤"
+    },
+    {
+        "phrase": "Hi."
+    }
+]

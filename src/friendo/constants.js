@@ -18,6 +18,7 @@ export const HATCH_DUR = 20
 export const TOTAL_EVENT_CHANCE = 100
 export const BLINK_CHANCE = 5
 export const SPEAK_CHANCE = 5
+export const RARESPEAK_CHANCE = 0.005
 
 // 'enum' of stat indices
 export const STATS = Object.freeze({

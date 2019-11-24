@@ -6,7 +6,7 @@
 import $ from 'jquery'
 import Friendo from '../../friendo/friendo'
 import { setEnterButton } from './key-listeners'
-import { getErrorName } from '../../friendo/phrases/game-text'
+import { getErrorName } from '../../friendo/text/game-text'
 
 // verifies input fields and returns a friendo if they're valid
 const createFriendo = () => {

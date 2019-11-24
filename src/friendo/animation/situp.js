@@ -2,8 +2,8 @@ import FAnimation from './f-animation'
 import { down, left } from '../art/art-util'
 
 export default class ASitup extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
     this.frames = [
       this.frame1.bind(this),
       this.frame2.bind(this),
