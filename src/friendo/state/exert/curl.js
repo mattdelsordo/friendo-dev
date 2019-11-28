@@ -10,9 +10,6 @@ export default class Curls extends Exert {
     this.id = STATES.ARM
     this.stat = STATS.ARM
     this.verb = ARM_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ACurl(old, phrases)
+    this.anim = new ACurl(savedState)
   }
 }

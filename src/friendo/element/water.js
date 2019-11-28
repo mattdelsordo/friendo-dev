@@ -11,6 +11,10 @@ import { drawHookMarker } from '../art/hook-marker'
 import { drawOval, drawOutlinedOval } from '../art/art-util'
 import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 import { WATER_SPEECH_STYLE, WATER_TEXT_SIZE } from '../art/art-config'
+import { idlePhrasesWater } from '../text/phrases/idle'
+import { fitnessPhrasesWater } from '../text/phrases/fitness'
+import { sleepPhrasesWater } from '../text/phrases/sleep'
+import { feedPhrasesWater } from '../text/phrases/feed'
 
 /**
  * Specifies how a water friendo is drawn
@@ -27,6 +31,13 @@ export default class WATER extends Element {
     this.eggFill = WATER_EGG_SKIN
     this.textStyle = WATER_SPEECH_STYLE
     this.textSize = WATER_TEXT_SIZE
+
+    this.phrases = {
+      idle: idlePhrasesWater,
+      fitness: fitnessPhrasesWater,
+      sleep: sleepPhrasesWater,
+      feed: feedPhrasesWater,
+    }
   }
 
   computeAnchors(friendo) {

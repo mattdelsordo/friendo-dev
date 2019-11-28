@@ -3,8 +3,8 @@ import { left, right } from '../art/art-util'
 import { drawPhone, PHONE_SCREEN_OFF, PHONE_SCREEN_ON } from '../art/props/phone'
 
 export default class ASurf extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.frames = [
       this.frame1.bind(this),

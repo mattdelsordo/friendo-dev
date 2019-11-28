@@ -13,9 +13,6 @@ export default class Situp extends Exert {
     this.id = STATES.CORE
     this.stat = STATS.CORE
     this.verb = CORE_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ASitup(old, phrases)
+    this.anim = new ASitup(savedState)
   }
 }

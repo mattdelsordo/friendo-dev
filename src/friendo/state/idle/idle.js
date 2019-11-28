@@ -14,7 +14,8 @@ export default class Idle extends State {
   constructor(savedState) {
     super(savedState)
     this.id = STATES.IDLE
-    this.anim = this._newAnimation(savedState.anim, new IdlePhrasebook())
+    this.phrasebook = new IdlePhrasebook()
+    this.anim = new AIdle(savedState.anim)
     this.hungerMultiplier = HUNGER_MULTIPLIER_IDLE
 
     // check for "idleness" using this field,
@@ -24,10 +25,6 @@ export default class Idle extends State {
     this.reps = -1
     this.verb = IDLE_VERB
     this.emoji = IDLE_EMOJI
-  }
-
-  _newAnimation(old, phrases) {
-    return new AIdle(old, phrases)
   }
 
   _doTransitionToSleep(friendo) {

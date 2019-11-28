@@ -9,9 +9,6 @@ export default class DogCuddle extends Exert {
     this.id = STATES.DOG
     this.stat = STATS.DOG
     this.verb = DOG_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ACuddle(old, phrases)
+    this.anim = new ACuddle(savedState)
   }
 }

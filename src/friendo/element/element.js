@@ -40,6 +40,12 @@ export default class Element {
 
     this.textStyle = DEFAULT_SPEECH_STYLE
     this.textSize = SPEECH_SIZE
+    this.phrases = {
+      idle: () => [],
+      fitness: () => [],
+      sleep: () => [],
+      feed: () => [],
+    }
   }
 
   toJSON() {

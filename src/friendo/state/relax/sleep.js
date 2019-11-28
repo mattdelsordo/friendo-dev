@@ -20,17 +20,14 @@ export default class Sleep extends Relax {
     this.id = STATES.SLEEP
     this.fatigueCost = ENERGY_COST_SLEEP
     this.hungerMultiplier = HUNGER_MULTIPLIER_SLEEP
-    this.anim = this._newAnimation(savedState.anim, new SleepPhrases())
+    this.phrasebook = new SleepPhrases()
+    this.anim = new ASleep(savedState.anim)
     this.reps = -1
     this.verb = SLEEP_VERB
     this.emoji = ASLEEP_EMOJI
 
     // tracks if the friendo fell asleep from being famished
     this.famished = (bellyPercent <= 0)
-  }
-
-  _newAnimation(old, phrases) {
-    return new ASleep(old, phrases)
   }
 
   // sleep only transitions to idle when friendo is at max energy

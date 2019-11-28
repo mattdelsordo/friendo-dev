@@ -11,6 +11,10 @@ import { drawHookMarker } from '../art/hook-marker'
 import { drawOutlinedPolygon, drawPolygon } from '../art/art-util'
 import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 import { AIR_SPEECH_STYLE, AIR_TEXT_SIZE } from '../art/art-config'
+import { idlePhrasesAir } from '../text/phrases/idle'
+import { fitnessPhrasesAir } from '../text/phrases/fitness'
+import { sleepPhrasesAir } from '../text/phrases/sleep'
+import { feedPhrasesAir } from '../text/phrases/feed'
 
 /**
  * Specifies how a air friendo is drawn
@@ -27,6 +31,13 @@ export default class Air extends Element {
     this.eggFill = AIR_EGG_SKIN
     this.textStyle = AIR_SPEECH_STYLE
     this.textSize = AIR_TEXT_SIZE
+
+    this.phrases = {
+      idle: idlePhrasesAir,
+      fitness: fitnessPhrasesAir,
+      sleep: sleepPhrasesAir,
+      feed: feedPhrasesAir,
+    }
   }
 
   // override to reposition hat

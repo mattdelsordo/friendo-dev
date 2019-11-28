@@ -3,8 +3,8 @@ import { left, right } from '../art/art-util'
 import { drawOpenBook } from '../art/props/book'
 
 export default class ARead extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.glasses = true
 

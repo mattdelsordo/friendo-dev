@@ -12,8 +12,8 @@ const DOG_COORDS = [
 ]
 
 export default class ACuddle extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.dogs = [new Dog(), new Dog(), new Dog(), new Dog(), new Dog()]
 

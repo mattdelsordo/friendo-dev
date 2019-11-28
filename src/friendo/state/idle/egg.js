@@ -5,7 +5,6 @@
 
 import State from '../state'
 import AEgg from '../../animation/egg'
-import EmptyPhrasebook from '../../text/phrasebooks/phrasebook'
 import { STATS, STATES } from '../../constants'
 import { MAX_EGG_LEVEL } from '../../balance'
 import { BABY_EMOJI, EGG_VERB } from '../../text/game-text'
@@ -23,13 +22,9 @@ export default class Egg extends State {
     this.reps = -1
 
     // phrasebook left blank to avoid speaking while and egg
-    this.anim = this._newAnimation(savedState.anim, new EmptyPhrasebook())
+    this.anim = new AEgg(savedState.anim)
     this.verb = EGG_VERB
     this.emoji = BABY_EMOJI
-  }
-
-  _newAnimation(old, phrases) {
-    return new AEgg(old, phrases)
   }
 
   _doTransitionToHatch(friendo) {

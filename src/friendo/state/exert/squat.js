@@ -13,9 +13,6 @@ export default class Squat extends Exert {
     this.id = STATES.LEG
     this.stat = STATS.LEG
     this.verb = LEG_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ASquat(old, phrases)
+    this.anim = new ASquat(savedState)
   }
 }

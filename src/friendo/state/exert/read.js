@@ -9,9 +9,6 @@ export default class ReadBook extends Exert {
     this.id = STATES.SIGHT
     this.stat = STATS.SIGHT
     this.verb = SIGHT_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ARead(old, phrases)
+    this.anim = new ARead(savedState)
   }
 }

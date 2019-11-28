@@ -9,9 +9,6 @@ export default class Munch extends Exert {
     this.id = STATES.TASTE
     this.stat = STATS.TASTE
     this.verb = TASTE_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new AMunch(old, phrases)
+    this.anim = new AMunch(savedState)
   }
 }

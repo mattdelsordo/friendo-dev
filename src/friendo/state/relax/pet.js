@@ -10,13 +10,10 @@ export default class Petting extends Relax {
     super(savedState)
     this.id = STATES.PET
     this.fatigueCost = ENERGY_COST_PET
-    this.anim = this._newAnimation(savedState.old, new IdlePhrasebook())
+    this.phrasebook = new IdlePhrasebook()
+    this.anim = new APet(savedState.old)
     this.reps = 2
     this.verb = IDLE_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new APet(old, phrases)
   }
 
   // exercise returns a flat fatigue cost

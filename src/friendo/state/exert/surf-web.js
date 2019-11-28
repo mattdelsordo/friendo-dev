@@ -9,9 +9,6 @@ export default class SurfWeb extends Exert {
     this.id = STATES.MEME
     this.stat = STATS.MEME
     this.verb = MEME_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new ASurf(old, phrases)
+    this.anim = new ASurf(savedState)
   }
 }

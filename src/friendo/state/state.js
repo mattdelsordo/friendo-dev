@@ -26,7 +26,8 @@ export default class State {
     this.hungerMultiplier = 0
 
     // set animation
-    this.anim = this._newAnimation(oldState.anim, new EmptyPhrasebook())
+    this.phrasebook = new EmptyPhrasebook()
+    this.anim = new FAnimation(oldState.anim)
 
     // override to transition to something OTHER than idle
     // e.g. for incubate
@@ -37,9 +38,9 @@ export default class State {
     this.verb = DEFAULT_VERB
   }
 
-  // call anim's phrasebook's reloadPhrases
+  // call anim's phrasebook's buildList
   loadPhrases(friendo) {
-    this.anim.phrasebook.reloadPhrases(friendo)
+    this.phrasebook.buildList(friendo)
   }
 
   toJSON() {
@@ -61,11 +62,6 @@ export default class State {
   // draws a single frame of this state's associated animation
   draw(g, x, y, friendo) {
     this.anim.draw(g, x, y, friendo)
-  }
-
-  // utility function to decouple setting the animation from choosing the phrasebook
-  _newAnimation(old, phrasebook) {
-    return new FAnimation(old, phrasebook)
   }
 
   // conditions to return to Idle and Sleep respectively

@@ -13,7 +13,7 @@ export default class EmptyPhrasebook {
    * This must be called after a new state is created and subsequently
    * when new phrases could potentially be unlocked
    */
-  loadPhrases() {
+  buildList() {
     // default phrasebook acts as an empty list
     this.phrases = EMPTY_BOOK
   }

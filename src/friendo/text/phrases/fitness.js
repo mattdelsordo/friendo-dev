@@ -1,4 +1,4 @@
-export default () => [
+export const fitnessPhrases = () => [
   'oof',
   'hoohf',
   'hef',
@@ -11,3 +11,8 @@ export default () => [
   'live for the grind',
   'hoo boy',
 ]
+
+export const fitnessPhrasesFire = () => []
+export const fitnessPhrasesWater = () => []
+export const fitnessPhrasesAir = () => []
+export const fitnessPhrasesEarth = () => []

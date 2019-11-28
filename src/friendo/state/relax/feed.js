@@ -12,14 +12,11 @@ export default class Feed extends Relax {
     super(savedState)
     this.id = STATES.FEED
     this.food = foodID
-    this.anim = this._newAnimation(savedState.anim, new FeedPhrasebook(), FOODS[this.food])
+    this.phrasebook = new FeedPhrasebook()
+    this.anim = new AFeed(savedState.anim, FOODS[this.food])
     this.fatigueCost = ENERGY_COST_FOOD
     this.reps = INITIAL_REPS
     this.verb = EAT_VERB
-  }
-
-  _newAnimation(old, phrases, food) {
-    return new AFeed(old, phrases, food)
   }
 
   _getHungerCost() {

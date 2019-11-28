@@ -1,11 +1,12 @@
 import EmptyPhrasebook from './phrasebook'
-import feedPhrases from '../phrases/feed'
+import { feedPhrases } from '../phrases/feed'
 
 export default class FeedPhrasebook extends EmptyPhrasebook {
   /**
    * Builds a list of phrases from which to pick
    */
-  reloadPhrases() {
+  buildList(friendo) {
     this.phrases = feedPhrases()
+    this.phrases += friendo.element.phrases.feed(friendo)
   }
 }

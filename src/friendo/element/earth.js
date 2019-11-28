@@ -8,6 +8,10 @@ import {
 import Element from './element'
 import ELEMENTS from './elements'
 import { EARTH_SPEECH_STYLE, EARTH_TEXT_SIZE } from '../art/art-config'
+import { idlePhrasesEarth } from '../text/phrases/idle'
+import { fitnessPhrasesEarth } from '../text/phrases/fitness'
+import { sleepPhrasesEarth } from '../text/phrases/sleep'
+import { feedPhrasesEarth } from '../text/phrases/feed'
 
 /**
  * Specifies how a earth friendo is drawn
@@ -24,6 +28,13 @@ export default class Earth extends Element {
     this.eggFill = EARTH_EGG_SKIN
     this.textStyle = EARTH_SPEECH_STYLE
     this.textSize = EARTH_TEXT_SIZE
+
+    this.phrases = {
+      idle: idlePhrasesEarth,
+      fitness: fitnessPhrasesEarth,
+      sleep: sleepPhrasesEarth,
+      feed: feedPhrasesEarth,
+    }
   }
 
   computeArmTethers(friendo) {

@@ -9,9 +9,6 @@ export default class Groom extends Exert {
     this.id = STATES.HAIR
     this.stat = STATS.HAIR
     this.verb = HAIR_VERB
-  }
-
-  _newAnimation(old, phrases) {
-    return new AGroom(old, phrases)
+    this.anim = new AGroom(savedState)
   }
 }

@@ -12,6 +12,10 @@ import { drawLine, drawOutlinedPolygon, drawPolygon } from '../art/art-util'
 import { oneLens, threeLens, twoLens } from '../art/props/glasses'
 import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 import { FIRE_SPEECH_STYLE, FIRE_TEXT_SIZE } from '../art/art-config'
+import { idlePhrasesFire } from '../text/phrases/idle'
+import { fitnessPhrasesFire } from '../text/phrases/fitness'
+import { sleepPhrasesFire } from '../text/phrases/sleep'
+import { feedPhrasesFire } from '../text/phrases/feed'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -29,6 +33,13 @@ export default class Fire extends Element {
     this.eggFill = FIRE_EGG_SKIN
     this.textStyle = FIRE_SPEECH_STYLE
     this.textSize = FIRE_TEXT_SIZE
+
+    this.phrases = {
+      idle: idlePhrasesFire,
+      fitness: fitnessPhrasesFire,
+      sleep: sleepPhrasesFire,
+      feed: feedPhrasesFire,
+    }
   }
 
   computeArmTethers(friendo) {

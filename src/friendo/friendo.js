@@ -28,7 +28,7 @@ import {
   DEFAULT_LEVEL,
   DEFAULT_FATIGUE,
   DEFAULT_MAX_ENERGY,
-  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER,
+  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER, ENERGY_THRESHOLDS,
 } from './balance'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
@@ -53,7 +53,6 @@ export default class Friendo {
     // initialize friendo from save file
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
-    this.state.loadPhrases(this)
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
@@ -80,6 +79,7 @@ export default class Friendo {
     this.onBgChange = () => {}
 
     // initialize stat stages, level, and anchors
+    this.state.loadPhrases(this)
     this.initializeStatStages()
     this.updateLevel()
     this.element.computeAnchors(this)
@@ -157,7 +157,6 @@ export default class Friendo {
       // skip if the increase only unlocks the stat
       if (stage > 1 && stage > this._statStage[stat]) {
         this.onStatStageUp(this, stat, stage)
-        this.state.loadPhrases(this)
       }
 
       this._statStage[stat] = stage
@@ -233,14 +232,30 @@ export default class Friendo {
     return this.getNetBelly() / this.maxBelly
   }
 
-  // additive multiplier to energy recovery rate, based on hunger
-  getHungerModifier() {
-    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
-      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
-        return HUNGER_MODIFIERS[i].value
+  // returns the "stage" of the energy level, used to determine speech options
+  getEnergyStage() {
+    for (let i = 0; i < ENERGY_THRESHOLDS.length; i += 1) {
+      if (this.getEnergyPercent() >= ENERGY_THRESHOLDS[i]) {
+        return i
       }
     }
+    return -1
+  }
 
+  // returns stage of hunger to determine multiplier on energy
+  getHungerStage() {
+    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
+      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  // additive multiplier to energy recovery rate, based on hunger
+  getHungerModifier() {
+    const stage = this.getHungerStage()
+    if (stage >= 0) return HUNGER_MODIFIERS[stage].threshold
     return BASE_HUNGER_MODIFIER
   }
 

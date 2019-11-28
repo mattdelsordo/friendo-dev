@@ -42,7 +42,15 @@ export const ARM_UNLOCK_LEVEL = 3
 export const HAIR_UNLOCK_LEVEL = 5
 export const DOG_UNLOCK_LEVEL = 10
 
+// thresholds that designate energy stages
+export const ENERGY_THRESHOLDS = [
+  0.5,
+  0.25,
+  0,
+]
+
 // for hunger% >= the threshold, modify hunger by the value
+// each threshold acts as the stage of hunger
 export const HUNGER_MODIFIERS = [
   {
     threshold: 0.8,

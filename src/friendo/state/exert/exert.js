@@ -11,7 +11,7 @@ import { STATES } from '../../constants'
 export default class Exert extends State {
   constructor(savedState, reps) {
     super(savedState, reps)
-    this.anim = this._newAnimation(savedState.anim, new FitnessPhrasebook())
+    this.phrasebook = new FitnessPhrasebook()
     this.words = 'feel the burn'
     this.frame = 0
     this.id = 'abstract_exert'
