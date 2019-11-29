@@ -11,6 +11,7 @@ import {
   STATS,
   STAT_STAGES,
   STATES,
+  BACKGROUNDS,
 } from './constants'
 import {
   LEG_UNLOCK_LEVEL,
@@ -43,6 +44,7 @@ import {
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
   DEFAULT_FOOD_PREF,
+  DEFAULT_BG,
 } from './default'
 
 export default class Friendo {
@@ -59,6 +61,7 @@ export default class Friendo {
     this.exp = fromJSON.exp || DEFAULT_EXP
     this.hunger = fromJSON.hunger || DEFAULT_HUNGER
     this.foodPref = fromJSON.foodPref || DEFAULT_FOOD_PREF
+    this.bgPref = fromJSON.bgPref || DEFAULT_BG
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
@@ -73,6 +76,7 @@ export default class Friendo {
     this.onStatUnlocked = () => {}
     this.onFoodPrefChange = () => {}
     this.onStatStageUp = () => {}
+    this.onBgChange = () => {}
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()
@@ -99,6 +103,7 @@ export default class Friendo {
       exp: this.exp,
       savedAt: new Date(), // not sure if this is operation is too expensive
       foodPref: this.foodPref,
+      bgPref: this.bgPref,
     }
   }
 
@@ -112,6 +117,7 @@ export default class Friendo {
   setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
   setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
   setOnStatStageUp(ossu) { this.onStatStageUp = ossu }
+  setOnBgChange(obc) { this.onBgChange = obc }
 
   setElement(element) {
     this.element = selectElement(element)
@@ -178,6 +184,12 @@ export default class Friendo {
       this.foodPref = pref
       this.onFoodPrefChange(pref)
     }
+  }
+
+  // background to display
+  setBgPref(pref) {
+    this.bgPref = pref
+    this.onBgChange(pref, BACKGROUNDS[pref])
   }
 
   /** Gets */

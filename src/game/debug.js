@@ -2,8 +2,8 @@ import $ from 'jquery'
 import Tether from 'tether'
 
 import { saveFriendo, loadFriendoJSON } from './game-util'
-import { STATS, TOTAL_EVENT_CHANCE, FOODS, STATES } from '../friendo/constants'
-import { setFoodPref } from './setup/ui-update'
+import { STATS, TOTAL_EVENT_CHANCE, FOODS, STATES, BACKGROUNDS } from '../friendo/constants'
+import { setFoodPref, setBgPref } from './setup/ui-update'
 import Friendo from '../friendo/friendo'
 // import { toggleHookMarkers } from '../friendo/art/art-util'
 import { FRAMERATE } from './game-config'
@@ -207,6 +207,18 @@ const stateListeners = (friendo) => {
   })
 }
 
+const bgListeners = (friendo) => {
+  friendo.setOnBgChange(setBgPref)
+
+  Object.keys(BACKGROUNDS).forEach((k) => {
+    $(`#bg-${k}`)
+      .css('display', 'block')
+      .click(() => { friendo.setBgPref(k) })
+  })
+
+  setBgPref(friendo.bgPref, BACKGROUNDS[friendo.bgPref])
+}
+
 /**
  * Initializes all UI elements
  */
@@ -259,6 +271,7 @@ $(document)
     birthdayListeners(friendo)
     rateListeners(friendo)
     stateListeners(friendo)
+    bgListeners(friendo)
 
     // initialize the UI
     initialize(friendo)
