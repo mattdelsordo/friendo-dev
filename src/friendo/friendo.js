@@ -380,7 +380,10 @@ export default class Friendo {
 
     for (let i = 0; i < MAX_DOGS; i += 1) {
       this.petDogs.dog.push(new Dog())
-      this.petDogs.location.push({ x: calcDogX(0, canvasW), y: calcDogY(0, canvasH) })
+      this.petDogs.location.push({
+        x: calcDogX(0, canvasW),
+        y: calcDogY(canvasH * (2 / 3), canvasH),
+      })
     }
   }
 
