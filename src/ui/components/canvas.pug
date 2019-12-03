@@ -1,1 +1,23 @@
-canvas#canvas.card.mx-auto(height='400' width='400')
+-
+    var bgs = [
+        { name: '0', emoji: '1f3e1' },
+        { name: 'earth', emoji: '1f3d4' },
+        { name: 'water', emoji: '1f30a' },
+        { name: 'fire', emoji: '1f30b' },
+        { name: 'air', emoji: '2601' },
+    ]
+
+mixin bgDropdownItem(bg)
+    a.dropdown-item(href='#' id=`bg-${bg.name}`)
+        +emoji(bg.emoji)
+
+.position-relative
+    include emoji
+    canvas#canvas.card.mx-auto(height='400' width='400')
+    .dropdown
+        button.btn.dropdown-toggle(type='button' data-toggle='dropdown')
+            +emoji('1f3e1')(id='bg-dropdown')
+        .dropdown-menu
+            each bg in bgs
+                +bgDropdownItem(bg)
+

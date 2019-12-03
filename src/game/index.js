@@ -16,6 +16,7 @@ import {
   onStatUnlocked,
   setFoodPref,
   onStatStageUp,
+  setBgPref,
 } from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
 import { initializeKeyListeners, unsetEnterButton } from './setup/key-listeners'
@@ -51,6 +52,7 @@ const start = (friendo) => {
   friendo.setOnStatUnlocked(onStatUnlocked)
   friendo.setOnFoodPrefChange(setFoodPref)
   friendo.setOnStatStageUp(onStatStageUp)
+  friendo.setOnBgChange(setBgPref)
 
   // start friendo's heart
   friendo.heartbeat()

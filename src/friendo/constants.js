@@ -1,3 +1,5 @@
+import ELEMENTS from './element/elements'
+
 // characters for stat stage display
 export const EMPTY_STAR = '\u2606'
 export const FULL_STAR = '\u2605'
@@ -91,3 +93,11 @@ export const FOODS = [
   { name: 'Stew', emoji: '1f372', dir: TOP2BOT },
 ]
 export const HOTDOG_EMOJI = { name: 'Hot Dog', emoji: '1f32d', dir: TOP2BOT }
+
+export const BACKGROUNDS = {
+  0: '1f3e1',
+  [ELEMENTS.EARTH]: '1f3d4',
+  [ELEMENTS.WATER]: '1f30a',
+  [ELEMENTS.FIRE]: '1f30b',
+  [ELEMENTS.AIR]: '2601',
+}

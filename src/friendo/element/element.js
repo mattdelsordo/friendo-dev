@@ -9,6 +9,7 @@ import { oneLens, twoLens, threeLens } from '../art/props/glasses'
 import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
 import birthdayHat from '../art/props/birthday-hat'
 import birthdayText from '../art/props/birthday-banner'
+import { DEFAULT_SPEECH_STYLE, SPEECH_SIZE } from '../art/art-config'
 
 /**
  * Specifies graphical representation and drawing style of a Friendo
@@ -36,6 +37,9 @@ export default class Element {
     this.fillStyle = DEFAULT_SKIN
     this.eggStroke = DEFAULT_EGG_OUTLINE
     this.eggFill = DEFAULT_EGG_SKIN
+
+    this.textStyle = DEFAULT_SPEECH_STYLE
+    this.textSize = SPEECH_SIZE
   }
 
   toJSON() {
@@ -49,6 +53,7 @@ export default class Element {
   setColors(g) {
     g.fillStyle = this.fillStyle
     g.strokeStyle = this.strokeStyle
+    g.font = this.textStyle
   }
 
   setEggColors(g) {

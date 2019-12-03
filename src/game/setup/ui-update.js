@@ -10,6 +10,7 @@ import {
   STAT_STAGES,
   STATS,
   FOODS,
+  BACKGROUNDS,
 } from '../../friendo/constants'
 import {
   MAX_EGG_LEVEL,
@@ -245,6 +246,26 @@ const setAvailableFood = (friendo, stage) => {
   }
 }
 
+// sets background icon/image
+export const setBgPref = (name, emoji) => {
+  $('#bg-dropdown').attr('src', `./img/emoji/${emoji}.png`)
+  $('#canvas').css('background', `url('img/bg/${name}.png')`)
+}
+
+export const setAvailableBgs = (friendo) => {
+  const bgAvailable = Math.floor(friendo.level / 10)
+
+  for (let i = 0; i <= bgAvailable; i += 1) {
+    $(`#bg-${i}`)
+      .css('display', 'block')
+      .click(() => { friendo.setBgPref(i) })
+  }
+
+  $(`#bg-${friendo.element.id}`)
+    .css('display', 'block')
+    .click(() => { friendo.setBgPref(friendo.element.id) })
+}
+
 // enable/disable all friendo interaction buttons to prevent the
 // player from breaking the entire game state
 export const enableButtons = () => {
@@ -296,6 +317,8 @@ export const initialize = (friendo) => {
   updateTimer(friendo.state.reps)
   setAvailableFood(friendo, friendo.getStatStage(STATS.TASTE))
   setFoodPref(friendo.foodPref)
+  setAvailableBgs(friendo)
+  setBgPref(friendo.bgPref, BACKGROUNDS[friendo.bgPref])
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
