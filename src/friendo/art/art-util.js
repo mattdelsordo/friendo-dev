@@ -1,7 +1,7 @@
 
 
 import { drawHookMarker } from './hook-marker'
-import { SPEECH_STYLE, SPEECH_SIZE } from './art-config'
+import { SPEECH_SIZE, SPEECH_OUTLINE_WEIGHT, SPEECH_LINE_LENGTH } from './art-config'
 
 // draws a rectangle with an outline on top of it
 export const drawOutlinedRect = (g, x, y, w, h) => {
@@ -82,11 +82,14 @@ export const drawRoundedRect = (g, x, y, w, h, r) => {
 
 // draws text for a friendo's message
 export const drawSpeech = (g, x, y, text) => {
-  g.font = SPEECH_STYLE
+  g.save()
+
+  g.lineWidth = SPEECH_OUTLINE_WEIGHT
 
   // multi line support
-  const lineLength = 22
+  const lineLength = SPEECH_LINE_LENGTH
   const words = text.split(' ')
+
   // build each line
   for (let i = 0, wordCount = 0; i < text.length; i += 1) {
     let line = ''
@@ -97,6 +100,11 @@ export const drawSpeech = (g, x, y, text) => {
       wordCount += 1
     }
     // console.log(`Built line "${line}"`)
+    g.strokeText(
+      line,
+      x,
+      y + (SPEECH_SIZE * i),
+    )
     g.fillText(
       line,
       x,
@@ -104,7 +112,7 @@ export const drawSpeech = (g, x, y, text) => {
     )
   }
 
-  // g.strokeText(text, x, y)
+  g.restore()
 }
 
 // positions appendages and whatnot
