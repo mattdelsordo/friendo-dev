@@ -61,4 +61,5 @@ export const statPhrases = {
   [STATS.TASTE]: tastePhrases,
   [STATS.DOG]: dogPhrases,
   [STATS.MEME]: memePhrases,
+  [STATS.EGG]: () => [],
 }

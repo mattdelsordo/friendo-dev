@@ -10,14 +10,14 @@ export default class IdlePhrasebook extends EmptyPhrasebook {
     // base phrases by default
     this.phrases = idlePhrases(friendo)
     // add phrases based on element
-    this.phrases += friendo.element.phrases.idle(friendo)
+    this.phrases = this.phrases.concat(friendo.element.phrases.idle(friendo))
     // add stat-specific phrases
-    Object.entries(STATS).forEach((s) => {
-      this.phrases += statPhrases[s](friendo.getStat(s))
+    Object.entries(STATS).forEach(([_, value]) => {
+      this.phrases = this.phrases.concat(statPhrases[value](friendo.getStat(value)))
     })
     // add hunger phrases
-    this.phrases += hungerPhrases(friendo.getHungerStage())
+    this.phrases = this.phrases.concat(hungerPhrases(friendo.getHungerStage()))
     // add sleep phrases
-    this.phrases += sleepyPhrases(friendo.getEnergyStage())
+    this.phrases = this.phrases.concat(sleepyPhrases(friendo.getEnergyStage()))
   }
 }

@@ -7,6 +7,6 @@ export default class FeedPhrasebook extends EmptyPhrasebook {
    */
   buildList(friendo) {
     this.phrases = feedPhrases()
-    this.phrases += friendo.element.phrases.feed(friendo)
+    this.phrases = this.phrases.concat(friendo.element.phrases.feed(friendo))
   }
 }

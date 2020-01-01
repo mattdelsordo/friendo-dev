@@ -7,6 +7,6 @@ export default class SleepPhrasebook extends EmptyPhrasebook {
    */
   buildList(friendo) {
     this.phrases = sleepPhrases()
-    this.phrases += friendo.element.phrases.sleep(friendo)
+    this.phrases = this.phrases.concat(friendo.element.phrases.sleep(friendo))
   }
 }

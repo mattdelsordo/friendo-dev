@@ -41,6 +41,7 @@ export default class State {
   // call anim's phrasebook's buildList
   loadPhrases(friendo) {
     this.phrasebook.buildList(friendo)
+    console.log(this.phrasebook.phrases)
   }
 
   toJSON() {

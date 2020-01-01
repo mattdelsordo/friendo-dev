@@ -7,6 +7,6 @@ export default class FitnessPhrasebook extends EmptyPhrasebook {
    */
   buildList(friendo) {
     this.phrases = fitnessPhrases()
-    this.phrases += friendo.element.phrases.fitness(friendo)
+    this.phrases = this.phrases.concat(friendo.element.phrases.fitness(friendo))
   }
 }
