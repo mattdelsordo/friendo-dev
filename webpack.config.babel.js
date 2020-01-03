@@ -1,4 +1,5 @@
 import path from 'path'
+import webpack from 'webpack'
 
 import { isProd } from './src/config'
 
@@ -26,6 +27,12 @@ const buildConfig = (inName, outName) => ({
     watchContentBase: true,
   },
   mode: isProd ? 'production' : 'development',
+  plugins: [
+    new webpack.DefinePlugin({
+      BUNDLE_BUILD_DATE: JSON.stringify(new Date()),
+      BUNDLE_VERSION: JSON.stringify(require("./package.json").version),
+    })
+  ]
 })
 
 export default [buildConfig('index', 'bundle'), buildConfig('debug', 'debug')]
