@@ -3,8 +3,15 @@
  */
 
 import $ from 'jquery'
-import { version } from '../../../package.json'
-import { reload, erase, saveFriendo, storeSavefile } from '../game-util'
+import {
+  VERSION,
+  reload,
+  erase,
+  saveFriendo,
+  storeSavefile,
+  cachedVersionMismatch,
+  daysSinceLastRelease,
+} from '../game-util'
 
 /** DNA Management functions */
 /* eslint-disable no-alert */
@@ -69,17 +76,28 @@ const loadFriendo = () => {
 /* eslint-enable no-alert */
 
 export default () => {
-  $('#vernum').html(`[ v${version} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${version}`)
+  $('#vernum').html(`[ v${VERSION} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${VERSION}`)
+
+  // show new version alert if necessary
+  const showUpdateAlert = cachedVersionMismatch() || daysSinceLastRelease() < 5
+  if (showUpdateAlert) {
+    $('#version-link').css('visibility', 'visible').addClass('new-version-alert')
+    $('#update-alert').css('display', 'inline')
+  }
 
   $('#game-info-icon').mouseenter(() => {
     // make links visible, change icon to open book
-    $('#game-info').css('visibility', 'visible')
+    $('#version-link, .header-btn').css('visibility', 'visible')
     $('#game-info-icon').attr('src', './img/emoji/1f4d6.png')
   })
 
   $('#header').mouseleave(() => {
     // hide links, close book
-    $('#game-info').css('visibility', 'hidden')
+    $('.header-btn').css('visibility', 'hidden')
+    // only hide version link if we aren't notifying of an update
+    if (!showUpdateAlert) {
+      $('#version-link').css('visibility', 'hidden')
+    }
     $('#game-info-icon').attr('src', './img/emoji/1f516.png')
   })
 
