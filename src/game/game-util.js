@@ -33,7 +33,14 @@ export const saveFriendo = (friendo) => {
 }
 
 // get friendo json from localstorage and decompress it
-export const loadFriendoJSON = () => JSON.parse(decompress(localStorage.getItem(STORAGE_TOKEN)))
+export const loadFriendoJSON = () => {
+  try {
+    return JSON.parse(decompress(localStorage.getItem(STORAGE_TOKEN)))
+  } catch (e) {
+    // savegame either doesnt exist or the decompressed JSON is invalid
+    return null
+  }
+}
 
 // hard-reloads the webpage to clear the cache
 export const reload = () => location.reload(true)
