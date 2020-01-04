@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+    head
+        title Friendo
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width')
+        link(rel='stylesheet' href='bootstrap.min.css')
+        link(rel='stylesheet' href='styles.css')
+        script(src='bundle.js')
+    body
+        .container
+            .row.mt-5
+                .col
+                    include ../../components/debug/name-input
+                    +nameInput("Friendo Name", "Owner Name")
+                    .row
+                        include ../../components/debug/level
+                        include ../../components/debug/zodiac
+                    include ../../components/canvas
+                    include ../../components/debug/hook-markers
+                    include ../../components/debug/state-picker
+                .col-sm
+                    include ../../components/debug/type-picker
+                    include ../../components/debug/birthday-picker
+                    include ../../components/debug/stat-sliders
+                    include ../../components/debug/constant-sliders

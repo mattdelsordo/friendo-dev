@@ -1,0 +1,19 @@
+// styles for the status bar
+
+#exercise-timer {
+  font-family: $font-family-monospace;
+}
+
+#cancel-exercise {
+  height: 1em;
+  width: 1em;
+  margin-bottom: 0.1em;
+  margin-right: 0;
+
+  &:hover {
+    background-color: lightgrey;
+  }
+  &:active {
+    background-color: darkgrey;
+  }
+}

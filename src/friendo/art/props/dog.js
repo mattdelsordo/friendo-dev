@@ -66,7 +66,6 @@ export class Dog {
 }
 
 export const calcDogX = (min, max) =>
-  Math.floor((Math.random() * (max - DOG_WIDTH)) + (DOG_WIDTH / 2)) + min
+  Math.floor((Math.random() * (max - min - (DOG_WIDTH / 2))) + min)
 
-export const calcDogY = (min, max) =>
-  Math.floor((Math.random() * ((max * (3 / 5)) - DOG_HEIGHT)) + DOG_HEIGHT + (max * (2 / 5))) + min
+export const calcDogY = (min, max) => Math.floor((Math.random() * (max - min - DOG_HEIGHT)) + min)

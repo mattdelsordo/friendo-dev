@@ -1,3 +1,9 @@
-#birthday-picker.border.p1
-    h5 Birthday:
-    input(type="date" name="bday" id="birthday-calendar")
+#birthday-picker.border.m-1
+    .row.p-1.align-items-center
+        .col
+            h6 Birthday:
+            input(type="date" name="bday" id="birthday-calendar")
+        .col
+            include ../emoji
+            h4.d-inline-block
+                +emoji('2754')(id="zodiac-display")

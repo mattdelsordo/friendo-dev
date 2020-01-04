@@ -20,8 +20,6 @@ header {
 }
 
 #game-info {
-  visibility: hidden;
-
   &-icon {
     margin-top: .35em;
   }
@@ -47,4 +45,18 @@ header {
   &:hover {
     color: #454b50;
   }
+}
+
+#version-link, .header-btn {
+  visibility: hidden;
+}
+
+#update-alert {
+  display: none;
+}
+
+.new-version-alert {
+  padding: 0 .3em;
+  background-color:#fcf8e3;
+  font-weight: bolder;
 }

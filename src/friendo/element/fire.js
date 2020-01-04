@@ -11,6 +11,7 @@ import { drawHookMarker } from '../art/hook-marker'
 import { drawLine, drawOutlinedPolygon, drawPolygon } from '../art/art-util'
 import { oneLens, threeLens, twoLens } from '../art/props/glasses'
 import { crack1, crack2, crack3 } from '../art/props/egg-cracks'
+import { FIRE_SPEECH_STYLE, FIRE_TEXT_SIZE } from '../art/art-config'
 
 /**
  * Specifies how a fire friendo is drawn
@@ -26,6 +27,8 @@ export default class Fire extends Element {
     this.fillStyle = FIRE_SKIN
     this.eggStroke = FIRE_EGG_OUTLINE
     this.eggFill = FIRE_EGG_SKIN
+    this.textStyle = FIRE_SPEECH_STYLE
+    this.textSize = FIRE_TEXT_SIZE
   }
 
   computeArmTethers(friendo) {
@@ -74,27 +77,29 @@ export default class Fire extends Element {
     if (friendo.getStatStage(STATS.SIGHT) > 2) {
       // lvl 7 and up, 3 eyes
       // fire types are a special case
-      this.drawEye(g, x, y - 6, doBlink, friendo.state.isSmiling)
-      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
-      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x, y - 6, doBlink, friendo.state.anim.isSmiling)
+      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.anim.isSmiling)
+      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.anim.isSmiling)
 
       // handle glasses
       // doesn't need glasses to see anymore after 9
-      if (friendo.state.glasses && friendo.getStatStage(STATS.SIGHT) < 3) threeLens(g, x, y + 3)
+      if (friendo.state.anim.glasses && friendo.getStatStage(STATS.SIGHT) < 4) {
+        threeLens(g, x, y + 3)
+      }
     } else if (friendo.getStatStage(STATS.SIGHT) > 1) {
       // lvl 4 and up, 2 eyes
       // eyes must be moved down if a fire element
-      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.isSmiling)
-      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x - 6, y + 4, doBlink, friendo.state.anim.isSmiling)
+      this.drawEye(g, x + 6, y + 4, doBlink, friendo.state.anim.isSmiling)
 
       // handle glasses
-      if (friendo.state.glasses) twoLens(g, x, y + 3)
+      if (friendo.state.anim.glasses) twoLens(g, x, y + 3)
     } else {
       // default = 1 eye
-      this.drawEye(g, x, y, doBlink, friendo.state.isSmiling)
+      this.drawEye(g, x, y, doBlink, friendo.state.anim.isSmiling)
 
       // handle glasses
-      if (friendo.state.glasses) oneLens(g, x, y)
+      if (friendo.state.anim.glasses) oneLens(g, x, y)
     }
 
     drawHookMarker(g, x, y)
@@ -108,7 +113,7 @@ export default class Fire extends Element {
     const tempFill = g.fillStyle
     g.fillStyle = g.strokeStyle
 
-    if (friendo.state.mouthIsOpen) {
+    if (friendo.state.anim.mouthIsOpen) {
       g.fillRect(MOUTH_START, y, MOUTH_LENGTH, MOUTH_OPEN_HEIGHT)
     } else {
       drawLine(g, MOUTH_START, y, MOUTH_START + MOUTH_LENGTH, y)

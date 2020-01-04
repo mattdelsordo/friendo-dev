@@ -37,7 +37,7 @@ mixin attribution-dialog
 
 // UI segment for friendo deletion
 mixin delete()
-    #delete-zone.collapse.mt-2
+    #delete-zone
         .card.card-body
             h5 ARE YOU SURE ABOUT THIS ONE BUD
             p This will banish your Friendo's pattern from the time stream.
@@ -56,6 +56,30 @@ mixin delete()
                     | Begone
                     +emoji('2620')(style="margin-left: 1em;")
 
+mixin download()
+    #download-zone
+        .card.card-body
+            p
+                | The game will save automatically, but it never hurts to keep a backup!
+                |
+                i If you clear your cookies, your Friendo's DNA will probably be deleted.
+            button.btn.btn-primary.mt-1#backup-btn Download
+
+mixin upload()
+    #upload-zone
+        .card.card-body
+            p
+                | Restore a Friendo from a backed-up DNA file.
+                |
+                i This will overwrite your current Friendo.
+            .input-group.mt-1
+                .input-group-prepend
+                    button.btn.input-group-text#uploadDNA Restore
+                .custom-file
+                    input.custom-file-input#selectDNA(type="file")
+                    label.custom-file-label#selectDNAlabel(for="selectDNA") Choose file
+
+
 mixin settings-dialog
     .modal.fade(id='settings-dialog' role='dialog')
         .modal-dialog(role='document')
@@ -63,11 +87,34 @@ mixin settings-dialog
                 .modal-header
                     h5.modal-title Settings
                 .modal-body
-                    button.btn.btn-danger(data-toggle="collapse" data-target="#delete-zone")
-                        +emoji('1f5d1')
+                    h6
+                        +emoji('1f4be')
                         |
-                        | Delete your Friendo
-                    +delete()
+                        | DNA Management
+                    // TODO: do this instead https://getbootstrap.com/docs/4.0/components/navs/#javascript-behavior
+                    ul.nav.nav-pills#dna-pills(role="tablist")
+                        li.nav-item
+                            a.nav-link#backup-pill-tab(data-toggle="pill" href="#backup-pill" role="tab")
+                                +emoji('1f4e5')
+                                |
+                                | Backup
+                        li.nav-item
+                            a.nav-link#restore-pill-tab(data-toggle="pill" href="#restore-pill" role="tab")
+                                +emoji('1f4e4')
+                                |
+                                | Restore
+                        li.nav-item
+                            a.nav-link#delete-pill-tab(data-toggle="pill" href="#delete-pill" role="tab")
+                                +emoji('1f5d1')
+                                |
+                                | Delete
+                    .tab-content.mt-1#dna-pill-content
+                        .tab-pane.fade#backup-pill(role="tabpanel")
+                            +download()
+                        .tab-pane.fade#restore-pill(role="tabpanel")
+                            +upload()
+                        .tab-pane.fade#delete-pill(role="tabpanel")
+                            +delete()
                 .modal-footer
                     button.btn.btn-secondary(data-dismiss='modal') Close
 
@@ -87,7 +134,9 @@ header#header
             // not an emoji - just unicode
             +emoji('1f516')(class='ml-4' id='game-info-icon')
             span.ml-2.w-100.d-flex#game-info
-                a#vernum(href="https://github.com/mattdelsordo/friendo/releases" target="_blank") [ v0.0.0 ]
+                a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank")
+                    span#vernum [ v0.0.0 ]
+                    span.ml-1#update-alert NEW!!
                 +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
             a#settings(href="" data-toggle="modal" data-target="#settings-dialog")

@@ -1,0 +1,31 @@
+#canvas {
+    background: url('img/bg/bg0.png');
+}
+
+#canvas + .dropdown {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    button {
+        padding: 0.2em;
+
+        .emoji {
+            border: none;
+            height: 1em;
+            width: 1em;
+            margin: 0;
+        }
+    }
+
+    .dropdown-menu {
+        min-width: 0;
+
+        .dropdown-item {
+            padding-left: 0.6em;
+            padding-right: 0.6em;
+            display: none;
+        }
+    }
+}

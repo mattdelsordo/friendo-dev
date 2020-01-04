@@ -1,0 +1,24 @@
+doctype html
+html(lang='en')
+    head
+        title Friendo
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width')
+        link(rel="shortcut icon" type="image/png" href="favicon.png")
+        link(rel='stylesheet' href='styles.css')
+        script(src='debug.js')
+    body
+        .container
+            .row
+                h3.mx-auto ~ Friendo Debug Page ~
+            .row.justify-content-center.mb-3
+                .col-auto.align-middle
+                    include ../../components/debug/name-input
+                    include ../../components/canvas
+                    include ../../components/debug/state-picker
+                .col-lg-5
+                    include ../../components/debug/birthday-picker
+                    include ../../components/debug/type-picker
+                    include ../../components/debug/stat-sliders
+                    include ../../components/debug/constant-sliders
+

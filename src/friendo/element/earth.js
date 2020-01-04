@@ -7,6 +7,7 @@ import {
 } from '../art/colors'
 import Element from './element'
 import ELEMENTS from './elements'
+import { EARTH_SPEECH_STYLE, EARTH_TEXT_SIZE } from '../art/art-config'
 
 /**
  * Specifies how a earth friendo is drawn
@@ -21,6 +22,8 @@ export default class Earth extends Element {
     this.fillStyle = EARTH_SKIN
     this.eggStroke = EARTH_EGG_OUTLINE
     this.eggFill = EARTH_EGG_SKIN
+    this.textStyle = EARTH_SPEECH_STYLE
+    this.textSize = EARTH_TEXT_SIZE
   }
 
   computeArmTethers(friendo) {

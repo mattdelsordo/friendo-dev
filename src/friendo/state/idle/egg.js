@@ -4,49 +4,60 @@
  */
 
 import State from '../state'
-import { STATS } from '../../constants'
-
-export const ID = 'state_baby'
+import AEgg from '../../animation/egg'
+import { STATS, STATES } from '../../constants'
+import { MAX_EGG_LEVEL } from '../../balance'
+import { BABY_EMOJI, EGG_VERB } from '../../phrases/game-text'
 
 export default class Egg extends State {
   constructor(savedState) {
     if (!savedState) savedState = {}
     super(savedState)
-    this.id = ID
-    this.shaking = savedState.shaking || false
+    this.id = STATES.BABY
 
-    // Left blank to avoid speaking while and egg
-    this.phrasebook = () => ['']
-    this.words = ''
+    // check for "idleness" using this field,
+    // not sure how great a polymorphic check would be since
+    // egg and idle have different behavior
+    this.isIdle = true
+    this.reps = -1
 
-    this.returnTo = this.id
+    // phrasebook left blank to avoid speaking while and egg
+    this.anim = new AEgg(savedState.anim, () => [''])
+    this.verb = EGG_VERB
+    this.emoji = BABY_EMOJI
   }
 
-  draw(g, x, y, friendo) {
-    super.draw(g, x, y, friendo)
+  _doTransitionToHatch(friendo) {
+    return friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL
+  }
+  _doHatch(friendo) {
+    friendo.setState(STATES.HATCH)
+  }
 
-    // Shake if not currently shaking and with a probability
-    // based on egg level
-    const rand = Math.floor(Math.random() * 100)
-    const shake =
-      (friendo.getStat(STATS.EGG) < 2 ? 0 : ((friendo.getStat(STATS.EGG) - 1) * 10 >= rand))
-    if (!this.shaking && shake) {
-      this.shaking = true
+  // egg can't have fatigue
+  _getFatigueCost() {
+    return 0
+  }
+  _getHungerCost() {
+    return 0
+  }
+
+  handleAction(friendo, action, reps) {
+    switch (action) {
+      case STATES.EGG:
+        friendo.setState(action, reps)
+        return true
+      default:
+        return false
     }
+  }
 
-    // do a shake
-    if (this.shaking) {
-      this.shaking = false
-      return this.frame2(g, x, y, friendo)
+  // overload this to trigger the hatching animation
+  doRep(friendo) {
+    super.doRep(friendo)
+
+    if (this._doTransitionToHatch(friendo)) {
+      this._doHatch(friendo)
     }
-    return this.frame1(g, x, y, friendo)
-  }
-
-  frame1(g, x, y, friendo) {
-    friendo.element.drawEgg(g, x, y, friendo)
-  }
-
-  frame2(g, x, y, friendo) {
-    friendo.element.drawEgg(g, x + 2, y, friendo)
   }
 }

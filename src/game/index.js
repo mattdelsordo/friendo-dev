@@ -1,17 +1,25 @@
 import $ from 'jquery'
 import Tether from 'tether'
-import { load, save } from './game-util'
-import { TICKRATE } from './game-config'
+import { loadFriendoJSON, saveFriendo } from './game-util'
+import { FRAMERATE, HEARTRATE, SAVE_INTERVAL } from './game-config'
 import Friendo from '../friendo/friendo'
 
 import canvasListeners from './setup/canvas-listeners'
-import header, { updateDelete } from './setup/header-listeners'
+import header, { updateDelete, updateDownload } from './setup/header-listeners'
 import creatorSetup, { showCreator, hideCreator } from './setup/char-creator-listeners'
-import { initialize, performAction } from './setup/ui-update'
+import {
+  disableButtons,
+  initialize,
+  onHatch,
+  onHeartbeat,
+  onStateChange,
+  onStatUnlocked,
+  setFoodPref,
+  onStatStageUp,
+  setBgPref,
+} from './setup/ui-update'
 import mainSetup from './setup/main-listeners'
-
-import { ID as idleID } from '../friendo/state/idle/idle'
-import { ID as eggID } from '../friendo/state/idle/egg'
+import { initializeKeyListeners, unsetEnterButton } from './setup/key-listeners'
 
 window.jQuery = $
 window.Tether = Tether
@@ -20,7 +28,9 @@ require('bootstrap')
 
 // initializes UI based on friendo and starts game processes
 const start = (friendo) => {
+  unsetEnterButton() // call this to remove the listener from the character creation page
   updateDelete(friendo)
+  updateDownload(friendo)
   mainSetup(friendo)
   initialize(friendo)
   canvasListeners()
@@ -33,12 +43,33 @@ const start = (friendo) => {
     context.clearRect(0, 0, canvas.width, canvas.height)
     friendo.draw(canvas, context)
     context.restore()
-  }, TICKRATE)
+  }, FRAMERATE)
 
-  // resume an exercise if applicable
-  if (!(friendo.state.id === idleID || friendo.state.id === eggID)) {
-    performAction(friendo, friendo.state.id, friendo.state.getReps())
+  // set friendo listeners
+  friendo.setOnHeartbeat(onHeartbeat)
+  friendo.setOnHatch(onHatch)
+  friendo.setOnStateChange(onStateChange)
+  friendo.setOnStatUnlocked(onStatUnlocked)
+  friendo.setOnFoodPrefChange(setFoodPref)
+  friendo.setOnStatStageUp(onStatStageUp)
+  friendo.setOnBgChange(setBgPref)
+
+  // start friendo's heart
+  friendo.heartbeat()
+  setInterval(() => {
+    friendo.heartbeat()
+  }, HEARTRATE)
+
+  // if already in a non-idle state, disable buttons as we would if
+  // triggering a new task
+  if (!friendo.state.isIdle) {
+    disableButtons()
   }
+
+  // save every 5(?) minutes
+  setInterval(() => {
+    saveFriendo(JSON.stringify(friendo))
+  }, SAVE_INTERVAL)
 }
 
 $(document)
@@ -49,20 +80,28 @@ $(document)
     // set header listeners
     header()
 
+    // set up enter-button
+    initializeKeyListeners()
+
     // set up UI listeners
     creatorSetup((newFriendo) => {
       friendo = newFriendo
-      save(JSON.stringify(friendo))
+      saveFriendo(friendo)
       start(friendo)
     })
 
     // initialize friendo
-    const savegame = load()
+    const savegame = loadFriendoJSON()
     // show creator if no savegame
     if (!savegame) showCreator()
     else {
       // else, initialize game
       friendo = new Friendo(savegame)
+
+      // advance friendo into the future based on how much time has passed
+      const heartbeatsSinceLastSave = (new Date() - new Date(savegame.savedAt)) / HEARTRATE
+      friendo.fastForward(heartbeatsSinceLastSave)
+
       start(friendo)
       hideCreator()
     }

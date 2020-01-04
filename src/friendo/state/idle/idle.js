@@ -1,74 +1,52 @@
-import State from '../state'
-import { left, right } from '../../art/art-util'
-import phrasebook from '../../phrases/idle-phrases'
+/**
+ * Abstract parent class for states that cost low quantities of energy and don't reward exp
+ * States that exert and relax states default back to
+ */
 
-export const ID = 'state_idle'
+import State from '../state'
+import phrasebook from '../../phrases/idle-phrases'
+import AIdle from '../../animation/idle'
+import { STATES } from '../../constants'
+import { HUNGER_MULTIPLIER_IDLE } from '../../balance'
+import { IDLE_EMOJI, IDLE_VERB } from '../../phrases/game-text'
 
 export default class Idle extends State {
   constructor(savedState) {
     super(savedState)
-    this.id = ID
-
-    this.frame = 0
-
+    this.id = STATES.IDLE
     this.phrasebook = phrasebook
-    this.words = 'Hi'
+    this.anim = new AIdle(savedState.anim, phrasebook)
+    this.hungerMultiplier = HUNGER_MULTIPLIER_IDLE
 
-    this.returnTo = this.id
+    // check for "idleness" using this field,
+    // not sure how great a polymorphic check would be since
+    // egg and idle have different behavior
+    this.isIdle = true
+    this.reps = -1
+    this.verb = IDLE_VERB
+    this.emoji = IDLE_EMOJI
   }
 
-  draw(g, x, y, friendo) {
-    super.draw(g, x, y, friendo)
+  _doTransitionToSleep(friendo) {
+    return friendo.getNetEnergy() <= 0
+  }
 
-    // decide which frame shall be displayed
-    this.frame = (this.frame + 1) % 4
-    switch (this.frame) {
-      case 2:
-      case 3:
-        return this.frame2(g, x, y, friendo)
-      case 0:
-      case 1:
+  handleAction(friendo, action, reps) {
+    switch (action) {
+      case STATES.ARM:
+      case STATES.DOG:
+      case STATES.HAIR:
+      case STATES.TASTE:
+      case STATES.SIGHT:
+      case STATES.CORE:
+      case STATES.LEG:
+      case STATES.MEME:
+      case STATES.FEED:
+      case STATES.PET:
+        friendo.setState(action, reps)
+        return true
       default:
-        return this.frame1(g, x, y, friendo)
+        return false
     }
-  }
-
-  frame1(g, x, y, friendo) {
-    // pre-compute constants for drawing for ease of readability
-    const { thighGap, bodyOffset } = friendo.element
-    const legBrush = friendo.element.legBrush(friendo)
-    const armBrush = friendo.element.armBrush(friendo)
-    const armOffset = {
-      x: friendo.element.armOffset.xOffset,
-      y: friendo.element.legHeight - friendo.element.armOffset.yOffset,
-    }
-    const armAngle = 0.25 // pi radians
-
-    left(g, x - thighGap, y, legBrush) // left leg
-    right(g, x + thighGap, y, legBrush) // right leg
-    left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
-    right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
-    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
-  }
-
-  frame2(g, x, y, friendo) {
-    // pre-compute constants for drawing for ease of readability
-    const { thighGap } = friendo.element
-    const bodyOffset = friendo.element.bodyOffset - (friendo.element.bodyOffset * 0.05)
-    const legBrush = friendo.element.legBrush(friendo)
-    const armBrush = friendo.element.armBrush(friendo)
-    const armOffset = {
-      x: friendo.element.armOffset.xOffset,
-      y: friendo.element.legHeight - friendo.element.armOffset.yOffset,
-    }
-    const armAngle = 0.30 // pi radians
-
-    left(g, x - thighGap, y, legBrush) // left leg
-    right(g, x + thighGap, y, legBrush) // right leg
-    left(g, x - armOffset.x, y - armOffset.y, armBrush, armAngle)// left arm
-    right(g, x + armOffset.x, y - armOffset.y, armBrush, armAngle)// right arm
-    const computedTethers = friendo.element.drawCore(g, x, y - bodyOffset, friendo, this.blink)
-    friendo.element.speak(g, x + computedTethers.speech.x, computedTethers.speech.y, friendo)
   }
 }

@@ -6,20 +6,30 @@
 /* eslint-disable no-console */
 
 import {
+  LVL_CALC_WHITELIST,
+  MAX_DOGS,
+  STATS,
+  STAT_STAGES,
+  STATES,
+  BACKGROUNDS,
+} from './constants'
+import {
   LEG_UNLOCK_LEVEL,
   ARM_UNLOCK_LEVEL,
   HAIR_UNLOCK_LEVEL,
   DOG_UNLOCK_LEVEL,
   LEVEL_MAX,
-  LVL_CALC_WHITELIST,
-  MAX_DOGS,
   MAX_EGG_LEVEL,
-  STATS,
   STAT_MAX,
-  ENERGY_PER_LEVEL,
-  STAT_STAGES,
-  getExpCurve, MEME_EXP_MODIFIER, TASTE_ENERGY_MODIFIER,
-} from './constants'
+  getExpCurve,
+  MEME_EXP_MODIFIER,
+  calcBellyCap,
+  calcMaxEnergy,
+  DEFAULT_LEVEL,
+  DEFAULT_FATIGUE,
+  DEFAULT_MAX_ENERGY,
+  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER,
+} from './balance'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
 import loadState from './state/load-state'
@@ -31,44 +41,52 @@ import {
   DEFAULT_ELEMENT,
   DEFAULT_STATE,
   DEFAULT_STAT_STAGES,
-  DEFAULT_LEVEL,
-  DEFAULT_ENERGY,
-  DEFAULT_MAX_ENERGY,
   DEFAULT_EXP,
   DEFAULT_ZODIAC,
+  DEFAULT_FOOD_PREF,
+  DEFAULT_BG,
 } from './default'
-import { exercise } from './actions'
-import { ID as idleID } from './state/idle/idle'
 
 export default class Friendo {
-  // helper method to create a friendo based on character creation
-  static newFriendo(name, owner, element) {
-    return new Friendo(JSON.stringify({ name, owner, element }))
-  }
-
   // constructor takes context on which to draw
-  constructor(json) {
+  constructor(fromJSON) {
     // initialize friendo from save file
-    console.log(`Loading Friendo from ${json}`)
-    const fromJSON = JSON.parse(json || '{}')
     this._stats = fromJSON.stats || Object.assign({}, DEFAULT_STATS)
     this.state = fromJSON.state ? loadState(fromJSON.state, fromJSON.state.id) : DEFAULT_STATE
     this.name = fromJSON.name || DEFAULT_NAME
     this.owner = fromJSON.owner || DEFAULT_OWNER
     this.element = fromJSON.element ? selectElement(fromJSON.element) : DEFAULT_ELEMENT
     this.zodiac = fromJSON.zodiac ? getZodiac(fromJSON.zodiac) : DEFAULT_ZODIAC
-    this.energy = fromJSON.energy || DEFAULT_ENERGY
+    this.fatigue = fromJSON.fatigue || DEFAULT_FATIGUE
     this.exp = fromJSON.exp || DEFAULT_EXP
+    this.hunger = fromJSON.hunger || DEFAULT_HUNGER
+    this.foodPref = fromJSON.foodPref || DEFAULT_FOOD_PREF
+    this.bgPref = fromJSON.bgPref || DEFAULT_BG
 
     // set default derived values
     this._statStage = Object.assign({}, DEFAULT_STAT_STAGES)
     this.level = DEFAULT_LEVEL
     this.maxEnergy = DEFAULT_MAX_ENERGY
+    this.maxBelly = DEFAULT_MAX_BELLY
+
+    // establish UI listener fields
+    this.onHeartbeat = () => {}
+    this.onHatch = () => {}
+    this.onStateChange = () => {}
+    this.onStatUnlocked = () => {}
+    this.onFoodPrefChange = () => {}
+    this.onStatStageUp = () => {}
+    this.onBgChange = () => {}
 
     // initialize stat stages, level, and anchors
     this.initializeStatStages()
     this.updateLevel()
     this.element.computeAnchors(this)
+  }
+
+  // helper method to create a friendo based on character creation
+  static newFriendo(name, owner, element) {
+    return new Friendo({ name, owner, element })
   }
 
   // converts ya boi to a JSON string
@@ -80,15 +98,42 @@ export default class Friendo {
       stats: this._stats,
       state: this.state,
       zodiac: this.zodiac,
-      energy: this.energy,
+      fatigue: this.fatigue,
+      hunger: this.hunger,
       exp: this.exp,
+      savedAt: new Date(), // not sure if this is operation is too expensive
+      foodPref: this.foodPref,
+      bgPref: this.bgPref,
     }
   }
+
+
+  /** Sets */
+
+  // UI listener setters
+  setOnHeartbeat(ohb) { this.onHeartbeat = ohb }
+  setOnHatch(oh) { this.onHatch = oh }
+  setOnStateChange(osc) { this.onStateChange = osc }
+  setOnStatUnlocked(osu) { this.onStatUnlocked = osu }
+  setOnFoodPrefChange(ofpc) { this.onFoodPrefChange = ofpc }
+  setOnStatStageUp(ossu) { this.onStatStageUp = ossu }
+  setOnBgChange(obc) { this.onBgChange = obc }
 
   setElement(element) {
     this.element = selectElement(element)
     this.element.computeAnchors(this)
     console.log(`Element set to ${this.element}`)
+  }
+
+  // sets the value of a stat
+  setStat(stat, value) {
+    this._stats[stat] = Number(value)
+    // recompute stage of stat
+    this.setStatStage(stat)
+    // recompute level
+    this.updateLevel()
+    // remember to recompute anchors for drawing
+    this.element.computeAnchors(this)
   }
 
   // stat stage is used to draw the friendo
@@ -107,66 +152,52 @@ export default class Friendo {
         }
       }
 
+      // if the stat ranked up, do the callback
+      // skip if the increase only unlocks the stat
+      if (stage > 1 && stage > this._statStage[stat]) {
+        this.onStatStageUp(this, stat, stage)
+      }
+
       this._statStage[stat] = stage
     }
   }
 
-  // calls setStatStage on every stat
-  // should only be called by the constructor
-  initializeStatStages() {
-    Object.keys(this._stats).forEach((key) => {
-      this.setStatStage(key)
-    })
+  // set new birthday
+  setBirthday(date) {
+    if (date) {
+      this.zodiac = getZodiac(date)
+    } else {
+      this.zodiac = getZodiac()
+    }
   }
 
-  computeLevel() {
-    // if core == 0, we're still an egg
-    if (this.getStat(STATS.CORE) === 0) return 0
+  setState(id, reps) {
+    // actually swtich the state
+    this.state = loadState(this.state, id, reps)
 
-    // compute cumulative sum but skip the first level of each stat
-    // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
-    const statSum = LVL_CALC_WHITELIST.reduce((l, r) =>
-      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
-
-    // if the sum of all stats is less than one, skip rest of calcs
-    if (statSum < 1) return 0
-
-    const level = Math.floor((statSum / LEVEL_MAX) * 100) + 1
-
-    // if level is greater than 100, just print a star
-    if (level > 100) return String.fromCharCode(0x2605)
-    return level
+    this.onStateChange(this)
   }
 
-  // maxumum energy is the default + 5 per every level past 1
-  computeMaxEnergy() {
-    // disregard level 0-1 in calcs, don't factor lvl in in to calc
-    return DEFAULT_MAX_ENERGY
-      + (this.level > 1 ? ((this.level * ENERGY_PER_LEVEL) - ENERGY_PER_LEVEL) : 0)
+  // default food to use in feeding
+  setFoodPref(pref) {
+    if (pref < this.getStatStage(STATS.TASTE)) {
+      this.foodPref = pref
+      this.onFoodPrefChange(pref)
+    }
   }
 
-  // compute level and set it in the friendo
-  // also compute energy
-  updateLevel() {
-    this.level = this.computeLevel()
-    this.maxEnergy = this.computeMaxEnergy()
-
-    // check to see if any stats are unlocked
-    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) this.setStat(STATS.LEG, 1)
-    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) this.setStat(STATS.ARM, 1)
-    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) this.setStat(STATS.HAIR, 1)
-    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) this.setStat(STATS.DOG, 1)
+  // background to display
+  setBgPref(pref) {
+    this.bgPref = pref
+    this.onBgChange(pref, BACKGROUNDS[pref])
   }
 
-  // sets the value of a stat
-  setStat(stat, value) {
-    this._stats[stat] = value
-    // recompute stage of stat
-    this.setStatStage(stat)
-    // recompute level
-    this.updateLevel()
-    // remember to recompute anchors for drawing
-    this.element.computeAnchors(this)
+  /** Gets */
+
+  // stat combination by which maximum belly capacity scales
+  getBellyFactor() {
+    // combination of physical body stats
+    return ((2 * this.getStat(STATS.CORE)) + this.getStat(STATS.ARM) + this.getStat(STATS.LEG)) / 4
   }
 
   getStat(stat) {
@@ -180,31 +211,93 @@ export default class Friendo {
     return 0
   }
 
+  // raw number of energy the friendo has remaining
+  getNetEnergy() {
+    return this.maxEnergy - this.fatigue
+  }
+
   // returns percentage of energy the friendo currently has
-  getEnergyLeft() {
-    return this.energy / this.maxEnergy
+  // !! as a decimal value !!
+  getEnergyPercent() {
+    return this.getNetEnergy() / this.maxEnergy
   }
 
-  // exp multiplier based off taste level
-  getFoodMultiplier() {
-    return 1 + (this.getStat(STATS.TASTE) * TASTE_ENERGY_MODIFIER)
+  getNetBelly() {
+    return this.maxBelly - this.hunger
   }
 
-  /**
-   * Adds energy to the friendo's reserve
-   * @param amnt - amount of energy to add
-   * @param feed - whether or not to factor in taste multiplier
-   */
-  modifyEnergy(amnt, feed = false) {
-    const newAmnt = feed ? (amnt * this.getFoodMultiplier()) : amnt
-    if (newAmnt + this.energy >= this.maxEnergy) this.energy = this.maxEnergy
-    else if (this.energy + newAmnt <= 0) this.energy = 0
-    else this.energy = this.energy + newAmnt
+  getBellyPercent() {
+    return this.getNetBelly() / this.maxBelly
+  }
+
+  // additive multiplier to energy recovery rate, based on hunger
+  getHungerModifier() {
+    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
+      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
+        return HUNGER_MODIFIERS[i].value
+      }
+    }
+
+    return BASE_HUNGER_MODIFIER
   }
 
   // exp multiplier based off meme tolerance
   getExpMultiplier() {
     return 1 + (this.getStat(STATS.MEME) * MEME_EXP_MODIFIER)
+  }
+
+  getExp(stat) {
+    if (stat in this.exp) return this.exp[stat]
+    return 0
+  }
+
+  // returns exp as a percentage of the exp needed for the level
+  getExpPercent(stat) {
+    if (stat in this.exp) {
+      return this.exp[stat] / getExpCurve(stat)[this._stats[stat]]
+    }
+    return 0
+  }
+
+  // returns the amount of exp left till the next levelup for a stat
+  getExpLeft(stat) {
+    return getExpCurve(stat)[this._stats[stat]] - this.exp[stat]
+  }
+
+  // compute cumulative sum but skip the first level of each stat
+  // only sum up stats that are exposed to the user, e.g. not egg, energy, etc.
+  // used to calculate level
+  getStatSum() {
+    return LVL_CALC_WHITELIST.reduce((l, r) =>
+      Number(l) + (this._stats[r] < 2 ? 0 : this._stats[r] - 1), 1)
+  }
+
+
+  /** Modifys */
+
+  // adds energy to friendo's reserve
+  modifyFatigue(amnt) {
+    if (Number.isNaN(amnt)) {
+      console.error(`Tried to modify fatigue by ${amnt}`)
+      return
+    }
+
+    if (this.fatigue - amnt >= this.maxEnergy) this.fatigue = this.maxEnergy
+    else if (this.fatigue - amnt <= 0) this.fatigue = 0
+    else this.fatigue = this.fatigue - amnt
+  }
+
+  // adds belly to belly
+  // feed = whether to factor in feeding multiplier
+  modifyHunger(amnt) {
+    if (Number.isNaN(amnt)) {
+      console.error(`Tried to modify hunger by ${amnt}`)
+      return
+    }
+
+    if (this.hunger - amnt >= this.maxBelly) this.hunger = this.maxBelly
+    else if (this.hunger - amnt <= 0) this.hunger = 0
+    else this.hunger = this.hunger - amnt
   }
 
   // adds exp for a given stat
@@ -226,17 +319,56 @@ export default class Friendo {
     }
   }
 
-  getExp(stat) {
-    if (stat in this.exp) return this.exp[stat]
-    return 0
+
+  /** Internal utilities */
+
+  // calls setStatStage on every stat
+  // should only be called by the constructor
+  initializeStatStages() {
+    Object.keys(this._stats).forEach((key) => {
+      this.setStatStage(key)
+    })
   }
 
-  // returns exp as a percentage of the exp needed for the level
-  getExpPercent(stat) {
-    if (stat in this.exp) {
-      return this.exp[stat] / getExpCurve(stat)[this._stats[stat]]
+  computeLevel() {
+    // if core == 0, we're still an egg
+    if (this.getStat(STATS.CORE) === 0) return 0
+
+    // if the sum of all stats is less than one, skip rest of calcs
+    const statSum = this.getStatSum()
+    if (statSum < 1) return 0
+
+    const level = Math.floor((statSum / LEVEL_MAX) * 100) + 1
+
+    // if level is greater than 100, just print a star
+    if (level > 100) return String.fromCharCode(0x2605)
+    return level
+  }
+
+  // compute level and set it in the friendo
+  // also compute energy
+  updateLevel() {
+    this.level = this.computeLevel()
+    this.maxEnergy = calcMaxEnergy(this.level)
+    this.maxBelly = calcBellyCap(this.getBellyFactor())
+
+    // check to see if any stats are unlocked
+    if (this.getStat(STATS.LEG) < 1 && this.level >= LEG_UNLOCK_LEVEL) {
+      this.setStat(STATS.LEG, 1)
+      this.onStatUnlocked(this, STATS.LEG)
     }
-    return 0
+    if (this.getStat(STATS.ARM) < 1 && this.level >= ARM_UNLOCK_LEVEL) {
+      this.setStat(STATS.ARM, 1)
+      this.onStatUnlocked(this, STATS.ARM)
+    }
+    if (this.getStat(STATS.HAIR) < 1 && this.level >= HAIR_UNLOCK_LEVEL) {
+      this.setStat(STATS.HAIR, 1)
+      this.onStatUnlocked(this, STATS.HAIR)
+    }
+    if (this.getStat(STATS.DOG) < 1 && this.level >= DOG_UNLOCK_LEVEL) {
+      this.setStat(STATS.DOG, 1)
+      this.onStatUnlocked(this, STATS.DOG)
+    }
   }
 
   // Initialize pet dogs for the eventuality of them existing
@@ -248,8 +380,27 @@ export default class Friendo {
 
     for (let i = 0; i < MAX_DOGS; i += 1) {
       this.petDogs.dog.push(new Dog())
-      this.petDogs.location.push({ x: calcDogX(0, canvasW), y: calcDogY(0, canvasH) })
+      this.petDogs.location.push({
+        x: calcDogX(0, canvasW),
+        y: calcDogY(canvasH * (2 / 3), canvasH),
+      })
     }
+  }
+
+
+  /** Externally called methods  */
+
+  // performs behaviors associated with hatching the egg and
+  // ending the tutorial
+  hatch() {
+    this.setStat(STATS.CORE, 1)
+    this.setStat(STATS.SIGHT, 1)
+    this.setStat(STATS.TASTE, 1)
+    this.setStat(STATS.MEME, 1)
+    this.setState(STATES.IDLE)
+    this.setBirthday() // get new birthday
+
+    this.onHatch(this)
   }
 
   // draws the friendo to the context specified by g at specified coordinate
@@ -267,46 +418,24 @@ export default class Friendo {
     this.state.draw(context, x, y, this)
   }
 
-  setState(id) {
-    this.state = loadState(this.state, id)
+  // perform one rep
+  heartbeat() {
+    // store stat, because if doRep causes a transition to a state without a stat
+    // then the subsequent onHeartbeat call wont properly update the UI
+    const s = this.state.stat
+    this.state.doRep(this)
+    this.onHeartbeat(this, (this.state.stat || s))
   }
 
-  // performs behaviors associated with hatching the egg and
-  // ending the tutorial
-  hatch() {
-    this.setStat(STATS.CORE, 1)
-    this.setStat(STATS.SIGHT, 1)
-    this.setStat(STATS.TASTE, 1)
-    this.setStat(STATS.MEME, 1)
-    this.setState(idleID)
-    this.zodiac = getZodiac()
+  // handle messages directed at the friendo
+  handleAction(action, reps) {
+    return this.state.handleAction(this, action, reps)
   }
 
-  /**
-   * Changes state and begins a new exercise routine
-   * @param action - id of state/exercise to do
-   * @param reps - # of reps to do
-   * @param everyRep - function to execute on every rep (save, update UI)
-   * @param end - function to call once complete (updateUI)
-   */
-  startExercise(action, reps = 1, everyRep, end) {
-    // change state and then save
-    this.setState(action)
-    this.state.setReps(reps)
-    everyRep(this)
-
-    // start exercise at (reps-1) because the way they're set up
-    // the 0th rep gets performed
-    exercise(this, action, reps - 1, everyRep, () => {
-      // if egg is maxed out, enable starting levels set state to idle
-      if (this.getStat(STATS.CORE) === 0 && this.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        this.hatch()
-      } else {
-        // reset state and then save
-        this.setState(this.state.returnTo)
-      }
-      everyRep(this, false)
-      end()
-    })
+  // advances time forward from the last save
+  fastForward(heartbeats) {
+    for (let i = 0; i < heartbeats; i += 1) {
+      this.heartbeat()
+    }
   }
 }

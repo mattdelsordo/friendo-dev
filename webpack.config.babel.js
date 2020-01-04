@@ -1,14 +1,14 @@
 import path from 'path'
+import webpack from 'webpack'
 
 import { isProd } from './src/config'
 
-
-export default {
+const buildConfig = (inName, outName) => ({
   entry: [
-    './src/game/index.js',
+    `./src/game/${inName}.js`,
   ],
   output: {
-    filename: 'bundle.js',
+    filename: `${outName}.js`,
     path: path.resolve(__dirname, 'docs'),
     publicPath: '/',
   },
@@ -27,4 +27,12 @@ export default {
     watchContentBase: true,
   },
   mode: isProd ? 'production' : 'development',
-}
+  plugins: [
+    new webpack.DefinePlugin({
+      BUNDLE_BUILD_DATE: JSON.stringify(new Date()),
+      BUNDLE_VERSION: JSON.stringify(require("./package.json").version),
+    })
+  ]
+})
+
+export default [buildConfig('index', 'bundle'), buildConfig('debug', 'debug')]

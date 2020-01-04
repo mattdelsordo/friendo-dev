@@ -3,7 +3,7 @@
  * bonuses certain stats get based on horoscope
  */
 
-import { ACTIONS, STATS } from '../constants'
+import { STATES, STATS } from '../constants'
 
 class Zodiac {
   constructor(birthtime) {
@@ -46,6 +46,10 @@ class Zodiac {
     }
     return `${Math.floor(days / 365)} yrs.`
   }
+
+  toString() {
+    return `${this.getAge()} old - born ${this.birthday.toLocaleDateString()} (${this.sign})`
+  }
 }
 
 // default zodiac sign - a birthdayless egg
@@ -84,7 +88,7 @@ export class Taurus extends Zodiac {
   }
 
   getStatBonus(stat) {
-    if (stat === ACTIONS.SLEEP) return 1.2
+    if (stat === STATES.SLEEP) return 1.2
     return 1
   }
 }
@@ -93,7 +97,7 @@ export class Gemini extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Gemini'
-    this.symbol = '264A'
+    this.symbol = '264a'
   }
 
   getStatBonus(stat) {
@@ -106,7 +110,7 @@ export class Cancer extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Cancer'
-    this.symbol = '264B'
+    this.symbol = '264b'
   }
 
   getStatBonus(stat) {
@@ -119,7 +123,7 @@ export class Leo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Leo'
-    this.symbol = '264C'
+    this.symbol = '264c'
   }
 
   getStatBonus(stat) {
@@ -132,7 +136,7 @@ export class Virgo extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Virgo'
-    this.symbol = '264D'
+    this.symbol = '264d'
   }
 
   getStatBonus(stat) {
@@ -145,7 +149,7 @@ export class Libra extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Libra'
-    this.symbol = '264E'
+    this.symbol = '264e'
   }
 
   getStatBonus(stat) {
@@ -166,11 +170,11 @@ export class Scorpio extends Zodiac {
   constructor(birthtime) {
     super(birthtime)
     this.sign = 'Scorpio'
-    this.symbol = '264F'
+    this.symbol = '264f'
   }
 
   getStatBonus(stat) {
-    if (stat === ACTIONS.PET) return 1.2
+    if (stat === STATES.PET) return 1.2
     return 1
   }
 }
@@ -222,7 +226,7 @@ export class Pisces extends Zodiac {
   }
 
   getStatBonus(stat) {
-    if (stat === ACTIONS.FEED) return 1.2
+    if (stat === STATES.FEED) return 1.2
     return 1
   }
 }

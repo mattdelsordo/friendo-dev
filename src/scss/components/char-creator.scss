@@ -33,3 +33,13 @@
 #name-input {
   font-size: 1.2em;
 }
+
+#btn-rand-name {
+  padding: 0.2rem 0.2rem;
+
+  .emoji {
+    height: 1.8em;
+    width: 1.8em;
+    vertical-align: -0.3em;
+  }
+}

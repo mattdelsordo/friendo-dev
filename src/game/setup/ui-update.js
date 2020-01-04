@@ -3,15 +3,31 @@
  */
 
 import $ from 'jquery'
-import { save } from '../game-util'
+import { saveFriendo } from '../game-util'
 import {
   EMPTY_STAR,
   FULL_STAR,
-  MAX_EGG_LEVEL,
-  STAT_MAX,
   STAT_STAGES,
   STATS,
+  FOODS,
+  BACKGROUNDS,
 } from '../../friendo/constants'
+import {
+  MAX_EGG_LEVEL,
+  STAT_MAX,
+} from '../../friendo/balance'
+import Exert from '../../friendo/state/exert/exert'
+import { HEARTRATE } from '../game-config'
+import {
+  ENERGY_TUT_CONTENT,
+  ENERGY_TUT_TITLE,
+  HUNGER_TUT_TITLE,
+  HUNGER_TUT_CONTENT,
+  ENERGY_EXPLAIN_CONTENT,
+  ENERGY_EXPLAIN_TITLE,
+  HUNGER_EXPLAIN_CONTENT,
+  HUNGER_EXPLAIN_TITLE, STAT_EXPLAIN,
+} from '../../friendo/phrases/game-text'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -24,13 +40,13 @@ export const setLevel = (level) => {
 export const setZodiac = (zodiac, color = 'black') => {
   $('#zodiac-display')
     .attr('src', `./img/emoji/${zodiac.symbol}.png`)
-    .popover({ content: '???', trigger: 'hover' })
+    .popover({ content: '???', trigger: 'hover focus', offset: '0, 2' })
 
   // separately set content so that the popover will be updated every time this function
   if (zodiac.sign !== 'Egg') {
     $('#zodiac-display')
       .css('border-color', color)
-      .data('bs.popover').config.content = `${zodiac.getAge()} old- born ${zodiac.birthday.toLocaleDateString()} (${zodiac.sign})`
+      .data('bs.popover').config.content = zodiac.toString()
     // determine if birthday and show it
     if (zodiac.isBirthday()) {
       $('#zodiac-display')
@@ -39,19 +55,86 @@ export const setZodiac = (zodiac, color = 'black') => {
   }
 }
 
+// set string to status
+const updateStatus = (status) => {
+  $('#status-display').html(status)
+}
+
+// set remaining time based on reps
+const updateTimer = (reps) => {
+  if (reps < 0) reps = 0
+
+  const hours = Math.floor(reps / 3600)
+  const mins = Math.floor((reps - (hours * 3600)) / 60)
+  const secs = reps - (hours * 3600) - (mins * 60)
+
+  let string = `${secs}`.padStart(2, '0')
+  string = `${mins}:${string}`.padStart(5, '0')
+  if (hours > 0) {
+    string = `${hours}:${string}`
+  }
+
+  $('#exercise-timer').html(string)
+}
+
+export const hideTimer = () => {
+  $('#exercise-timer').css('visibility', 'hidden')
+  $('#cancel-exercise').css('visibility', 'hidden')
+}
+
+export const showTimer = () => {
+  $('#exercise-timer').css('visibility', 'visible')
+  $('#cancel-exercise').css('visibility', 'visible')
+}
+
 // sets and triggers tutorial content
-const showTutorial = () => {
+const showTrainingTutorial = () => {
   $('#egg-display')
     .popover({
       trigger: 'manual',
       content: 'Click on a stat to train your Friendo.',
       title: 'Click me!',
+      offset: '0, 2',
     })
     .click(() => {
       $('#egg-display').popover('hide')
     })
 
   $('#egg-display').popover('show')
+}
+
+const showNewMeal = () => {
+  $('#food-selector').popover('show')
+}
+
+// handles popups that teach the user about energy and hunger
+const showEnergyTutorial = () => {
+  $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_TUT_CONTENT
+  $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_TUT_TITLE
+  $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_TUT_CONTENT
+  $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_TUT_TITLE
+
+  $('#max-energy-emoji').popover('show')
+  $('#empty-belly-emoji').popover('show')
+
+  // hide popovers when hovered over
+  $('.popover').hover(() => {}, function hidePopovers() {
+    $(this).popover('hide')
+  })
+
+  setTimeout(() => {
+    $('#max-energy-emoji').popover('hide')
+    $('#empty-belly-emoji').popover('hide')
+
+    $('#max-energy-emoji').data('bs.popover').config.content = ENERGY_EXPLAIN_CONTENT
+    $('#max-energy-emoji').data('bs.popover').config.title = ENERGY_EXPLAIN_TITLE
+    $('#empty-belly-emoji').data('bs.popover').config.content = HUNGER_EXPLAIN_CONTENT
+    $('#empty-belly-emoji').data('bs.popover').config.title = HUNGER_EXPLAIN_TITLE
+  }, 20000)
+}
+
+const setPageTitle = (name, emoji) => {
+  $(document).prop('title', `Friendo \u{00b7} ${name} ${emoji}`)
 }
 
 /**
@@ -125,6 +208,7 @@ export const setStat = (stat, exp, lvl, stage) => {
   $(`#${stat}-prog`).data('lastVal', percent)
 }
 export const setAllStats = (friendo) => {
+  /* eslint-disable-next-line compat/compat */
   Object.values(STATS).forEach((s) => {
     setStat(s, friendo.getExpPercent(s), friendo.getStat(s), friendo.getStatStage(s))
   })
@@ -136,6 +220,71 @@ export const setAllStats = (friendo) => {
  */
 export const setEnergy = (energy) => {
   $('#energybar').css('width', `${Math.floor(energy * 100)}%`)
+}
+
+export const setBelly = (belly) => {
+  if (belly >= 0.5) {
+    $('#hungerbar').css('background-color', 'var(--success)')
+  } else if (belly >= 0.2) {
+    $('#hungerbar').css('background-color', 'var(--warning)')
+  } else {
+    $('#hungerbar').css('background-color', 'var(--danger)')
+  }
+  $('#hungerbar').css('width', `${Math.floor(belly * 100)}%`)
+}
+
+export const setFoodPref = (pref) => {
+  $('#food-pref').attr('src', `./img/emoji/${FOODS[pref].emoji}.png`)
+}
+
+// enables all food options of lower value than the stage
+const setAvailableFood = (friendo, stage) => {
+  for (let i = 0; i < stage; i += 1) {
+    $(`#food-${i}`)
+      .css('display', 'block')
+      .click(() => { friendo.setFoodPref(i) })
+  }
+}
+
+// sets background icon/image
+export const setBgPref = (name, emoji) => {
+  $('#bg-dropdown').attr('src', `./img/emoji/${emoji}.png`)
+  $('#canvas').css('background', `url('img/bg/${name}.png')`)
+}
+
+export const setAvailableBgs = (friendo) => {
+  const bgAvailable = Math.floor(friendo.level / 10)
+
+  for (let i = 0; i <= bgAvailable; i += 1) {
+    $(`#bg-${i}`)
+      .css('display', 'block')
+      .click(() => { friendo.setBgPref(i) })
+  }
+
+  $(`#bg-${friendo.element.id}`)
+    .css('display', 'block')
+    .click(() => { friendo.setBgPref(friendo.element.id) })
+}
+
+// enable/disable all friendo interaction buttons to prevent the
+// player from breaking the entire game state
+export const enableButtons = () => {
+  $('#pet-button').prop('disabled', '')
+  $('#feed-button').prop('disabled', '')
+  $('#food-selector').prop('disabled', '')
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', '')
+  })
+}
+export const disableButtons = () => {
+  $('#pet-button').prop('disabled', 'disabled')
+  $('#feed-button').prop('disabled', 'disabled')
+  $('#food-selector').prop('disabled', 'disabled')
+  /* eslint-disable-next-line compat/compat */
+  Object.values(STATS).forEach((s) => {
+    $(`#start-${s}`).prop('disabled', 'disabled')
+  })
 }
 
 // handle daily events for if someone plays continuously past midnight
@@ -157,11 +306,19 @@ const daily = (friendo) => {
 
 // bulk-set all UI elements from friendo
 export const initialize = (friendo) => {
+  setPageTitle(friendo.name, friendo.state.emoji)
   setName(friendo.name)
   setLevel(friendo.level)
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
-  setEnergy(friendo.getEnergyLeft())
+  setEnergy(friendo.getEnergyPercent())
+  setBelly(friendo.getBellyPercent())
+  updateStatus(friendo.state.verb)
+  updateTimer(friendo.state.reps)
+  setAvailableFood(friendo, friendo.getStatStage(STATS.TASTE))
+  setFoodPref(friendo.foodPref)
+  setAvailableBgs(friendo)
+  setBgPref(friendo.bgPref, BACKGROUNDS[friendo.bgPref])
 
   // show stats based on level
   // CORE=0 means we're still in the tutorial
@@ -190,37 +347,36 @@ export const initialize = (friendo) => {
     $(`#${STATS.DOG}-bar`).css('visibility', 'visible')
   }
 
-  // show tutorial if egg level is 0
-  if (friendo.getStat(STATS.EGG) === 1) showTutorial()
+  // show tutorial if egg level is less than 3
+  if (friendo.getStat(STATS.CORE) === 0 && friendo.getStat(STATS.EGG) < 3) showTrainingTutorial()
+  // show energy tutorial if no stat has levelled up
+  if (friendo.getStat(STATS.CORE) > 0 && friendo.getStatSum() === 1) showEnergyTutorial()
 
   // start daily event timer
   daily(friendo)
-}
 
-// enable/disable all friendo interaction buttons to prevent the
-// player from breaking the entire game state
-export const enableButtons = () => {
-  $('#pet-button').prop('disabled', '')
-  $('#feed-button').prop('disabled', '')
-  Object.values(STATS).forEach((s) => {
-    $(`#start-${s}`).prop('disabled', '')
-  })
-}
-export const disableButtons = () => {
-  $('#pet-button').prop('disabled', 'disabled')
-  $('#feed-button').prop('disabled', 'disabled')
-  Object.values(STATS).forEach((s) => {
-    $(`#start-${s}`).prop('disabled', 'disabled')
-  })
+  // update state-specific stuff
+  if (!friendo.state.isIdle) {
+    disableButtons()
+  }
+  if (friendo.state instanceof Exert) {
+    showTimer()
+  } else {
+    hideTimer()
+  }
 }
 
 // checks whether or not a new stat has been unlocked and
 // updates the UI accordingly
-const updateStatVisibility = (friendo) => {
-  Object.values(STATS).forEach((s) => {
-    if (friendo.getStat(s) >= 1) $(`#${s}-bar`).css('visibility', 'visible')
-  })
+const updateStatVisibility = (friendo, stat) => {
+  if (friendo.getStat(stat) >= 1) $(`#${stat}-bar`).css('visibility', 'visible')
 }
+// // not useful now, may be useful later
+// const updateAllStatVisibility = (friendo) => {
+//   Object.values(STATS).forEach((s) => {
+//     updateStatVisibility(friendo, s)
+//   })
+// }
 
 const hideEggDisplay = (friendo) => {
   // show hidden content
@@ -230,41 +386,72 @@ const hideEggDisplay = (friendo) => {
   setAllStats(friendo)
 }
 
-// generalized action peforming routine for the buttons
+// update these elements every lifetime tick
+export const onHeartbeat = (friendo, stat, updatebar = true) => {
+  // update energy bar
+  setEnergy(friendo.getEnergyPercent())
+  setBelly(friendo.getBellyPercent())
+  updateTimer(friendo.state.reps)
+
+  // we need to be able to untoggle this to prevent breaking the
+  // progress bar animation
+  if (stat && updatebar) {
+    // update stat displays
+    setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+    $(`#${stat}-icon`).data('bs.popover').config.content = STAT_EXPLAIN[stat](friendo)
+  }
+
+  // update level
+  setLevel(friendo.level)
+}
+
+// stuff to update when the friendo hatches!
+export const onHatch = (friendo) => {
+  setZodiac(friendo.zodiac, friendo.element.strokeStyle)
+  hideEggDisplay(friendo)
+}
+
+// stuff to do when friendo changes state
+export const onStateChange = (friendo) => {
+  updateStatus(friendo.state.verb)
+  setPageTitle(friendo.name, friendo.state.emoji)
+
+  // handle enabling/disabling buttons based on the state
+  if (friendo.state.isIdle) {
+    enableButtons()
+  } else {
+    disableButtons()
+  }
+
+  // if exercising, show timer
+  if (friendo.state instanceof Exert) {
+    updateTimer(friendo.state.reps)
+    showTimer()
+  } else {
+    // wait a second to hide timer
+    setTimeout(hideTimer, HEARTRATE / 2)
+  }
+  saveFriendo(friendo)
+}
+
+// makes a previously invisible stat field visible
+export const onStatUnlocked = (friendo, stat) => {
+  setStat(stat, friendo.getExpPercent(stat), friendo.getStat(stat), friendo.getStatStage(stat))
+  updateStatVisibility(friendo, stat)
+}
+
+// fire when a friendo's stat stage increases (above 1)
+export const onStatStageUp = (friendo, stat, stage) => {
+  if (stat === STATS.TASTE) {
+    setAvailableFood(friendo, stage)
+    showNewMeal()
+  }
+}
+
+// send message to friendo to change state
+// if the friendo can transition (returns true),
+// disable buttons (friendo will already have changed state)
 export const performAction = (friendo, action, reps = 1) => {
-  disableButtons()
-  friendo.startExercise(
-    action,
-    reps,
-    // function to call on every rep
-    (f, updatebar = true) => {
-      // save
-      save(JSON.stringify(f))
-      // update energy bar
-      setEnergy(f.getEnergyLeft())
-      // check to see if any stat can be made visible
-      updateStatVisibility(f)
-
-      // we need to be able to untoggle this to prevent breaking the
-      // progress bar animation
-      if (updatebar) {
-        // update stat displays
-        const stat = action.split('_')[1] || ''
-        setStat(stat, f.getExpPercent(stat), f.getStat(stat), f.getStatStage(stat))
-      }
-
-      // update level
-      setLevel(friendo.level)
-    },
-    // function to call at end
-    () => {
-      enableButtons()
-
-      // check whether incubation tutorial is over
-      if (friendo.getStat(STATS.EGG) === MAX_EGG_LEVEL) {
-        setZodiac(friendo.zodiac, friendo.element.strokeStyle)
-        hideEggDisplay(friendo)
-      }
-    },
-  )
+  // this function used to do more shit
+  friendo.handleAction(action, reps)
 }
