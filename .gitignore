@@ -1,3 +1,8 @@
+# Add new patterns to the top of the file
+# in order to avoid merge conflicts with master
+
+*.friendo
+
 /node_modules
 
 .DS_Store
@@ -16,5 +21,3 @@ yarn-error.log*
 **/.idea/tasks.xml
 
 docs/
-
-*.friendo
