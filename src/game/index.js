@@ -72,8 +72,26 @@ const start = (friendo) => {
   }, SAVE_INTERVAL)
 }
 
+// Register the service worker that gets compiled to /sw.js
+// disable select eslint rules because we want logging and
+// already did the compatibility check
+/* eslint-disable compat/compat, no-console */
+const registerServiceWorker = () => {
+    // register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then((reg) => {
+        console.log('[ServiceWorker] Registration successful in ', reg.scope)
+      }, (err) => {
+        console.log('[ServiceWorker] Failed to register: ', err)
+      })
+    }
+}
+/* eslint-enable compat/compat, no-console */
+
 $(document)
   .ready(() => {
+    registerServiceWorker()
+
     // define store of game state
     let friendo
 

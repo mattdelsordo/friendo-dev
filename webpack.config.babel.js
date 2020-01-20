@@ -2,10 +2,11 @@ import path from 'path'
 import webpack from 'webpack'
 
 import { isProd } from './src/config'
+import { buildCacheList } from './build-cache-list'
 
 const buildConfig = (inName, outName) => ({
   entry: [
-    `./src/game/${inName}.js`,
+    `./src/${inName}.js`,
   ],
   output: {
     filename: `${outName}.js`,
@@ -31,8 +32,9 @@ const buildConfig = (inName, outName) => ({
     new webpack.DefinePlugin({
       BUNDLE_BUILD_DATE: JSON.stringify(new Date()),
       BUNDLE_VERSION: JSON.stringify(require("./package.json").version),
+      URLS_TO_CACHE: JSON.stringify(buildCacheList()),
     })
   ]
 })
 
-export default [buildConfig('index', 'bundle'), buildConfig('debug', 'debug')]
+export default [buildConfig('game/index', 'bundle'), buildConfig('service-worker', 'sw'), buildConfig('game/debug', 'debug')]
