@@ -1,14 +1,63 @@
-[
-    {
-        "phrase": "I could really go for a sandwich right about now..."
-    },
-    {
-        "phrase": "I think my tummy just grumbled!"
-    },
-    {
-        "phrase": "Feed me ${friendo.owner}"
-    },
-    {
-        "phrase": "Is it dinner time yet?"
-    }
+[{
+    "phrase": "I could really go for a sandwich right about now..."
+  },
+  {
+    "phrase": "I think my tummy just grumbled!"
+  },
+  {
+    "phrase": "Feed me, ${friendo.owner}"
+  },
+  {
+    "phrase": "Is it dinner time yet?"
+  },
+  {
+    "phrase": "${friendo.name} needs a snack!"
+  },
+  {
+    "phrase": "I'm really hungry."
+  },
+  {
+    "phrase": "Did you forget to feed me?"
+  },
+  {
+    "phrase": "Can I have little a salami, for snack?",
+    "meme": 2
+  },
+  {
+    "phrase": "What's for dinner?"
+  },
+  {
+    "phrase": "I could really go for some chicken vindaloo",
+    "element": "fire"
+  },
+  {
+    "phrase": "Serve me up some gaspacho",
+    "element": "water"
+  },
+  {
+    "phrase": "Baked potatoes are my favorite...",
+    "element": "earth"
+  },
+  {
+    "phrase": "Can I have cotton candy for dinner?",
+    "element": "air"
+  },
+  {
+    "phrase": "Can I have some carrots? They're good for your vision.",
+    "sight": 10
+  },
+  {
+    "phrase": "I need some protein! Gotta bulk up.",
+    "core": 40,
+    "leg": 40,
+    "arm": 40
+  },
+  {
+    "phrase": "I need some salmon to maintain my shine",
+    "hair": 65
+  },
+  {
+    "phrase": "I'm hungry enough to eat a dog treat...",
+    "dog": 20
+  }
 ]
