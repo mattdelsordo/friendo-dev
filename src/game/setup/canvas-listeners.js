@@ -11,7 +11,7 @@ import $ from 'jquery'
  */
 const resizeCanvas = () => {
   $('#canvas')
-    .width(Math.min(400, Math.floor($(window).width() * 0.95)))
+    .width(Math.min(400, Math.floor($(window).width() * 0.9)))
     .height($('#canvas').width())
 }
 
