@@ -3,7 +3,6 @@ import {
   BLINK_TIME,
   SPEAK_CHANCE,
   SPEAK_TIME,
-  TOTAL_EVENT_CHANCE,
 } from '../constants'
 import { left, right } from '../art/art-util'
 
@@ -70,7 +69,7 @@ export default class FAnimation {
     // handle blink
     if (this.blink > 0) {
       this.blink -= 1
-    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.blinkRate) {
+    } else if (this.blinkRate > Math.random()) {
       // not blinking, chance to blink
       this.blink = BLINK_TIME
     }
@@ -79,7 +78,7 @@ export default class FAnimation {
     if (this.speak > 0) {
       // decrement speech timer if greater than 0
       this.speak -= 1
-    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.speakRate) {
+    } else if (this.speakRate > Math.random()) {
       // chance to reset speech timer and pick a new phrase
       this.speak = SPEAK_TIME
       this.words = friendo.state.phrasebook.pick(friendo)
