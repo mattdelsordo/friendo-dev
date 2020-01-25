@@ -27,7 +27,7 @@ import {
   ENERGY_EXPLAIN_TITLE,
   HUNGER_EXPLAIN_CONTENT,
   HUNGER_EXPLAIN_TITLE, STAT_EXPLAIN,
-} from '../../friendo/phrases/game-text'
+} from '../../friendo/text/game-text'
 
 export const setName = (name) => {
   $('#name-display').html(name)
@@ -222,10 +222,10 @@ export const setEnergy = (energy) => {
   $('#energybar').css('width', `${Math.floor(energy * 100)}%`)
 }
 
-export const setBelly = (belly) => {
-  if (belly >= 0.5) {
+export const setBelly = (belly, stage) => {
+  if (stage === 0 || stage === 1) {
     $('#hungerbar').css('background-color', 'var(--success)')
-  } else if (belly >= 0.2) {
+  } else if (stage === 2) {
     $('#hungerbar').css('background-color', 'var(--warning)')
   } else {
     $('#hungerbar').css('background-color', 'var(--danger)')
@@ -312,7 +312,7 @@ export const initialize = (friendo) => {
   setZodiac(friendo.zodiac, friendo.element.strokeStyle)
   setAllStats(friendo)
   setEnergy(friendo.getEnergyPercent())
-  setBelly(friendo.getBellyPercent())
+  setBelly(friendo.getBellyPercent(), friendo.getHungerStage())
   updateStatus(friendo.state.verb)
   updateTimer(friendo.state.reps)
   setAvailableFood(friendo, friendo.getStatStage(STATS.TASTE))
@@ -390,7 +390,7 @@ const hideEggDisplay = (friendo) => {
 export const onHeartbeat = (friendo, stat, updatebar = true) => {
   // update energy bar
   setEnergy(friendo.getEnergyPercent())
-  setBelly(friendo.getBellyPercent())
+  setBelly(friendo.getBellyPercent(), friendo.getHungerStage())
   updateTimer(friendo.state.reps)
 
   // we need to be able to untoggle this to prevent breaking the

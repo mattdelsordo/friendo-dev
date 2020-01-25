@@ -8,8 +8,8 @@ import { STATS } from '../constants'
 const SHAKE_CHANCES = [0, 0, 10, 30, 50]
 
 export default class AEgg extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
     this.shaking = (old) ? old.shaking : false
   }
 

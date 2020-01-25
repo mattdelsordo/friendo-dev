@@ -3,7 +3,6 @@ import {
   BLINK_TIME,
   SPEAK_CHANCE,
   SPEAK_TIME,
-  TOTAL_EVENT_CHANCE,
 } from '../constants'
 import { left, right } from '../art/art-util'
 
@@ -16,7 +15,7 @@ import { left, right } from '../art/art-util'
 const FRAME_DELAY = 2
 
 export default class FAnimation {
-  constructor(old, phrasebook) {
+  constructor(old) {
     // carry over components of previous animation for continuity
     if (!old) old = {}
     this.blinkRate = old.blinkRate || BLINK_CHANCE
@@ -28,7 +27,6 @@ export default class FAnimation {
     this.words = old.words || ''
 
     // define animation-specific parameters
-    this.phrasebook = phrasebook
     this.frameDelay = FRAME_DELAY
 
     this.frames = [this.frame1]
@@ -63,12 +61,6 @@ export default class FAnimation {
     }
   }
 
-  pickPhrase(friendo) {
-    const list = this.phrasebook(friendo)
-    const selected = Math.floor(Math.random() * list.length)
-    return list[selected]
-  }
-
   // prerequisite setup for the draw method
   predraw(g, x, y, friendo) {
     /**
@@ -77,7 +69,7 @@ export default class FAnimation {
     // handle blink
     if (this.blink > 0) {
       this.blink -= 1
-    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.blinkRate) {
+    } else if (this.blinkRate > Math.random()) {
       // not blinking, chance to blink
       this.blink = BLINK_TIME
     }
@@ -86,10 +78,10 @@ export default class FAnimation {
     if (this.speak > 0) {
       // decrement speech timer if greater than 0
       this.speak -= 1
-    } else if (Math.random() * TOTAL_EVENT_CHANCE < this.speakRate) {
+    } else if (this.speakRate > Math.random()) {
       // chance to reset speech timer and pick a new phrase
       this.speak = SPEAK_TIME
-      this.words = this.pickPhrase(friendo)
+      this.words = friendo.state.phrasebook.pick(friendo)
     } else {
       // if speak <= 0, don't speak
       this.words = ''

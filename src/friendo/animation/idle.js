@@ -6,8 +6,8 @@ import { left, right } from '../art/art-util'
  */
 
 export default class AIdle extends FAnimation {
-  constructor(old, phrasebook) {
-    super(old, phrasebook)
+  constructor(old) {
+    super(old)
 
     this.frames = [this.frame1, this.frame2]
   }

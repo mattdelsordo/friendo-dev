@@ -1,0 +1,785 @@
+[{
+    "phrase": "I love you ${friendo.owner}"
+  },
+  {
+    "phrase": "You can call me ${friendo.name}"
+  },
+  {
+    "phrase": "❤"
+  },
+  {
+    "phrase": "Hi."
+  },
+  {
+    "phrase": "Hows it going?"
+  },
+  {
+    "phrase": "Doo doo doo doo"
+  },
+  {
+    "phrase": "Watch any good shows recently?"
+  },
+  {
+    "phrase": "I don't wanna clean my room!"
+  },
+  {
+    "phrase": "Want to play a round of Carcassonne?"
+  },
+  {
+    "phrase": "We should go on a vacation."
+  },
+  {
+    "phrase": "Can you take me to the park?"
+  },
+  {
+    "phrase": "Let's go to the pool!",
+    "element": "water"
+  },
+  {
+    "phrase": "When I grow up I want to be a firefighter.",
+    "element": "water"
+  },
+  {
+    "phrase": "Sorry if I get you too damp when you pet me.",
+    "element": "water"
+  },
+  {
+    "phrase": "Ooh lets make some slime as a craft!",
+    "element": "water"
+  },
+  {
+    "phrase": "Can you take me to see the fish at the aquarium?",
+    "element": "water"
+  },
+  {
+    "phrase": "Want to bake some cookies?",
+    "element": "fire"
+  },
+  {
+    "phrase": "When I grow up I want to be a blacksmith!",
+    "element": "fire"
+  },
+  {
+    "phrase": "I have to be careful not to set the room on fire!",
+    "element": "fire"
+  },
+  {
+    "phrase": "My favorite animals are salamanders. They don't get burned when I pick them up!",
+    "element": "fire"
+  },
+  {
+    "phrase": "Let's go out back and build a big bonfire!",
+    "element": "fire"
+  },
+  {
+    "phrase": "I just want to play in the mud.",
+    "element": "earth"
+  },
+  {
+    "phrase": "My favorite animal is the star-nosed mole.",
+    "element": "earth"
+  },
+  {
+    "phrase": "I saw a really pretty flower today.",
+    "element": "earth"
+  },
+  {
+    "phrase": "I want to be an IT technician when I grow up.",
+    "element": "earth"
+  },
+  {
+    "phrase": "Let's go to the beach and build a big sandcastle!",
+    "element": "earth"
+  },
+  {
+    "phrase": "Let's go fly a kite!",
+    "element": "air"
+  },
+  {
+    "phrase": "I'm really good at blowing bubbles.",
+    "element": "air"
+  },
+  {
+    "phrase": "I can already fly but... someday I want to be a pilot.",
+    "element": "air"
+  },
+  {
+    "phrase": "I like watching the birds out the window.",
+    "element": "air"
+  },
+  {
+    "phrase": "What'll it be for my next workout?"
+  },
+  {
+    "phrase": "Gotta limber up for my next rep..."
+  },
+  {
+    "phrase": "Seen any good movies lately?"
+  },
+  {
+    "phrase": "What's your favorite sport?"
+  },
+  {
+    "meme": 2,
+    "phrase": "They rescued my egg from Area 51"
+  },
+  {
+    "meme": 2,
+    "phrase": "aight imma head out"
+  },
+  {
+    "meme": 2,
+    "phrase": "Ah shit, here we go again"
+  },
+  {
+    "meme": 2,
+    "phrase": "Ok boomer"
+  },
+  {
+    "meme": 2,
+    "phrase": "I'm dummy thicc"
+  },
+  {
+    "meme": 2,
+    "phrase": "I hope to be as strong as Ultra Instinct Shaggy one day\n"
+  },
+  {
+    "meme": 2,
+    "phrase": "I hope nobody kills my 3-5 friendly dogs while I play.\n",
+    "dog": 40
+  },
+  {
+    "meme": 2,
+    "phrase": "I'm gonna take my dog to the old town road",
+    "dog": 1
+  },
+  {
+    "meme": 10,
+    "phrase": "Oh my gosh is that Sans Undertale??"
+  },
+  {
+    "meme": 10,
+    "phrase": "The aurora borealis? At this time of day, at this time of year?"
+  },
+  {
+    "meme": 10,
+    "phrase": "E"
+  },
+  {
+    "meme": 10,
+    "phrase": "Friendos rise up"
+  },
+  {
+    "meme": 10,
+    "phrase": "I'm your best friend ever, change my mind."
+  },
+  {
+    "meme": 10,
+    "phrase": "I'm starting to look like Big Chungus"
+  },
+  {
+    "meme": 10,
+    "phrase": "This ain't it, chief"
+  },
+  {
+    "meme": 10,
+    "phrase": "Oh lawd I'm comin'"
+  },
+  {
+    "meme": 10,
+    "phrase": "I've got big Friendo energy"
+  },
+  {
+    "meme": 20,
+    "phrase": "do u kno de way?"
+  },
+  {
+    "meme": 20,
+    "phrase": "o shit whaddup!"
+  },
+  {
+    "meme": 20,
+    "phrase": "| || || |_"
+  },
+  {
+    "meme": 20,
+    "phrase": "Here comes dat ${friendo.name}!!!!!!"
+  },
+  {
+    "meme": 20,
+    "phrase": "You know I had to do it to 'em"
+  },
+  {
+    "meme": 20,
+    "phrase": "yOu NeEd To EaT tO KeEp YoUr EnErgY uP"
+  },
+  {
+    "meme": 20,
+    "phrase": "Cash me outside\n"
+  },
+  {
+    "meme": 20,
+    "phrase": "To be fair, you have to have a very high IQ to train me"
+  },
+  {
+    "meme": 20,
+    "phrase": "I protec, but I also... nah I just protec"
+  },
+  {
+    "meme": 20,
+    "phrase": "Would you say I'm an absolute unit?"
+  },
+  {
+    "meme": 20,
+    "phrase": "I'm gonna do a weird flex, ok?\n"
+  },
+  {
+    "meme": 20,
+    "phrase": "stonks"
+  },
+  {
+    "meme": 20,
+    "phrase": "what in tarnation"
+  },
+  {
+    "meme": 20,
+    "phrase": "somebody toucha my spaghet!"
+  },
+  {
+    "meme": 20,
+    "phrase": "whomst'd"
+  },
+  {
+    "meme": 20,
+    "phrase": "da ting go skrrra\n"
+  },
+  {
+    "meme": 20,
+    "phrase": "What is you doin???\n"
+  },
+  {
+    "meme": 20,
+    "phrase": "Improvise. Adapt. Overcome."
+  },
+  {
+    "meme": 20,
+    "phrase": "No swearing in my Christian browser game"
+  },
+  {
+    "meme": 20,
+    "phrase": "then perish"
+  },
+  {
+    "meme": 20,
+    "phrase": "Me Me Big boy\n"
+  },
+  {
+    "meme": 30,
+    "phrase": "RIP Harambe"
+  },
+  {
+    "meme": 30,
+    "phrase": "Did you ever hear the tragedy of Darth Plagueis The Wise?"
+  },
+  {
+    "meme": 30,
+    "phrase": "We are number one!"
+  },
+  {
+    "meme": 30,
+    "phrase": "IT'S TIME TO STOP"
+  },
+  {
+    "meme": 30,
+    "phrase": "Was that a Jojo reference??"
+  },
+  {
+    "meme": 30,
+    "phrase": "It's ${friendo.name}, my dudes"
+  },
+  {
+    "meme": 30,
+    "phrase": "This is the ideal friendo body."
+  },
+  {
+    "meme": 30,
+    "phrase": "You may not like it, but this is what peak performance looks like."
+  },
+  {
+    "meme": 30,
+    "phrase": "I... committed tax fraud"
+  },
+  {
+    "meme": 30,
+    "phrase": "oww oof my muscles"
+  },
+  {
+    "meme": 30,
+    "phrase": "Ah, I see you're a human of culture as well."
+  },
+  {
+    "meme": 30,
+    "phrase": "${friendo.owner}, may I have some \u00f6ats"
+  },
+  {
+    "meme": 30,
+    "phrase": "Damn, ${friendo.owner}"
+  },
+  {
+    "meme": 30,
+    "phrase": "bone apple tea"
+  },
+  {
+    "meme": 30,
+    "phrase": "god I wish that were me"
+  },
+  {
+    "meme": 30,
+    "phrase": "While you were gaming, I studied the blade"
+  },
+  {
+    "meme": 30,
+    "phrase": "i lik the bred"
+  },
+  {
+    "meme": 30,
+    "phrase": "Saturdays are for the boys"
+  },
+  {
+    "meme": 30,
+    "phrase": "Name a more iconic duo than us, ${friendo.owner}, I'll wait\n"
+  },
+  {
+    "meme": 30,
+    "phrase": "Hewwo"
+  },
+  {
+    "meme": 30,
+    "phrase": "Rename fire ants to spicy boys!!!"
+  },
+  {
+    "meme": 40,
+    "phrase": "It's blue and black!!!"
+  },
+  {
+    "meme": 40,
+    "phrase": "I want to Netflix and chill\n"
+  },
+  {
+    "meme": 40,
+    "phrase": "that sounds fake but....okay\n"
+  },
+  {
+    "meme": 40,
+    "phrase": "good shit good shit thats some good shit right there"
+  },
+  {
+    "meme": 40,
+    "phrase": "deez nuts"
+  },
+  {
+    "meme": 40,
+    "phrase": "ha gotem"
+  },
+  {
+    "meme": 40,
+    "phrase": "OwO what's this?"
+  },
+  {
+    "meme": 40,
+    "phrase": "Friendship gained with ${friendo.owner}"
+  },
+  {
+    "meme": 40,
+    "phrase": "suh dude"
+  },
+  {
+    "meme": 40,
+    "phrase": "Welcome to Chili's"
+  },
+  {
+    "meme": 40,
+    "phrase": "another one"
+  },
+  {
+    "meme": 40,
+    "phrase": "shh bby is ok"
+  },
+  {
+    "meme": 40,
+    "phrase": "congradulations, you played myself"
+  },
+  {
+    "meme": 40,
+    "phrase": "WITNESS ME"
+  },
+  {
+    "meme": 40,
+    "phrase": "Be careful who you call ugly in Middle School"
+  },
+  {
+    "meme": 40,
+    "phrase": "yeah booooooooooooooooooi"
+  },
+  {
+    "meme": 50,
+    "phrase": "I'm a big guy... for you"
+  },
+  {
+    "meme": 50,
+    "phrase": "Press F to Feed me a sandwich"
+  },
+  {
+    "meme": 50,
+    "phrase": "some. BODY once told me the wooorld was gonna roll me"
+  },
+  {
+    "meme": 50,
+    "phrase": "bruh."
+  },
+  {
+    "meme": 50,
+    "phrase": "I never see you exercise... but that's none of by business."
+  },
+  {
+    "meme": 50,
+    "phrase": "This could be us but... hey, you ARE playing!"
+  },
+  {
+    "meme": 50,
+    "phrase": "I'm ${friendo.name}... from Target."
+  },
+  {
+    "meme": 50,
+    "phrase": "Actually, It's about ethics in browser game journalism."
+  },
+  {
+    "meme": 50,
+    "phrase": "yee"
+  },
+  {
+    "meme": 50,
+    "phrase": "my name is jeff"
+  },
+  {
+    "meme": 50,
+    "phrase": "I crave that mineral\n"
+  },
+  {
+    "meme": 50,
+    "phrase": "I showed you my hair please respond"
+  },
+  {
+    "meme": 50,
+    "phrase": "graphic design is my passion"
+  },
+  {
+    "meme": 50,
+    "phrase": "hey its me ur brother"
+  },
+  {
+    "meme": 50,
+    "phrase": "it's a prank dude it's a prank!"
+  },
+  {
+    "meme": 50,
+    "phrase": "They had us in the first half, not gonna lie."
+  },
+  {
+    "meme": 50,
+    "phrase": "I lived, bitch"
+  },
+  {
+    "meme": 50,
+    "phrase": "suck my ass"
+  },
+  {
+    "meme": 50,
+    "phrase": "..........................................................slime man"
+  },
+  {
+    "meme": 50,
+    "phrase": "Take a closer look at that snout!\n"
+  },
+  {
+    "meme": 50,
+    "phrase": "My potions are too strong for you, traveller"
+  },
+  {
+    "meme": 60,
+    "phrase": "This is fine."
+  },
+  {
+    "meme": 60,
+    "phrase": "much friendo, very wow"
+  },
+  {
+    "meme": 60,
+    "phrase": "Let's make a Harlem Shake video!\n"
+  },
+  {
+    "meme": 60,
+    "phrase": "You had one job!"
+  },
+  {
+    "meme": 60,
+    "phrase": "Wait... what does the fox say?"
+  },
+  {
+    "meme": 60,
+    "phrase": "ayy LMAO"
+  },
+  {
+    "meme": 60,
+    "phrase": "In this moment I am euphoric."
+  },
+  {
+    "meme": 60,
+    "phrase": "Surprise, bitch. I bet you though you'd seen the last of me"
+  },
+  {
+    "meme": 60,
+    "phrase": "On all levels including physical, I am a Friendo"
+  },
+  {
+    "meme": 60,
+    "phrase": "My server needs some more dedotated wam"
+  },
+  {
+    "meme": 60,
+    "phrase": "#shrekt"
+  },
+  {
+    "meme": 70,
+    "phrase": "What the fuck did you just fucking say about me, you little bitch?"
+  },
+  {
+    "meme": 70,
+    "phrase": "*points at dog* Is this a pidgeon?",
+    "dog": 1
+  },
+  {
+    "meme": 70,
+    "phrase": "Ehrmagerd!!"
+  },
+  {
+    "meme": 70,
+    "phrase": "Oppan Gangnam style"
+  },
+  {
+    "meme": 70,
+    "phrase": "Have you heard about Kony 2012\n"
+  },
+  {
+    "meme": 70,
+    "phrase": "I hope Romney doesn't kill Big Bird..."
+  },
+  {
+    "meme": 70,
+    "phrase": "( \u0361\u00b0 \u035c\u0296 \u0361\u00b0)"
+  },
+  {
+    "meme": 70,
+    "phrase": "Raise your dongers"
+  },
+  {
+    "meme": 70,
+    "phrase": "I hope senpai will notice me..."
+  },
+  {
+    "meme": 70,
+    "phrase": "420 blaze it"
+  },
+  {
+    "meme": 70,
+    "phrase": "expand dong"
+  },
+  {
+    "meme": 70,
+    "phrase": "*tips fedora*"
+  },
+  {
+    "meme": 70,
+    "phrase": "You know nothing, ${friendo.owner} Snow"
+  },
+  {
+    "meme": 70,
+    "phrase": "[intensifies]"
+  },
+  {
+    "meme": 70,
+    "phrase": "2spooky"
+  },
+  {
+    "meme": 70,
+    "phrase": "Instructions unclear, hair stuck in ceiling fan"
+  },
+  {
+    "meme": 70,
+    "phrase": "Pee is stored in the balls"
+  },
+  {
+    "meme": 70,
+    "phrase": "you tried"
+  },
+  {
+    "meme": 70,
+    "phrase": "bold move, cotton"
+  },
+  {
+    "meme": 70,
+    "phrase": "Call me, maybe?"
+  },
+  {
+    "meme": 70,
+    "phrase": "2deep4u"
+  },
+  {
+    "meme": 80,
+    "phrase": "I'm about to end your Tamagotchi's whole career"
+  },
+  {
+    "meme": 80,
+    "phrase": "Everybody's lookin' forward to the weekend\n"
+  },
+  {
+    "meme": 80,
+    "phrase": "Nope! Chuck Testa"
+  },
+  {
+    "meme": 80,
+    "phrase": "Hold my phone I'm gonna plank"
+  },
+  {
+    "meme": 80,
+    "phrase": "Exercise ALL the muscles!"
+  },
+  {
+    "meme": 80,
+    "phrase": "*brohoof*\n"
+  },
+  {
+    "meme": 80,
+    "phrase": "You don't say?"
+  },
+  {
+    "meme": 80,
+    "phrase": "Murica"
+  },
+  {
+    "meme": 80,
+    "phrase": "feels good"
+  },
+  {
+    "meme": 80,
+    "phrase": "serve me up a nice cold glass of bepis\n"
+  },
+  {
+    "meme": 80,
+    "phrase": "(\u00b4\uff65\u03c9\uff65`)"
+  },
+  {
+    "meme": 80,
+    "phrase": "WHAT YEAR IS IT?"
+  },
+  {
+    "meme": 80,
+    "phrase": "I want my hat back"
+  },
+  {
+    "meme": 80,
+    "phrase": "well a very, very heavay a heavy drit, burtation tonight,"
+  },
+  {
+    "meme": 80,
+    "phrase": "What a time to be alive"
+  },
+  {
+    "meme": 80,
+    "phrase": "You have no power here!"
+  },
+  {
+    "meme": 80,
+    "phrase": "hhhehehe"
+  },
+  {
+    "meme": 90,
+    "phrase": "FFFFFFFUUUUUUUUUUUU"
+  },
+  {
+    "meme": 90,
+    "phrase": "Trololololo lololo lololol"
+  },
+  {
+    "meme": 90,
+    "phrase": "With you I won't be Forever Alone, ${friendo.owner}"
+  },
+  {
+    "meme": 90,
+    "phrase": "Deal with it"
+  },
+  {
+    "meme": 90,
+    "phrase": "Fuckin' magnets, how do they work?"
+  },
+  {
+    "meme": 90,
+    "phrase": "Double rainbow!!"
+  },
+  {
+    "meme": 90,
+    "phrase": "I'm on a horse."
+  },
+  {
+    "meme": 90,
+    "phrase": "Hide your kids, hide your wife."
+  },
+  {
+    "meme": 90,
+    "phrase": "Me gusta"
+  },
+  {
+    "meme": 90,
+    "phrase": "y u no feed me"
+  },
+  {
+    "meme": 90,
+    "phrase": "fuck yea."
+  },
+  {
+    "meme": 90,
+    "phrase": "OKAY"
+  },
+  {
+    "meme": 90,
+    "phrase": "I know that feel bro"
+  },
+  {
+    "meme": 90,
+    "phrase": "impossibru"
+  },
+  {
+    "meme": 90,
+    "phrase": "come at me bro"
+  },
+  {
+    "meme": 90,
+    "phrase": "Shut up and take my money!"
+  },
+  {
+    "meme": 90,
+    "phrase": "${friendo.owner}, that kills people!"
+  },
+  {
+    "meme": 90,
+    "phrase": "Oh stop it, you"
+  },
+  {
+    "meme": 90,
+    "phrase": "u jelly?"
+  },
+  {
+    "meme": 90,
+    "phrase": "> tfw no gf"
+  }
+]

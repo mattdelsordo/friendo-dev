@@ -2,7 +2,7 @@
  * Abstract parent class for states that restore energy and reward no exp
  */
 import State from '../state'
-import { IDLE_EMOJI } from '../../phrases/game-text'
+import { IDLE_EMOJI } from '../../text/game-text'
 
 export default class Relax extends State {
   constructor(savedState) {

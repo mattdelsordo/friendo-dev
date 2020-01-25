@@ -5,8 +5,8 @@ import { drawHandDown as paintHand } from '../art/props/hand'
 const FRAME_DELAY = 1
 
 export default class APet extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.isSmiling = true
     this.frameDelay = FRAME_DELAY
