@@ -76,13 +76,12 @@ const loadFriendo = () => {
 /* eslint-enable no-alert */
 
 export default () => {
-  $('#vernum').html(`[ v${VERSION} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${VERSION}`)
+  $('#vernum').html(`[v${VERSION}]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${VERSION}`)
 
   // show new version alert if necessary
   const showUpdateAlert = cachedVersionMismatch() || daysSinceLastRelease() < 5
   if (showUpdateAlert) {
     $('#version-link').css('visibility', 'visible').addClass('new-version-alert')
-    $('#update-alert').css('display', 'inline')
   }
 
   $('#game-info-icon').mouseenter(() => {

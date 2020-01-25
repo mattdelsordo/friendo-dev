@@ -23,6 +23,7 @@ header {
   &-icon {
     margin-top: .35em;
   }
+  white-space: nowrap;
 }
 
 #favicon {
@@ -49,10 +50,6 @@ header {
 
 #version-link, .header-btn {
   visibility: hidden;
-}
-
-#update-alert {
-  display: none;
 }
 
 .new-version-alert {
