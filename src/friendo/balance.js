@@ -85,7 +85,7 @@ export const LEVEL_MAX = (LVL_CALC_WHITELIST.length * 99) + 1
 
 const EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.8) + 8))
 const STEEP_EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.9) + 6))
-const EGG_EXP = [0, 240, 180, 180, HATCH_DUR]
+const EGG_EXP = [0, 10, 20, 30, HATCH_DUR]
 
 // returns the exp curve for a given stat
 export const getExpCurve = (stat) => {
