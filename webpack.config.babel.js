@@ -23,6 +23,7 @@ const buildConfig = (inName, outName) => ({
     extensions: ['.js', '.jsx'],
   },
   devServer: {
+    host: '0.0.0.0',
     port: 3001,
     contentBase: path.join(__dirname, './docs'),
     watchContentBase: true,

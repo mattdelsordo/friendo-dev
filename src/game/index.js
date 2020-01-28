@@ -77,14 +77,14 @@ const start = (friendo) => {
 // already did the compatibility check
 /* eslint-disable compat/compat, no-console */
 const registerServiceWorker = () => {
-    // register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then((reg) => {
-        console.log('[ServiceWorker] Registration successful in ', reg.scope)
-      }, (err) => {
-        console.log('[ServiceWorker] Failed to register: ', err)
-      })
-    }
+  // register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then((reg) => {
+      console.log('[ServiceWorker] Registration successful in ', reg.scope)
+    }, (err) => {
+      console.log('[ServiceWorker] Failed to register: ', err)
+    })
+  }
 }
 /* eslint-enable compat/compat, no-console */
 

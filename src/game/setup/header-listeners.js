@@ -118,6 +118,23 @@ export default () => {
   $('#uploadDNA').click(() => {
     loadFriendo()
   })
+
+  /** Enable Add to Homescreen (works in Chrome at time of writing) */
+  let A2HSEvent
+  window.addEventListener('beforeinstallprompt', (e) => {
+    A2HSEvent = e
+    $('#btn-a2hs').css('display', 'inline-block')
+  })
+
+  $('#btn-a2hs').click(() => {
+    A2HSEvent.prompt()
+    A2HSEvent.userChoice.then((choiceResult) => {
+      // if the choice is accepted, re-hide the button
+      if (choiceResult.outcome === 'accepted') {
+        $('#btn-a2hs').css('display', 'none')
+      }
+    })
+  })
 }
 
 export const updateDelete = (friendo) => {

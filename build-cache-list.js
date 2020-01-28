@@ -16,7 +16,8 @@ const BLACKLIST = [
   '/.directory',
   '/img/.directory',
   '/img/bg/.directory',
-  '/img/emoji/.directory'
+  '/img/emoji/.directory',
+  '/img/icons/.directory'
 ]
 
 const findFilesToCache = (dir, addToList) => {
