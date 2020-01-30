@@ -32,6 +32,10 @@ header {
   margin-bottom: 0.2em;
 }
 
+#btn-a2hs {
+  display: none;
+}
+
 // Hide header button text when screen is too small
 @media screen and (max-width: 550px) {
   .header-btn span {
