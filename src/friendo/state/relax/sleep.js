@@ -2,7 +2,7 @@
  * Define behavior for a sleeping friendo
  */
 
-import phrasebook from '../../phrases/sleep-phrases'
+import { SleepPhrasebook } from '../../text/phrasebooks/sleep'
 import { STATES } from '../../constants'
 import {
   HUNGER_MULTIPLIER_SLEEP,
@@ -12,7 +12,7 @@ import {
 } from '../../balance'
 import Relax from './relax'
 import ASleep from '../../animation/sleep'
-import { ASLEEP_EMOJI, SLEEP_VERB } from '../../phrases/game-text'
+import { ASLEEP_EMOJI, SLEEP_VERB } from '../../text/game-text'
 
 export default class Sleep extends Relax {
   constructor(savedState, bellyPercent) {
@@ -20,7 +20,8 @@ export default class Sleep extends Relax {
     this.id = STATES.SLEEP
     this.fatigueCost = ENERGY_COST_SLEEP
     this.hungerMultiplier = HUNGER_MULTIPLIER_SLEEP
-    this.anim = new ASleep(savedState.anim, phrasebook)
+    this.phrasebook = new SleepPhrasebook()
+    this.anim = new ASleep(savedState.anim)
     this.reps = -1
     this.verb = SLEEP_VERB
     this.emoji = ASLEEP_EMOJI

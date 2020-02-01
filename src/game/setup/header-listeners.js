@@ -76,13 +76,12 @@ const loadFriendo = () => {
 /* eslint-enable no-alert */
 
 export default () => {
-  $('#vernum').html(`[ v${VERSION} ]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${VERSION}`)
+  $('#vernum').html(`[v${VERSION}]`).attr('href', `https://github.com/mattdelsordo/friendo/releases/tag/v${VERSION}`)
 
   // show new version alert if necessary
   const showUpdateAlert = cachedVersionMismatch() || daysSinceLastRelease() < 5
   if (showUpdateAlert) {
     $('#version-link').css('visibility', 'visible').addClass('new-version-alert')
-    $('#update-alert').css('display', 'inline')
   }
 
   $('#game-info-icon').mouseenter(() => {
@@ -118,6 +117,23 @@ export default () => {
 
   $('#uploadDNA').click(() => {
     loadFriendo()
+  })
+
+  /** Enable Add to Homescreen (works in Chrome at time of writing) */
+  let A2HSEvent
+  window.addEventListener('beforeinstallprompt', (e) => {
+    A2HSEvent = e
+    $('#btn-a2hs').css('display', 'inline-block')
+  })
+
+  $('#btn-a2hs').click(() => {
+    A2HSEvent.prompt()
+    A2HSEvent.userChoice.then((choiceResult) => {
+      // if the choice is accepted, re-hide the button
+      if (choiceResult.outcome === 'accepted') {
+        $('#btn-a2hs').css('display', 'none')
+      }
+    })
   })
 }
 

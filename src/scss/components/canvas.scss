@@ -1,12 +1,14 @@
 #canvas {
     background: url('img/bg/bg0.png');
+    background-size: cover !important;
+    background-position: center !important;
 }
 
 #canvas + .dropdown {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 0;
 
     button {
         padding: 0.2em;

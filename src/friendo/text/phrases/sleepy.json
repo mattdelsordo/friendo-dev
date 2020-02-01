@@ -1,0 +1,34 @@
+[{
+    "phrase": "*yawn*"
+  },
+  {
+    "phrase": "boy am I drowsy"
+  },
+  {
+    "phrase": "almost time to hit the hay"
+  },
+  {
+    "phrase": "I really could use a nice pile of mud to lay in...",
+    "element": "earth"
+  },
+  {
+    "phrase": "I'm so tired I might float away...",
+    "element": "air"
+  },
+  {
+    "phrase": "${friendo.owner}, can you read me a bedtime story?"
+  },
+  {
+    "phrase": "Gonna use my dog as a pillow",
+    "dog": "30"
+  },
+  {
+    "phrase": "I'm tired"
+  },
+  {
+    "phrase": "Gettin' real tired over here"
+  },
+  {
+    "phrase": "I'm running out of energy!"
+  }
+]

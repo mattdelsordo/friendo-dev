@@ -4,8 +4,8 @@ import { left, right } from '../art/art-util'
 import { HOTDOG_EMOJI as EMOJI } from '../constants'
 
 export default class AMunch extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.emoji = new Image()
     this.emoji.src = `./img/emoji/${EMOJI.emoji}.png`

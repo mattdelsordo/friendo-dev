@@ -28,7 +28,7 @@ import {
   DEFAULT_LEVEL,
   DEFAULT_FATIGUE,
   DEFAULT_MAX_ENERGY,
-  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER,
+  DEFAULT_MAX_BELLY, DEFAULT_HUNGER, HUNGER_MODIFIERS, BASE_HUNGER_MODIFIER, ENERGY_THRESHOLDS,
 } from './balance'
 import { Dog, calcDogX, calcDogY } from './art/props/dog'
 import selectElement from './element/select-element'
@@ -79,6 +79,7 @@ export default class Friendo {
     this.onBgChange = () => {}
 
     // initialize stat stages, level, and anchors
+    this.state.loadPhrases(this)
     this.initializeStatStages()
     this.updateLevel()
     this.element.computeAnchors(this)
@@ -174,6 +175,7 @@ export default class Friendo {
   setState(id, reps) {
     // actually swtich the state
     this.state = loadState(this.state, id, reps)
+    this.state.loadPhrases(this)
 
     this.onStateChange(this)
   }
@@ -230,14 +232,30 @@ export default class Friendo {
     return this.getNetBelly() / this.maxBelly
   }
 
-  // additive multiplier to energy recovery rate, based on hunger
-  getHungerModifier() {
-    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
-      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
-        return HUNGER_MODIFIERS[i].value
+  // returns the "stage" of the energy level, used to determine speech options
+  getEnergyStage() {
+    for (let i = 0; i < ENERGY_THRESHOLDS.length; i += 1) {
+      if (this.getEnergyPercent() >= ENERGY_THRESHOLDS[i]) {
+        return i
       }
     }
+    return -1
+  }
 
+  // returns stage of hunger to determine multiplier on energy
+  getHungerStage() {
+    for (let i = 0; i < HUNGER_MODIFIERS.length; i += 1) {
+      if (this.getBellyPercent() >= HUNGER_MODIFIERS[i].threshold) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  // additive multiplier to energy recovery rate, based on hunger
+  getHungerModifier() {
+    const stage = this.getHungerStage()
+    if (stage >= 0) return HUNGER_MODIFIERS[stage].value
     return BASE_HUNGER_MODIFIER
   }
 

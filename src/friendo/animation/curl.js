@@ -3,8 +3,8 @@ import dumbbell from '../art/props/dumbbell'
 import { left, right } from '../art/art-util'
 
 export default class ACurl extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.frames = [
       this.frame1.bind(this),

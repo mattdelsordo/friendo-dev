@@ -2,8 +2,8 @@ import FAnimation from './f-animation'
 import { left, right } from '../art/art-util'
 
 export default class ASleep extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.frames = [this.frame1]
   }

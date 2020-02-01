@@ -2,12 +2,10 @@
 
 // format of header links
 mixin header-btn(txt, emo)
-    a.ml-3.header-btn&attributes(attributes)
+    a.ml-2.header-btn&attributes(attributes)
         | [
-        |
         +emoji(emo)
         span #{txt}
-        |
         | ]
 
 // dialog that displays attributions
@@ -135,9 +133,10 @@ header#header
             +emoji('1f516')(class='ml-4' id='game-info-icon')
             span.ml-2.w-100.d-flex#game-info
                 a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank")
-                    span#vernum [ v0.0.0 ]
-                    span.ml-1#update-alert NEW!!
+                    span#vernum [v0.0.0]
                 +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
+            button.btn.btn-outline-info.mr-1.p-1#btn-a2hs
+                +emoji('1f4f2')
             a#settings(href="" data-toggle="modal" data-target="#settings-dialog")
                 +emoji('2699')

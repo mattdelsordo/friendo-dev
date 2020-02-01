@@ -42,23 +42,35 @@ export const ARM_UNLOCK_LEVEL = 3
 export const HAIR_UNLOCK_LEVEL = 5
 export const DOG_UNLOCK_LEVEL = 10
 
+// thresholds that designate energy stages
+export const ENERGY_THRESHOLDS = [
+  0.5,
+  0.25,
+  0,
+]
+
 // for hunger% >= the threshold, modify hunger by the value
+// each threshold acts as the stage of hunger
 export const HUNGER_MODIFIERS = [
   {
-    threshold: 0.8,
+    threshold: 0.75,
     value: EXERCISE_COST / -2, // should be additive
+    speakChance: 0,
   },
   {
     threshold: 0.5,
     value: EXERCISE_COST / -4, // should be additive
+    speakChance: 0.1,
   },
   {
     threshold: 0.2,
     value: 0,
+    speakChance: 0.5,
   },
   {
     threshold: 0.01,
     value: EXERCISE_COST / 2,
+    speakChance: 0.8,
   },
 ]
 // hunger modifier for if no threshold is greater than the value
@@ -73,7 +85,7 @@ export const LEVEL_MAX = (LVL_CALC_WHITELIST.length * 99) + 1
 
 const EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.8) + 8))
 const STEEP_EXP_CURVE = Array.from(Array(101), (_, i) => Math.ceil((i ** 1.9) + 6))
-const EGG_EXP = [0, 240, 180, 180, HATCH_DUR]
+const EGG_EXP = [0, 10, 20, 30, HATCH_DUR]
 
 // returns the exp curve for a given stat
 export const getExpCurve = (stat) => {

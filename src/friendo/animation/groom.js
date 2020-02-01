@@ -15,8 +15,8 @@ const rotateHairbrush = (g, x, y, angle = 0) => {
 }
 
 export default class AGroom extends FAnimation {
-  constructor(old, phrases) {
-    super(old, phrases)
+  constructor(old) {
+    super(old)
 
     this.isSmiling = true
 

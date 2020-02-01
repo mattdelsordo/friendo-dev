@@ -23,12 +23,17 @@ header {
   &-icon {
     margin-top: .35em;
   }
+  white-space: nowrap;
 }
 
 #favicon {
   height: 1.2em;
   width: 1.2em;
   margin-bottom: 0.2em;
+}
+
+#btn-a2hs {
+  display: none;
 }
 
 // Hide header button text when screen is too small
@@ -49,10 +54,6 @@ header {
 
 #version-link, .header-btn {
   visibility: hidden;
-}
-
-#update-alert {
-  display: none;
 }
 
 .new-version-alert {
