@@ -17,5 +17,22 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "/img/screenshots/character-creator.jpg",
+      "sizes": "748x423",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/img/screenshots/gameplay.jpg",
+      "sizes": "925x526",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/img/screenshots/mafia-meme.jpg",
+      "sizes": "598x352",
+      "type": "image/jpeg"
+    }
   ]
 }
