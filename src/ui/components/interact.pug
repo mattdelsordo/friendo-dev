@@ -15,7 +15,7 @@
 
 mixin foodDropdownItem(food, i)
     .dropdown-item.food-option(href="#" id=`food-${i}`)
-        +emoji(food.emoji)
+        +emoji(food.emoji)(alt=`${food.name}`)
         |
         | #{food.name}
 
@@ -26,7 +26,7 @@ mixin foodDropdownItem(food, i)
         .btn-group.dropdown.w-100(role="group")
             button.btn.btn-warning.w-75#feed-button(type="button") Feed
             button.btn.btn-warning.dropdown-toggle.p-0.m-0#food-selector(type="button" data-toggle="dropdown")
-                +emoji('1f35e')(id="food-pref")
+                +emoji('1f35e')(id="food-pref", alt="Choose what to feed your Friendo")
             .dropdown-menu
                 each f, i in foods
                     +foodDropdownItem(f, i)

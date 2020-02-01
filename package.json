@@ -1,6 +1,6 @@
 {
   "name": "friendo",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Friendo: a virtual pal.",
   "main": "index.js",
   "repository": "https://github.com/mattdelsordo/friendo.git",

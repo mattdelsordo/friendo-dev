@@ -1,4 +1,4 @@
-![this was a fresh meme when I made it](/res/img/mafia-meme.png)
+![this was a fresh meme when I made it](/res/img/screenshots/mafia-meme.jpg)
 ## Friendo
 
 A Friendo is a virtual pal. Hatch your Friendo from an egg, care for it, and schedule its exercise regimen until it becomes the big strong Friendo it was destined to be. Friendos grow, learn, get stronger, and adopt more dogs as you increase their stats. Make a new friend at **https://mattdelsordo.github.io/friendo/** and see how powerful your bond will become!
