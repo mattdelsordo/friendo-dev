@@ -1,7 +1,7 @@
 {
   "name": "Friendo",
   "short_name": "Friendo",
-  "description": "Watch your virtual pal grow as you train them to maximize their potential!",
+  "description": "Make a new pal. Help them grow big and strong. Fill their room with dogs.",
   "start_url": "/index.html",
   "display": "standalone",
   "theme_color": "#FFFFFF",

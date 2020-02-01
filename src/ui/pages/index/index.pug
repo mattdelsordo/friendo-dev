@@ -1,9 +1,16 @@
 doctype html
 html(lang='en')
     head
-        title Friendo
+        //- encoding and viewport come first 
         meta(charset='utf-8')
         meta(name='viewport' content='width=device-width')
+
+        //- Title and description
+        title Friendo
+        meta(name="application-name" content="Friendo")
+        meta(name='description' content="Make a new pal. Help them grow big and strong. Fill their room with dogs.")
+
+        //- Functional stuff
         link(rel='stylesheet' href='styles.css')
         link(rel='manifest' href='/friendo.webmanifest')
         script(defer src='bundle.js')
@@ -30,6 +37,9 @@ html(lang='en')
         meta(name="msapplication-TileImage" content="/img/icons/favicon-144.png")
         //- Win8/IE 11
         meta(name="msapplication-config" content="/browserconfig.xml")
+
+        //- theme color
+        meta(name="theme-color" content="#FFFFFF")
 
     include ../../components/header
     body
