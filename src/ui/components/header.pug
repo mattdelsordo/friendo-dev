@@ -4,7 +4,7 @@
 mixin header-btn(txt, emo)
     a.ml-2.header-btn&attributes(attributes)
         | [
-        +emoji(emo)
+        +emoji(emo)(alt=`${txt}`)
         span #{txt}
         | ]
 
@@ -21,15 +21,15 @@ mixin attribution-dialog
                         li
                             | Emoji from
                             |
-                            a(href="https://github.com/twitter/twemoji" target="_blank") twemoji
+                            a(href="https://github.com/twitter/twemoji" target="_blank" rel="noopener") twemoji
                             |
                             | by
                             |
-                            a(href="https://github.com/twitter" target="_blank") Twitter
+                            a(href="https://github.com/twitter" target="_blank" rel="noopener") Twitter
                             |
                             | are licensed under
                             |
-                            a(href="https://creativecommons.org/licenses/by/4.0/" target="_blank") CC BY 4.0
+                            a(href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener") CC BY 4.0
                 .modal-footer
                     button.btn.btn-secondary(data-dismiss='modal') Nice
 
@@ -50,9 +50,9 @@ mixin delete()
                         | Do it.
             #imserious.collapse
                 button.btn.btn-danger#delete-btn
-                    +emoji('2620')(style="margin-right: 1em;")
+                    +emoji('2620')(style="margin-right: 1em;", alt="The point of no return")
                     | Begone
-                    +emoji('2620')(style="margin-left: 1em;")
+                    +emoji('2620')(style="margin-left: 1em;", alt="The point of no return")
 
 mixin download()
     #download-zone
@@ -86,24 +86,24 @@ mixin settings-dialog
                     h5.modal-title Settings
                 .modal-body
                     h6
-                        +emoji('1f4be')
+                        +emoji('1f4be')(alt="DNA Management")
                         |
                         | DNA Management
                     // TODO: do this instead https://getbootstrap.com/docs/4.0/components/navs/#javascript-behavior
                     ul.nav.nav-pills#dna-pills(role="tablist")
                         li.nav-item
                             a.nav-link#backup-pill-tab(data-toggle="pill" href="#backup-pill" role="tab")
-                                +emoji('1f4e5')
+                                +emoji('1f4e5')(alt="Download a DNA file")
                                 |
                                 | Backup
                         li.nav-item
                             a.nav-link#restore-pill-tab(data-toggle="pill" href="#restore-pill" role="tab")
-                                +emoji('1f4e4')
+                                +emoji('1f4e4')(alt="Load a DNA file")
                                 |
                                 | Restore
                         li.nav-item
                             a.nav-link#delete-pill-tab(data-toggle="pill" href="#delete-pill" role="tab")
-                                +emoji('1f5d1')
+                                +emoji('1f5d1')(alt="Delete your Friendo :(")
                                 |
                                 | Delete
                     .tab-content.mt-1#dna-pill-content
@@ -126,17 +126,17 @@ include emoji
 header#header
     .container.text-muted.align-middle.h-100
         .d-flex.h-100
-            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;")
-                img#favicon(src="favicon.png")
+            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;" rel="noopener")
+                img#favicon(src="/img/icons/favicon-192.png", alt="Friendo")
                 span.ml-1#title Friendo
             // not an emoji - just unicode
-            +emoji('1f516')(class='ml-4' id='game-info-icon')
+            +emoji('1f516')(class='ml-4' id='game-info-icon', alt="Game info")
             span.ml-2.w-100.d-flex#game-info
-                a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank")
+                a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank" rel="noopener")
                     span#vernum [v0.0.0]
-                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
+                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank" rel="noopener")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
             button.btn.btn-outline-info.mr-1.p-1#btn-a2hs
-                +emoji('1f4f2')
+                +emoji('1f4f2')(alt="Install Friendo locally!")
             a#settings(href="" data-toggle="modal" data-target="#settings-dialog")
-                +emoji('2699')
+                +emoji('2699')(alt="Settings")

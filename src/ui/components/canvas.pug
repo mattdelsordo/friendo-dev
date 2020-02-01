@@ -1,22 +1,22 @@
 -
     var bgs = [
-        { name: '0', emoji: '1f3e1' },
-        { name: 'earth', emoji: '1f3d4' },
-        { name: 'water', emoji: '1f30a' },
-        { name: 'fire', emoji: '1f30b' },
-        { name: 'air', emoji: '2601' },
+        { name: '0', emoji: '1f3e1', alt: 'Default' },
+        { name: 'earth', emoji: '1f3d4', alt: 'Fire' },
+        { name: 'water', emoji: '1f30a', alt: 'Water' },
+        { name: 'fire', emoji: '1f30b', alt: 'Fire' },
+        { name: 'air', emoji: '2601', alt: 'Air' },
     ]
 
 mixin bgDropdownItem(bg)
     a.dropdown-item(href='#' id=`bg-${bg.name}`)
-        +emoji(bg.emoji)
+        +emoji(bg.emoji)(alt=`${bg.alt} Background`)
 
 .position-relative
     include emoji
     canvas#canvas.card.mx-auto(height='400' width='400')
     .dropdown
         button.btn.dropdown-toggle(type='button' data-toggle='dropdown')
-            +emoji('1f3e1')(id='bg-dropdown')
+            +emoji('1f3e1')(id='bg-dropdown', alt='Pick a background!')
         .dropdown-menu
             each bg in bgs
                 +bgDropdownItem(bg)
