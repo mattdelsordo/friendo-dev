@@ -21,15 +21,15 @@ mixin attribution-dialog
                         li
                             | Emoji from
                             |
-                            a(href="https://github.com/twitter/twemoji" target="_blank") twemoji
+                            a(href="https://github.com/twitter/twemoji" target="_blank" rel="noopener") twemoji
                             |
                             | by
                             |
-                            a(href="https://github.com/twitter" target="_blank") Twitter
+                            a(href="https://github.com/twitter" target="_blank" rel="noopener") Twitter
                             |
                             | are licensed under
                             |
-                            a(href="https://creativecommons.org/licenses/by/4.0/" target="_blank") CC BY 4.0
+                            a(href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener") CC BY 4.0
                 .modal-footer
                     button.btn.btn-secondary(data-dismiss='modal') Nice
 
@@ -126,15 +126,15 @@ include emoji
 header#header
     .container.text-muted.align-middle.h-100
         .d-flex.h-100
-            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;")
+            a(href="https://github.com/mattdelsordo/friendo" target="_blank" style="flex-shrink: 0;" rel="noopener")
                 img#favicon(src="/img/icons/favicon-192.png", alt="Friendo")
                 span.ml-1#title Friendo
             // not an emoji - just unicode
             +emoji('1f516')(class='ml-4' id='game-info-icon', alt="Game info")
             span.ml-2.w-100.d-flex#game-info
-                a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank")
+                a#version-link(href="https://github.com/mattdelsordo/friendo/releases" target="_blank" rel="noopener")
                     span#vernum [v0.0.0]
-                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank")
+                +header-btn('Report a bug', '1f41b')(href="https://github.com/mattdelsordo/friendo/issues" target="_blank" rel="noopener")
                 +header-btn('Attributions', '1f4dc')(href="" data-toggle="modal" data-target="#attributions")
             button.btn.btn-outline-info.mr-1.p-1#btn-a2hs
                 +emoji('1f4f2')(alt="Install Friendo locally!")
