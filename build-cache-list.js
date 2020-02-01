@@ -29,7 +29,6 @@ const findFilesToCache = (dir, addToList) => {
     const stat = fs.statSync(filepath)
     const relativePath = path.relative(RELATIVE_RES_PATH, filepath)
     if (stat.isDirectory()) {
-      addToList(`/${relativePath}/`)
       findFilesToCache(filepath, addToList)
     } else {
       addToList(`/${relativePath}`)
