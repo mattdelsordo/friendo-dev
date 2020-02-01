@@ -62,10 +62,10 @@ mixin statdisplay(stat)
   - var statId = stat.name.split(' ')[0].toLowerCase()
   .position-relative.mb-2
       .w-100.text-center.lock.p-2
-          +emoji('1f512').lock-emoji
+          +emoji('1f512')(alt="This stat is locked").lock-emoji
 
       .stat-row.d-flex.flex-row.align-items-center.p-2(data-toggle='modal' data-target=`#train-${statId}` id=`${statId}-bar`)
-          +emoji(stat.icon)(id=`${statId}-icon` class="mr-2")
+          +emoji(stat.icon)(id=`${statId}-icon` class="mr-2", alt=`${stat.name}`)
           span.mr-1(id=`${statId}-name`) #{stat.name}
           .d-flex.flex-column.align-items.center.ml-auto.w-50
               .progress
